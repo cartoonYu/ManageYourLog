@@ -2,3 +2,7 @@
 .mvn
 mvnw
 mvnw.cmd
+ManageYourLogServer/target
+ManageYourLogCommon/target
+ManageYourLogTest/target
+*.iml
