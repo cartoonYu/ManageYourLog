@@ -1,7 +1,6 @@
 package org.manageyourlogserver.dao.mysql.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author cartoon

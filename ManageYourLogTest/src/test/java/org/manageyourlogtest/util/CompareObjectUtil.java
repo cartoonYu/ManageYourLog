@@ -31,9 +31,8 @@ public class CompareObjectUtil {
         boolean compareRes = true;
         Field[] fields = classType.getDeclaredFields();
         for(Field field : fields){
-            PropertyDescriptor propertyDescriptor = BeanUtils.getPropertyDescriptor(classType, field.getName());
-            Method getterMethod = propertyDescriptor.getReadMethod();
             try {
+                Method getterMethod = getGetterMethod(classType, field);
                 Object sourceData = getterMethod.invoke(sourceObj);
                 Object compareData = getterMethod.invoke(compareObj);
                 if(Objects.isNull(sourceData) && Objects.isNull(compareData)){
@@ -92,4 +91,9 @@ public class CompareObjectUtil {
         return compareRes;
     }
 
+    private static Method getGetterMethod(Class<?> classType, Field field) throws NoSuchMethodException {
+        String fieldName = field.getName();
+        String getterMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        return classType.getMethod(getterMethodName);
+    }
 }
