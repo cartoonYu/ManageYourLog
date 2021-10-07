@@ -3,12 +3,17 @@ package org.manageyourlogtest.server.dao.mysql.converter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.manageyourlogcommon.constants.LogRecordIndexSort;
 import org.manageyourlogserver.dao.mysql.converter.LogRecordIndexConverter;
 import org.manageyourlogserver.dao.mysql.entity.LogRecordIndexMysqlEntity;
 import org.manageyourlogserver.model.LogRecordIndex;
+import org.manageyourlogserver.repository.LogRecordRepository;
 import org.manageyourlogtest.base.BaseTest;
 import org.manageyourlogtest.util.CompareObjectUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 

@@ -1,12 +1,11 @@
 package org.manageyourlogtest.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.ImmutableList;
+import org.junit.jupiter.api.BeforeAll;
 import org.manageyourlogcommon.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +20,8 @@ public class CompareObjectUtil {
 
     private static final Logger log = LoggerFactory.getLogger(CompareObjectUtil.class);
 
+    private static List<String> excludeFieldList = ImmutableList.of("__$lineHits$__");
+
     public static boolean compare(Class<?> classType, Object sourceObj, Object compareObj){
         if(Objects.isNull(compareObj) && Objects.isNull(sourceObj)){
             return true;
@@ -32,6 +33,9 @@ public class CompareObjectUtil {
         Field[] fields = classType.getDeclaredFields();
         for(Field field : fields){
             try {
+                if(excludeFieldList.contains(field.getName())){
+                    continue;
+                }
                 Method getterMethod = getGetterMethod(classType, field);
                 Object sourceData = getterMethod.invoke(sourceObj);
                 Object compareData = getterMethod.invoke(compareObj);

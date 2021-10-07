@@ -1,10 +1,18 @@
-spring:
-  datasource:
-    url: jdbc:mariadb://localhost:3307/ManageLog
-    username: root
-    password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
 mariaDB4j:
   dataDir: ./data/data/local/
   baseDir: ./data/data/base/
   port: 3307
+spring:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:script/ManageLogSchema.sql
+      data-locations: classpath:script/ManageLogData.sql
+  datasource:
+    url: jdbc:mariadb://localhost:3307/ManageLog
+    username: root
+    password:
+    driver-class-name: org.mariadb.jdbc.Driver
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
