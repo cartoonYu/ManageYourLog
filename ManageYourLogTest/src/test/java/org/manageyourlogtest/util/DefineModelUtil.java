@@ -18,7 +18,7 @@ public class DefineModelUtil {
 
     public static LogRecord defineLogRecord(){
         LogRecord record = new LogRecord();
-        record.setRecordId(111L)
+        record.setRecordId("111")
                 .setContent("111")
                 .setOperatorSort("user")
                 .setOperator("cartoon")
@@ -32,8 +32,8 @@ public class DefineModelUtil {
 
     public static LogRecordIndex defineLogRecordIndex(){
         LogRecordIndex logRecordIndex = new LogRecordIndex();
-        logRecordIndex.setIndexId(111L)
-                .setLogRecordId(111L)
+        logRecordIndex.setIndexId("111")
+                .setLogRecordId("111")
                 .setLogRecordIndexSort(LogRecordIndexSort.Id)
                 .setIndexValue("111")
                 .setVersion(1)

@@ -12,9 +12,9 @@ import java.util.Date;
  */
 public class LogRecordIndex {
 
-    private Long indexId;
+    private String indexId;
 
-    private Long logRecordId;
+    private String logRecordId;
 
     private LogRecordIndexSort logRecordIndexSort;
 
@@ -26,20 +26,20 @@ public class LogRecordIndex {
 
     private LocalDateTime modifyTime;
 
-    public Long getIndexId() {
+    public String getIndexId() {
         return indexId;
     }
 
-    public LogRecordIndex setIndexId(Long indexId) {
+    public LogRecordIndex setIndexId(String indexId) {
         this.indexId = indexId;
         return this;
     }
 
-    public Long getLogRecordId() {
+    public String getLogRecordId() {
         return logRecordId;
     }
 
-    public LogRecordIndex setLogRecordId(Long logRecordId) {
+    public LogRecordIndex setLogRecordId(String logRecordId) {
         this.logRecordId = logRecordId;
         return this;
     }

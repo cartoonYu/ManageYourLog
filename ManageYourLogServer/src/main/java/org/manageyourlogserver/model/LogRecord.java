@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class LogRecord {
 
-    private Long recordId;
+    private String recordId;
 
     private String content;
 
@@ -32,11 +32,11 @@ public class LogRecord {
 
     private LocalDateTime modifyTime;
 
-    public Long getRecordId() {
+    public String getRecordId() {
         return recordId;
     }
 
-    public LogRecord setRecordId(Long recordId) {
+    public LogRecord setRecordId(String recordId) {
         this.recordId = recordId;
         return this;
     }
