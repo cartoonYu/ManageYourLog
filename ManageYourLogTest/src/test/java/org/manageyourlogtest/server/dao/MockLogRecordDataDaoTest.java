@@ -1,6 +1,8 @@
 package org.manageyourlogtest.server.dao;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.manageyourlogserver.dao.mock.LogRecordMockEntity;
 import org.manageyourlogserver.dao.mock.MockLogRecordDataDao;
 import org.manageyourlogserver.model.LogRecord;
 import org.manageyourlogtest.base.BaseTest;
@@ -19,6 +21,7 @@ public class MockLogRecordDataDaoTest extends BaseTest {
 
     @Test
     public void testMockLogRecordData(){
-        List<LogRecord> logRecords = mockLogRecordDataDao.getMockData();
+        List<LogRecordMockEntity> logRecords = mockLogRecordDataDao.getMockData();
+        Assertions.assertNotNull(logRecords);
     }
 }

@@ -29,4 +29,9 @@ public enum LogRecordSort {
                 .findAny()
                 .orElse(null);
     }
+
+    public static LogRecordSort parse(String sortId){
+        Long integerValue = Long.valueOf(sortId);
+        return parse(integerValue);
+    }
 }

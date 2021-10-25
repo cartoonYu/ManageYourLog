@@ -18,7 +18,6 @@ public class IdGenerateUtilTest extends BaseTest {
     @Test
     public void testGenerateNormal(){
         String res = IdGenerateUtil.generate(13);
-        log.info(res);
         Assertions.assertNotNull(res);
         Assertions.assertEquals(13, res.length());
     }
@@ -26,7 +25,6 @@ public class IdGenerateUtilTest extends BaseTest {
     @Test
     public void testGenerateOverLength(){
         String res = IdGenerateUtil.generate(19);
-        log.info(res);
         Assertions.assertNotNull(res);
         Assertions.assertEquals(19, res.length());
     }

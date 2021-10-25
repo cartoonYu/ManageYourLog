@@ -22,7 +22,6 @@ public class ReadJsonUtil {
 
     public static JSONArray readJsonArray(String fileName){
         String fileData = readFile(fileName);
-        System.out.println(fileData);
         return ofNullable(fileData)
                 .map(JSONArray::parseArray)
                 .orElse(new JSONArray());
