@@ -1,4 +1,4 @@
-package org.manageyourlogtest.common;
+package org.manageyourlogtest.common.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
