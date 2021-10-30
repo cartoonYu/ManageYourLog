@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.manageyourlogserver.dao.mock.LogRecordMockEntity;
 import org.manageyourlogserver.dao.mock.MockLogRecordDataDao;
-import org.manageyourlogserver.model.LogRecord;
 import org.manageyourlogtest.base.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

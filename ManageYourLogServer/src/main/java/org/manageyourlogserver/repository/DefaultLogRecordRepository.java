@@ -2,7 +2,7 @@ package org.manageyourlogserver.repository;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.manageyourlogserver.converter.MockDataConverter;
+import org.manageyourlogserver.converter.repository.MockDataConverter;
 import org.manageyourlogserver.dao.mock.LogRecordIndexMockEntity;
 import org.manageyourlogserver.dao.mock.LogRecordMockEntity;
 import org.manageyourlogserver.dao.mock.MockLogRecordDataDao;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2021/10/23 17:27
  */
 @Repository

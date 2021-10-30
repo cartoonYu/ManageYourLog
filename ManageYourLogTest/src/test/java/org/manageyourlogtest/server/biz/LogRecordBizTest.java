@@ -10,7 +10,7 @@ import org.manageyourlogtest.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2021/10/23 18:32
  */
 public class LogRecordBizTest extends BaseTest {

@@ -4,7 +4,6 @@ package org.manageyourlogserver.model;
 import org.manageyourlogcommon.constants.LogRecordSort;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**

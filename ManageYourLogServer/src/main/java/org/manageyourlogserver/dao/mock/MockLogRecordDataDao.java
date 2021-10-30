@@ -1,12 +1,9 @@
 package org.manageyourlogserver.dao.mock;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.manageyourlogcommon.util.ReadJsonUtil;
-import org.manageyourlogserver.model.LogRecord;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**

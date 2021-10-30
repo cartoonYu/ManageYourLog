@@ -1,7 +1,7 @@
 package org.manageyourlogcommon.util;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2021/10/23 17:51
  */
 public class IdGenerateUtil {

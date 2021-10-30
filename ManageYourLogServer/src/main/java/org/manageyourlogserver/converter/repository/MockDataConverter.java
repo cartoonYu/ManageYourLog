@@ -1,4 +1,4 @@
-package org.manageyourlogserver.converter;
+package org.manageyourlogserver.converter.repository;
 
 import org.manageyourlogcommon.constants.LogRecordIndexSort;
 import org.manageyourlogcommon.constants.LogRecordSort;

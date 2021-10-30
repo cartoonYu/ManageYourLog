@@ -3,7 +3,6 @@ package org.manageyourlogserver.model;
 import org.manageyourlogcommon.constants.LogRecordIndexSort;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author cartoon

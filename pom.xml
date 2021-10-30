@@ -21,6 +21,7 @@
         <module>ManageYourLogServer</module>
         <module>ManageYourLogTest</module>
         <module>ManageYourLogCommon</module>
+        <module>ManageYourLogFacade</module>
     </modules>
 
     <properties>

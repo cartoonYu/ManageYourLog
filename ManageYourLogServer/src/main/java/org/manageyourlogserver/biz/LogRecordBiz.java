@@ -5,7 +5,7 @@ import org.manageyourlogserver.model.LogRecord;
 import java.util.List;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2021/10/23 17:31
  */
 public interface LogRecordBiz {

@@ -5,7 +5,7 @@ import java.util.Collection;
 import static java.util.Optional.ofNullable;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2021/10/23 18:36
  */
 public class CollectionUtil {

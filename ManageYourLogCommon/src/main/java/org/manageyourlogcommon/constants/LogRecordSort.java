@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum LogRecordSort {
 
+    DEFAULT(0L, "default"),
     Operate(1L, "operate");
 
     private Long sortId;
