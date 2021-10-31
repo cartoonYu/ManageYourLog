@@ -6,7 +6,6 @@ package org.manageyourlogcommon.constants;
  */
 public enum Error {
 
-    paramIllegal(100, "param is illegal, param is miss or param is null"),
     paramMiss(101, "param is miss, param property is miss");
 
     private Integer code;

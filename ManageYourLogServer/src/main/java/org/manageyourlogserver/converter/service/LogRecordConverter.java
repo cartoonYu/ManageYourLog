@@ -16,6 +16,10 @@ import static java.util.Optional.ofNullable;
  */
 public class LogRecordConverter {
 
+    public static List<LogRecord> convert(List<LogRecordReq> logRecordReqs){
+        return ofNullable(logRecordReqs).map(reqList -> reqList.stream().map(LogRecordConverter::convert).collect(Collectors.toList())).orElse(null);
+    }
+
     public static LogRecord convert(LogRecordReq logRecordReq){
         return ofNullable(logRecordReq).map(req -> {
             LogRecord logRecord = new LogRecord();
@@ -23,12 +27,12 @@ public class LogRecordConverter {
                     .setOperatorSort(req.getOperatorSort())
                     .setOperator(req.getOperator())
                     .setLogRecordSort(req.getLogRecordSort())
-                    .setIndexList(convert(req.getIndexList()));
+                    .setIndexList(convertIndex(req.getIndexList()));
             return logRecord;
         }).orElse(null);
     }
 
-    private static List<LogRecordIndex> convert(List<LogRecordIndexReq> indexReqList){
+    private static List<LogRecordIndex> convertIndex(List<LogRecordIndexReq> indexReqList){
         return ofNullable(indexReqList)
                 .map(indexList ->
                         indexList.stream()

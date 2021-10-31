@@ -8,46 +8,31 @@ import org.manageyourlogcommon.constants.Error;
  */
 public class UploadLogResp<T> {
 
-    private boolean isSuccessUpload;
+    private boolean hasAbnormal;
 
     private Error failResult;
 
     private T successResult;
 
     public UploadLogResp(T successResult) {
-        isSuccessUpload = true;
+        hasAbnormal = false;
         this.successResult = successResult;
     }
 
     public UploadLogResp(Error failResult) {
-        isSuccessUpload = false;
+        hasAbnormal = true;
         this.failResult = failResult;
     }
 
-    public boolean isSuccessUpload() {
-        return isSuccessUpload;
-    }
-
-    public UploadLogResp<T> setSuccessUpload(boolean successUpload) {
-        isSuccessUpload = successUpload;
-        return this;
+    public boolean isHasAbnormal() {
+        return hasAbnormal;
     }
 
     public Error getFailResult() {
         return failResult;
     }
 
-    public UploadLogResp<T> setFailResult(Error failResult) {
-        this.failResult = failResult;
-        return this;
-    }
-
     public T getSuccessResult() {
         return successResult;
-    }
-
-    public UploadLogResp<T> setSuccessResult(T successResult) {
-        this.successResult = successResult;
-        return this;
     }
 }

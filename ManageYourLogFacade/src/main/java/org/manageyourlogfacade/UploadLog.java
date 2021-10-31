@@ -14,5 +14,5 @@ public interface UploadLog {
 
     UploadLogResp<Boolean> upload(LogRecordReq logRecordReq);
 
-    UploadLogResp<Boolean> upload(List<LogRecordIndexReq> logRecordIndexReqs);
+    UploadLogResp<Boolean> upload(List<LogRecordReq> logRecordReqs);
 }
