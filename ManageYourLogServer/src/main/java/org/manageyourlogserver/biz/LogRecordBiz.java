@@ -2,6 +2,7 @@ package org.manageyourlogserver.biz;
 
 import org.manageyourlogserver.model.LogRecord;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,4 +16,8 @@ public interface LogRecordBiz {
     boolean saveRecord(List<LogRecord> logRecords);
 
     List<LogRecord> getLogs(String index);
+
+    List<LogRecord> getLogs(LocalDateTime startTime, LocalDateTime endTime);
+
+    List<LogRecord> getLogs(String index, LocalDateTime startTime, LocalDateTime endTime);
 }

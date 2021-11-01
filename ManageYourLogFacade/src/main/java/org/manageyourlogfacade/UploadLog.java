@@ -1,6 +1,5 @@
 package org.manageyourlogfacade;
 
-import org.manageyourlogfacade.model.req.LogRecordIndexReq;
 import org.manageyourlogfacade.model.req.LogRecordReq;
 import org.manageyourlogfacade.model.resp.UploadLogResp;
 

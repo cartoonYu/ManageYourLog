@@ -2,6 +2,7 @@ package org.manageyourlogserver.repository;
 
 import org.manageyourlogserver.model.LogRecord;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface LogRecordRepository {
@@ -11,4 +12,8 @@ public interface LogRecordRepository {
     boolean save(List<LogRecord> logRecords);
 
     List<LogRecord> getByIndex(String index);
+
+    List<LogRecord> getByTime(LocalDateTime startTime, LocalDateTime endTime);
+
+    List<LogRecord> getByIndexAndTime(String index, LocalDateTime startTime, LocalDateTime endTime);
 }

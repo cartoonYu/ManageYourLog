@@ -9,6 +9,7 @@ import org.manageyourlogserver.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
@@ -47,6 +48,16 @@ public class LogRecordBizImpl implements LogRecordBiz{
         return ofNullable(index)
                 .map(indexWord -> logRecordRepository.getByIndex(index))
                 .orElse(ImmutableList.of());
+    }
+
+    @Override
+    public List<LogRecord> getLogs(LocalDateTime startTime, LocalDateTime endTime) {
+        return logRecordRepository.getByTime(startTime, endTime);
+    }
+
+    @Override
+    public List<LogRecord> getLogs(String index, LocalDateTime startTime, LocalDateTime endTime) {
+        return logRecordRepository.getByIndexAndTime(index, startTime, endTime);
     }
 
     private LogRecord initLogRecord(LogRecord logRecord){
