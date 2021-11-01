@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.manageyourlogfacade.UploadLog;
-import org.manageyourlogfacade.model.req.LogRecordReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordReq;
 import org.manageyourlogfacade.model.resp.UploadLogResp;
 import org.manageyourlogtest.base.BaseTest;
 import org.manageyourlogtest.util.DefineModelUtil;
@@ -22,24 +22,24 @@ public class SyncUploadLogTest extends BaseTest {
     @Qualifier("syncUploadLog")
     private UploadLog uploadLog;
 
-    private static LogRecordReq logRecordReq;
+    private static UploadLogRecordReq uploadLogRecordReq;
 
     @Test
     public void testUploadSingleLogNormal(){
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(logRecordReq);
+        UploadLogResp<Boolean> uploadRes = uploadLog.upload(uploadLogRecordReq);
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @Test
     public void testUploadLogListNormal(){
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(logRecordReq));
+        UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @BeforeAll
     public static void init(){
-        logRecordReq = DefineModelUtil.defineLogRecordReq();
+        uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
     }
 }

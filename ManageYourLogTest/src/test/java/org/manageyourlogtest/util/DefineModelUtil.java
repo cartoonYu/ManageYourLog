@@ -3,8 +3,8 @@ package org.manageyourlogtest.util;
 import com.google.common.collect.ImmutableList;
 import org.manageyourlogcommon.constants.LogRecordIndexSort;
 import org.manageyourlogcommon.constants.LogRecordSort;
-import org.manageyourlogfacade.model.req.LogRecordIndexReq;
-import org.manageyourlogfacade.model.req.LogRecordReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordIndexReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordReq;
 import org.manageyourlogserver.model.LogRecord;
 import org.manageyourlogserver.model.LogRecordIndex;
 
@@ -17,17 +17,17 @@ import java.time.LocalDateTime;
  */
 public class DefineModelUtil {
 
-    public static LogRecordReq defineLogRecordReq(){
-        LogRecordIndexReq logRecordIndexReq = new LogRecordIndexReq();
-        logRecordIndexReq.setLogRecordIndexSort(LogRecordIndexSort.Id)
+    public static UploadLogRecordReq defineLogRecordReq(){
+        UploadLogRecordIndexReq uploadLogRecordIndexReq = new UploadLogRecordIndexReq();
+        uploadLogRecordIndexReq.setLogRecordIndexSort(LogRecordIndexSort.Id)
                 .setIndexValue("111");
-        LogRecordReq logRecordReq = new LogRecordReq();
-        logRecordReq.setContent("111")
+        UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
+        uploadLogRecordReq.setContent("111")
                 .setOperatorSort("user")
                 .setOperator("cartoon")
                 .setLogRecordSort(LogRecordSort.Operate)
-                .setIndexList(ImmutableList.of(logRecordIndexReq));
-        return logRecordReq;
+                .setIndexList(ImmutableList.of(uploadLogRecordIndexReq));
+        return uploadLogRecordReq;
     }
 
     public static LogRecord defineLogRecord(){

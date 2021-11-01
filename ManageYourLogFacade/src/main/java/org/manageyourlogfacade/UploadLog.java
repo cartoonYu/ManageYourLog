@@ -1,6 +1,6 @@
 package org.manageyourlogfacade;
 
-import org.manageyourlogfacade.model.req.LogRecordReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordReq;
 import org.manageyourlogfacade.model.resp.UploadLogResp;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface UploadLog {
 
-    UploadLogResp<Boolean> upload(LogRecordReq logRecordReq);
+    UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq);
 
-    UploadLogResp<Boolean> upload(List<LogRecordReq> logRecordReqs);
+    UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs);
 }

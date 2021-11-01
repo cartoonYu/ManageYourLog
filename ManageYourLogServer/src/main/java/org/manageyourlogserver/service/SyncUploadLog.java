@@ -3,7 +3,7 @@ package org.manageyourlogserver.service;
 import org.manageyourlogcommon.constants.Error;
 import org.manageyourlogcommon.util.CollectionUtil;
 import org.manageyourlogfacade.UploadLog;
-import org.manageyourlogfacade.model.req.LogRecordReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordReq;
 import org.manageyourlogfacade.model.resp.UploadLogResp;
 import org.manageyourlogserver.biz.LogRecordBiz;
 import org.manageyourlogserver.converter.service.LogRecordConverter;
@@ -20,29 +20,29 @@ import java.util.stream.Collectors;
  * @author cartoon
  * @date 2021/10/30 17:38
  */
-@Service
+@Service("syncUploadLog")
 public class SyncUploadLog implements UploadLog {
 
     @Autowired
     private LogRecordBiz logRecordBiz;
 
     @Override
-    public UploadLogResp<Boolean> upload(LogRecordReq logRecordReq) {
-        if(!judgeParamIllegal(logRecordReq)){
+    public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
+        if(!judgeParamIllegal(uploadLogRecordReq)){
             return new UploadLogResp<>(Error.paramMiss);
         }
-        LogRecord logRecord = LogRecordConverter.convert(logRecordReq);
+        LogRecord logRecord = LogRecordConverter.convert(uploadLogRecordReq);
         logRecord = packLogRecord(logRecord);
         boolean saveRes = logRecordBiz.saveRecord(logRecord);
         return new UploadLogResp<>(saveRes);
     }
 
     @Override
-    public UploadLogResp<Boolean> upload(List<LogRecordReq> logRecordReqs) {
-        if(!judgeParamIllegal(logRecordReqs)){
+    public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
+        if(!judgeParamIllegal(uploadLogRecordReqs)){
             return new UploadLogResp<>(Error.paramMiss);
         }
-        List<LogRecord> logRecords = LogRecordConverter.convert(logRecordReqs);
+        List<LogRecord> logRecords = LogRecordConverter.convert(uploadLogRecordReqs);
         logRecords = packLogRecord(logRecords);
         boolean saveRes = logRecordBiz.saveRecord(logRecords);
         return new UploadLogResp<>(saveRes);
@@ -58,11 +58,11 @@ public class SyncUploadLog implements UploadLog {
         return logRecord;
     }
 
-    private boolean judgeParamIllegal(List<LogRecordReq> logRecordReqs){
-        if(CollectionUtil.judgeIsEmpty(logRecordReqs)){
+    private boolean judgeParamIllegal(List<UploadLogRecordReq> uploadLogRecordReqs){
+        if(CollectionUtil.judgeIsEmpty(uploadLogRecordReqs)){
             return false;
         }
-        for(LogRecordReq req : logRecordReqs){
+        for(UploadLogRecordReq req : uploadLogRecordReqs){
             if(!judgeParamIllegal(req)){
                 return false;
             }
@@ -70,17 +70,17 @@ public class SyncUploadLog implements UploadLog {
         return true;
     }
 
-    private boolean judgeParamIllegal(LogRecordReq logRecordReq){
-        if(Objects.isNull(logRecordReq)){
+    private boolean judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq){
+        if(Objects.isNull(uploadLogRecordReq)){
             return false;
         }
-        if(Objects.isNull(logRecordReq.getContent())){
+        if(Objects.isNull(uploadLogRecordReq.getContent())){
             return false;
         }
-        if(Objects.isNull(logRecordReq.getOperator())){
+        if(Objects.isNull(uploadLogRecordReq.getOperator())){
             return false;
         }
-        if(Objects.isNull(logRecordReq.getLogRecordSort())){
+        if(Objects.isNull(uploadLogRecordReq.getLogRecordSort())){
             return false;
         }
         return true;

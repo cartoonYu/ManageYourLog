@@ -16,5 +16,4 @@ public class ManageYourLogTestApplication {
         SpringApplication.run(ManageYourLogTestApplication.class, args);
     }
 
-
 }

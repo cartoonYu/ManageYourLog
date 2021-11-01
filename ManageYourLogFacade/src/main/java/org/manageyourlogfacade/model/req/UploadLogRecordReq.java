@@ -8,7 +8,7 @@ import java.util.List;
  * @author cartoon
  * @date 2021/10/30 17:28
  */
-public class LogRecordReq {
+public class UploadLogRecordReq {
 
     private String content;
 
@@ -18,13 +18,13 @@ public class LogRecordReq {
 
     private LogRecordSort logRecordSort;
 
-    private List<LogRecordIndexReq> indexList;
+    private List<UploadLogRecordIndexReq> indexList;
 
     public String getContent() {
         return content;
     }
 
-    public LogRecordReq setContent(String content) {
+    public UploadLogRecordReq setContent(String content) {
         this.content = content;
         return this;
     }
@@ -33,7 +33,7 @@ public class LogRecordReq {
         return operatorSort;
     }
 
-    public LogRecordReq setOperatorSort(String operatorSort) {
+    public UploadLogRecordReq setOperatorSort(String operatorSort) {
         this.operatorSort = operatorSort;
         return this;
     }
@@ -42,7 +42,7 @@ public class LogRecordReq {
         return operator;
     }
 
-    public LogRecordReq setOperator(String operator) {
+    public UploadLogRecordReq setOperator(String operator) {
         this.operator = operator;
         return this;
     }
@@ -51,16 +51,16 @@ public class LogRecordReq {
         return logRecordSort;
     }
 
-    public LogRecordReq setLogRecordSort(LogRecordSort logRecordSort) {
+    public UploadLogRecordReq setLogRecordSort(LogRecordSort logRecordSort) {
         this.logRecordSort = logRecordSort;
         return this;
     }
 
-    public List<LogRecordIndexReq> getIndexList() {
+    public List<UploadLogRecordIndexReq> getIndexList() {
         return indexList;
     }
 
-    public LogRecordReq setIndexList(List<LogRecordIndexReq> indexList) {
+    public UploadLogRecordReq setIndexList(List<UploadLogRecordIndexReq> indexList) {
         this.indexList = indexList;
         return this;
     }

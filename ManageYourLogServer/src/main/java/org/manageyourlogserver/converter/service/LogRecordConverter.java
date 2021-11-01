@@ -1,7 +1,7 @@
 package org.manageyourlogserver.converter.service;
 
-import org.manageyourlogfacade.model.req.LogRecordIndexReq;
-import org.manageyourlogfacade.model.req.LogRecordReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordIndexReq;
+import org.manageyourlogfacade.model.req.UploadLogRecordReq;
 import org.manageyourlogserver.model.LogRecord;
 import org.manageyourlogserver.model.LogRecordIndex;
 
@@ -16,12 +16,12 @@ import static java.util.Optional.ofNullable;
  */
 public class LogRecordConverter {
 
-    public static List<LogRecord> convert(List<LogRecordReq> logRecordReqs){
-        return ofNullable(logRecordReqs).map(reqList -> reqList.stream().map(LogRecordConverter::convert).collect(Collectors.toList())).orElse(null);
+    public static List<LogRecord> convert(List<UploadLogRecordReq> uploadLogRecordReqs){
+        return ofNullable(uploadLogRecordReqs).map(reqList -> reqList.stream().map(LogRecordConverter::convert).collect(Collectors.toList())).orElse(null);
     }
 
-    public static LogRecord convert(LogRecordReq logRecordReq){
-        return ofNullable(logRecordReq).map(req -> {
+    public static LogRecord convert(UploadLogRecordReq uploadLogRecordReq){
+        return ofNullable(uploadLogRecordReq).map(req -> {
             LogRecord logRecord = new LogRecord();
             logRecord.setContent(req.getContent())
                     .setOperatorSort(req.getOperatorSort())
@@ -32,7 +32,7 @@ public class LogRecordConverter {
         }).orElse(null);
     }
 
-    private static List<LogRecordIndex> convertIndex(List<LogRecordIndexReq> indexReqList){
+    private static List<LogRecordIndex> convertIndex(List<UploadLogRecordIndexReq> indexReqList){
         return ofNullable(indexReqList)
                 .map(indexList ->
                         indexList.stream()

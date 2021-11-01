@@ -6,7 +6,7 @@ import org.manageyourlogcommon.constants.LogRecordIndexSort;
  * @author cartoon
  * @date 2021/10/30 17:27
  */
-public class LogRecordIndexReq {
+public class UploadLogRecordIndexReq {
 
     private LogRecordIndexSort logRecordIndexSort;
 
@@ -16,7 +16,7 @@ public class LogRecordIndexReq {
         return logRecordIndexSort;
     }
 
-    public LogRecordIndexReq setLogRecordIndexSort(LogRecordIndexSort logRecordIndexSort) {
+    public UploadLogRecordIndexReq setLogRecordIndexSort(LogRecordIndexSort logRecordIndexSort) {
         this.logRecordIndexSort = logRecordIndexSort;
         return this;
     }
@@ -25,7 +25,7 @@ public class LogRecordIndexReq {
         return indexValue;
     }
 
-    public LogRecordIndexReq setIndexValue(String indexValue) {
+    public UploadLogRecordIndexReq setIndexValue(String indexValue) {
         this.indexValue = indexValue;
         return this;
     }

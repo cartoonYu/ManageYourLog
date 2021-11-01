@@ -18,7 +18,6 @@ import java.util.List;
 
 /**
  * default repository, storage mode depend on user choice
- * TODO choice mode is rely on factory
  * @author cartoon
  * @date 2021/10/23 17:27
  */
