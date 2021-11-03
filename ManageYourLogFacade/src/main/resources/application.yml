@@ -1,5 +1,7 @@
 spring:
   application:
     name: ManageYourLogFacade
-
+upload:
+  log:
+    mode: http
 
