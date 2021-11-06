@@ -13,4 +13,3 @@
 1. mvc test
 
 #### common
-1. pom 文件强制依赖阿里云
