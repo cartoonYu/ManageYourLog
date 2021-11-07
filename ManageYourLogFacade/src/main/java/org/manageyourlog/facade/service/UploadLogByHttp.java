@@ -53,10 +53,4 @@ public class UploadLogByHttp implements UploadLog {
         return new UploadLogResp<>(Error.uploadUrlMiss);
     }
 
-    public UploadLogByHttp() {
-        Optional<String> baseUrl = applicationConfig.get(ApplicationConfigKey.uploadLogServerUrl);
-        if(!baseUrl.isPresent()){
-
-        }
-    }
 }

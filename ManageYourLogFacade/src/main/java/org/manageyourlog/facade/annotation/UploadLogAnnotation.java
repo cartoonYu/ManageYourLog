@@ -7,9 +7,7 @@ import org.manageyourlog.common.constants.LogRecordSort;
  * @author cartoon
  * @date 2021/11/6 17:59
  */
-public @interface UploadLog {
-
-    String content();
+public @interface UploadLogAnnotation {
 
     String operatorSort();
 
