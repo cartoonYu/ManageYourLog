@@ -6,7 +6,8 @@ package org.manageyourlog.common.constants;
  */
 public enum Error {
 
-    paramMiss(101, "param is miss, param property is miss");
+    paramMiss(101, "param is miss, param property is miss"),
+    uploadUrlMiss(200, "upload url is miss, please check config");
 
     private Integer code;
 

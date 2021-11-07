@@ -4,4 +4,6 @@ spring:
 upload:
   log:
     mode: http
+    server:
+      url: http://127.0.0.1:8080
 

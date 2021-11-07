@@ -28,7 +28,7 @@ public class UploadLogController {
         return uploadLog.upload(req);
     }
 
-    @PostMapping("uploadLogList")
+    @PostMapping("/uploadLogList")
     public UploadLogResp<Boolean> uploadLogList(@RequestBody List<UploadLogRecordReq> req){
         return uploadLog.upload(req);
     }

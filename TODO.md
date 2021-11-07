@@ -2,6 +2,7 @@
 1. kafka 异步写入消息
 2. rpc 调用同步写入
 3. http 同步调用
+4. UploadLog 注解关于日志索引合并
 
 #### server
 1. 实际储存方式
