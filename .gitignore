@@ -6,5 +6,6 @@ ManageYourLogServer/target
 ManageYourLogCommon/target
 ManageYourLogTest/target
 ManageYourLogFacade/target
+ManageYourLogDemo/target
 *.iml
 data
