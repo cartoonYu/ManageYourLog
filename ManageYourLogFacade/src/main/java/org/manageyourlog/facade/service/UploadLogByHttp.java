@@ -37,7 +37,7 @@ public class UploadLogByHttp implements UploadLog {
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
         Optional<String> baseUrl = applicationConfig.get(ApplicationConfigKey.uploadLogServerUrl);
         if(baseUrl.isPresent()){
-            String url = String.format("%s%s", baseUrl, uploadSingleLogInterface);
+            String url = String.format("%s%s", baseUrl.get(), uploadSingleLogInterface);
             return httpService.post(url, uploadLogRecordReq, UploadLogResp.class);
         }
         return new UploadLogResp<>(Error.uploadUrlMiss);
@@ -47,7 +47,7 @@ public class UploadLogByHttp implements UploadLog {
     public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
         Optional<String> baseUrl = applicationConfig.get(ApplicationConfigKey.uploadLogServerUrl);
         if(baseUrl.isPresent()){
-            String url = String.format("%s%s", baseUrl, uploadLogListInterface);
+            String url = String.format("%s%s", baseUrl.get(), uploadLogListInterface);
             return httpService.post(url, uploadLogRecordReqs, UploadLogResp.class);
         }
         return new UploadLogResp<>(Error.uploadUrlMiss);

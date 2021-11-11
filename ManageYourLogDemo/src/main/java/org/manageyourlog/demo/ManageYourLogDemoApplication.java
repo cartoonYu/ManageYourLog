@@ -10,5 +10,4 @@ public class ManageYourLogDemoApplication {
         SpringApplication.run(ManageYourLogDemoApplication.class, args);
     }
 
-
 }
