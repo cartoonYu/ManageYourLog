@@ -24,6 +24,9 @@ public class UploadLogResp<T> {
         this.failResult = failResult;
     }
 
+    public UploadLogResp() {
+    }
+
     public boolean isHasAbnormal() {
         return hasAbnormal;
     }
