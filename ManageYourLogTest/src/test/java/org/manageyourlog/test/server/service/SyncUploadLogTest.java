@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.facade.UploadLog;
+import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.test.base.BaseTest;
@@ -19,21 +19,21 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class SyncUploadLogTest extends BaseTest {
 
     @Autowired
-    @Qualifier("syncUploadLog")
-    private UploadLog uploadLog;
+    @Qualifier("syncActualUploadLog")
+    private ActualUploadLog syncUploadLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;
 
     @Test
     public void testUploadSingleLogNormal(){
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(uploadLogRecordReq);
+        UploadLogResp<Boolean> uploadRes = syncUploadLog.upload(uploadLogRecordReq);
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @Test
     public void testUploadLogListNormal(){
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
+        UploadLogResp<Boolean> uploadRes = syncUploadLog.upload(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }

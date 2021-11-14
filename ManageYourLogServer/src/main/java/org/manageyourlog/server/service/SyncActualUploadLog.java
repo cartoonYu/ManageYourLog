@@ -2,14 +2,13 @@ package org.manageyourlog.server.service;
 
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.CollectionUtil;
-import org.manageyourlog.facade.UploadLog;
+import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.server.biz.LogRecordBiz;
 import org.manageyourlog.server.converter.service.LogRecordConverter;
 import org.manageyourlog.server.model.LogRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
  * @date 2021/10/30 17:38
  */
 @Service
-public class SyncUploadLog implements UploadLog {
+public class SyncActualUploadLog implements ActualUploadLog {
 
     @Autowired
     private LogRecordBiz logRecordBiz;
@@ -84,6 +83,11 @@ public class SyncUploadLog implements UploadLog {
         if(Objects.isNull(uploadLogRecordReq.getLogRecordSort())){
             return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean enable() {
         return true;
     }
 }

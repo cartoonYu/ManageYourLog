@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
 import org.manageyourlog.facade.UploadLog;
+import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class DemoControllerAspect {
 
     @Around("execution(* org.manageyourlog.demo.DemoController.query(..))")
     public Object queryAspect(ProceedingJoinPoint pj) {
-
         try {
             QueryReq queryReq = JSONObject.parseObject(JSONObject.toJSONString(pj.getArgs()[0]), QueryReq.class);
             String data = (String) pj.proceed();

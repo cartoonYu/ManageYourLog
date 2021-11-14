@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * @author cartoon.yu
- * @date 2021/11/6 17:00
+ * @author cartoon
+ * @date 2021/11/6 20:55
  */
 @Component
 public class ApplicationConfig implements EnvironmentAware {

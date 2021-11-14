@@ -1,6 +1,6 @@
 package org.manageyourlog.server.controller;
 
-import org.manageyourlog.facade.UploadLog;
+import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,16 @@ import java.util.List;
 public class UploadLogController {
 
     @Autowired
-    @Qualifier("syncUploadLog")
-    private UploadLog uploadLog;
+    @Qualifier("syncActualUploadLog")
+    private ActualUploadLog actualUploadLog;
 
     @PostMapping("/uploadSingleLog")
     public UploadLogResp<Boolean> uploadSingleLog(@RequestBody UploadLogRecordReq req){
-        return uploadLog.upload(req);
+        return actualUploadLog.upload(req);
     }
 
     @PostMapping("/uploadLogList")
     public UploadLogResp<Boolean> uploadLogList(@RequestBody List<UploadLogRecordReq> req){
-        return uploadLog.upload(req);
+        return actualUploadLog.upload(req);
     }
 }
