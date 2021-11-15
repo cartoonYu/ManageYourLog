@@ -3,7 +3,6 @@ package org.manageyourlog.facade.service;
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.StringUtil;
 import org.manageyourlog.facade.config.ApplicationConfig;
-import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.http.HttpService;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;

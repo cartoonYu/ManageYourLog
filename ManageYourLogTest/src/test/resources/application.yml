@@ -6,3 +6,5 @@ check:
   upload:
     log:
       mode: false
+store:
+  method: default

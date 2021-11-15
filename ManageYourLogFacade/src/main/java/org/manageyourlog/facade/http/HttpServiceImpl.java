@@ -1,6 +1,5 @@
 package org.manageyourlog.facade.http;
 
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
