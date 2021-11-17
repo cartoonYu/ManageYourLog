@@ -2,6 +2,8 @@ package org.manageyourlog.facade.model.req;
 
 import org.manageyourlog.common.constants.LogRecordSort;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +21,8 @@ public class UploadLogRecordReq {
     private LogRecordSort logRecordSort;
 
     private List<UploadLogRecordIndexReq> indexList;
+
+    private LocalDateTime uploadTime;
 
     public String getContent() {
         return content;
@@ -62,6 +66,15 @@ public class UploadLogRecordReq {
 
     public UploadLogRecordReq setIndexList(List<UploadLogRecordIndexReq> indexList) {
         this.indexList = indexList;
+        return this;
+    }
+
+    public LocalDateTime getUploadTime() {
+        return uploadTime;
+    }
+
+    public UploadLogRecordReq setUploadTime(LocalDateTime uploadTime) {
+        this.uploadTime = uploadTime;
         return this;
     }
 }

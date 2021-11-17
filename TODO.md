@@ -6,7 +6,6 @@
 
 #### server
 1. 实际储存方式
-2. repo 选择具体存储方式 factory/策略
 3. 多方式上传日志（http/rpc/kafka）
 4. CommonController/CommonService 按照职责重命名
 

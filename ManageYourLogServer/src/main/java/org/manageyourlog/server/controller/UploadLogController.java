@@ -20,7 +20,7 @@ import java.util.List;
 public class UploadLogController {
 
     @Autowired
-    @Qualifier("syncActualUploadLog")
+    @Qualifier("syncReceiveLog")
     private ActualUploadLog actualUploadLog;
 
     @PostMapping("/uploadSingleLog")

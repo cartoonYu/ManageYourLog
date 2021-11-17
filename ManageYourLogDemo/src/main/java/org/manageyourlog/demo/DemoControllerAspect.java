@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
 import org.manageyourlog.facade.UploadLog;
-import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.springframework.beans.factory.annotation.Autowired;
