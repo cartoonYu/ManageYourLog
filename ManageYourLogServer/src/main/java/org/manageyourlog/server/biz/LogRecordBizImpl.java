@@ -45,9 +45,7 @@ public class LogRecordBizImpl implements LogRecordBiz{
 
     @Override
     public List<LogRecord> getLogs(String index) {
-        return ofNullable(index)
-                .map(indexWord -> logRecordRepository.getByIndex(index))
-                .orElse(ImmutableList.of());
+        return logRecordRepository.getByIndex(index);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package org.manageyourlog.server.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.server.converter.service.LogRecordConverter;
 import org.manageyourlog.server.model.LogRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -16,21 +18,28 @@ import java.util.stream.Collectors;
 @Service
 public class AsyncReceiveLog extends ReceiveLog {
 
+    private static final Logger log = LoggerFactory.getLogger(SyncReceiveLog.class);
+
     @Override
     protected boolean judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq) {
         if(Objects.isNull(uploadLogRecordReq)){
+            log.error("async receive log, upload req is null");
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getContent())){
+            log.error("async receive log, upload req content is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getOperator())){
+            log.error("async receive log, upload req operator is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getLogRecordSort())){
+            log.error("async receive log, upload req log record sort is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getUploadTime())){
+            log.error("async receive log, upload req log upload time is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
             return false;
         }
         return true;

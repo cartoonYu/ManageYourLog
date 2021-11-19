@@ -3,6 +3,7 @@ package org.manageyourlog.test.server.service;
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
@@ -28,6 +29,7 @@ public class AsyncReceiveLogTest extends BaseTest {
 
     @Test
     public void testUploadSingleLogNormal(){
+        uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         UploadLogResp<Boolean> uploadRes = uploadLog.upload(uploadLogRecordReq);
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
@@ -35,14 +37,28 @@ public class AsyncReceiveLogTest extends BaseTest {
 
     @Test
     public void testUploadLogListNormal(){
+        uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
-    @BeforeAll
-    public static void init(){
+    @Test
+    public void testUploadSingleLogWithoutUploadTime(){
+        UploadLogResp<Boolean> uploadRes = uploadLog.upload(uploadLogRecordReq);
+        Assertions.assertTrue(uploadRes.isHasAbnormal());
+        Assertions.assertNull(uploadRes.getSuccessResult());
+    }
+
+    @Test
+    public void testUploadLogListWithoutUploadTime(){
+        UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
+        Assertions.assertTrue(uploadRes.isHasAbnormal());
+        Assertions.assertNull(uploadRes.getSuccessResult());
+    }
+
+    @BeforeEach
+    public void init(){
         uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
-        uploadLogRecordReq.setUploadTime(LocalDateTime.now());
     }
 }
