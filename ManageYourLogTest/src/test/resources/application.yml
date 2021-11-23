@@ -10,7 +10,11 @@ store:
   method: default
 spring:
   datasource:
-    url: jdbc:mysql://cartoon-ali.com:3306/ManageYourLog
-    username: test
-    password: $Qwe13579
+    url: jdbc:mysql://localhost:3306/ManageYourLog
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+mariadb:
+  baseDir: ../local/base
+  dataDir: ../local/data
+  port: 3306
