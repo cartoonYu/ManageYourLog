@@ -32,6 +32,16 @@
         where indexValue = #{indexValue}
     </select>
 
+    <select id="getByIndexIds" resultType="org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO">
+        select <include refid="Base_Column_List"/> from LogRecordIndex
+        <where>
+            indexId in
+            <foreach collection="indexIds" open="(" close=")" separator="," item="indexId">
+                #{indexId}
+            </foreach>
+        </where>
+    </select>
+
     <select id="getByIndexAndTime" resultType="org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecordIndex
         where indexValue = #{indexValue} and modifyTime between #{startTime} and #{endTime}

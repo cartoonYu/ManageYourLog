@@ -16,7 +16,7 @@ public interface LogRecordMapper {
 
     int batchInsert(List<LogRecordMysqlPO> logRecordMysqlPOS);
 
-    LogRecordMysqlPO getById(List<String> recordIds);
+    List<LogRecordMysqlPO> getById(List<String> recordIds);
 
     List<LogRecordMysqlPO> getByTime(@Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 

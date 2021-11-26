@@ -17,13 +17,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
  */
 public class UploadLogControllerTest extends BaseTestWithMvc {
 
-    @MockBean
-    private SyncReceiveLog syncReceiveLog;
-
     @Test
     public void testUploadSingleLog() throws Exception{
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
-        Mockito.when(syncReceiveLog.upload(uploadLogRecordReq)).thenReturn(new UploadLogResp<>(true));
         String result = post("/uploadSingleLog", uploadLogRecordReq);
         Assertions.assertNotNull(result);
     }

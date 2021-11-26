@@ -9,7 +9,8 @@ import java.util.Arrays;
  */
 public enum RepositoryMode {
 
-    defaultMode("default", DefaultLogRecordRepository.class);
+    defaultMode("default", DefaultLogRecordRepository.class),
+    mysql("mysql", LogRecordMysqlRepository.class);
 
     private String mode;
 

@@ -18,5 +18,7 @@ public interface LogRecordIndexMapper {
 
     List<LogRecordIndexMysqlPO> getByIndex(String indexValue);
 
+    List<LogRecordIndexMysqlPO> getByIndexIds(List<String> indexIds);
+
     List<LogRecordIndexMysqlPO> getByIndexAndTime(@Param("indexValue") String indexValue, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 }
