@@ -1,12 +1,10 @@
 package org.manageyourlog.server.biz;
 
-import com.google.common.collect.ImmutableList;
 import org.manageyourlog.common.util.CollectionUtil;
 import org.manageyourlog.common.util.IdGenerateUtil;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
 import org.manageyourlog.server.repository.LogRecordRepository;
-import org.manageyourlog.server.repository.RepositoryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +20,8 @@ import static java.util.Optional.ofNullable;
 @Service
 public class LogRecordBizImpl implements LogRecordBiz{
 
-    private LogRecordRepository logRecordRepository;
-
     @Autowired
-    private RepositoryFactory repositoryFactory;
+    private LogRecordRepository logRecordRepository;
 
     @Override
     public boolean saveRecord(LogRecord logRecord) {
@@ -75,9 +71,5 @@ public class LogRecordBizImpl implements LogRecordBiz{
                     );
             return record;
         }).orElse(null);
-    }
-
-    public LogRecordBizImpl() {
-        logRecordRepository = repositoryFactory.get();
     }
 }

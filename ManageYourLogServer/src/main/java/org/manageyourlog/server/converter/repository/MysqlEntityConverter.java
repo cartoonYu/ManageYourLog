@@ -9,6 +9,7 @@ import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
 import org.manageyourlog.server.dao.mysql.LogRecordMysqlPO;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 import java.util.stream.Collectors;

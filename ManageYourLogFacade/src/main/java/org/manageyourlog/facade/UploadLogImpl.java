@@ -17,17 +17,15 @@ import java.util.List;
 public class UploadLogImpl implements UploadLog{
 
     @Autowired
-    private UploadLogFactory uploadLogFactory;
+    private ActualUploadLog actualUploadLog;
 
     @Override
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
-        ActualUploadLog actualUploadLog = uploadLogFactory.getActualUploadService();
         return actualUploadLog.upload(uploadLogRecordReq);
     }
 
     @Override
     public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
-        ActualUploadLog actualUploadLog = uploadLogFactory.getActualUploadService();
         return actualUploadLog.upload(uploadLogRecordReqs);
     }
 }

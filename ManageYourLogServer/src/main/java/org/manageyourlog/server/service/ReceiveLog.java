@@ -6,7 +6,6 @@ import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.server.biz.LogRecordBiz;
-import org.manageyourlog.server.converter.service.LogRecordConverter;
 import org.manageyourlog.server.model.LogRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

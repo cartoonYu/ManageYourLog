@@ -2,9 +2,8 @@ package org.manageyourlog.test.server.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.server.repository.DefaultLogRecordRepository;
+import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 import org.manageyourlog.server.repository.LogRecordRepository;
-import org.manageyourlog.server.repository.RepositoryFactory;
 import org.manageyourlog.test.base.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,14 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 1.0
  * @since 2021/11/16 00:10
  */
-public class RepositoryFactoryTest extends BaseTest {
+public class StoreRepositoryFactoryTest extends BaseTest {
 
     @Autowired
-    private RepositoryFactory repositoryFactory;
+    private LogRecordRepository logRecordRepository;
 
     @Test
     public void testDefault(){
-        LogRecordRepository logRecordRepository = repositoryFactory.get();
-        Assertions.assertTrue(logRecordRepository instanceof DefaultLogRecordRepository);
+        Assertions.assertTrue(logRecordRepository instanceof LogRecordMysqlRepository);
     }
 }
