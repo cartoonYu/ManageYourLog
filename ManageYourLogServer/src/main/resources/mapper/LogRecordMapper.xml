@@ -13,7 +13,7 @@
         value (#{recordId}, #{content}, #{operatorSort}, #{operator}, #{logRecordSort}, #{indexIds}, #{version}, #{createTime}, #{modifyTime})
     </insert>
 
-    <insert id="batchInsert">
+    <insert id="batchInsert" parameterType="org.manageyourlog.server.dao.mysql.LogRecordMysqlPO">
         insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
         values
         <foreach collection="logRecordMysqlPOS" item="logRecordMysqlPO" separator="," open="(" close=")">

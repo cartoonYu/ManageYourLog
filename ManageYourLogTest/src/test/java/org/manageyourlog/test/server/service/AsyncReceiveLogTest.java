@@ -2,12 +2,11 @@ package org.manageyourlog.test.server.service;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.manageyourlog.facade.TransferLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
-import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class AsyncReceiveLogTest extends BaseTest {
 
     @Autowired
     @Qualifier("asyncReceiveLog")
-    private ActualUploadLog uploadLog;
+    private TransferLog uploadLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;
 

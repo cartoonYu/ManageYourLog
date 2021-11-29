@@ -3,11 +3,12 @@ package org.manageyourlog.facade.service;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 
 import java.util.Arrays;
+import java.util.Optional;
 
-public enum UploadLogMode {
+public enum SendLogMode {
 
-    http("http", ApplicationConfigKey.uploadLogServerUrl, ActualUploadLogByHttp.class),
-    defaultMode("http", ApplicationConfigKey.uploadLogServerUrl, ActualUploadLogByHttp.class);
+    http("http", ApplicationConfigKey.uploadLogServerUrl, SendLogByHttp.class),
+    defaultMode("default", null, SendLog.class);
 
     private String mode;
 
@@ -15,7 +16,7 @@ public enum UploadLogMode {
 
     private Class<?> classType;
 
-    UploadLogMode(String mode, ApplicationConfigKey baseUrl, Class<?> classType) {
+    SendLogMode(String mode, ApplicationConfigKey baseUrl, Class<?> classType) {
         this.mode = mode;
         this.baseUrl = baseUrl;
         this.classType = classType;
@@ -33,7 +34,9 @@ public enum UploadLogMode {
         return baseUrl;
     }
 
-    public static UploadLogMode parse(String mode){
-        return Arrays.stream(UploadLogMode.values()).filter(uploadLogMode -> uploadLogMode.getMode().equals(mode)).findAny().orElse(defaultMode);
+    public static Optional<SendLogMode> parse(String mode){
+        return Arrays.stream(SendLogMode.values())
+                .filter(sendLogMode -> sendLogMode.getMode().equals(mode))
+                .findAny();
     }
 }

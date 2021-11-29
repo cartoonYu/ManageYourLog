@@ -1,5 +1,7 @@
 package org.manageyourlog.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Component;
  * @since 2021/11/16 00:02
  */
 public abstract class BaseFactory implements ApplicationContextAware, ApplicationRunner {
+
+    protected final Logger log = LoggerFactory.getLogger(BaseFactory.class);
 
     protected ApplicationContext applicationContext;
 

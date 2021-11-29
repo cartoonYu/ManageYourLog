@@ -2,11 +2,10 @@ package org.manageyourlog.server.repository;
 
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.BaseFactory;
+import org.manageyourlog.facade.TransferLog;
 import org.manageyourlog.facade.config.ApplicationConfig;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
-import org.manageyourlog.facade.service.UploadLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -28,15 +27,24 @@ public class StoreRepositoryFactory extends BaseFactory {
     @Primary
     public LogRecordRepository initPrimaryRepository(){
         Optional<String> storeMode = applicationConfig.get(ApplicationConfigKey.storeMethod);
-        RepositoryMode repositoryMode = storeMode.isPresent() ? RepositoryMode.parse(storeMode.get()) : RepositoryMode.defaultMode;
-        return (LogRecordRepository) applicationContext.getBean(repositoryMode.getClassType());
+        Class<?> storeClass = RepositoryMode.defaultMode.getClassType();
+        if(storeMode.isPresent()){
+            for(RepositoryMode repositoryMode : RepositoryMode.values()){
+                if(repositoryMode.getMode().equals(storeMode.get())){
+                    storeClass = repositoryMode.getClassType();
+                }
+            }
+        }
+        log.info("init store repository, class type: {}", storeClass.getSimpleName());
+        return (LogRecordRepository) applicationContext.getBean(storeClass);
     }
 
     @Override
     protected void checkModeIllegal() throws IllegalArgumentException {
         Optional<String> storeMethod = applicationConfig.get(ApplicationConfigKey.storeMethod);
         if(!storeMethod.isPresent()){
-
+            log.error("check store mode, check fail because related config is miss");
+            throw new IllegalArgumentException(Error.propertyMiss.getMsg());
         }
     }
 }

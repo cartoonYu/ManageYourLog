@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.http.HttpService;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
-import org.manageyourlog.facade.service.ActualUploadLogByHttp;
+import org.manageyourlog.facade.service.SendLogByHttp;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 import org.mockito.InjectMocks;
@@ -22,14 +22,14 @@ import static org.mockito.ArgumentMatchers.eq;
  * @version 1.0
  * @since 2021/11/20 22:05
  */
-public class ActualUploadLogByHttpTest extends BaseTest {
+public class SendLogByHttpTest extends BaseTest {
 
     @Mock
     private HttpService httpService;
 
     @InjectMocks
     @Autowired
-    private ActualUploadLogByHttp uploadLogByHttp;
+    private SendLogByHttp uploadLogByHttp;
 
     @Test
     public void testUploadSingleLog(){

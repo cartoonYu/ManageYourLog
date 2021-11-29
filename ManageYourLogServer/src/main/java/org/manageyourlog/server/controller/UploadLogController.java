@@ -1,6 +1,6 @@
 package org.manageyourlog.server.controller;
 
-import org.manageyourlog.facade.service.ActualUploadLog;
+import org.manageyourlog.facade.TransferLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UploadLogController {
 
     @Autowired
     @Qualifier("syncReceiveLog")
-    private ActualUploadLog actualUploadLog;
+    private TransferLog actualUploadLog;
 
     @PostMapping("/uploadSingleLog")
     public UploadLogResp<Boolean> uploadSingleLog(@RequestBody UploadLogRecordReq req){

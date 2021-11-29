@@ -2,11 +2,13 @@ package org.manageyourlog.server.service;
 
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.CollectionUtil;
+import org.manageyourlog.facade.TransferLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
-import org.manageyourlog.facade.service.ActualUploadLog;
 import org.manageyourlog.server.biz.LogRecordBiz;
 import org.manageyourlog.server.model.LogRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,9 @@ import java.util.stream.Collectors;
  * @date 2021/11/17 23:14
  */
 @Service
-public abstract class ReceiveLog implements ActualUploadLog {
+public abstract class ReceiveLog implements TransferLog {
+
+    protected final Logger log = LoggerFactory.getLogger(ReceiveLog.class);
 
     @Autowired
     private LogRecordBiz logRecordBiz;
@@ -41,11 +45,6 @@ public abstract class ReceiveLog implements ActualUploadLog {
         List<LogRecord> logRecords = packLogRecord(uploadLogRecordReqs);
         boolean saveRes = logRecordBiz.saveRecord(logRecords);
         return new UploadLogResp<>(saveRes);
-    }
-
-    @Override
-    public boolean enable() {
-        return true;
     }
 
     protected abstract boolean judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq);
