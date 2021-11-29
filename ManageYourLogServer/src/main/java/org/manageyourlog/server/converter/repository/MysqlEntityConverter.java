@@ -9,7 +9,7 @@ import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
 import org.manageyourlog.server.dao.mysql.LogRecordMysqlPO;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
-import org.springframework.context.annotation.Primary;
+import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,7 +86,7 @@ public class MysqlEntityConverter {
                 .setCreateTime(logRecord.getCreateTime())
                 .setModifyTime(logRecord.getModifyTime());
         if(CollectionUtil.judgeIsNotEmpty(logRecord.getIndexList())){
-            logRecordMysqlPO.setIndexIds(logRecord.getIndexList().stream().map(LogRecordIndex::getIndexId).collect(Collectors.joining(",")));
+            logRecordMysqlPO.setIndexIds(logRecord.getIndexList().stream().map(LogRecordIndex::getIndexId).collect(Collectors.joining(LogRecordMysqlRepository.indexSplitCharacter)));
         }
         return logRecordMysqlPO;
     }

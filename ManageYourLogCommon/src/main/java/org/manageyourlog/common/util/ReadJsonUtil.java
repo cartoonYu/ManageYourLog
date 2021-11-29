@@ -39,11 +39,11 @@ public class ReadJsonUtil {
         Resource resource = new ClassPathResource(fileName);
         try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)){
             int ch;
-            StringBuffer sb = new StringBuffer();
+            StringBuilder stringBuilder = new StringBuilder();
             while ((ch = reader.read()) != -1) {
-                sb.append((char) ch);
+                stringBuilder.append((char) ch);
             }
-            res = sb.toString();
+            res = stringBuilder.toString();
         } catch (Exception e) {
             log.error("read file, read file error", e);
         }

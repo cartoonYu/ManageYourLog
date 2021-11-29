@@ -14,7 +14,7 @@ public class IdGenerateUtil {
         while (length != 0){
             String nanoTimestamp = String.valueOf(System.nanoTime());
             if(length <= nanoTimestamp.length()){
-                res.append(nanoTimestamp.substring(0, length));
+                res.append(nanoTimestamp, 0, length);
                 length = 0;
                 continue;
             }

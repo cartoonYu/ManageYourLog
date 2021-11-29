@@ -3,17 +3,17 @@ package org.manageyourlog.common.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.lang.NonNull;
 
 /**
  * base factory<br/>
- * 1. check select mode if have corresponding implementation class<br />
+ * 1. check select mode if project have corresponding implementation class<br />
  * 2. provide ApplicationContext object for subclass use
+ * 3. define a Logger object for subclass to use
  * @author cartoon
  * @version 1.0
  * @since 2021/11/16 00:02
@@ -25,7 +25,7 @@ public abstract class BaseFactory implements ApplicationContextAware, Applicatio
     protected ApplicationContext applicationContext;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 

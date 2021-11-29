@@ -10,9 +10,9 @@ public enum Error {
     uploadUrlMiss(200, "upload url is miss, please check config"),
     propertyMiss(201, "property is miss, please check property file");
 
-    private Integer code;
+    private final Integer code;
 
-    private String msg;
+    private final String msg;
 
     Error(Integer code, String msg) {
         this.code = code;

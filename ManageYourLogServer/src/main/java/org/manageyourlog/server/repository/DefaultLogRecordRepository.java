@@ -24,8 +24,6 @@ import java.util.List;
 @Repository
 public class DefaultLogRecordRepository implements LogRecordRepository{
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultLogRecordRepository.class);
-
     @Autowired
     private MockLogRecordIndexDao mockLogRecordIndexDao;
 

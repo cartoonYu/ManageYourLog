@@ -21,15 +21,15 @@ public class UploadLogController {
 
     @Autowired
     @Qualifier("syncReceiveLog")
-    private TransferLog actualUploadLog;
+    private TransferLog syncReceiveLog;
 
     @PostMapping("/uploadSingleLog")
     public UploadLogResp<Boolean> uploadSingleLog(@RequestBody UploadLogRecordReq req){
-        return actualUploadLog.upload(req);
+        return syncReceiveLog.upload(req);
     }
 
     @PostMapping("/uploadLogList")
     public UploadLogResp<Boolean> uploadLogList(@RequestBody List<UploadLogRecordReq> req){
-        return actualUploadLog.upload(req);
+        return syncReceiveLog.upload(req);
     }
 }

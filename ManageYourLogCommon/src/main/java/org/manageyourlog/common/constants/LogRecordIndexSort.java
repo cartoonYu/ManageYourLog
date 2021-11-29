@@ -7,9 +7,9 @@ public enum LogRecordIndexSort {
     Date(1L, "date"),
     Id(2L, "id");
 
-    private Long sortId;
+    private final Long sortId;
 
-    private String sortDescription;
+    private final String sortDescription;
 
     LogRecordIndexSort(Long sortId, String sortDescription) {
         this.sortId = sortId;

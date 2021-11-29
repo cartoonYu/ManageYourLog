@@ -25,6 +25,8 @@ import java.util.stream.Collectors;
 @Repository
 public class LogRecordMysqlRepository implements LogRecordRepository{
 
+    public static final String indexSplitCharacter = ",";
+
     @Autowired
     private LogRecordIndexMapper logRecordIndexMapper;
 
@@ -87,7 +89,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
     private List<String> getIndexIdFromRecordList(List<LogRecordMysqlPO> recordMysqlPOS){
         return recordMysqlPOS.stream()
                 .map(LogRecordMysqlPO::getIndexIds)
-                .map(indexId -> Arrays.stream(indexId.split(",")).collect(Collectors.toList()))
+                .map(indexId -> Arrays.stream(indexId.split(indexSplitCharacter)).collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }

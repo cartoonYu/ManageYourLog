@@ -1,7 +1,5 @@
 package org.manageyourlog.server.repository;
 
-import java.util.Arrays;
-
 /**
  * @author cartoon
  * @version 1.0
@@ -12,9 +10,9 @@ public enum RepositoryMode {
     defaultMode("default", DefaultLogRecordRepository.class),
     mysql("mysql", LogRecordMysqlRepository.class);
 
-    private String mode;
+    private final String mode;
 
-    private Class<?> classType;
+    private final Class<?> classType;
 
     RepositoryMode(String mode, Class<?> classType) {
         this.mode = mode;
@@ -27,12 +25,5 @@ public enum RepositoryMode {
 
     public Class<?> getClassType() {
         return classType;
-    }
-
-    public static RepositoryMode parse(String mode){
-        return Arrays.stream(RepositoryMode.values())
-                .filter(repositoryMode -> repositoryMode.getMode().equals(mode))
-                .findAny()
-                .orElse(RepositoryMode.defaultMode);
     }
 }
