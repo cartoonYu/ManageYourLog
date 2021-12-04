@@ -2,8 +2,8 @@ package org.manageyourlog.test.server.dao;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.server.mock.LogRecordMockEntity;
-import org.manageyourlog.server.mock.MockLogRecordDataDao;
+import org.manageyourlog.server.dao.mock.LogRecordMockEntity;
+import org.manageyourlog.server.dao.mock.MockLogRecordDataDao;
 import org.manageyourlog.test.base.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

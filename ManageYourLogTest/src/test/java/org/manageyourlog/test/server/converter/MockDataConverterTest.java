@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.util.ReadJsonUtil;
 import org.manageyourlog.server.converter.repository.MockDataConverter;
-import org.manageyourlog.server.mock.LogRecordIndexMockEntity;
-import org.manageyourlog.server.mock.LogRecordMockEntity;
+import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
+import org.manageyourlog.server.dao.mock.LogRecordMockEntity;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.test.base.BaseTest;
 

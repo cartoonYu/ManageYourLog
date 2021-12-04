@@ -12,8 +12,8 @@ import org.springframework.lang.NonNull;
 /**
  * base factory<br/>
  * 1. check select mode if project have corresponding implementation class<br />
- * 2. provide ApplicationContext object for subclass use
- * 3. define a Logger object for subclass to use
+ * 2. provide ApplicationContext object for subclass use<br />
+ * 3. define a Logger object for subclass to use<br />
  * @author cartoon
  * @version 1.0
  * @since 2021/11/16 00:02

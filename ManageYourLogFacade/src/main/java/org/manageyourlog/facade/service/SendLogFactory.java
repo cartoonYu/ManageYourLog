@@ -2,7 +2,7 @@ package org.manageyourlog.facade.service;
 
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.BaseFactory;
-import org.manageyourlog.facade.TransferLog;
+import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.config.ApplicationConfig;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SendLogFactory extends BaseFactory {
 
     @Bean
     @Primary
-    public TransferLog initPrimarySendLogService(){
+    public UploadLog initPrimarySendLogService(){
         Optional<String> uploadMode = applicationConfig.get(ApplicationConfigKey.uploadLogMode);
         Class<?> sendLogClass = SendLogMode.defaultMode.getClassType();
         if(uploadMode.isPresent()){
@@ -36,7 +36,7 @@ public class SendLogFactory extends BaseFactory {
             }
         }
         log.info("init send log service, class type: {}", sendLogClass.getSimpleName());
-        return (TransferLog) applicationContext.getBean(sendLogClass);
+        return (UploadLog) applicationContext.getBean(sendLogClass);
     }
 
     @Override

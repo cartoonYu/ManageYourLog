@@ -3,13 +3,11 @@ package org.manageyourlog.server.repository;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.manageyourlog.server.converter.repository.MockDataConverter;
-import org.manageyourlog.server.mock.LogRecordIndexMockEntity;
-import org.manageyourlog.server.mock.LogRecordMockEntity;
-import org.manageyourlog.server.mock.MockLogRecordDataDao;
-import org.manageyourlog.server.mock.MockLogRecordIndexDao;
+import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
+import org.manageyourlog.server.dao.mock.LogRecordMockEntity;
+import org.manageyourlog.server.dao.mock.MockLogRecordDataDao;
+import org.manageyourlog.server.dao.mock.MockLogRecordIndexDao;
 import org.manageyourlog.server.model.LogRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

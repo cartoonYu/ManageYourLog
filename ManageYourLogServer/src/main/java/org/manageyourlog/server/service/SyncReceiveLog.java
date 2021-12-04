@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @date 2021/10/30 17:38
  */
 @Service
-public class SyncReceiveLog extends ReceiveLog{
+public class SyncReceiveLog extends ReceiveLogImpl {
 
     private static final Logger log = LoggerFactory.getLogger(SyncReceiveLog.class);
 

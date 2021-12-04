@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.facade.TransferLog;
+import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.test.base.BaseTest;
@@ -22,7 +22,7 @@ public class AsyncReceiveLogTest extends BaseTest {
 
     @Autowired
     @Qualifier("asyncReceiveLog")
-    private TransferLog uploadLog;
+    private UploadLog uploadLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;
 

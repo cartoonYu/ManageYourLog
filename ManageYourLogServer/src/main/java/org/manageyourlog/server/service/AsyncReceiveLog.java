@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @date 2021/11/17 23:10
  */
 @Service
-public class AsyncReceiveLog extends ReceiveLog {
+public class AsyncReceiveLog extends ReceiveLogImpl {
 
     private static final Logger log = LoggerFactory.getLogger(SyncReceiveLog.class);
 

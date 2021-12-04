@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
 @Mapper
+@Repository
 public interface LogRecordMapper {
 
     int insert(LogRecordMysqlPO logRecordMysqlPO);

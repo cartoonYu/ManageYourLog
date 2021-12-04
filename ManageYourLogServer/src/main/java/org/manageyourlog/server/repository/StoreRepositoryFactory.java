@@ -2,7 +2,6 @@ package org.manageyourlog.server.repository;
 
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.BaseFactory;
-import org.manageyourlog.facade.TransferLog;
 import org.manageyourlog.facade.config.ApplicationConfig;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;

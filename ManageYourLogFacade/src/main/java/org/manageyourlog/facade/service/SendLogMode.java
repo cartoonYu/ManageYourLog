@@ -5,7 +5,7 @@ import org.manageyourlog.facade.config.ApplicationConfigKey;
 public enum SendLogMode {
 
     http("http", ApplicationConfigKey.uploadLogServerUrl, SendLogByHttp.class),
-    defaultMode("default", null, SendLog.class);
+    defaultMode("default", null, SendLogByDefault.class);
 
     private final String mode;
 

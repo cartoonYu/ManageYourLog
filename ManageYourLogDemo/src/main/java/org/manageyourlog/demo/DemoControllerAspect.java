@@ -5,10 +5,9 @@ import com.google.common.collect.ImmutableList;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
-import org.manageyourlog.facade.TransferLog;
+import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class DemoControllerAspect {
 
     @Autowired
-    private TransferLog sendLog;
+    private UploadLog sendLog;
 
     @Around("execution(* org.manageyourlog.demo.DemoController.query(..))")
     public Object queryAspect(ProceedingJoinPoint pj) {

@@ -1,7 +1,7 @@
 package org.manageyourlog.facade.service;
 
 import org.manageyourlog.common.constants.Error;
-import org.manageyourlog.facade.TransferLog;
+import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.config.ApplicationConfig;
 import org.manageyourlog.facade.http.HttpService;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * @since 2021/11/03 09:02
  */
 @Service
-public class SendLogByHttp extends SendLog {
+public class SendLogByHttp implements UploadLog {
 
     @Autowired
     private HttpService httpService;

@@ -11,9 +11,9 @@ import java.util.List;
  * @author cartoon
  * @date 2021/11/14 23:26
  */
-public interface TransferLog {
+public interface UploadLog {
 
-    Logger log = LoggerFactory.getLogger(TransferLog.class);
+    Logger log = LoggerFactory.getLogger(UploadLog.class);
 
     UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq);
 
