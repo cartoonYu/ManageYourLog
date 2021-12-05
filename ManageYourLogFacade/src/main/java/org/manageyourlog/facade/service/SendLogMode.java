@@ -1,6 +1,7 @@
 package org.manageyourlog.facade.service;
 
-import org.manageyourlog.facade.config.ApplicationConfigKey;
+
+import org.manageyourlog.common.config.ApplicationConfigKey;
 
 public enum SendLogMode {
 

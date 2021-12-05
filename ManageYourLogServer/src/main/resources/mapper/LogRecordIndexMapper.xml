@@ -17,13 +17,13 @@
         insert into LogRecordIndex(indexId, logRecordId, sortId, indexValue, version, createTime, modifyTime)
         values
         <foreach collection="indexList" item="index" open="(" close=")" separator=",">
-            #{indexId},
-            #{logRecordId},
-            #{sortId},
-            #{indexValue},
-            #{version},
-            #{createTime},
-            #{modifyTime}
+            #{index.indexId},
+            #{index.logRecordId},
+            #{index.sortId},
+            #{index.indexValue},
+            #{index.version},
+            #{index.createTime},
+            #{index.modifyTime}
         </foreach>
     </insert>
 

@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.config;
+package org.manageyourlog.common.config;
 
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;

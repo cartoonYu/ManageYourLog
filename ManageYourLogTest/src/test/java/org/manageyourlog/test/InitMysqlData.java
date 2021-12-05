@@ -37,6 +37,7 @@ public class InitMysqlData implements InitializingBean, DisposableBean {
             mariaDB4jSpringService.setDefaultPort(port);
             mariaDB4jSpringService.start();
             mariaDB4jSpringService.getDB().source("script/MysqlSchema.sql");
+            mariaDB4jSpringService.getDB().source("script/MysqlData.sql");
             mariaDbIsStart.set(true);
         }
 

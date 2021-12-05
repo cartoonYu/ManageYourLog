@@ -58,8 +58,9 @@ public class LogRecordBizImpl implements LogRecordBiz{
     }
 
     private LogRecord initLogRecord(LogRecord logRecord){
+        String recordId = IdGenerateUtil.generate(13);
         return ofNullable(logRecord).map(record -> {
-            record.setRecordId(IdGenerateUtil.generate(13))
+            record.setRecordId(recordId)
                     .setVersion(1);
             List<LogRecordIndex> logRecordIndices = record.getIndexList();
             ofNullable(logRecordIndices)
@@ -67,6 +68,7 @@ public class LogRecordBizImpl implements LogRecordBiz{
                             indexList.forEach(index ->
                                     index.setIndexId(IdGenerateUtil.generate(13))
                                             .setVersion(1)
+                                            .setLogRecordId(recordId)
                             )
                     );
             return record;

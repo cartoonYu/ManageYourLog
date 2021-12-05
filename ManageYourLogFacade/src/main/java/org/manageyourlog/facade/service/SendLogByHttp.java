@@ -1,8 +1,8 @@
 package org.manageyourlog.facade.service;
 
+import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.facade.UploadLog;
-import org.manageyourlog.facade.config.ApplicationConfig;
 import org.manageyourlog.facade.http.HttpService;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;

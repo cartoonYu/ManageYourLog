@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.server.service.ReceiveLog;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,20 @@ public class SyncReceiveLogTest extends BaseTest {
 
     @Autowired
     @Qualifier("syncReceiveLog")
-    private UploadLog syncUploadLog;
+    private ReceiveLog receiveLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;
 
     @Test
     public void testUploadSingleLogNormal(){
-        UploadLogResp<Boolean> uploadRes = syncUploadLog.upload(uploadLogRecordReq);
+        UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @Test
     public void testUploadLogListNormal(){
-        UploadLogResp<Boolean> uploadRes = syncUploadLog.upload(ImmutableList.of(uploadLogRecordReq));
+        UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }

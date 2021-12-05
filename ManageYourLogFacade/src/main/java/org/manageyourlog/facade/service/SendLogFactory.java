@@ -1,10 +1,9 @@
 package org.manageyourlog.facade.service;
 
-import org.manageyourlog.common.constants.Error;
+import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.config.ApplicationConfigKey;
 import org.manageyourlog.common.util.BaseFactory;
 import org.manageyourlog.facade.UploadLog;
-import org.manageyourlog.facade.config.ApplicationConfig;
-import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -34,17 +33,10 @@ public class SendLogFactory extends BaseFactory {
                     break;
                 }
             }
+        } else {
+            log.warn("init send log service, have not determine store mode, back to default class type: {}", sendLogClass.getSimpleName());
         }
         log.info("init send log service, class type: {}", sendLogClass.getSimpleName());
         return (UploadLog) applicationContext.getBean(sendLogClass);
-    }
-
-    @Override
-    protected void checkModeIllegal() throws IllegalArgumentException {
-        Optional<String> uploadMode = applicationConfig.get(ApplicationConfigKey.uploadLogMode);
-        if(!uploadMode.isPresent()){
-            log.error("check send log mode, check fail because related config is miss");
-            throw new IllegalArgumentException(Error.propertyMiss.getMsg());
-        }
     }
 }

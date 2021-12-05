@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.server.service.ReceiveLog;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,14 @@ public class AsyncReceiveLogTest extends BaseTest {
 
     @Autowired
     @Qualifier("asyncReceiveLog")
-    private UploadLog uploadLog;
+    private ReceiveLog receiveLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;
 
     @Test
     public void testUploadSingleLogNormal(){
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(uploadLogRecordReq);
+        UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
@@ -37,21 +38,21 @@ public class AsyncReceiveLogTest extends BaseTest {
     @Test
     public void testUploadLogListNormal(){
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
+        UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertFalse(uploadRes.isHasAbnormal());
         Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @Test
     public void testUploadSingleLogWithoutUploadTime(){
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(uploadLogRecordReq);
+        UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
         Assertions.assertTrue(uploadRes.isHasAbnormal());
         Assertions.assertNull(uploadRes.getSuccessResult());
     }
 
     @Test
     public void testUploadLogListWithoutUploadTime(){
-        UploadLogResp<Boolean> uploadRes = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
+        UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertTrue(uploadRes.isHasAbnormal());
         Assertions.assertNull(uploadRes.getSuccessResult());
     }

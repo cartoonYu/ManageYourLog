@@ -1,9 +1,8 @@
 package org.manageyourlog.server.repository;
 
-import org.manageyourlog.common.constants.Error;
+import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.config.ApplicationConfigKey;
 import org.manageyourlog.common.util.BaseFactory;
-import org.manageyourlog.facade.config.ApplicationConfig;
-import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -33,17 +32,10 @@ public class StoreRepositoryFactory extends BaseFactory {
                     storeClass = repositoryMode.getClassType();
                 }
             }
+        } else {
+            log.warn("init store repository, have not determine store mode, back to default class type: {}", storeClass.getSimpleName());
         }
         log.info("init store repository, class type: {}", storeClass.getSimpleName());
         return (LogRecordRepository) applicationContext.getBean(storeClass);
-    }
-
-    @Override
-    protected void checkModeIllegal() throws IllegalArgumentException {
-        Optional<String> storeMethod = applicationConfig.get(ApplicationConfigKey.storeMethod);
-        if(!storeMethod.isPresent()){
-            log.error("check store mode, check fail because related config is miss");
-            throw new IllegalArgumentException(Error.propertyMiss.getMsg());
-        }
     }
 }
