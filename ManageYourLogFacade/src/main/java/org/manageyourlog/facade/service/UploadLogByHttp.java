@@ -18,7 +18,7 @@ import java.util.Optional;
  * @since 2021/11/03 09:02
  */
 @Service
-public class SendLogByHttp implements UploadLog {
+public class UploadLogByHttp implements UploadLog {
 
     @Autowired
     private HttpService httpService;
@@ -41,7 +41,7 @@ public class SendLogByHttp implements UploadLog {
     }
 
     private <T> UploadLogResp<Boolean> upload(String interfaceName, T data){
-        Optional<String> baseUrl = applicationConfig.get(SendLogMode.http.getBaseUrl());
+        Optional<String> baseUrl = applicationConfig.get(UploadLogMode.http.getBaseUrl());
         if(baseUrl.isPresent()){
             String url = String.format("%s%s", baseUrl.get(), interfaceName);
             return httpService.post(url, data, UploadLogResp.class);

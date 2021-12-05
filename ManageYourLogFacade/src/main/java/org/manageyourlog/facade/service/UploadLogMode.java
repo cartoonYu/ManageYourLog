@@ -3,10 +3,10 @@ package org.manageyourlog.facade.service;
 
 import org.manageyourlog.common.config.ApplicationConfigKey;
 
-public enum SendLogMode {
+public enum UploadLogMode {
 
-    http("http", ApplicationConfigKey.uploadLogServerUrl, SendLogByHttp.class),
-    defaultMode("default", null, SendLogByDefault.class);
+    http("http", ApplicationConfigKey.uploadLogServerUrl, UploadLogByHttp.class),
+    defaultMode("default", null, UploadLogByDefault.class);
 
     private final String mode;
 
@@ -14,7 +14,7 @@ public enum SendLogMode {
 
     private final Class<?> classType;
 
-    SendLogMode(String mode, ApplicationConfigKey baseUrl, Class<?> classType) {
+    UploadLogMode(String mode, ApplicationConfigKey baseUrl, Class<?> classType) {
         this.mode = mode;
         this.baseUrl = baseUrl;
         this.classType = classType;

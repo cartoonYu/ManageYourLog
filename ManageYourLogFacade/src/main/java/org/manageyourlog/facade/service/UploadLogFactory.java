@@ -16,7 +16,7 @@ import java.util.Optional;
  * @date 2021/11/5 20:55
  */
 @Component
-public class SendLogFactory extends BaseFactory {
+public class UploadLogFactory extends BaseFactory {
 
     @Autowired
     private ApplicationConfig applicationConfig;
@@ -25,11 +25,11 @@ public class SendLogFactory extends BaseFactory {
     @Primary
     public UploadLog initPrimarySendLogService(){
         Optional<String> uploadMode = applicationConfig.get(ApplicationConfigKey.uploadLogMode);
-        Class<?> sendLogClass = SendLogMode.defaultMode.getClassType();
+        Class<?> sendLogClass = UploadLogMode.defaultMode.getClassType();
         if(uploadMode.isPresent()){
-            for(SendLogMode sendLogMode : SendLogMode.values()){
-                if(uploadMode.get().equals(sendLogMode.getMode())){
-                    sendLogClass = sendLogMode.getClassType();
+            for(UploadLogMode uploadLogMode : UploadLogMode.values()){
+                if(uploadMode.get().equals(uploadLogMode.getMode())){
+                    sendLogClass = uploadLogMode.getClassType();
                     break;
                 }
             }
