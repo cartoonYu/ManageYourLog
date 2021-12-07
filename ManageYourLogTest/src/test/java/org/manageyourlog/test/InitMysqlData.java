@@ -1,6 +1,5 @@
 package org.manageyourlog.test;
 
-import ch.vorburger.mariadb4j.MariaDB4jService;
 import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

@@ -27,13 +27,6 @@ public class ReadJsonUtil {
                 .orElse(new JSONArray());
     }
 
-    public static JSONObject readJsonObject(String fileName){
-        String fileData = readFile(fileName);
-        return ofNullable(fileData)
-                .map(JSONObject::parseObject)
-                .orElse(new JSONObject());
-    }
-
     private static String readFile(String fileName){
         String res = null;
         Resource resource = new ClassPathResource(fileName);

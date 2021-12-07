@@ -66,5 +66,7 @@ public class UploadLogByHttpTest extends BaseTest{
         UploadLogResp<Boolean> uploadLogResp = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertTrue(uploadLogResp.isHasAbnormal());
         Assertions.assertEquals(Error.uploadUrlMiss, uploadLogResp.getFailResult());
+        Assertions.assertEquals(Error.uploadUrlMiss.getCode(), uploadLogResp.getFailResult().getCode());
+        Assertions.assertEquals(Error.uploadUrlMiss.getMsg(), uploadLogResp.getFailResult().getMsg());
     }
 }

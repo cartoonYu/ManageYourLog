@@ -28,4 +28,11 @@ public class IdGenerateUtilTest extends BaseTest {
         Assertions.assertNotNull(res);
         Assertions.assertEquals(19, res.length());
     }
+
+    @Test
+    public void testGenerateZeroLength(){
+        String res = IdGenerateUtil.generate(0);
+        Assertions.assertNotNull(res);
+        Assertions.assertEquals(0, res.length());
+    }
 }
