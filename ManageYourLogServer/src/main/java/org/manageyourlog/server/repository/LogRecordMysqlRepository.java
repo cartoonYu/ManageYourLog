@@ -62,7 +62,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
         List<LogRecordIndexMysqlPO> indexMysqlPOS = logRecordIndexMapper.getByIndexIds(indexIds);
-        return MysqlEntityConverter.convert(logRecordMysqlPoList, indexMysqlPOS);
+        return MysqlEntityConverter.convertToModel(logRecordMysqlPoList, indexMysqlPOS);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
         List<LogRecordIndexMysqlPO> indexMysqlPOS = logRecordIndexMapper.getByIndexIds(indexIds);
-        return MysqlEntityConverter.convert(logRecordMysqlPoList, indexMysqlPOS);
+        return MysqlEntityConverter.convertToModel(logRecordMysqlPoList, indexMysqlPOS);
     }
 
     private List<String> getIndexIdFromRecordList(List<LogRecordMysqlPO> recordMysqlPOS){

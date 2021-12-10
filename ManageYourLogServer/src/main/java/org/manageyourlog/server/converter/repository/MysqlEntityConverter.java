@@ -12,22 +12,41 @@ import org.manageyourlog.server.model.LogRecordIndex;
 import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 
 /**
+ * mysql converter, convert between mysql po and model
  * @author cartoon
  * @date 2021/11/25 20:34
  */
 public class MysqlEntityConverter {
 
-    public static List<LogRecord> convert(List<LogRecordMysqlPO> logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
-        //TODO
-        return ImmutableList.of();
+    /**
+     * convert po list to model list
+     * @param logRecordMysqlPO log record po list
+     * @param logRecordIndexMysqlPOList incoming log's index list
+     * @return log record model list
+     */
+    public static List<LogRecord> convertToModel(List<LogRecordMysqlPO> logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
+        Map<String, List<LogRecordIndexMysqlPO>> recordIdToIndexListMap = logRecordIndexMysqlPOList.stream().collect(Collectors.groupingBy(LogRecordIndexMysqlPO::getLogRecordId));
+        return ofNullable(logRecordMysqlPO)
+                .map(logRecordList ->
+                        logRecordList.stream()
+                                .map(logRecord -> convertToModel(logRecord, recordIdToIndexListMap.get(logRecord.getRecordId())))
+                                .collect(Collectors.toList()))
+                .orElse(ImmutableList.of());
     }
 
-    public static LogRecord convert(LogRecordMysqlPO logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
+    /**
+     * convert po to model
+     * @param logRecordMysqlPO log record po list
+     * @param logRecordIndexMysqlPOList incoming log's index list
+     * @return log record model
+     */
+    public static LogRecord convertToModel(LogRecordMysqlPO logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
         return ofNullable(logRecordMysqlPO).map(po -> {
             LogRecord logRecord = new LogRecord();
             logRecord.setRecordId(po.getRecordId())
@@ -35,47 +54,40 @@ public class MysqlEntityConverter {
                     .setOperatorSort(po.getOperatorSort())
                     .setOperator(po.getOperator())
                     .setLogRecordSort(LogRecordSort.parse(po.getLogRecordSort()))
-                    .setIndexList(convert(logRecordIndexMysqlPOList))
                     .setVersion(po.getVersion())
                     .setCreateTime(po.getCreateTime())
-                    .setModifyTime(po.getModifyTime());
+                    .setModifyTime(po.getModifyTime())
+                    .setIndexList(logRecordIndexMysqlPOList.stream().map(indexPo -> {
+                        LogRecordIndex logRecordIndex = new LogRecordIndex();
+                        logRecordIndex.setIndexId(indexPo.getIndexId())
+                                .setLogRecordId(indexPo.getLogRecordId())
+                                .setLogRecordIndexSort(LogRecordIndexSort.parse(indexPo.getSortId()))
+                                .setIndexValue(indexPo.getIndexValue())
+                                .setVersion(indexPo.getVersion())
+                                .setCreateTime(indexPo.getCreateTime())
+                                .setModifyTime(indexPo.getModifyTime());
+                        return logRecordIndex;
+                    }).collect(Collectors.toList()));
             return logRecord;
         }).orElse(null);
     }
 
-    private static List<LogRecordIndex> convert(List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
-        return ofNullable(logRecordIndexMysqlPOList)
-                .map(list -> list.stream().map(MysqlEntityConverter::convert).collect(Collectors.toList()))
-                .orElse(null);
-    }
-
-    private static LogRecordIndex convert(LogRecordIndexMysqlPO logRecordIndexMysqlPO){
-        return ofNullable(logRecordIndexMysqlPO).map(po -> {
-            LogRecordIndex logRecordIndex = new LogRecordIndex();
-            logRecordIndex.setIndexId(po.getIndexId())
-                    .setLogRecordId(po.getLogRecordId())
-                    .setLogRecordIndexSort(LogRecordIndexSort.parse(po.getSortId()))
-                    .setIndexValue(po.getIndexValue())
-                    .setVersion(po.getVersion())
-                    .setCreateTime(po.getCreateTime())
-                    .setModifyTime(po.getModifyTime());
-            return logRecordIndex;
-        }).orElse(null);
-    }
-
-    public static ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> convertToPo(LogRecord logRecord){
-        LogRecordMysqlPO logRecordMysqlPO = convertToLogRecordPo(logRecord);
-        List<LogRecordIndexMysqlPO> indexMysqlPOS = convertToIndexPo(logRecord.getIndexList());
-        return ImmutablePair.of(logRecordMysqlPO, indexMysqlPOS);
-    }
-
+    /**
+     * convert model list to po list
+     * @param logRecords model list
+     * @return record and its index list
+     */
     public static List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> convertToPo(List<LogRecord> logRecords){
         return logRecords.stream().map(MysqlEntityConverter::convertToPo).collect(Collectors.toList());
     }
 
-
-
-    private static LogRecordMysqlPO convertToLogRecordPo(LogRecord logRecord){
+    /**
+     * convert model to po
+     * @param logRecord model
+     * @return record and its index list po
+     */
+    public static ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> convertToPo(LogRecord logRecord){
+        //convert log model to po
         LogRecordMysqlPO logRecordMysqlPO = new LogRecordMysqlPO();
         logRecordMysqlPO.setRecordId(logRecord.getRecordId())
                 .setContent(logRecord.getContent())
@@ -88,24 +100,22 @@ public class MysqlEntityConverter {
         if(CollectionUtil.judgeIsNotEmpty(logRecord.getIndexList())){
             logRecordMysqlPO.setIndexIds(logRecord.getIndexList().stream().map(LogRecordIndex::getIndexId).collect(Collectors.joining(LogRecordMysqlRepository.indexSplitCharacter)));
         }
-        return logRecordMysqlPO;
-    }
-
-    private static List<LogRecordIndexMysqlPO> convertToIndexPo(List<LogRecordIndex> logRecordIndices){
-        return ofNullable(logRecordIndices).map(
-              indexList -> indexList.stream().map(
-                      index -> {
-                          LogRecordIndexMysqlPO indexMysqlPO = new LogRecordIndexMysqlPO();
-                          indexMysqlPO.setIndexId(index.getIndexId())
-                                  .setLogRecordId(index.getLogRecordId())
-                                  .setSortId(index.getLogRecordIndexSort().getSortId())
-                                  .setIndexValue(index.getIndexValue())
-                                  .setVersion(index.getVersion())
-                                  .setCreateTime(index.getCreateTime())
-                                  .setModifyTime(index.getModifyTime());
-                          return indexMysqlPO;
-                      }
-              ).collect(Collectors.toList())
-        ).orElse(null);
+        //convert index model to po
+        List<LogRecordIndexMysqlPO> indexMysqlPOS = ofNullable(logRecord.getIndexList()).map(
+                indexList -> indexList.stream().map(
+                        index -> {
+                            LogRecordIndexMysqlPO indexMysqlPO = new LogRecordIndexMysqlPO();
+                            indexMysqlPO.setIndexId(index.getIndexId())
+                                    .setLogRecordId(index.getLogRecordId())
+                                    .setSortId(index.getLogRecordIndexSort().getSortId())
+                                    .setIndexValue(index.getIndexValue())
+                                    .setVersion(index.getVersion())
+                                    .setCreateTime(index.getCreateTime())
+                                    .setModifyTime(index.getModifyTime());
+                            return indexMysqlPO;
+                        }
+                ).collect(Collectors.toList())
+        ).orElse(ImmutableList.of());
+        return ImmutablePair.of(logRecordMysqlPO, indexMysqlPOS);
     }
 }
