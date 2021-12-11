@@ -72,9 +72,6 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
     }
 
     private List<LogRecord> getIndexListByIndexList(List<LogRecordIndexMysqlPO> indexMysqlPOList){
-        if(CollectionUtil.judgeIsEmpty(indexMysqlPOList)){
-            return ImmutableList.of();
-        }
         //get all record id from index list
         List<String> recordIds = indexMysqlPOList.stream().map(LogRecordIndexMysqlPO::getLogRecordId).collect(Collectors.toList());
         //get record by id from database

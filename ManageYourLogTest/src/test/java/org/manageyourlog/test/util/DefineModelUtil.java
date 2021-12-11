@@ -3,6 +3,7 @@ package org.manageyourlog.test.util;
 import com.google.common.collect.ImmutableList;
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
+import org.manageyourlog.common.util.IdGenerateUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.server.model.LogRecord;
@@ -32,22 +33,23 @@ public class DefineModelUtil {
 
     public static LogRecord defineLogRecord(){
         LogRecord record = new LogRecord();
-        record.setRecordId("111")
+        String recordId = IdGenerateUtil.generate(13);
+        record.setRecordId(recordId)
                 .setContent("111")
                 .setOperatorSort("user")
                 .setOperator("cartoon")
                 .setLogRecordSort(LogRecordSort.Operate)
-                .setIndexList(ImmutableList.of(defineLogRecordIndex()))
+                .setIndexList(ImmutableList.of(defineLogRecordIndex(recordId)))
                 .setVersion(1)
                 .setCreateTime(LocalDateTime.now())
                 .setModifyTime(LocalDateTime.now());
         return record;
     }
 
-    public static LogRecordIndex defineLogRecordIndex(){
+    private static LogRecordIndex defineLogRecordIndex(String recordId){
         LogRecordIndex logRecordIndex = new LogRecordIndex();
-        logRecordIndex.setIndexId("111")
-                .setLogRecordId("111")
+        logRecordIndex.setIndexId(IdGenerateUtil.generate(13))
+                .setLogRecordId(recordId)
                 .setLogRecordIndexSort(LogRecordIndexSort.Id)
                 .setIndexValue("111")
                 .setVersion(1)

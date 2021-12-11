@@ -25,7 +25,6 @@ public class DefaultLogRecordRepositoryTest extends BaseTest {
         Assertions.assertTrue(logRecordRepository.save(new LogRecord()));
     }
 
-
     @Test
     public void testSaveList(){
         Assertions.assertTrue(logRecordRepository.save(ImmutableList.of()));
