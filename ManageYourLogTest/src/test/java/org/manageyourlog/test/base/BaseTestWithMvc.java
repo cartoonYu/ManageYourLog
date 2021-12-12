@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * base test which contains web container
  * @author cartoon
  * @version 1.0
  * @since 2021/11/20 23:03

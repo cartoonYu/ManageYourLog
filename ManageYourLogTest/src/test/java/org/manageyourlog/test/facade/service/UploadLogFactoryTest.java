@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author cartoon
  * @date 2021/12/7 11:21
  */
-public class UploadLogFactoryTest extends BaseTest implements EnvironmentAware {
+public class UploadLogFactoryTest extends BaseTest{
 
     @Spy
     private ApplicationConfig applicationConfig;
@@ -32,13 +32,10 @@ public class UploadLogFactoryTest extends BaseTest implements EnvironmentAware {
 
     @Test
     public void testInitBeanDefault(){
+        applicationConfig.setEnvironment(BaseTest.environment);
         Mockito.when(applicationConfig.get(ApplicationConfigKey.uploadLogMode)).thenReturn(Optional.empty());
         UploadLog uploadLog = uploadLogFactory.initPrimarySendLogService();
         Assertions.assertTrue(uploadLog instanceof UploadLogByDefault);
     }
 
-    @Override
-    public void setEnvironment(Environment environment) {
-        applicationConfig.setEnvironment(environment);
-    }
 }

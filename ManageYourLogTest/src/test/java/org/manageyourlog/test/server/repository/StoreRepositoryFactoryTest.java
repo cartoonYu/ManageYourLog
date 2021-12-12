@@ -2,10 +2,19 @@ package org.manageyourlog.test.server.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.config.ApplicationConfigKey;
+import org.manageyourlog.server.repository.DefaultLogRecordRepository;
 import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 import org.manageyourlog.server.repository.LogRecordRepository;
+import org.manageyourlog.server.repository.StoreRepositoryFactory;
 import org.manageyourlog.test.base.BaseTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 /**
  * @author cartoon
@@ -14,11 +23,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class StoreRepositoryFactoryTest extends BaseTest {
 
+    @Spy
+    private ApplicationConfig applicationConfig;
+
     @Autowired
-    private LogRecordRepository logRecordRepository;
+    @InjectMocks
+    private StoreRepositoryFactory storeRepositoryFactory;
 
     @Test
-    public void testDefault(){
-        Assertions.assertTrue(logRecordRepository instanceof LogRecordMysqlRepository);
+    public void testInitBeanDefault(){
+        applicationConfig.setEnvironment(BaseTest.environment);
+        Mockito.when(applicationConfig.get(ApplicationConfigKey.storeMethod)).thenReturn(Optional.empty());
+        LogRecordRepository logRecordRepository = storeRepositoryFactory.initPrimaryRepository();
+        Assertions.assertTrue(logRecordRepository instanceof DefaultLogRecordRepository);
     }
 }

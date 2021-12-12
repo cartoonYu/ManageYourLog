@@ -8,8 +8,6 @@ import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.repository.LogRecordRepository;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,42 +20,48 @@ public class LogRecordMysqlRepositoryTest extends BaseTest {
 
     private static String indexValue = "111";
 
-    @Autowired
-    @Qualifier("logRecordMysqlRepository")
-    private LogRecordRepository logRecordRepository;
+    private List<LogRecordRepository> logRecordRepositoryList = getAllImplement(LogRecordRepository.class);
 
     @Order(1)
     @Test
     public void testSaveSingleLog(){
         LogRecord logRecord = DefineModelUtil.defineLogRecord();
-        Assertions.assertTrue(logRecordRepository.save(logRecord));
+        logRecordRepositoryList.forEach(logRecordRepository -> Assertions.assertTrue(logRecordRepository.save(logRecord)));
     }
 
     @Order(2)
     @Test
     public void testSaveLogList(){
         LogRecord logRecord = DefineModelUtil.defineLogRecord();
-        Assertions.assertTrue(logRecordRepository.save(ImmutableList.of(logRecord)));
+        logRecordRepositoryList.forEach(logRecordRepository -> Assertions.assertTrue(logRecordRepository.save(ImmutableList.of(logRecord))));
     }
 
     @Order(3)
     @Test
     public void getByIndex(){
-        List<LogRecord> logRecords = logRecordRepository.getByIndex(indexValue);
-        Assertions.assertFalse(logRecords.isEmpty());
+        logRecordRepositoryList.forEach(logRecordRepository -> {
+            List<LogRecord> logRecords = logRecordRepository.getByIndex(indexValue);
+            Assertions.assertFalse(logRecords.isEmpty());
+        });
     }
 
     @Order(3)
     @Test
     public void testGetByTime(){
-        List<LogRecord> logRecords = logRecordRepository.getByTime(LocalDateTime.now().plusSeconds(-1), LocalDateTime.now());
-        Assertions.assertFalse(logRecords.isEmpty());
+        logRecordRepositoryList.forEach(logRecordRepository -> {
+            List<LogRecord> logRecords = logRecordRepository.getByTime(LocalDateTime.now().plusSeconds(-1), LocalDateTime.now());
+            Assertions.assertFalse(logRecords.isEmpty());
+        });
+
     }
 
     @Order(3)
     @Test
     public void testGetByIndexAndTime(){
-        List<LogRecord> logRecords = logRecordRepository.getByIndexAndTime(indexValue, LocalDateTime.now().plusSeconds(-1), LocalDateTime.now());
-        Assertions.assertFalse(logRecords.isEmpty());
+        logRecordRepositoryList.forEach(logRecordRepository -> {
+            List<LogRecord> logRecords = logRecordRepository.getByIndexAndTime(indexValue, LocalDateTime.now().plusSeconds(-1), LocalDateTime.now());
+            Assertions.assertFalse(logRecords.isEmpty());
+        });
     }
+
 }

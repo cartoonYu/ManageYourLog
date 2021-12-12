@@ -1,8 +1,6 @@
 package org.manageyourlog.server.repository;
 
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.manageyourlog.common.util.CollectionUtil;
 import org.manageyourlog.server.converter.repository.MysqlEntityConverter;
 import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
 import org.manageyourlog.server.dao.mysql.LogRecordMysqlPO;
