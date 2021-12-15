@@ -1,6 +1,7 @@
 package org.manageyourlog.test.common.util;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.common.util.IdGenerateUtil;
@@ -11,10 +12,12 @@ import org.slf4j.LoggerFactory;
  * @author cartoon
  * @date 2021/10/23 17:59
  */
+@DisplayName("id generate util test")
 public class IdGenerateUtilTest extends BaseTest {
 
     private static final Logger log = LoggerFactory.getLogger(IdGenerateUtilTest.class);
 
+    @DisplayName("generate id normal test")
     @Test
     public void testGenerateNormal(){
         String res = IdGenerateUtil.generate(13);
@@ -22,6 +25,7 @@ public class IdGenerateUtilTest extends BaseTest {
         Assertions.assertEquals(13, res.length());
     }
 
+    @DisplayName("generate id with over length test")
     @Test
     public void testGenerateOverLength(){
         String res = IdGenerateUtil.generate(19);
@@ -29,6 +33,7 @@ public class IdGenerateUtilTest extends BaseTest {
         Assertions.assertEquals(19, res.length());
     }
 
+    @DisplayName("generate id with zero length test")
     @Test
     public void testGenerateZeroLength(){
         String res = IdGenerateUtil.generate(0);

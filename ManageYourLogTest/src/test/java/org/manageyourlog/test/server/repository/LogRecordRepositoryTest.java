@@ -2,6 +2,7 @@ package org.manageyourlog.test.server.repository;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.server.model.LogRecord;
@@ -16,13 +17,15 @@ import java.util.List;
  * @author cartoon
  * @date 2021/12/11 23:25
  */
-public class LogRecordMysqlRepositoryTest extends BaseTest {
+@DisplayName("log repository test")
+public class LogRecordRepositoryTest extends BaseTest {
 
     private static String indexValue = "111";
 
     private List<LogRecordRepository> logRecordRepositoryList = getAllImplement(LogRecordRepository.class);
 
     @Order(1)
+    @DisplayName("single log save test")
     @Test
     public void testSaveSingleLog(){
         LogRecord logRecord = DefineModelUtil.defineLogRecord();
@@ -30,6 +33,7 @@ public class LogRecordMysqlRepositoryTest extends BaseTest {
     }
 
     @Order(2)
+    @DisplayName("log list save test")
     @Test
     public void testSaveLogList(){
         LogRecord logRecord = DefineModelUtil.defineLogRecord();
@@ -37,6 +41,7 @@ public class LogRecordMysqlRepositoryTest extends BaseTest {
     }
 
     @Order(3)
+    @DisplayName("get log by index test")
     @Test
     public void getByIndex(){
         logRecordRepositoryList.forEach(logRecordRepository -> {
@@ -45,6 +50,7 @@ public class LogRecordMysqlRepositoryTest extends BaseTest {
         });
     }
 
+    @DisplayName("get log by time test")
     @Order(3)
     @Test
     public void testGetByTime(){
@@ -52,9 +58,9 @@ public class LogRecordMysqlRepositoryTest extends BaseTest {
             List<LogRecord> logRecords = logRecordRepository.getByTime(LocalDateTime.now().plusSeconds(-1), LocalDateTime.now());
             Assertions.assertFalse(logRecords.isEmpty());
         });
-
     }
 
+    @DisplayName("get log by index and time test")
     @Order(3)
     @Test
     public void testGetByIndexAndTime(){

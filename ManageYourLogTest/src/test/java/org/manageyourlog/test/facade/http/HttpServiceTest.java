@@ -2,6 +2,7 @@ package org.manageyourlog.test.facade.http;
 
 import com.alibaba.fastjson.JSONObject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.http.HttpServiceImpl;
 import org.manageyourlog.test.base.BaseTest;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
  * @author cartoon
  * @date 2021/12/7 11:35
  */
+@DisplayName("http service test")
 public class HttpServiceTest extends BaseTest {
 
     @Mock
@@ -25,6 +27,7 @@ public class HttpServiceTest extends BaseTest {
     @Autowired
     private HttpServiceImpl httpService;
 
+    @DisplayName("test http service with post method normally")
     @Test
     public void testPostNormal(){
         String mockResult = "";

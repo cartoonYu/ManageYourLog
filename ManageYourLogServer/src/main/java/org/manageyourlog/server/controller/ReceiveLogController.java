@@ -18,18 +18,18 @@ import java.util.List;
  * @date 2021/10/31 17:06
  */
 @RestController
-public class UploadLogController {
+public class ReceiveLogController {
 
     @Autowired
     @Qualifier("syncReceiveLog")
     private ReceiveLog syncReceiveLog;
 
-    @PostMapping("/uploadSingleLog")
+    @PostMapping("/receiveSingleLog")
     public UploadLogResp<Boolean> uploadSingleLog(@RequestBody UploadLogRecordReq req){
         return syncReceiveLog.receive(req);
     }
 
-    @PostMapping("/uploadLogList")
+    @PostMapping("/receiveLogList")
     public UploadLogResp<Boolean> uploadLogList(@RequestBody List<UploadLogRecordReq> req){
         return syncReceiveLog.receive(req);
     }

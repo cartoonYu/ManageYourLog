@@ -1,6 +1,7 @@
 package org.manageyourlog.test.facade.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.config.ApplicationConfigKey;
@@ -21,6 +22,7 @@ import java.util.Optional;
  * @author cartoon
  * @date 2021/12/7 11:21
  */
+@DisplayName("upload log service factory test")
 public class UploadLogFactoryTest extends BaseTest{
 
     @Spy
@@ -30,6 +32,7 @@ public class UploadLogFactoryTest extends BaseTest{
     @InjectMocks
     private UploadLogFactory uploadLogFactory;
 
+    @DisplayName("upload log service factory test")
     @Test
     public void testInitBeanDefault(){
         applicationConfig.setEnvironment(BaseTest.environment);

@@ -12,6 +12,7 @@ import org.manageyourlog.server.model.LogRecordIndex;
 import java.time.LocalDateTime;
 
 /**
+ * define model util
  * @author cartoon
  * @version 1.0
  * @since 2021/10/07 19:43

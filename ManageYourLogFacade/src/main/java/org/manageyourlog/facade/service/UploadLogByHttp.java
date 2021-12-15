@@ -26,9 +26,9 @@ public class UploadLogByHttp implements UploadLog {
     @Autowired
     private ApplicationConfig applicationConfig;
 
-    private String uploadSingleLogInterface = "/uploadSingleLog";
+    private String uploadSingleLogInterface = "/receiveSingleLog";
 
-    private String uploadLogListInterface = "/uploadLogList";
+    private String uploadLogListInterface = "/receiveLogList";
 
     @Override
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {

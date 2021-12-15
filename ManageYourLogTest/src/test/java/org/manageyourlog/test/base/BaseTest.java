@@ -32,9 +32,9 @@ public abstract class BaseTest implements ApplicationContextAware, EnvironmentAw
 
     /**
      * get all incoming class type's implement class object by spring
-     * @param classType
+     * @param classType specify class type
      * @param <T>
-     * @return
+     * @return all implement by specify class
      */
     protected <T> List<T> getAllImplement(Class<T> classType){
         Map<String, T> allImplement = context.getBeansOfType(classType);

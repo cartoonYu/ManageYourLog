@@ -1,6 +1,7 @@
 package org.manageyourlog.test.server.repository;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.config.ApplicationConfigKey;
@@ -21,6 +22,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 2021/11/16 00:10
  */
+@DisplayName("store repository factory test")
 public class StoreRepositoryFactoryTest extends BaseTest {
 
     @Spy
@@ -30,6 +32,7 @@ public class StoreRepositoryFactoryTest extends BaseTest {
     @InjectMocks
     private StoreRepositoryFactory storeRepositoryFactory;
 
+    @DisplayName("init bean default test")
     @Test
     public void testInitBeanDefault(){
         applicationConfig.setEnvironment(BaseTest.environment);

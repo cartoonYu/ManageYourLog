@@ -2,6 +2,7 @@ package org.manageyourlog.test.facade.service;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.constants.Error;
@@ -28,6 +29,7 @@ import static org.mockito.ArgumentMatchers.eq;
  * @version 1.0
  * @since 2021/11/20 22:05
  */
+@DisplayName("upload log by http test")
 public class UploadLogByHttpTest extends BaseTest{
 
     @Mock
@@ -41,6 +43,7 @@ public class UploadLogByHttpTest extends BaseTest{
     @Autowired
     private UploadLogByHttp uploadLog;
 
+    @DisplayName("upload single log by http")
     @Test
     public void testUploadSingleLog(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
@@ -50,6 +53,7 @@ public class UploadLogByHttpTest extends BaseTest{
         Assertions.assertTrue(uploadLogResp.getSuccessResult());
     }
 
+    @DisplayName("upload log list by http")
     @Test
     public void testUploadLogList(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
@@ -59,6 +63,7 @@ public class UploadLogByHttpTest extends BaseTest{
         Assertions.assertTrue(uploadLogResp.getSuccessResult());
     }
 
+    @DisplayName("upload log without assign base url")
     @Test
     public void testUploadLogWithoutBaseUrl(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
@@ -69,4 +74,6 @@ public class UploadLogByHttpTest extends BaseTest{
         Assertions.assertEquals(Error.uploadUrlMiss.getCode(), uploadLogResp.getFailResult().getCode());
         Assertions.assertEquals(Error.uploadUrlMiss.getMsg(), uploadLogResp.getFailResult().getMsg());
     }
+
+
 }
