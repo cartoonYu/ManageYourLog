@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-@SpringBootApplication(scanBasePackages = {"org.manageyourlog.demo", "org.manageyourlog.facade"})
+@SpringBootApplication(scanBasePackages = {"org.manageyourlog.demo", "org.manageyourlog"})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ManageYourLogDemoApplication {
 

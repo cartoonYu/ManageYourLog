@@ -8,7 +8,8 @@ public enum Error {
 
     paramMiss(101, "param is miss, param property is miss"),
     uploadUrlMiss(200, "upload url is miss, please check config"),
-    propertyMiss(201, "property is miss, please check property file");
+    propertyMiss(201, "property is miss, please check property file"),
+    uploadLogFail(301, "upload log fail");
 
     private final Integer code;
 

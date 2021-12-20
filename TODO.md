@@ -9,9 +9,9 @@
 4. p6spy + 动态日志级别添加
 5. mybatis 事务添加
 6. 数据库存储枚举改为存储真实描述
-7. 同步上传/异步上传请求 req 分开
 
 #### test
+1. test 包分拆到各业务包中？
 
 #### common
-1. http 工具类的构建
+1. fastjosn 转为 gson
