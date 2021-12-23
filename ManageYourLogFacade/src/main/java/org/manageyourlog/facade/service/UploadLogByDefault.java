@@ -1,7 +1,6 @@
 package org.manageyourlog.facade.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
@@ -18,13 +17,13 @@ public class UploadLogByDefault implements UploadLog {
 
     @Override
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
-        log.info("actual upload log by default, upload single log, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
+        log.info("actual upload log by default, upload single log, data: {}", GsonUtil.writeJson(uploadLogRecordReq));
         return new UploadLogResp<>(true);
     }
 
     @Override
     public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
-        log.info("actual upload log by default, upload log list, data: {}", JSONArray.toJSONString(uploadLogRecordReqs));
+        log.info("actual upload log by default, upload log list, data: {}", GsonUtil.writeJson(uploadLogRecordReqs));
         return new UploadLogResp<>(true);
     }
 }

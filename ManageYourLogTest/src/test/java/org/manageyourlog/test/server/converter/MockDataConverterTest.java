@@ -1,10 +1,10 @@
 package org.manageyourlog.test.server.converter;
 
-import com.alibaba.fastjson.JSONArray;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.common.util.ReadJsonUtil;
 import org.manageyourlog.server.converter.repository.MockDataConverter;
 import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
@@ -36,10 +36,9 @@ public class MockDataConverterTest extends BaseTest {
 
     @BeforeAll
     public static void init(){
-        JSONArray logRecordJsonArray = ReadJsonUtil.readJsonArray("logRecordData.json");
-        mockLogRecord =  logRecordJsonArray.toJavaList(LogRecordMockEntity.class);
-        JSONArray logRecordIndexJsonArray = ReadJsonUtil.readJsonArray("logRecordIndexData.json");
-        mockLogRecordIndex = logRecordIndexJsonArray.toJavaList(LogRecordIndexMockEntity.class);
-
+        mockLogRecord = ReadJsonUtil.readArray("logRecordData.json", LogRecordMockEntity.class);
+        mockLogRecordIndex = ReadJsonUtil.readArray("logRecordIndexData.json", LogRecordIndexMockEntity.class);
+        System.out.println(GsonUtil.writeJson(mockLogRecord));
+        System.out.println(GsonUtil.writeJson(mockLogRecordIndex));
     }
 }

@@ -1,9 +1,9 @@
 package org.manageyourlog.test.base;
 
-import com.alibaba.fastjson.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.manageyourlog.common.util.GsonUtil;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,7 +33,7 @@ public class BaseTestWithMvc {
         return mockMvc
                 .perform(
                         MockMvcRequestBuilders.post(urlTemplate)
-                                .content(JSONObject.toJSONString(data).getBytes(StandardCharsets.UTF_8))
+                                .content(GsonUtil.writeJson(data).getBytes(StandardCharsets.UTF_8))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andReturn()

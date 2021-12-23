@@ -1,6 +1,5 @@
 package org.manageyourlog.server.dao.mock;
 
-import com.alibaba.fastjson.JSONArray;
 import org.manageyourlog.common.util.ReadJsonUtil;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +13,6 @@ import java.util.List;
 public class MockLogRecordIndexDao {
 
     public List<LogRecordIndexMockEntity> getMockData(){
-        JSONArray jsonArray = ReadJsonUtil.readJsonArray("logRecordIndexData.json");
-        List<LogRecordIndexMockEntity> res = jsonArray.toJavaList(LogRecordIndexMockEntity.class);
-        return res;
+        return ReadJsonUtil.readArray("logRecordIndexData.json", LogRecordIndexMockEntity.class);
     }
 }

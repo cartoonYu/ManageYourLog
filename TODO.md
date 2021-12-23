@@ -14,4 +14,4 @@
 1. test 包分拆到各业务包中？
 
 #### common
-1. fastjosn 转为 gson
+2. 通过注解进行 retrofit 实体类

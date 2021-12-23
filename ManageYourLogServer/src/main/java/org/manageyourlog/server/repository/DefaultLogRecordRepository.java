@@ -1,7 +1,6 @@
 package org.manageyourlog.server.repository;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.server.converter.repository.MockDataConverter;
 import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
 import org.manageyourlog.server.dao.mock.LogRecordMockEntity;
@@ -30,13 +29,13 @@ public class DefaultLogRecordRepository implements LogRecordRepository{
 
     @Override
     public boolean save(LogRecord logRecord) {
-        log.info("default log record, save log: {}", JSONObject.toJSONString(logRecord));
+        log.info("default log record, save log: {}", GsonUtil.writeJson(logRecord));
         return true;
     }
 
     @Override
     public boolean save(List<LogRecord> logRecords) {
-        log.info("default log record, save log: {}", JSONArray.toJSONString(logRecords));
+        log.info("default log record, save log: {}", GsonUtil.writeJson(logRecords));
         return true;
     }
 

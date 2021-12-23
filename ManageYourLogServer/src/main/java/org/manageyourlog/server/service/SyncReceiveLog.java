@@ -1,6 +1,6 @@
 package org.manageyourlog.server.service;
 
-import com.alibaba.fastjson.JSONObject;
+import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.server.converter.service.LogRecordConverter;
 import org.manageyourlog.server.model.LogRecord;
@@ -28,15 +28,15 @@ public class SyncReceiveLog extends ReceiveLogImpl {
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getContent())){
-            log.error("sync receive log, upload req content is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
+            log.error("sync receive log, upload req content is null, data: {}", GsonUtil.writeJson(uploadLogRecordReq));
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getOperator())){
-            log.error("sync receive log, upload req operator is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
+            log.error("sync receive log, upload req operator is null, data: {}", GsonUtil.writeJson(uploadLogRecordReq));
             return false;
         }
         if(Objects.isNull(uploadLogRecordReq.getLogRecordSort())){
-            log.error("sync receive log, upload req log record sort is null, data: {}", JSONObject.toJSONString(uploadLogRecordReq));
+            log.error("sync receive log, upload req log record sort is null, data: {}", GsonUtil.writeJson(uploadLogRecordReq));
             return false;
         }
         return true;

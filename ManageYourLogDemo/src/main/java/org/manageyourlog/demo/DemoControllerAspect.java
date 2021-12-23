@@ -1,6 +1,5 @@
 package org.manageyourlog.demo;
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.ImmutableList;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,7 +26,8 @@ public class DemoControllerAspect {
     @Around("execution(* org.manageyourlog.demo.DemoController.query(..))")
     public Object queryAspect(ProceedingJoinPoint pj) {
         try {
-            QueryReq queryReq = JSONObject.parseObject(JSONObject.toJSONString(pj.getArgs()[0]), QueryReq.class);
+
+            QueryReq queryReq = (QueryReq)pj.getArgs()[0];
             String data = (String) pj.proceed();
 
             String content = String.format("%s operate %s", queryReq.getUserId(), queryReq.getOrderId());

@@ -1,6 +1,6 @@
 package org.manageyourlog.demo;
 
-import com.alibaba.fastjson.JSONObject;
+import org.manageyourlog.common.util.GsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class DemoController {
 
     @PostMapping("/query")
     public String query(@RequestBody QueryReq queryReq){
-        log.info("call query interface, req: {}", JSONObject.toJSONString(queryReq));
+        log.info("call query interface, req: {}", GsonUtil.writeJson(queryReq));
         return "mock call query interface";
     }
 }
