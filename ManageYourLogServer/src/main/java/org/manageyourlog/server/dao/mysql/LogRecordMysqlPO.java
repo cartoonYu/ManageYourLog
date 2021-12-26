@@ -17,7 +17,7 @@ public class LogRecordMysqlPO {
 
     private String operator;
 
-    private Long logRecordSort;
+    private String logRecordSort;
 
     private String indexIds;
 
@@ -63,11 +63,11 @@ public class LogRecordMysqlPO {
         return this;
     }
 
-    public Long getLogRecordSort() {
+    public String getLogRecordSort() {
         return logRecordSort;
     }
 
-    public LogRecordMysqlPO setLogRecordSort(Long logRecordSort) {
+    public LogRecordMysqlPO setLogRecordSort(String logRecordSort) {
         this.logRecordSort = logRecordSort;
         return this;
     }

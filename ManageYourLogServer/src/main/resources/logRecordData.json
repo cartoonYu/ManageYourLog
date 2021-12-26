@@ -4,7 +4,7 @@
     "content":"订单 1111 被快递员 222 送出分拨中心",
     "operatorSort":"deliveryman",
     "operator":"222",
-    "logRecordSort":"1",
+    "logRecordSort":"operate",
     "indexList": ["111"],
     "version":1,
     "create_time":"2021-10-26 00:00:00",

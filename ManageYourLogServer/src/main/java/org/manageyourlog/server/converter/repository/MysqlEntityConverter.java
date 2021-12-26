@@ -61,7 +61,7 @@ public class MysqlEntityConverter {
                         LogRecordIndex logRecordIndex = new LogRecordIndex();
                         logRecordIndex.setIndexId(indexPo.getIndexId())
                                 .setLogRecordId(indexPo.getLogRecordId())
-                                .setLogRecordIndexSort(LogRecordIndexSort.parse(indexPo.getSortId()))
+                                .setLogRecordIndexSort(LogRecordIndexSort.parse(indexPo.getSort()))
                                 .setIndexValue(indexPo.getIndexValue())
                                 .setVersion(indexPo.getVersion())
                                 .setCreateTime(indexPo.getCreateTime())
@@ -93,7 +93,7 @@ public class MysqlEntityConverter {
                 .setContent(logRecord.getContent())
                 .setOperatorSort(logRecord.getOperatorSort())
                 .setOperator(logRecord.getOperator())
-                .setLogRecordSort(logRecord.getLogRecordSort().getSortId())
+                .setLogRecordSort(logRecord.getLogRecordSort().getSortDescription())
                 .setVersion(logRecord.getVersion())
                 .setCreateTime(logRecord.getCreateTime())
                 .setModifyTime(logRecord.getModifyTime());
@@ -107,7 +107,7 @@ public class MysqlEntityConverter {
                             LogRecordIndexMysqlPO indexMysqlPO = new LogRecordIndexMysqlPO();
                             indexMysqlPO.setIndexId(index.getIndexId())
                                     .setLogRecordId(index.getLogRecordId())
-                                    .setSortId(index.getLogRecordIndexSort().getSortId())
+                                    .setSort(index.getLogRecordIndexSort().getSortDescription())
                                     .setIndexValue(index.getIndexValue())
                                     .setVersion(index.getVersion())
                                     .setCreateTime(index.getCreateTime())

@@ -1,9 +1,8 @@
 package org.manageyourlog.server.controller;
 
-import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
-import org.manageyourlog.server.service.ReceiveLog;
+import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;

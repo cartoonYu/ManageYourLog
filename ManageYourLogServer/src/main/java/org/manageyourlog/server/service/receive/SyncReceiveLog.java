@@ -1,4 +1,4 @@
-package org.manageyourlog.server.service;
+package org.manageyourlog.server.service.receive;
 
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;

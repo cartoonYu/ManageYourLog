@@ -24,15 +24,11 @@ public enum LogRecordSort {
         return sortDescription;
     }
 
-    public static LogRecordSort parse(Long sortId){
+    public static LogRecordSort parse(String sortDescription){
         return Arrays.stream(LogRecordSort.values())
-                .filter(value -> value.getSortId().equals(sortId))
+                .filter(value -> value.getSortDescription().equals(sortDescription))
                 .findAny()
                 .orElse(null);
     }
 
-    public static LogRecordSort parse(String sortId){
-        Long integerValue = Long.valueOf(sortId);
-        return parse(integerValue);
-    }
 }

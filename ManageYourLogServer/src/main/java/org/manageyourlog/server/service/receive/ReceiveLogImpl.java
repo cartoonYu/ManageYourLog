@@ -1,12 +1,13 @@
-package org.manageyourlog.server.service;
+package org.manageyourlog.server.service.receive;
 
 import org.manageyourlog.common.constants.Error;
 import org.manageyourlog.common.util.CollectionUtil;
-import org.manageyourlog.facade.UploadLog;
+import org.manageyourlog.common.util.IdGenerateUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
-import org.manageyourlog.server.biz.LogRecordBiz;
 import org.manageyourlog.server.model.LogRecord;
+import org.manageyourlog.server.model.LogRecordIndex;
+import org.manageyourlog.server.repository.LogRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Optional.ofNullable;
+
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2021/11/17 23:14
  */
 @Service
@@ -25,7 +28,7 @@ public abstract class ReceiveLogImpl implements ReceiveLog {
     protected final Logger log = LoggerFactory.getLogger(ReceiveLogImpl.class);
 
     @Autowired
-    private LogRecordBiz logRecordBiz;
+    private LogRecordRepository logRecordRepository;
 
     @Override
     public UploadLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
@@ -33,7 +36,9 @@ public abstract class ReceiveLogImpl implements ReceiveLog {
             return new UploadLogResp<>(Error.paramMiss);
         }
         LogRecord logRecord = packLogRecord(uploadLogRecordReq);
-        boolean saveRes = logRecordBiz.saveRecord(logRecord);
+        boolean saveRes = ofNullable(logRecord)
+                                .map(record -> logRecordRepository.save(initLogRecord(record)))
+                                .orElse(false);
         return new UploadLogResp<>(saveRes);
     }
 
@@ -43,7 +48,11 @@ public abstract class ReceiveLogImpl implements ReceiveLog {
             return new UploadLogResp<>(Error.paramMiss);
         }
         List<LogRecord> logRecords = packLogRecord(uploadLogRecordReqs);
-        boolean saveRes = logRecordBiz.saveRecord(logRecords);
+        if(CollectionUtil.judgeIsEmpty(logRecords)){
+            return new UploadLogResp<>(false);
+        }
+        logRecords.forEach(record -> record = initLogRecord(record));
+        boolean saveRes = logRecordRepository.save(logRecords);
         return new UploadLogResp<>(saveRes);
     }
 
@@ -65,5 +74,23 @@ public abstract class ReceiveLogImpl implements ReceiveLog {
             }
         }
         return true;
+    }
+
+    private LogRecord initLogRecord(LogRecord logRecord){
+        String recordId = IdGenerateUtil.generate(13);
+        return ofNullable(logRecord).map(record -> {
+            record.setRecordId(recordId)
+                    .setVersion(1);
+            List<LogRecordIndex> logRecordIndices = record.getIndexList();
+            ofNullable(logRecordIndices)
+                    .ifPresent(indexList ->
+                            indexList.forEach(index ->
+                                    index.setIndexId(IdGenerateUtil.generate(13))
+                                            .setVersion(1)
+                                            .setLogRecordId(recordId)
+                            )
+                    );
+            return record;
+        }).orElse(null);
     }
 }

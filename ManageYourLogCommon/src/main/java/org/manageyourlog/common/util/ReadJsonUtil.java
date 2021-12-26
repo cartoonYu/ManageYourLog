@@ -22,7 +22,7 @@ public class ReadJsonUtil {
         return GsonUtil.readJson(fileData, classType);
     }
 
-    public static String readFile(String fileName){
+    private static String readFile(String fileName){
         String res = null;
         Resource resource = new ClassPathResource(fileName);
         try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)){

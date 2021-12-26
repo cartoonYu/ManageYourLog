@@ -1,4 +1,4 @@
-package org.manageyourlog.server.service;
+package org.manageyourlog.server.service.receive;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;

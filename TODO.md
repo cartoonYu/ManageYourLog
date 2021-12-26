@@ -5,13 +5,13 @@
 #### server
 1. 实际储存方式(mysql/es/hbase...)
 2. 多方式上传日志（rpc/kafka）
-3. CommonController/CommonService 按照职责重命名
 4. p6spy + 动态日志级别添加
 5. mybatis 事务添加
-6. 数据库存储枚举改为存储真实描述
 
 #### test
 1. test 包分拆到各业务包中？
+2. 完全使用 junit5 api
 
 #### common
+1. README.md 编写
 2. 通过注解进行 retrofit 实体类

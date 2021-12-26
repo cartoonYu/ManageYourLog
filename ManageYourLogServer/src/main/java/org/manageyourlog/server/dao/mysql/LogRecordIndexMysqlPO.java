@@ -13,7 +13,7 @@ public class LogRecordIndexMysqlPO {
 
     private String logRecordId;
 
-    private Long sortId;
+    private String sort;
 
     private String indexValue;
 
@@ -41,12 +41,12 @@ public class LogRecordIndexMysqlPO {
         return this;
     }
 
-    public Long getSortId() {
-        return sortId;
+    public String getSort() {
+        return sort;
     }
 
-    public LogRecordIndexMysqlPO setSortId(Long sortId) {
-        this.sortId = sortId;
+    public LogRecordIndexMysqlPO setSort(String sort) {
+        this.sort = sort;
         return this;
     }
 

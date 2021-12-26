@@ -2,7 +2,7 @@
   {
     "indexId":"111",
     "logRecordId":"111",
-    "logRecordIndexSort":"1",
+    "logRecordIndexSort":"id",
     "indexValue":"1111",
     "version":1,
     "create_time":"2021-10-26 00:00:00",
