@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
-@Repository
 public interface LogRecordMapper {
 
     int insert(LogRecordMysqlPO logRecordMysqlPO);
