@@ -3,7 +3,6 @@ package org.manageyourlog.server.dao.mysql.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
