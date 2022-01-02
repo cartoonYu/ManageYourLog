@@ -1,9 +1,9 @@
 package org.manageyourlog.facade.service;
 
 import org.manageyourlog.common.config.ApplicationConfig;
-import org.manageyourlog.common.config.ApplicationConfigKey;
 import org.manageyourlog.common.util.BaseFactory;
 import org.manageyourlog.facade.UploadLog;
+import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -24,7 +24,7 @@ public class UploadLogFactory extends BaseFactory {
     @Bean
     @Primary
     public UploadLog initPrimarySendLogService(){
-        Optional<String> uploadMode = applicationConfig.get(ApplicationConfigKey.uploadLogMode);
+        Optional<String> uploadMode = applicationConfig.get(ApplicationConfigKey.uploadLogMode.getKey());
         Class<?> sendLogClass = UploadLogMode.defaultMode.getClassType();
         if(uploadMode.isPresent()){
             for(UploadLogMode uploadLogMode : UploadLogMode.values()){

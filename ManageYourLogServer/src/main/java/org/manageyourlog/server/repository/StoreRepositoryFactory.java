@@ -1,8 +1,8 @@
 package org.manageyourlog.server.repository;
 
 import org.manageyourlog.common.config.ApplicationConfig;
-import org.manageyourlog.common.config.ApplicationConfigKey;
 import org.manageyourlog.common.util.BaseFactory;
+import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -24,7 +24,7 @@ public class StoreRepositoryFactory extends BaseFactory {
     @Bean
     @Primary
     public LogRecordRepository initPrimaryRepository(){
-        Optional<String> storeMode = applicationConfig.get(ApplicationConfigKey.storeMethod);
+        Optional<String> storeMode = applicationConfig.get(ApplicationConfigKey.storeMethod.getKey());
         Class<?> storeClass = RepositoryMode.defaultMode.getClassType();
         if(storeMode.isPresent()){
             for(RepositoryMode repositoryMode : RepositoryMode.values()){

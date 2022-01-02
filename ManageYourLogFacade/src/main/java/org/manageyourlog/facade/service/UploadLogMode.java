@@ -1,7 +1,7 @@
 package org.manageyourlog.facade.service;
 
 
-import org.manageyourlog.common.config.ApplicationConfigKey;
+import org.manageyourlog.facade.config.ApplicationConfigKey;
 
 public enum UploadLogMode {
 

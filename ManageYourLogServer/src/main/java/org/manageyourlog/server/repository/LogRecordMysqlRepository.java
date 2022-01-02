@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manageyourlog.server.converter.repository.MysqlEntityConverter;
 import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
 import org.manageyourlog.server.dao.mysql.LogRecordMysqlPO;
-import org.manageyourlog.server.dao.mysql.MysqlLoadCondition;
+import org.manageyourlog.server.dao.mysql.MysqlLoadDaoCondition;
 import org.manageyourlog.server.dao.mysql.MysqlDatasourceConfig;
 import org.manageyourlog.server.dao.mysql.mapper.LogRecordIndexMapper;
 import org.manageyourlog.server.dao.mysql.mapper.LogRecordMapper;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @date 2021/11/25 20:30
  */
 @Repository
-@Conditional({MysqlLoadCondition.class})
+@Conditional({MysqlLoadDaoCondition.class})
 public class LogRecordMysqlRepository implements LogRecordRepository{
 
     public static final String indexSplitCharacter = ",";

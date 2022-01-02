@@ -15,9 +15,9 @@ import java.util.Optional;
 public class ApplicationConfig implements EnvironmentAware {
 
     private Environment environment;
-
-    public Optional<String> get(ApplicationConfigKey configKey){
-        String config = environment.getProperty(configKey.getKey());
+    
+    public Optional<String> get(String configKey){
+        String config = environment.getProperty(configKey);
         return Objects.isNull(config) ? Optional.empty() : Optional.of(config);
     }
 

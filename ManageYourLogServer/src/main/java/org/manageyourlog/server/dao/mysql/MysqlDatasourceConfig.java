@@ -2,13 +2,13 @@ package org.manageyourlog.server.dao.mysql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.manageyourlog.server.dao.DatasourceEnum;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -24,7 +24,7 @@ import java.util.function.Function;
  * @date 2021/12/30 21:06
  */
 @Configuration
-@Conditional({MysqlLoadCondition.class})
+@Conditional({MysqlLoadDaoCondition.class})
 @MapperScan(basePackages = MysqlDatasourceConfig.packageName,
                 sqlSessionTemplateRef = "mysqlTemplate")
 public class MysqlDatasourceConfig {
@@ -36,8 +36,10 @@ public class MysqlDatasourceConfig {
     public SqlSessionFactory sqlSessionFactory;
 
     public <T, R> R executeSql(Class<T> classType, Function<T, R> executeFunction){
-        T mapper = sqlSessionFactory.openSession().getMapper(classType);
-        return executeFunction.apply(mapper);
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+            T mapper = sqlSession.getMapper(classType);
+            return executeFunction.apply(mapper);
+        }
     }
 
 
@@ -48,7 +50,6 @@ public class MysqlDatasourceConfig {
     }
 
     @Bean("mysqlSqlSessionFactory")
-    @ConditionalOnBean(name = DatasourceEnum.mysql)
     public SqlSessionFactory createSqlSessionFactory(@Qualifier(DatasourceEnum.mysql) DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -60,7 +61,6 @@ public class MysqlDatasourceConfig {
     }
 
     @Bean(name = "mysqlTemplate")
-    @ConditionalOnBean(name = DatasourceEnum.mysql)
     public SqlSessionTemplate getTemplate(@Qualifier("mysqlSqlSessionFactory") SqlSessionFactory sqlSessionFactory){
         return new SqlSessionTemplate(sqlSessionFactory);
     }

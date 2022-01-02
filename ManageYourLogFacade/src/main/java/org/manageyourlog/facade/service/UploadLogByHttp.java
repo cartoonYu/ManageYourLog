@@ -55,7 +55,7 @@ public class UploadLogByHttp implements UploadLog {
 
     @PostConstruct
     private void init(){
-        Optional<String> baseUrl = applicationConfig.get(UploadLogMode.http.getBaseUrl());
+        Optional<String> baseUrl = applicationConfig.get(UploadLogMode.http.getBaseUrl().getKey());
         baseUrl.ifPresent(s -> uploadLogInterface = httpRegister.register(UploadLogInterface.class, s));
     }
 }

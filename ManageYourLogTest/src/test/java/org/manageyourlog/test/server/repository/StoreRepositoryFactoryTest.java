@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.config.ApplicationConfig;
-import org.manageyourlog.common.config.ApplicationConfigKey;
+import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.manageyourlog.server.repository.DefaultLogRecordRepository;
-import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 import org.manageyourlog.server.repository.LogRecordRepository;
 import org.manageyourlog.server.repository.StoreRepositoryFactory;
 import org.manageyourlog.test.base.BaseTest;
@@ -36,7 +35,7 @@ public class StoreRepositoryFactoryTest extends BaseTest {
     @Test
     public void testInitBeanDefault(){
         applicationConfig.setEnvironment(BaseTest.environment);
-        Mockito.when(applicationConfig.get(ApplicationConfigKey.storeMethod)).thenReturn(Optional.empty());
+        Mockito.when(applicationConfig.get(ApplicationConfigKey.storeMethod.getKey())).thenReturn(Optional.empty());
         LogRecordRepository logRecordRepository = storeRepositoryFactory.initPrimaryRepository();
         Assertions.assertTrue(logRecordRepository instanceof DefaultLogRecordRepository);
     }
