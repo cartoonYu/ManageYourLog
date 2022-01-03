@@ -4,14 +4,14 @@ package org.manageyourlog.server.dao;
  * @author cartoon
  * @date 2022/1/3 00:28
  */
-public enum StoreLoadDaoEnum {
+public enum StoreLoadSortEnum {
 
     All("all"),
     Mysql("mysql");
 
     private String info;
 
-    StoreLoadDaoEnum(String info) {
+    StoreLoadSortEnum(String info) {
         this.info = info;
     }
 

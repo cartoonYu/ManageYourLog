@@ -1,6 +1,7 @@
 package org.manageyourlog.test.server.repository;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -9,7 +10,10 @@ import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.repository.LogRecordRepository;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -70,4 +74,23 @@ public class LogRecordRepositoryTest extends BaseTest {
         });
     }
 
+    @Autowired
+    private LogRecordRepository logRecordRepository;
+
+    @DisplayName("test rollback")
+    @Order(4)
+    @Test
+    public void testRollback(){
+        LogRecord logRecord = DefineModelUtil.defineLogRecord();
+        logRecord.getIndexList().get(0).setIndexId("1111");
+        logRecordRepository.save(logRecord);
+        LogRecord logRecord1 = DefineModelUtil.defineLogRecord();
+        logRecord1.getIndexList().get(0).setIndexId("1111");
+        try {
+            logRecordRepository.save(logRecord1);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("111111");
+    }
 }

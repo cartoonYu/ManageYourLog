@@ -4,7 +4,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.manageyourlog.server.dao.DatasourceEnum;
+import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
+import org.manageyourlog.server.dao.StoreDatasourceEnum;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -15,8 +16,11 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
@@ -24,7 +28,7 @@ import java.util.function.Function;
  * @date 2021/12/30 21:06
  */
 @Configuration
-@Conditional({MysqlLoadDaoCondition.class})
+@Conditional({MysqlLoadCondition.class})
 @MapperScan(basePackages = MysqlDatasourceConfig.packageName,
                 sqlSessionTemplateRef = "mysqlTemplate")
 public class MysqlDatasourceConfig {
@@ -35,6 +39,26 @@ public class MysqlDatasourceConfig {
 
     public SqlSessionFactory sqlSessionFactory;
 
+    private ConcurrentHashMap<Long, SqlSession> threadToSqlSessionMap;
+
+    public <T, R> R executeSql(Class<T> classType, Function<T, R> executeFunction, boolean isEndCall){
+        Long threadId = Thread.currentThread().getId();
+        try {
+            SqlSession sqlSession = threadToSqlSessionMap.get(threadId);
+            if(Objects.isNull(sqlSession)){
+                sqlSession = sqlSessionFactory.openSession();
+                threadToSqlSessionMap.put(threadId, sqlSession);
+            }
+            T mapper = sqlSession.getMapper(classType);
+            return executeFunction.apply(mapper);
+        } finally {
+            if(isEndCall && threadToSqlSessionMap.containsKey(threadId)){
+                threadToSqlSessionMap.get(threadId).close();
+                threadToSqlSessionMap.remove(threadId);
+            }
+        }
+    }
+
     public <T, R> R executeSql(Class<T> classType, Function<T, R> executeFunction){
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
             T mapper = sqlSession.getMapper(classType);
@@ -43,18 +67,19 @@ public class MysqlDatasourceConfig {
     }
 
 
-    @Bean(name = DatasourceEnum.mysql)
+    @Bean(name = StoreDatasourceEnum.mysql)
     public HikariDataSource getDataSource(@Qualifier("mysqlProperties") Properties properties){
         HikariConfig hikariConfig = new HikariConfig(properties);
         return new HikariDataSource(hikariConfig);
     }
 
     @Bean("mysqlSqlSessionFactory")
-    public SqlSessionFactory createSqlSessionFactory(@Qualifier(DatasourceEnum.mysql) DataSource dataSource) throws Exception {
+    public SqlSessionFactory createSqlSessionFactory(@Qualifier(StoreDatasourceEnum.mysql) DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + mapperLocation));
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTransactionFactory(new ManagedTransactionFactory());
         sqlSessionFactoryBean.setTypeAliasesPackage(packageName);
         sqlSessionFactory = sqlSessionFactoryBean.getObject();
         return sqlSessionFactory;
@@ -69,5 +94,10 @@ public class MysqlDatasourceConfig {
     @ConfigurationProperties(prefix = "store.mysql")
     public Properties properties(){
         return new Properties();
+    }
+
+    @PostConstruct
+    private void init(){
+        threadToSqlSessionMap = new ConcurrentHashMap<>(32);
     }
 }

@@ -3,7 +3,7 @@ package org.manageyourlog.test;
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
-import org.manageyourlog.server.dao.DatasourceEnum;
+import org.manageyourlog.server.dao.StoreDatasourceEnum;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import static java.util.Optional.ofNullable;
  * @date 2021/11/21 21:46
  */
 @Component
-@ConditionalOnBean(name = DatasourceEnum.mysql)
+@ConditionalOnBean(name = StoreDatasourceEnum.mysql)
 public class InitMysqlData implements InitializingBean, DisposableBean {
 
     @Value("${mariadb.baseDir}")
