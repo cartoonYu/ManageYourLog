@@ -11,9 +11,7 @@ import org.manageyourlog.server.repository.LogRecordRepository;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -82,15 +80,17 @@ public class LogRecordRepositoryTest extends BaseTest {
     @Test
     public void testRollback(){
         LogRecord logRecord = DefineModelUtil.defineLogRecord();
-        logRecord.getIndexList().get(0).setIndexId("1111");
+        logRecord.getIndexList().get(0).setIndexId("2222");
         logRecordRepository.save(logRecord);
         LogRecord logRecord1 = DefineModelUtil.defineLogRecord();
-        logRecord1.getIndexList().get(0).setIndexId("1111");
-        try {
-            logRecordRepository.save(logRecord1);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println("111111");
+        logRecord1.getIndexList().get(0).setIndexId("2222");
+        Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(logRecord1));
+    }
+
+    @DisplayName("test test")
+    @Order(5)
+    @Test
+    public void test(){
+        System.out.println("1111111");
     }
 }

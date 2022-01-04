@@ -2,7 +2,6 @@ package org.manageyourlog.server.dao.mysql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.manageyourlog.server.dao.StoreDatasourceEnum;
@@ -15,13 +14,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 /**
  * @author cartoon
@@ -38,33 +35,6 @@ public class MysqlDatasourceConfig {
     public static final String mapperLocation = "mapper/*.xml";
 
     public SqlSessionFactory sqlSessionFactory;
-
-    private ConcurrentHashMap<Long, SqlSession> threadToSqlSessionMap;
-
-    public <T, R> R executeSql(Class<T> classType, Function<T, R> executeFunction, boolean isEndCall){
-        Long threadId = Thread.currentThread().getId();
-        try {
-            SqlSession sqlSession = threadToSqlSessionMap.get(threadId);
-            if(Objects.isNull(sqlSession)){
-                sqlSession = sqlSessionFactory.openSession();
-                threadToSqlSessionMap.put(threadId, sqlSession);
-            }
-            T mapper = sqlSession.getMapper(classType);
-            return executeFunction.apply(mapper);
-        } finally {
-            if(isEndCall && threadToSqlSessionMap.containsKey(threadId)){
-                threadToSqlSessionMap.get(threadId).close();
-                threadToSqlSessionMap.remove(threadId);
-            }
-        }
-    }
-
-    public <T, R> R executeSql(Class<T> classType, Function<T, R> executeFunction){
-        try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            T mapper = sqlSession.getMapper(classType);
-            return executeFunction.apply(mapper);
-        }
-    }
 
 
     @Bean(name = StoreDatasourceEnum.mysql)
@@ -90,14 +60,16 @@ public class MysqlDatasourceConfig {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
+    @Bean("mysqlPlatformTransactionManager")
+    public PlatformTransactionManager platformTransactionManager(@Qualifier(StoreDatasourceEnum.mysql) DataSource mysqlDataSource){
+        return new DataSourceTransactionManager(mysqlDataSource);
+    }
+
     @Bean("mysqlProperties")
     @ConfigurationProperties(prefix = "store.mysql")
     public Properties properties(){
         return new Properties();
     }
 
-    @PostConstruct
-    private void init(){
-        threadToSqlSessionMap = new ConcurrentHashMap<>(32);
-    }
+
 }

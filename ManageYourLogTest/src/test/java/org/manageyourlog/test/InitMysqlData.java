@@ -3,11 +3,11 @@ package org.manageyourlog.test;
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
-import org.manageyourlog.server.dao.StoreDatasourceEnum;
+import org.manageyourlog.server.dao.mysql.MysqlLoadCondition;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,7 +19,7 @@ import static java.util.Optional.ofNullable;
  * @date 2021/11/21 21:46
  */
 @Component
-@ConditionalOnBean(name = StoreDatasourceEnum.mysql)
+@Conditional({MysqlLoadCondition.class})
 public class InitMysqlData implements InitializingBean, DisposableBean {
 
     @Value("${mariadb.baseDir}")
@@ -43,9 +43,9 @@ public class InitMysqlData implements InitializingBean, DisposableBean {
             configBuilder.setDataDir(dataDir); // just an example
             configBuilder.setBaseDir(baseDir);
             db = DB.newEmbeddedDB(configBuilder.build());
+            db.start();
             db.source("script/MysqlSchema.sql");
             db.source("script/MysqlData.sql");
-            db.start();
             mariaDbIsStart.set(true);
         }
 
