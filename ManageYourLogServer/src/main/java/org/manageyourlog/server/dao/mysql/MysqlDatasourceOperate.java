@@ -1,5 +1,6 @@
 package org.manageyourlog.server.dao.mysql;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,7 @@ import java.util.function.Function;
 @Conditional({MysqlLoadCondition.class})
 public class MysqlDatasourceOperate {
 
-    private ConcurrentHashMap<Long, SqlSession> threadToSqlSessionMap;
-
-    private ConcurrentHashMap<Long, TransactionTemplate> threadToTransactionMap;
+    private ThreadLocal<ImmutablePair<SqlSession, TransactionTemplate>> sessionToTransaction;
 
     @Autowired
     @Qualifier("mysqlPlatformTransactionManager")
@@ -35,26 +34,20 @@ public class MysqlDatasourceOperate {
     private SqlSessionFactory sqlSessionFactory;
 
     public <T, R> R executeSql(Class<T> classType, Function<T, R> executeFunction, boolean isEndCall){
-        Long threadId = Thread.currentThread().getId();
         try {
-            TransactionTemplate transactionTemplate = threadToTransactionMap.get(threadId);
-            if(Objects.isNull(transactionTemplate)){
-                transactionTemplate = new TransactionTemplate(platformTransactionManager);
-                threadToTransactionMap.put(threadId, transactionTemplate);
+            ImmutablePair<SqlSession, TransactionTemplate> operateTool = sessionToTransaction.get();
+            if(Objects.isNull(operateTool)){
+                operateTool = new ImmutablePair<>(sqlSessionFactory.openSession(), new TransactionTemplate(platformTransactionManager));
+                sessionToTransaction.set(operateTool);
             }
-            return transactionTemplate.execute(txStatus -> {
-                SqlSession sqlSession = threadToSqlSessionMap.get(threadId);
-                if(Objects.isNull(sqlSession)){
-                    sqlSession = sqlSessionFactory.openSession();
-                    threadToSqlSessionMap.put(threadId, sqlSession);
-                }
+            final SqlSession sqlSession = operateTool.getLeft();
+            return operateTool.getRight().execute(txStatus -> {
                 T mapper = sqlSession.getMapper(classType);
                 return executeFunction.apply(mapper);
             });
         } finally {
-            if(isEndCall && threadToSqlSessionMap.containsKey(threadId)){
-                threadToSqlSessionMap.get(threadId).close();
-                threadToSqlSessionMap.remove(threadId);
+            if(isEndCall && Objects.nonNull(sessionToTransaction.get())){
+                sessionToTransaction.remove();
             }
         }
     }
@@ -68,7 +61,6 @@ public class MysqlDatasourceOperate {
 
     @PostConstruct
     public void init(){
-        threadToSqlSessionMap = new ConcurrentHashMap<>(32);
-        threadToTransactionMap = new ConcurrentHashMap<>(32);
+        sessionToTransaction = new ThreadLocal<>();
     }
 }
