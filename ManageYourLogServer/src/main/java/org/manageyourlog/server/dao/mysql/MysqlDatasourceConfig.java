@@ -3,7 +3,6 @@ package org.manageyourlog.server.dao.mysql;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.manageyourlog.server.dao.StoreDatasourceEnum;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -36,7 +35,6 @@ public class MysqlDatasourceConfig {
 
     public SqlSessionFactory sqlSessionFactory;
 
-
     @Bean(name = StoreDatasourceEnum.mysql)
     public HikariDataSource getDataSource(@Qualifier("mysqlProperties") Properties properties){
         HikariConfig hikariConfig = new HikariConfig(properties);
@@ -49,7 +47,6 @@ public class MysqlDatasourceConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + mapperLocation));
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTransactionFactory(new ManagedTransactionFactory());
         sqlSessionFactoryBean.setTypeAliasesPackage(packageName);
         sqlSessionFactory = sqlSessionFactoryBean.getObject();
         return sqlSessionFactory;
@@ -70,6 +67,5 @@ public class MysqlDatasourceConfig {
     public Properties properties(){
         return new Properties();
     }
-
 
 }

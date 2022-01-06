@@ -3,10 +3,9 @@
 2. rpc 调用同步写入
 
 #### server
-1. 实际储存方式(mysql/es/hbase...)
+1. 实际储存方式(es/hbase...)
 2. 多方式上传日志（rpc/kafka）
-4. p6spy + 动态日志级别添加
-5. mybatis 事务添加
+5. converter 使用factory / builder 构建
 
 #### test
 1. test 包分拆到各业务包中？

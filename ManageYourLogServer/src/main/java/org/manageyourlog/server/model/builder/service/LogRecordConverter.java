@@ -1,4 +1,4 @@
-package org.manageyourlog.server.converter.service;
+package org.manageyourlog.server.model.builder.service;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;

@@ -1,9 +1,9 @@
-package org.manageyourlog.server.converter.repository;
+package org.manageyourlog.server.model.builder.repository;
 
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
-import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
-import org.manageyourlog.server.dao.mock.LogRecordMockEntity;
+import org.manageyourlog.server.dao.mock.model.LogRecordIndexMockEntity;
+import org.manageyourlog.server.dao.mock.model.LogRecordMockEntity;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
 

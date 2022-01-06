@@ -1,4 +1,4 @@
-package org.manageyourlog.server.dao.mysql;
+package org.manageyourlog.server.dao.mysql.model;
 
 import java.time.LocalDateTime;
 

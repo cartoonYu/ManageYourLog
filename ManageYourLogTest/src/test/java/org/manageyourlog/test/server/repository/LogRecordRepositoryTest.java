@@ -86,11 +86,4 @@ public class LogRecordRepositoryTest extends BaseTest {
         logRecord1.getIndexList().get(0).setIndexId("2222");
         Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(logRecord1));
     }
-
-    @DisplayName("test test")
-    @Order(5)
-    @Test
-    public void test(){
-        System.out.println("1111111");
-    }
 }

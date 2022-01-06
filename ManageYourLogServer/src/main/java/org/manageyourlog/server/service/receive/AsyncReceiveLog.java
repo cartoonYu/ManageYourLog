@@ -2,7 +2,7 @@ package org.manageyourlog.server.service.receive;
 
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.server.converter.service.LogRecordConverter;
+import org.manageyourlog.server.model.builder.service.LogRecordConverter;
 import org.manageyourlog.server.model.LogRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

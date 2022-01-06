@@ -1,4 +1,4 @@
-package org.manageyourlog.server.dao.mock;
+package org.manageyourlog.server.dao.mock.model;
 
 import java.time.LocalDateTime;
 

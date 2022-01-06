@@ -1,11 +1,11 @@
 package org.manageyourlog.server.repository;
 
 import org.manageyourlog.common.util.GsonUtil;
-import org.manageyourlog.server.converter.repository.MockDataConverter;
-import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
-import org.manageyourlog.server.dao.mock.LogRecordMockEntity;
-import org.manageyourlog.server.dao.mock.MockLogRecordDataDao;
-import org.manageyourlog.server.dao.mock.MockLogRecordIndexDao;
+import org.manageyourlog.server.model.builder.repository.MockDataConverter;
+import org.manageyourlog.server.dao.mock.model.LogRecordIndexMockEntity;
+import org.manageyourlog.server.dao.mock.model.LogRecordMockEntity;
+import org.manageyourlog.server.dao.mock.dao.MockLogRecordDataDao;
+import org.manageyourlog.server.dao.mock.dao.MockLogRecordIndexDao;
 import org.manageyourlog.server.model.LogRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

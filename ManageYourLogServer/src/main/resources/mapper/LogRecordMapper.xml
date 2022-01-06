@@ -8,12 +8,12 @@
         recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime
     </sql>
 
-    <insert id="insert" parameterType="org.manageyourlog.server.dao.mysql.LogRecordMysqlPO">
+    <insert id="insert" parameterType="org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO">
         insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
         value (#{recordId}, #{content}, #{operatorSort}, #{operator}, #{logRecordSort}, #{indexIds}, #{version}, #{createTime}, #{modifyTime})
     </insert>
 
-    <insert id="batchInsert" parameterType="org.manageyourlog.server.dao.mysql.LogRecordMysqlPO">
+    <insert id="batchInsert" parameterType="org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO">
         insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
         values
         <foreach collection="logRecordMysqlPOS" item="logRecordMysqlPO" separator="," open="(" close=")">
@@ -29,7 +29,7 @@
         </foreach>
     </insert>
 
-    <select id="getById" resultType="org.manageyourlog.server.dao.mysql.LogRecordMysqlPO">
+    <select id="getById" resultType="org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecord
         <where>
             recordId in
@@ -39,12 +39,12 @@
         </where>
     </select>
 
-    <select id="getByTime" resultType="org.manageyourlog.server.dao.mysql.LogRecordMysqlPO">
+    <select id="getByTime" resultType="org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecord
         where modifyTime between #{startTime} and #{endTime}
     </select>
 
-    <select id="getByIndexAndTime" resultType="org.manageyourlog.server.dao.mysql.LogRecordMysqlPO">
+    <select id="getByIndexAndTime" resultType="org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecord
         <where>
             recordId in

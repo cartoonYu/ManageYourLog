@@ -1,12 +1,12 @@
-package org.manageyourlog.server.converter.repository;
+package org.manageyourlog.server.model.builder.repository;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
 import org.manageyourlog.common.util.CollectionUtil;
-import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
-import org.manageyourlog.server.dao.mysql.LogRecordMysqlPO;
+import org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO;
+import org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
 import org.manageyourlog.server.repository.LogRecordMysqlRepository;

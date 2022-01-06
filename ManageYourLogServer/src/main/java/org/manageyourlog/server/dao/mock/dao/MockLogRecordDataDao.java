@@ -1,6 +1,7 @@
-package org.manageyourlog.server.dao.mock;
+package org.manageyourlog.server.dao.mock.dao;
 
 import org.manageyourlog.common.util.ReadJsonUtil;
+import org.manageyourlog.server.dao.mock.model.LogRecordMockEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

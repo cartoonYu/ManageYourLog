@@ -3,8 +3,8 @@ package org.manageyourlog.test.server.dao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.server.dao.mock.LogRecordIndexMockEntity;
-import org.manageyourlog.server.dao.mock.MockLogRecordIndexDao;
+import org.manageyourlog.server.dao.mock.model.LogRecordIndexMockEntity;
+import org.manageyourlog.server.dao.mock.dao.MockLogRecordIndexDao;
 import org.manageyourlog.test.base.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

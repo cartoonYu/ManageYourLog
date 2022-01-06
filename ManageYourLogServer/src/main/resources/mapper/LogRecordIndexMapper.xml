@@ -8,7 +8,7 @@
         indexId, logRecordId, sort, indexValue, version, createTime, modifyTime
     </sql>
 
-    <insert id="insert" parameterType = "org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO">
+    <insert id="insert" parameterType = "org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO">
         insert into LogRecordIndex(indexId, logRecordId, sort, indexValue, version, createTime, modifyTime)
         value (#{indexId}, #{logRecordId}, #{sort}, #{indexValue}, #{version}, #{createTime}, #{modifyTime})
     </insert>
@@ -27,12 +27,12 @@
         </foreach>
     </insert>
 
-    <select id="getByIndex" resultType = "org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO">
+    <select id="getByIndex" resultType = "org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecordIndex
         where indexValue = #{indexValue}
     </select>
 
-    <select id="getByIndexIds" resultType="org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO">
+    <select id="getByIndexIds" resultType="org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecordIndex
         <where>
             indexId in
@@ -42,7 +42,7 @@
         </where>
     </select>
 
-    <select id="getByIndexAndTime" resultType="org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO">
+    <select id="getByIndexAndTime" resultType="org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO">
         select <include refid="Base_Column_List"/> from LogRecordIndex
         where indexValue = #{indexValue} and modifyTime between #{startTime} and #{endTime}
     </select>

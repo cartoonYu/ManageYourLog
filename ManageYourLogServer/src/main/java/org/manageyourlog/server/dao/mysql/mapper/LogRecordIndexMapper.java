@@ -2,7 +2,7 @@ package org.manageyourlog.server.dao.mysql.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.manageyourlog.server.dao.mysql.LogRecordIndexMysqlPO;
+import org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO;
 
 import java.time.LocalDateTime;
 import java.util.List;
