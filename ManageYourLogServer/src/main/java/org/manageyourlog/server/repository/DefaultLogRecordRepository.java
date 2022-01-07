@@ -43,20 +43,20 @@ public class DefaultLogRecordRepository implements LogRecordRepository{
     public List<LogRecord> getByIndex(String index) {
         List<LogRecordIndexMockEntity> logIndexList = mockLogRecordIndexDao.getMockData();
         List<LogRecordMockEntity> logList = mockLogRecordDataDao.getMockData();
-        return MockDataConverter.convert(logList, logIndexList);
+        return MockDataConverter.getInstance().convert(logList, logIndexList);
     }
 
     @Override
     public List<LogRecord> getByTime(LocalDateTime startTime, LocalDateTime endTime) {
         List<LogRecordIndexMockEntity> logIndexList = mockLogRecordIndexDao.getMockData();
         List<LogRecordMockEntity> logList = mockLogRecordDataDao.getMockData();
-        return MockDataConverter.convert(logList, logIndexList);
+        return MockDataConverter.getInstance().convert(logList, logIndexList);
     }
 
     @Override
     public List<LogRecord> getByIndexAndTime(String index, LocalDateTime startTime, LocalDateTime endTime) {
         List<LogRecordIndexMockEntity> logIndexList = mockLogRecordIndexDao.getMockData();
         List<LogRecordMockEntity> logList = mockLogRecordDataDao.getMockData();
-        return MockDataConverter.convert(logList, logIndexList);
+        return MockDataConverter.getInstance().convert(logList, logIndexList);
     }
 }

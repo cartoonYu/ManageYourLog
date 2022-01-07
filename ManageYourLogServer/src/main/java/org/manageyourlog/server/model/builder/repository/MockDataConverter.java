@@ -6,6 +6,7 @@ import org.manageyourlog.server.dao.mock.model.LogRecordIndexMockEntity;
 import org.manageyourlog.server.dao.mock.model.LogRecordMockEntity;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
+import org.manageyourlog.server.model.builder.service.LogRecordConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,13 @@ import java.util.stream.Collectors;
  */
 public class MockDataConverter {
 
-    public static List<LogRecord> convert(List<LogRecordMockEntity> recordMockEntities, List<LogRecordIndexMockEntity> recordIndexMockEntities){
+    private static final MockDataConverter INSTANCE = new MockDataConverter();
+
+    public static MockDataConverter getInstance(){
+        return INSTANCE;
+    }
+
+    public List<LogRecord> convert(List<LogRecordMockEntity> recordMockEntities, List<LogRecordIndexMockEntity> recordIndexMockEntities){
         return recordMockEntities.stream().map(record -> {
             LogRecord logRecord = new LogRecord();
             logRecord.setRecordId(record.getRecordId())
@@ -33,7 +40,7 @@ public class MockDataConverter {
         }).collect(Collectors.toList());
     }
 
-    private static List<LogRecordIndex> convert(List<LogRecordIndexMockEntity> recordIndexMockEntities){
+    private List<LogRecordIndex> convert(List<LogRecordIndexMockEntity> recordIndexMockEntities){
         return recordIndexMockEntities.stream().map(index -> {
             LogRecordIndex logRecordIndex = new LogRecordIndex();
             logRecordIndex.setIndexId(index.getIndexId())

@@ -12,6 +12,7 @@ import java.util.List;
  * @author cartoon
  * @date 2021/12/19 17:01
  */
+
 public interface UploadLogInterface {
 
     @POST("/receiveSingleLog")

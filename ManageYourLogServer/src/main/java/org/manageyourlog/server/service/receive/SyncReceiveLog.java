@@ -44,7 +44,7 @@ public class SyncReceiveLog extends ReceiveLogImpl {
 
     @Override
     protected LogRecord packLogRecord(UploadLogRecordReq req){
-        LogRecord logRecord = LogRecordConverter.convert(req);
+        LogRecord logRecord = LogRecordConverter.getInstance().convert(req);
         logRecord.setCreateTime(LocalDateTime.now())
                 .setModifyTime(LocalDateTime.now());
         logRecord.setIndexList(logRecord.getIndexList().stream()

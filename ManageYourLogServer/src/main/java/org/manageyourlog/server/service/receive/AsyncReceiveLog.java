@@ -47,7 +47,7 @@ public class AsyncReceiveLog extends ReceiveLogImpl {
 
     @Override
     protected LogRecord packLogRecord(UploadLogRecordReq req) {
-        LogRecord logRecord = LogRecordConverter.convert(req);
+        LogRecord logRecord = LogRecordConverter.getInstance().convert(req);
         logRecord.setCreateTime(req.getUploadTime())
                 .setModifyTime(req.getUploadTime());
         logRecord.setIndexList(logRecord.getIndexList().stream()

@@ -24,13 +24,19 @@ import static java.util.Optional.ofNullable;
  */
 public class MysqlEntityConverter {
 
+    private static final MysqlEntityConverter INSTANCE = new MysqlEntityConverter();
+
+    public static MysqlEntityConverter getInstance(){
+        return INSTANCE;
+    }
+
     /**
      * convert po list to model list
      * @param logRecordMysqlPO log record po list
      * @param logRecordIndexMysqlPOList incoming log's index list
      * @return log record model list
      */
-    public static List<LogRecord> convertToModel(List<LogRecordMysqlPO> logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
+    public List<LogRecord> convertToModel(List<LogRecordMysqlPO> logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
         Map<String, List<LogRecordIndexMysqlPO>> recordIdToIndexListMap = logRecordIndexMysqlPOList.stream().collect(Collectors.groupingBy(LogRecordIndexMysqlPO::getLogRecordId));
         return ofNullable(logRecordMysqlPO)
                 .map(logRecordList ->
@@ -46,7 +52,7 @@ public class MysqlEntityConverter {
      * @param logRecordIndexMysqlPOList incoming log's index list
      * @return log record model
      */
-    public static LogRecord convertToModel(LogRecordMysqlPO logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
+    public LogRecord convertToModel(LogRecordMysqlPO logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
         return ofNullable(logRecordMysqlPO).map(po -> {
             LogRecord logRecord = new LogRecord();
             logRecord.setRecordId(po.getRecordId())

@@ -29,7 +29,7 @@ public class MockDataConverterTest extends BaseTest {
     @DisplayName("convert test")
     @Test
     public void testConvert(){
-        List<LogRecord> logRecords = MockDataConverter.convert(mockLogRecord, mockLogRecordIndex);
+        List<LogRecord> logRecords = MockDataConverter.getInstance().convert(mockLogRecord, mockLogRecordIndex);
         Assertions.assertNotNull(logRecords);
         Assertions.assertEquals(1, logRecords.size());
     }

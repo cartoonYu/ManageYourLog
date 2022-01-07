@@ -15,7 +15,7 @@ public enum ApplicationConfigKey {
         this.key = key;
     }
 
-    public String getKey() {
+    public final String getKey() {
         return key;
     }
 }

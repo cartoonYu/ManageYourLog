@@ -16,11 +16,13 @@ import static java.util.Optional.ofNullable;
  */
 public class LogRecordConverter {
 
-    public static List<LogRecord> convert(List<UploadLogRecordReq> uploadLogRecordReqs){
-        return ofNullable(uploadLogRecordReqs).map(reqList -> reqList.stream().map(LogRecordConverter::convert).collect(Collectors.toList())).orElse(null);
+    private static final LogRecordConverter INSTANCE = new LogRecordConverter();
+
+    public static LogRecordConverter getInstance(){
+        return INSTANCE;
     }
 
-    public static LogRecord convert(UploadLogRecordReq uploadLogRecordReq){
+    public LogRecord convert(UploadLogRecordReq uploadLogRecordReq){
         return ofNullable(uploadLogRecordReq).map(req -> {
             LogRecord logRecord = new LogRecord();
             logRecord.setContent(req.getContent())
@@ -32,7 +34,7 @@ public class LogRecordConverter {
         }).orElse(null);
     }
 
-    private static List<LogRecordIndex> convertIndex(List<UploadLogRecordIndexReq> indexReqList){
+    private List<LogRecordIndex> convertIndex(List<UploadLogRecordIndexReq> indexReqList){
         return ofNullable(indexReqList)
                 .map(indexList ->
                         indexList.stream()
