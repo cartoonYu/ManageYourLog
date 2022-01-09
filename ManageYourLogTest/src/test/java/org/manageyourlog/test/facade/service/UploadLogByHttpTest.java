@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.http.UploadLogInterface;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
-import org.manageyourlog.facade.service.UploadLogByHttp;
+import org.manageyourlog.facade.service.http.UploadLogByHttp;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 import org.mockito.*;

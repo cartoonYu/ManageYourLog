@@ -25,8 +25,7 @@ public class GsonUtil {
     }
 
     public static <T> T readJsonObject(String sourceStr, Class<T> classType){
-        Type type = new ParameterizedTypeImpl(classType);
-        return formGsonObject().fromJson(sourceStr, type);
+        return formGsonObject().fromJson(sourceStr, classType);
     }
 
     public static <T> List<T> readJson(String sourceStr, Class<T> classType){

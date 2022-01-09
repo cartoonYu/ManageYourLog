@@ -7,7 +7,7 @@ import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.UploadLogByDefault;
-import org.manageyourlog.facade.service.UploadLogFactory;
+import org.manageyourlog.facade.service.factory.UploadLogFactory;
 import org.manageyourlog.test.base.BaseTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;

@@ -1,4 +1,7 @@
-package org.manageyourlog.server.repository;
+package org.manageyourlog.server.repository.factory;
+
+import org.manageyourlog.server.repository.DefaultLogRecordRepository;
+import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 
 /**
  * @author cartoon

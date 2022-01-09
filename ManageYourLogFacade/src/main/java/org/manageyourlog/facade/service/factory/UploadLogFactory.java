@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.service;
+package org.manageyourlog.facade.service.factory;
 
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.util.BaseFactory;
@@ -25,16 +25,11 @@ public class UploadLogFactory extends BaseFactory {
     @Primary
     public UploadLog initPrimarySendLogService(){
         Optional<String> uploadMode = applicationConfig.get(ApplicationConfigKey.uploadLogMode.getKey());
-        Class<?> sendLogClass = UploadLogMode.defaultMode.getClassType();
-        if(uploadMode.isPresent()){
-            for(UploadLogMode uploadLogMode : UploadLogMode.values()){
-                if(uploadMode.get().equals(uploadLogMode.getMode())){
-                    sendLogClass = uploadLogMode.getClassType();
-                    break;
-                }
-            }
-        } else {
+        Class<?> sendLogClass = UploadLogMode.defaultMode.getHandleClass();
+        if(uploadMode.isEmpty()){
             log.warn("init send log service, have not determine store mode, back to default class type: {}", sendLogClass.getSimpleName());
+        } else {
+            sendLogClass = UploadLogMode.parse(uploadMode.get()).getHandleClass();
         }
         log.info("init send log service, class type: {}", sendLogClass.getSimpleName());
         return (UploadLog) applicationContext.getBean(sendLogClass);

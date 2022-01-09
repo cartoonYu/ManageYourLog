@@ -7,7 +7,9 @@ package org.manageyourlog.facade.config;
 public enum ApplicationConfigKey {
 
     uploadLogMode("upload.log.mode"),
-    uploadLogServerUrl("upload.log.server.url");
+    uploadLogServerUrl("upload.log.server.url"),
+    uploadLogKafkaUrl("upload.log.kafka.url"),
+    uploadLogKafkaTopic("upload.log.kafka.topic");
 
     private String key;
 

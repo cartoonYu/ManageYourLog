@@ -1,8 +1,9 @@
-package org.manageyourlog.server.repository;
+package org.manageyourlog.server.repository.factory;
 
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.util.BaseFactory;
 import org.manageyourlog.server.config.ApplicationConfigKey;
+import org.manageyourlog.server.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;

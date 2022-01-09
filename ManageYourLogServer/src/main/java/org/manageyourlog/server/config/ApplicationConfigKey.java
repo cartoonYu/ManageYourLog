@@ -7,7 +7,7 @@ package org.manageyourlog.server.config;
 public enum ApplicationConfigKey {
 
     storeMethod("store.method", "存储方式"),
-    storeLoadDao("store.load.dao", "");
+    storeLoadDao("store.load.dao", "加载存储方式种类");
 
     private String key;
 

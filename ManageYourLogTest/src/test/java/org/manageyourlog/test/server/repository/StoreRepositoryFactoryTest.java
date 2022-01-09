@@ -7,7 +7,7 @@ import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.manageyourlog.server.repository.DefaultLogRecordRepository;
 import org.manageyourlog.server.repository.LogRecordRepository;
-import org.manageyourlog.server.repository.StoreRepositoryFactory;
+import org.manageyourlog.server.repository.factory.StoreRepositoryFactory;
 import org.manageyourlog.test.base.BaseTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;

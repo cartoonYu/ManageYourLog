@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.service;
+package org.manageyourlog.facade.service.http;
 
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.common.constants.Error;
@@ -8,12 +8,13 @@ import org.manageyourlog.facade.http.UploadLogInterface;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author cartoon
@@ -21,10 +22,12 @@ import java.util.Optional;
  * @since 2021/11/03 09:02
  */
 @Service
+@Conditional(UploadLogByHttpLoadCondition.class)
+@ConditionalOnExpression
 public class UploadLogByHttp implements UploadLog {
 
     @Autowired
-    private ApplicationConfig applicationConfig;
+    private UploadLogByHttpConfig uploadLogByHttpConfig;
 
     @Autowired
     private HttpRegister httpRegister;
@@ -55,7 +58,7 @@ public class UploadLogByHttp implements UploadLog {
 
     @PostConstruct
     private void init(){
-        Optional<String> baseUrl = applicationConfig.get(UploadLogMode.http.getBaseUrl().getKey());
-        baseUrl.ifPresent(s -> uploadLogInterface = httpRegister.register(UploadLogInterface.class, s));
+        String baseUrl = uploadLogByHttpConfig.getBaseUrl();
+        uploadLogInterface = httpRegister.register(UploadLogInterface.class, baseUrl);
     }
 }
