@@ -14,7 +14,7 @@ import org.manageyourlog.test.util.DefineModelUtil;
  * @since 2021/11/01 22:55
  */
 @DisplayName("receive log controller test")
-public class ReceiveLogControllerTest extends BaseTestWithMvc {
+public class ReceiveLogByHttpTest extends BaseTestWithMvc {
 
     @DisplayName("receive single log test")
     @Test

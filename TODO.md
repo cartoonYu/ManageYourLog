@@ -1,11 +1,11 @@
 #### facade
-1. kafka 异步写入消息
-2. rpc 调用同步写入
+1. rpc 调用同步写入
 
 #### server
 1. 实际储存方式(es/hbase...)
-2. 多方式上传日志（rpc/kafka）
-3. web 容器切换到 undertow
+2. 多方式上传日志（rpc）
+3. receive log 按需加载
+4. kafka 接收日志优化
 
 #### test
 1. test 包分拆到各业务包中？
@@ -13,3 +13,5 @@
 
 #### common
 1. README.md 编写
+2. 配置类使用 前缀 + condition 进行加载
+3. swagger 使用

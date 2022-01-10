@@ -6,8 +6,10 @@ package org.manageyourlog.server.config;
  */
 public enum ApplicationConfigKey {
 
-    storeMethod("store.method", "存储方式"),
-    storeLoadDao("store.load.dao", "加载存储方式种类");
+    storeMethod("store.method", "store log method"),
+    storeLoadDao("store.load.dao", "log store dao pattern"),
+    uploadLogKafkaUrl("receive.log.kafka.url", "receive log from mq server"),
+    uploadLogKafkaTopic("receive.log.kafka.topic", "receive log from mq topic");
 
     private String key;
 

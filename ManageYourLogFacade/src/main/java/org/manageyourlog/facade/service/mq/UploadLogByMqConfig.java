@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.service.kafka;
+package org.manageyourlog.facade.service.mq;
 
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
@@ -13,7 +13,7 @@ import java.util.Optional;
  * @date 2022/1/9 15:54
  */
 @Component
-public class UploadLogByKafkaConfig {
+public class UploadLogByMqConfig {
 
     @Autowired
     private ApplicationConfig applicationConfig;

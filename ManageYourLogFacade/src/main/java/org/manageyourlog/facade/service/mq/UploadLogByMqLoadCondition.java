@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.service.kafka;
+package org.manageyourlog.facade.service.mq;
 
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.factory.UploadLogMode;
@@ -10,7 +10,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * @author cartoon
  * @date 2022/1/9 16:52
  */
-public class UploadLogByKafkaLoadCondition implements Condition {
+public class UploadLogByMqLoadCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {

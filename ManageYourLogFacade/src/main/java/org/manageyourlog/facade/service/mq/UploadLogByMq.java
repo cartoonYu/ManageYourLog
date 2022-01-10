@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.service.kafka;
+package org.manageyourlog.facade.service.mq;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -22,11 +22,11 @@ import java.util.Properties;
  * @date 2022/1/9 15:23
  */
 @Service
-@Conditional(UploadLogByKafkaLoadCondition.class)
-public class UploadLogByKafka implements UploadLog {
+@Conditional(UploadLogByMqLoadCondition.class)
+public class UploadLogByMq implements UploadLog {
 
     @Autowired
-    private UploadLogByKafkaConfig uploadLogByKafkaConfig;
+    private UploadLogByMqConfig uploadLogByMQConfig;
 
     private String sendTopic;
 
@@ -50,11 +50,11 @@ public class UploadLogByKafka implements UploadLog {
     @PostConstruct
     private void init(){
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, uploadLogByKafkaConfig.getBaseUrl());
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, uploadLogByMQConfig.getBaseUrl());
         props.put("retries", 0);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         sender = new KafkaProducer<>(props);
-        sendTopic = uploadLogByKafkaConfig.getTopic();
+        sendTopic = uploadLogByMQConfig.getTopic();
     }
 }

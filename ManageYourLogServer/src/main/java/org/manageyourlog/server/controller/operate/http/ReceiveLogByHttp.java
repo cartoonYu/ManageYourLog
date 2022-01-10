@@ -1,4 +1,4 @@
-package org.manageyourlog.server.controller;
+package org.manageyourlog.server.controller.operate.http;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2021/10/31 17:06
  */
 @RestController
-public class ReceiveLogController {
+public class ReceiveLogByHttp {
 
     @Autowired
     @Qualifier("syncReceiveLog")

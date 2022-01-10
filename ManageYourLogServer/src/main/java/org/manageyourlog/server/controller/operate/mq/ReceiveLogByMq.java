@@ -1,4 +1,4 @@
-package org.manageyourlog.server.controller;
+package org.manageyourlog.server.controller.operate.mq;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -10,18 +10,16 @@ import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author cartoon
@@ -29,40 +27,40 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/3/24 8:24 PM
  */
 @Component
-public class TestConsumer implements ApplicationRunner {
+@EnableScheduling
+public class ReceiveLogByMq implements DisposableBean {
 
-    private static final Logger log = LoggerFactory.getLogger(TestConsumer.class);
+    private static final Logger log = LoggerFactory.getLogger(ReceiveLogByMq.class);
 
-    private ThreadPoolExecutor singleThreadPool;
+    @Autowired
+    private ReceiveLogByMqConfig config;
 
     private KafkaConsumer<String, String> consumer;
-
-    private String topic;
 
     @Autowired
     @Qualifier("asyncReceiveLog")
     private ReceiveLog asyncReceiveLog;
 
+    @Scheduled(fixedDelay = 1L)
+    public void execute(){
+        ConsumerRecords<String, String> sourceData = consumer.poll(Duration.ofMillis(100));
+        for (ConsumerRecord<String, String> record : sourceData) {
+            String receiveData = record.value();
+            log.info("receive data: {}", receiveData);
+            UploadLogRecordReq recordReq = GsonUtil.readJsonObject(receiveData, UploadLogRecordReq.class);
+            asyncReceiveLog.receive(recordReq);
+        }
+    }
+
     @Override
-    public void run(ApplicationArguments args){
-        singleThreadPool.execute(() -> {
-            while (true){
-                ConsumerRecords<String, String> sourceData = consumer.poll(Duration.ofMillis(100));
-                for (ConsumerRecord<String, String> record : sourceData) {
-                    String receiveData = record.value();
-                    log.info("receive data: {}", receiveData);
-                    UploadLogRecordReq recordReq = GsonUtil.readJsonObject(receiveData, UploadLogRecordReq.class);
-                    asyncReceiveLog.receive(recordReq);
-                    log.info("decode data: {}", GsonUtil.writeJson(recordReq));
-                }
-            }
-        });
+    public void destroy() throws Exception {
+        consumer.close();
     }
 
     private Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "cartoon-ali.com:9092");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, config.getConsumeUrl());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, config.getConsumeTopic());
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 2);
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 30);
@@ -73,10 +71,7 @@ public class TestConsumer implements ApplicationRunner {
 
     @PostConstruct
     private void init(){
-        singleThreadPool = new ThreadPoolExecutor(1, 1, 60,
-                TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
         consumer = new KafkaConsumer<>(consumerConfigs());
-        topic = "ManageYourLog";
-        consumer.subscribe(Collections.singleton(topic));
+        consumer.subscribe(Collections.singleton(config.getConsumeTopic()));
     }
 }

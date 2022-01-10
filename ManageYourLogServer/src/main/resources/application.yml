@@ -11,3 +11,9 @@ store:
     driverClassName: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+receive:
+  log:
+    mode: kafka
+    kafka:
+      url: cartoon-ali.com:9092
+      topic: ManageYourLog
