@@ -15,3 +15,4 @@
 1. README.md 编写
 2. 配置类使用 前缀 + condition 进行加载
 3. swagger 使用
+4. 日志打印统一开关

@@ -8,8 +8,9 @@ public enum ApplicationConfigKey {
 
     storeMethod("store.method", "store log method"),
     storeLoadDao("store.load.dao", "log store dao pattern"),
+    receiveLogMode("receive.log.mode", "receive log mode"),
     uploadLogKafkaUrl("receive.log.kafka.url", "receive log from mq server"),
-    uploadLogKafkaTopic("receive.log.kafka.topic", "receive log from mq topic");
+    receiveLogKafkaTopic("receive.log.kafka.topic", "receive log from mq topic");
 
     private String key;
 
