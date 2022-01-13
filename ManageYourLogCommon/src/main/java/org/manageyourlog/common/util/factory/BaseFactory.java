@@ -1,4 +1,4 @@
-package org.manageyourlog.common.util;
+package org.manageyourlog.common.util.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

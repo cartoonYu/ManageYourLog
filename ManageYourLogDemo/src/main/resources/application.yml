@@ -5,6 +5,7 @@ upload:
   log:
     mode: kafka
     kafka:
-      url: cartoon-ali.com:9092
+      bootstrap:
+        servers: cartoon-ali.com:9092
       topic: ManageYourLog
 

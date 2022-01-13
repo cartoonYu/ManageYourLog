@@ -1,4 +1,4 @@
-package org.manageyourlog.server.controller.operate.mq;
+package org.manageyourlog.server.controller.receive.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * @author cartoon
@@ -24,10 +25,10 @@ import java.time.Duration;
  */
 @Component
 @EnableScheduling
-@Conditional(ReceiveLogByMqCondition.class)
-public class ReceiveLogByMq{
+@Conditional(ReceiveLogByKafkaCondition.class)
+public class ReceiveLogByKafka {
 
-    private static final Logger log = LoggerFactory.getLogger(ReceiveLogByMq.class);
+    private static final Logger log = LoggerFactory.getLogger(ReceiveLogByKafka.class);
 
     @Autowired
     @Qualifier("receiveByKafkaConsumer")
@@ -37,12 +38,14 @@ public class ReceiveLogByMq{
     @Qualifier("asyncReceiveLog")
     private ReceiveLog asyncReceiveLog;
 
-    @Scheduled(fixedDelay = 1L)
+    @Scheduled(fixedDelay = 10L)
     public void execute(){
-        ConsumerRecords<String, String> sourceData = consumer.poll(Duration.ofMillis(100));
+        ConsumerRecords<String, String> sourceData = consumer.poll(Duration.ofMillis(0));
         for (ConsumerRecord<String, String> record : sourceData) {
             String receiveData = record.value();
-            log.info("receive data: {}", receiveData);
+            if(log.isInfoEnabled()){
+                log.info("receive data: {}, time: {}", receiveData, LocalDateTime.now());
+            }
             UploadLogRecordReq recordReq = GsonUtil.readJsonObject(receiveData, UploadLogRecordReq.class);
             asyncReceiveLog.receive(recordReq);
         }

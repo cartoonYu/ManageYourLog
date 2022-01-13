@@ -1,7 +1,7 @@
 package org.manageyourlog.facade.service.factory;
 
 import org.manageyourlog.common.config.ApplicationConfig;
-import org.manageyourlog.common.util.BaseFactory;
+import org.manageyourlog.common.util.factory.BaseFactory;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;

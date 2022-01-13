@@ -23,9 +23,9 @@ import static java.util.Optional.ofNullable;
  * @date 2021/11/17 23:14
  */
 @Service
-public abstract class ReceiveLogImpl implements ReceiveLog {
+public abstract class AbstractReceiveLog implements ReceiveLog {
 
-    protected final Logger log = LoggerFactory.getLogger(ReceiveLogImpl.class);
+    protected final Logger log = LoggerFactory.getLogger(AbstractReceiveLog.class);
 
     @Autowired
     private LogRecordRepository logRecordRepository;

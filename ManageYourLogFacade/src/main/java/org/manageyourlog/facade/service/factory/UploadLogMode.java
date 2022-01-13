@@ -2,9 +2,9 @@ package org.manageyourlog.facade.service.factory;
 
 import org.manageyourlog.facade.service.UploadLogByDefault;
 import org.manageyourlog.facade.service.http.UploadLogByHttp;
-import org.manageyourlog.facade.service.mq.UploadLogByMq;
+import org.manageyourlog.facade.service.kafka.UploadLogByKafka;
 import org.manageyourlog.facade.service.http.UploadLogByHttpConfig;
-import org.manageyourlog.facade.service.mq.UploadLogByMqConfig;
+import org.manageyourlog.facade.service.kafka.UploadLogByKafkaConfig;
 
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ import java.util.Arrays;
 public enum UploadLogMode {
 
     http("http", UploadLogByHttpConfig.class, UploadLogByHttp.class),
-    kafka("kafka", UploadLogByMqConfig.class, UploadLogByMq.class),
+    kafka("kafka", UploadLogByKafkaConfig.class, UploadLogByKafka.class),
     defaultMode("default", null, UploadLogByDefault.class);;
 
     private final String mode;

@@ -3,10 +3,20 @@ upload:
     mode: http
     server:
       url: http://127.0.0.1:8080
+receive:
+  log:
+    load:
+      mode: all
+    kafka:
+      bootstrap:
+        servers: cartoon-ali.com:9092
+      group:
+        id: ManageYourLog
+      topic: ManageYourLog
 store:
-  method: mysql
+  mode: mysql
   load:
-    dao: all
+    mode: all
   mysql:
     jdbcUrl: jdbc:mysql://localhost:3306/ManageYourLog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
     username:
@@ -16,6 +26,3 @@ mariadb:
   baseDir: ../local/base
   dataDir: ../local/data
   port: 3306
-receive:
-  log:
-    mode: http

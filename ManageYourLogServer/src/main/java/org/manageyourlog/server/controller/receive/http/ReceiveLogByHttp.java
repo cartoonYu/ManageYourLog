@@ -1,10 +1,11 @@
-package org.manageyourlog.server.controller.operate.http;
+package org.manageyourlog.server.controller.receive.http;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2021/10/31 17:06
  */
 @RestController
+@Conditional(ReceiveLogByHttpCondition.class)
 public class ReceiveLogByHttp {
 
     @Autowired

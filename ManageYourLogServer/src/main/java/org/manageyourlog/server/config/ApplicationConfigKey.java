@@ -6,9 +6,9 @@ package org.manageyourlog.server.config;
  */
 public enum ApplicationConfigKey {
 
-    storeMethod("store.method", "store log method"),
-    storeLoadDao("store.load.dao", "log store dao pattern"),
-    receiveLogMode("receive.log.mode", "receive log mode"),
+    storeMode("store.mode", "store log method"),
+    storeLoadMode("store.load.mode", "load store mode"),
+    receiveLogLoadMode("receive.log.load.mode", "load receive log mode"),
     uploadLogKafkaUrl("receive.log.kafka.url", "receive log from mq server"),
     receiveLogKafkaTopic("receive.log.kafka.topic", "receive log from mq topic");
 

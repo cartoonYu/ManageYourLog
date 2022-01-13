@@ -35,7 +35,7 @@ public class StoreRepositoryFactoryTest extends BaseTest {
     @Test
     public void testInitBeanDefault(){
         applicationConfig.setEnvironment(BaseTest.environment);
-        Mockito.when(applicationConfig.get(ApplicationConfigKey.storeMethod.getKey())).thenReturn(Optional.empty());
+        Mockito.when(applicationConfig.get(ApplicationConfigKey.storeMode.getKey())).thenReturn(Optional.empty());
         LogRecordRepository logRecordRepository = storeRepositoryFactory.initPrimaryRepository();
         Assertions.assertTrue(logRecordRepository instanceof DefaultLogRecordRepository);
     }

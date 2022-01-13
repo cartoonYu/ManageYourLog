@@ -1,4 +1,4 @@
-package org.manageyourlog.server.controller.operate.mq;
+package org.manageyourlog.server.controller.receive.kafka;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -20,8 +20,8 @@ import java.util.Properties;
  * @date 2022/1/10 00:07
  */
 @Component
-@Conditional(ReceiveLogByMqCondition.class)
-public class ReceiveLogByMqConfig implements DisposableBean {
+@Conditional(ReceiveLogByKafkaCondition.class)
+public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Autowired
     private ApplicationConfig applicationConfig;

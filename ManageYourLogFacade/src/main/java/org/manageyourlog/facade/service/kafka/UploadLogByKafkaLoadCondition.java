@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.service.http;
+package org.manageyourlog.facade.service.kafka;
 
 import org.manageyourlog.common.util.loadCondition.AbstractLoadCondition;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
@@ -6,9 +6,9 @@ import org.manageyourlog.facade.service.factory.UploadLogMode;
 
 /**
  * @author cartoon
- * @date 2022/1/9 17:00
+ * @date 2022/1/12 20:52
  */
-public class UploadLogByHttpLoadCondition extends AbstractLoadCondition {
+public class UploadLogByKafkaLoadCondition extends AbstractLoadCondition {
 
     @Override
     protected String configKey() {
@@ -17,6 +17,6 @@ public class UploadLogByHttpLoadCondition extends AbstractLoadCondition {
 
     @Override
     protected String matchSpecifyCondition() {
-        return UploadLogMode.http.getMode();
+        return UploadLogMode.kafka.getMode();
     }
 }

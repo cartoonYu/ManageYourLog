@@ -1,4 +1,4 @@
-package org.manageyourlog.server.controller.operate;
+package org.manageyourlog.server.controller.receive;
 
 /**
  * @author cartoon
