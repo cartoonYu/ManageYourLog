@@ -3,13 +3,19 @@ server:
 receive:
   log:
     load:
-      mode: http,mq
+      mode: http,mq,rpc
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092
       group:
         id: ManageYourLog
       topic: ManageYourLog
+      rate: 10
+    rpc:
+      ip: cartoon-ali.com
+      port: 8848
+      application:
+        name: ManageYourLog
 store:
   mode: default
   load:

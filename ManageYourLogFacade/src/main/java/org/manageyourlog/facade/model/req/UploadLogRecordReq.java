@@ -2,6 +2,7 @@ package org.manageyourlog.facade.model.req;
 
 import org.manageyourlog.common.constants.LogRecordSort;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author cartoon
  * @date 2021/10/30 17:28
  */
-public class UploadLogRecordReq {
+public class UploadLogRecordReq implements Serializable {
 
     private String content;
 

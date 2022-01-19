@@ -33,7 +33,7 @@ public class GsonUtil {
         return formGsonObject().fromJson(sourceStr, type);
     }
 
-    private static Gson formGsonObject(){
+    public static Gson formGsonObject(){
         return new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))))
                 .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))

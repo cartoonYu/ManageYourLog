@@ -5,6 +5,7 @@ import org.manageyourlog.facade.service.http.UploadLogByHttp;
 import org.manageyourlog.facade.service.kafka.UploadLogByKafka;
 import org.manageyourlog.facade.service.http.UploadLogByHttpConfig;
 import org.manageyourlog.facade.service.kafka.UploadLogByKafkaConfig;
+import org.manageyourlog.facade.service.rpc.UploadLogByRpc;
 
 import java.util.Arrays;
 
@@ -14,28 +15,22 @@ import java.util.Arrays;
  */
 public enum UploadLogMode {
 
-    http("http", UploadLogByHttpConfig.class, UploadLogByHttp.class),
-    kafka("kafka", UploadLogByKafkaConfig.class, UploadLogByKafka.class),
-    defaultMode("default", null, UploadLogByDefault.class);;
+    http("http", UploadLogByHttp.class),
+    kafka("kafka", UploadLogByKafka.class),
+    rpc("rpc", UploadLogByRpc.class),
+    defaultMode("default", UploadLogByDefault.class);
 
     private final String mode;
 
-    private final Class<?> configClass;
-
     private final Class<?> handleClass;
 
-    UploadLogMode(String mode, Class<?> configClass, Class<?> handleClass) {
+    UploadLogMode(String mode, Class<?> handleClass) {
         this.mode = mode;
-        this.configClass = configClass;
         this.handleClass = handleClass;
     }
 
     public String getMode() {
         return mode;
-    }
-
-    public Class<?> getConfigClass() {
-        return configClass;
     }
 
     public Class<?> getHandleClass() {

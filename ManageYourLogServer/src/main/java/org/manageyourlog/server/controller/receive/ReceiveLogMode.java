@@ -7,7 +7,8 @@ package org.manageyourlog.server.controller.receive;
 public enum ReceiveLogMode {
 
     http("http"),
-    mq("mq");
+    mq("mq"),
+    rpc("rpc");
 
     private String mode;
 

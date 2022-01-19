@@ -3,7 +3,7 @@ spring:
     name: ManageYourLogDemo
 upload:
   log:
-    mode: kafka
+    mode: rpc
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092

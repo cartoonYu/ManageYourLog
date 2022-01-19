@@ -2,11 +2,13 @@ package org.manageyourlog.facade.model.req;
 
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 
+import java.io.Serializable;
+
 /**
  * @author cartoon
  * @date 2021/10/30 17:27
  */
-public class UploadLogRecordIndexReq {
+public class UploadLogRecordIndexReq implements Serializable {
 
     private LogRecordIndexSort logRecordIndexSort;
 

@@ -4,8 +4,7 @@
 #### server
 1. 实际储存方式(es/hbase...)
 2. 多方式上传日志（rpc）
-3. receive log 按需加载
-4. kafka 接收日志优化
+3. 查询接口构建
 
 #### test
 1. test 包分拆到各业务包中？
@@ -13,7 +12,5 @@
 
 #### common
 1. README.md 编写
-2. 配置类使用 前缀 + condition 进行加载
 3. swagger 使用
 4. 日志打印统一开关
-5. 配置收拢

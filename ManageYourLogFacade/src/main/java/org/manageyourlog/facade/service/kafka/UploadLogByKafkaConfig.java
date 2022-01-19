@@ -20,7 +20,7 @@ import java.util.Properties;
 
 /**
  * @author cartoon
- * @date 2022/1/9 15:54
+ * @date 2022/1/13 20:54
  */
 @Component
 @Conditional(UploadLogByKafkaLoadCondition.class)

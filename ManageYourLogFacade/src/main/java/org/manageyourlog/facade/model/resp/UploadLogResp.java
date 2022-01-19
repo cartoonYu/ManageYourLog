@@ -2,11 +2,13 @@ package org.manageyourlog.facade.model.resp;
 
 import org.manageyourlog.common.constants.Error;
 
+import java.io.Serializable;
+
 /**
  * @author cartoon
  * @date 2021/10/30 17:54
  */
-public class UploadLogResp<T> {
+public class UploadLogResp<T> implements Serializable {
 
     private boolean hasAbnormal;
 

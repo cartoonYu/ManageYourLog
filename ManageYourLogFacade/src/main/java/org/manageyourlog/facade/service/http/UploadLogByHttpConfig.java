@@ -3,7 +3,7 @@ package org.manageyourlog.facade.service.http;
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +14,7 @@ import java.util.Optional;
  * @date 2022/1/9 15:49
  */
 @Component
+@Conditional(UploadLogByHttpLoadCondition.class)
 public class UploadLogByHttpConfig {
 
     @Autowired

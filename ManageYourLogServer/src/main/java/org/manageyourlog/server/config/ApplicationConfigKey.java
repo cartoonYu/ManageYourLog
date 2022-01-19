@@ -10,7 +10,11 @@ public enum ApplicationConfigKey {
     storeLoadMode("store.load.mode", "load store mode"),
     receiveLogLoadMode("receive.log.load.mode", "load receive log mode"),
     uploadLogKafkaUrl("receive.log.kafka.url", "receive log from mq server"),
-    receiveLogKafkaTopic("receive.log.kafka.topic", "receive log from mq topic");
+    receiveLogKafkaTopic("receive.log.kafka.topic", "receive log from mq topic"),
+    receiveLogKafkaRate("receive.log.kafka.rate", "receive log from mq rate"),
+    receiveLogRpcIp("receive.log.rpc.ip", "receive log rpc ip address"),
+    receiveLogRpcPort("receive.log.rpc.port", "receive log rpc port"),
+    receiveLogRpcApplicationName("receive.log.rpc.application.name", "receive log rpc application name");
 
     private String key;
 

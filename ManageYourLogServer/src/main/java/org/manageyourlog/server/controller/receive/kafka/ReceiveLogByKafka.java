@@ -38,7 +38,7 @@ public class ReceiveLogByKafka {
     @Qualifier("asyncReceiveLog")
     private ReceiveLog asyncReceiveLog;
 
-    @Scheduled(fixedDelay = 10L)
+    @Scheduled(fixedDelayString = "${receive.log.kafka.rate}")
     public void execute(){
         ConsumerRecords<String, String> sourceData = consumer.poll(Duration.ofMillis(0));
         for (ConsumerRecord<String, String> record : sourceData) {
