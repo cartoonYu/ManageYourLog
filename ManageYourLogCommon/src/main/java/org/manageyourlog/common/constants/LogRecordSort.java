@@ -1,8 +1,9 @@
 package org.manageyourlog.common.constants;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public enum LogRecordSort {
+public enum LogRecordSort implements Serializable {
 
     DEFAULT(0L, "default"),
     Operate(1L, "operate");

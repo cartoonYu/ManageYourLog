@@ -1,10 +1,12 @@
 package org.manageyourlog.common.constants;
 
+import java.io.Serializable;
+
 /**
  * @author cartoon
  * @date 2021/10/30 17:55
  */
-public enum Error {
+public enum Error implements Serializable {
 
     paramMiss(101, "param is miss, param property is miss"),
     uploadUrlMiss(200, "upload url is miss, please check config"),

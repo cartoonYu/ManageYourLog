@@ -10,11 +10,14 @@ import java.io.Serializable;
  */
 public class UploadLogResp<T> implements Serializable {
 
-    private boolean hasAbnormal;
+    private Boolean hasAbnormal;
 
     private Error failResult;
 
     private T successResult;
+
+    public UploadLogResp() {
+    }
 
     public UploadLogResp(T successResult) {
         hasAbnormal = false;
@@ -26,7 +29,7 @@ public class UploadLogResp<T> implements Serializable {
         this.failResult = failResult;
     }
 
-    public boolean isHasAbnormal() {
+    public Boolean isHasAbnormal() {
         return hasAbnormal;
     }
 

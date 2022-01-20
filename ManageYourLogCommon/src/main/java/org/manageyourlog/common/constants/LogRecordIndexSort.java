@@ -1,8 +1,9 @@
 package org.manageyourlog.common.constants;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public enum LogRecordIndexSort {
+public enum LogRecordIndexSort implements Serializable {
 
     Date(1L, "date"),
     Id(2L, "id");

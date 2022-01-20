@@ -40,7 +40,7 @@ public class UploadLogByRpcConfig {
     public ProtocolConfig protocolConfig(){
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");
-        protocolConfig.setSerialization("dubbo");
+        protocolConfig.setSerialization("nativejava");
         protocolConfig.setPort(-1);
         return protocolConfig;
     }

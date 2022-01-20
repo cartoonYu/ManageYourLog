@@ -39,7 +39,7 @@ public class ReceiveLogByRpcConfig{
     public ProtocolConfig protocolConfig(){
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");
-        protocolConfig.setSerialization("dubbo");
+        protocolConfig.setSerialization("nativejava");
         protocolConfig.setPort(20881);
         return protocolConfig;
     }
