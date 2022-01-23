@@ -9,7 +9,6 @@ import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -31,11 +30,9 @@ public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Bean(name = "receiveByKafkaConsumer")
     public KafkaConsumer<String, String> consumer(@Qualifier("receiveByKafkaConfig") Properties config){
-        String topic = applicationConfig.get(ApplicationConfigKey.receiveLogKafkaTopic.getKey()).orElse(null);
-        assert topic != null;
         Properties consumeConfig = getConsumeConfig(config);
         kafkaConsumer = new KafkaConsumer<>(consumeConfig);
-        kafkaConsumer.subscribe(ImmutableList.of(topic));
+        applicationConfig.get(ApplicationConfigKey.receiveLogKafkaTopic.getKey(), (topic) -> kafkaConsumer.subscribe(ImmutableList.of(topic)));
         return kafkaConsumer;
     }
 

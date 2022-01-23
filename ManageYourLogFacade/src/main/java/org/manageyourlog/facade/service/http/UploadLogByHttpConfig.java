@@ -25,8 +25,7 @@ public class UploadLogByHttpConfig {
 
     @PostConstruct
     private void init(){
-        Optional<String> baseUrl = applicationConfig.get(ApplicationConfigKey.uploadLogServerUrl.getKey());
-        baseUrl.ifPresent(url -> this.baseUrl = url);
+        applicationConfig.get(ApplicationConfigKey.uploadLogServerUrl.getKey(), (baseUrl) -> this.baseUrl = baseUrl);
     }
 
     public String getBaseUrl() {

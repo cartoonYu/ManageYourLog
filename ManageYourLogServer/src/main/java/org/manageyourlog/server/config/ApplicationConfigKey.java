@@ -14,7 +14,10 @@ public enum ApplicationConfigKey {
     receiveLogKafkaRate("receive.log.kafka.rate", "receive log from mq rate"),
     receiveLogRpcIp("receive.log.rpc.ip", "receive log rpc ip address"),
     receiveLogRpcPort("receive.log.rpc.port", "receive log rpc port"),
-    receiveLogRpcApplicationName("receive.log.rpc.application.name", "receive log rpc application name");
+    receiveLogRpcApplicationName("receive.log.rpc.application.name", "receive log rpc application name"),
+    receiveLogRpcProtocolName("receive.log.rpc.protocol.name", "receive log rpc protocol name"),
+    receiveLogRpcProtocolPort("receive.log.rpc.protocol.port", "receive log rpc protocol port"),
+    receiveLogRpcSerialization("receive.log.rpc.protocol.serialization", "receive log rpc protocol serialization");
 
     private String key;
 

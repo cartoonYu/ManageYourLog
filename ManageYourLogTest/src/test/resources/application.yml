@@ -1,8 +1,22 @@
 upload:
   log:
-    mode: http
+    mode: all
     server:
       url: http://127.0.0.1:8080
+    kafka:
+      bootstrap:
+        servers: cartoon-ali.com:9092
+      topic: ManageYourLog
+    rpc:
+      ip: cartoon-ali.com
+      port: 8848
+      application:
+        name: ManageYourLog
+      protocol:
+        name: dubbo
+        port: 20882
+        serialization: nativejava
+
 receive:
   log:
     load:
@@ -13,6 +27,16 @@ receive:
       group:
         id: ManageYourLog
       topic: ManageYourLog
+      rate: 10
+    rpc:
+      ip: cartoon-ali.com
+      port: 8848
+      application:
+        name: ManageYourLog
+      protocol:
+        name: dubbo
+        port: 20881
+        serialization: nativejava
 store:
   mode: mysql
   load:

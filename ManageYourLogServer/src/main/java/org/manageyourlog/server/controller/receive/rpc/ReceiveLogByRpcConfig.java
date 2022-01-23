@@ -4,9 +4,13 @@ import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
+import org.manageyourlog.server.config.ApplicationConfigKey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author cartoon
@@ -17,30 +21,55 @@ import org.springframework.context.annotation.Configuration;
 @DubboComponentScan("org.manageyourlog.server.controller.receive.rpc")
 public class ReceiveLogByRpcConfig{
 
-    @Bean("applicationBean")
+    @Autowired
+    private org.manageyourlog.common.config.ApplicationConfig config;
+
+    private String ip;
+
+    private Integer port;
+
+    private String applicationName;
+
+    private String protocolName;
+
+    private Integer protocolPort;
+
+    private String protocolSerialization;
+
+    @Bean("receiveLogByRpcApplicationBean")
     public ApplicationConfig applicationBean() {
         ApplicationConfig applicationConfig = new ApplicationConfig();
-        applicationConfig.setName("ManageYourLog");
+        applicationConfig.setName(applicationName);
         return applicationConfig;
     }
 
     /**
      * 当前连接注册中心配置
      */
-    @Bean("my-registry")
+    @Bean("receiveLogByRpcRegistry")
     public RegistryConfig registryConfig() {
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress("nacos://cartoon-ali.com");
-        registryConfig.setPort(8848);
+        registryConfig.setAddress(String.format("nacos://%s", ip));
+        registryConfig.setPort(port);
         return registryConfig;
     }
 
-    @Bean
+    @Bean("receiveLogByRpcProtocolConfig")
     public ProtocolConfig protocolConfig(){
         ProtocolConfig protocolConfig = new ProtocolConfig();
-        protocolConfig.setName("dubbo");
-        protocolConfig.setSerialization("nativejava");
-        protocolConfig.setPort(20881);
+        protocolConfig.setName(protocolName);
+        protocolConfig.setSerialization(protocolSerialization);
+        protocolConfig.setPort(protocolPort);
         return protocolConfig;
+    }
+
+    @PostConstruct
+    private void init(){
+        config.get(ApplicationConfigKey.receiveLogRpcIp.getKey(), (value) -> ip = value);
+        config.get(ApplicationConfigKey.receiveLogRpcPort.getKey(), (value) -> port = Integer.parseInt(value));
+        config.get(ApplicationConfigKey.receiveLogRpcApplicationName.getKey(), (value) -> applicationName = value);
+        config.get(ApplicationConfigKey.receiveLogRpcProtocolName.getKey(), (value) -> protocolName = value);
+        config.get(ApplicationConfigKey.receiveLogRpcProtocolPort.getKey(), (value) -> protocolPort = Integer.parseInt(value));
+        config.get(ApplicationConfigKey.receiveLogRpcSerialization.getKey(), (value) -> protocolSerialization = value);
     }
 }
