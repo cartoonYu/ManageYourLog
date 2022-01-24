@@ -16,24 +16,30 @@ import java.util.List;
  */
 public class GsonUtil {
 
-    public static <T> String writeJson(List<T> data){
+    private static final GsonUtil INSTANCE = new GsonUtil();
+
+    public static GsonUtil getInstance(){
+        return INSTANCE;
+    }
+
+    public <T> String writeJson(List<T> data){
         return formGsonObject().toJson(data);
     }
 
-    public static <T> String writeJson(T data){
+    public <T> String writeJson(T data){
         return formGsonObject().toJson(data);
     }
 
-    public static <T> T readJsonObject(String sourceStr, Class<T> classType){
+    public <T> T readJsonObject(String sourceStr, Class<T> classType){
         return formGsonObject().fromJson(sourceStr, classType);
     }
 
-    public static <T> List<T> readJson(String sourceStr, Class<T> classType){
+    public <T> List<T> readJson(String sourceStr, Class<T> classType){
         Type type = new ParameterizedTypeImpl(classType);
         return formGsonObject().fromJson(sourceStr, type);
     }
 
-    public static Gson formGsonObject(){
+    public Gson formGsonObject(){
         return new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))))
                 .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
@@ -63,5 +69,8 @@ public class GsonUtil {
             //返回Type对象
             return null;
         }
+    }
+
+    private GsonUtil() {
     }
 }

@@ -19,7 +19,7 @@ public class ReadJsonUtil {
 
     public static <T> List<T> readArray(String fileName, Class<T> classType){
         String fileData = readFile(fileName);
-        return GsonUtil.readJson(fileData, classType);
+        return GsonUtil.getInstance().readJson(fileData, classType);
     }
 
     private static String readFile(String fileName){

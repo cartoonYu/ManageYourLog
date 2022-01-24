@@ -8,8 +8,6 @@ import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
 import org.manageyourlog.server.repository.LogRecordRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +22,6 @@ import static java.util.Optional.ofNullable;
  */
 @Service
 public abstract class AbstractReceiveLog implements ReceiveLog {
-
-    protected final Logger log = LoggerFactory.getLogger(AbstractReceiveLog.class);
 
     @Autowired
     private LogRecordRepository logRecordRepository;
@@ -48,7 +44,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
             return new UploadLogResp<>(Error.paramMiss);
         }
         List<LogRecord> logRecords = packLogRecord(uploadLogRecordReqs);
-        if(CollectionUtil.judgeIsEmpty(logRecords)){
+        if(CollectionUtil.getInstance().judgeIsEmpty(logRecords)){
             return new UploadLogResp<>(false);
         }
         logRecords.forEach(record -> record = initLogRecord(record));
@@ -65,7 +61,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     }
 
     private boolean judgeParamIllegal(List<UploadLogRecordReq> uploadLogRecordReqs){
-        if(CollectionUtil.judgeIsEmpty(uploadLogRecordReqs)){
+        if(CollectionUtil.getInstance().judgeIsEmpty(uploadLogRecordReqs)){
             return false;
         }
         for(UploadLogRecordReq req : uploadLogRecordReqs){
@@ -77,7 +73,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     }
 
     private LogRecord initLogRecord(LogRecord logRecord){
-        String recordId = IdGenerateUtil.generate(13);
+        String recordId = IdGenerateUtil.getInstance().generate(13);
         return ofNullable(logRecord).map(record -> {
             record.setRecordId(recordId)
                     .setVersion(1);
@@ -85,7 +81,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
             ofNullable(logRecordIndices)
                     .ifPresent(indexList ->
                             indexList.forEach(index ->
-                                    index.setIndexId(IdGenerateUtil.generate(13))
+                                    index.setIndexId(IdGenerateUtil.getInstance().generate(13))
                                             .setVersion(1)
                                             .setLogRecordId(recordId)
                             )

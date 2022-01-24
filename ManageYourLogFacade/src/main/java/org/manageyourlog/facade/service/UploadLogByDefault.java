@@ -17,13 +17,13 @@ public class UploadLogByDefault implements UploadLog {
 
     @Override
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
-        log.info("actual upload log by default, upload single log, data: {}", GsonUtil.writeJson(uploadLogRecordReq));
+        log.info("actual upload log by default, upload single log, data: {}", GsonUtil.getInstance().writeJson(uploadLogRecordReq));
         return new UploadLogResp<>(true);
     }
 
     @Override
     public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
-        log.info("actual upload log by default, upload log list, data: {}", GsonUtil.writeJson(uploadLogRecordReqs));
+        log.info("actual upload log by default, upload log list, data: {}", GsonUtil.getInstance().writeJson(uploadLogRecordReqs));
         return new UploadLogResp<>(true);
     }
 }

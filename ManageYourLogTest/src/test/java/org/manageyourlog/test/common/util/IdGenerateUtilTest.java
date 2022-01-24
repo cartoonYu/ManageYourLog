@@ -20,7 +20,7 @@ public class IdGenerateUtilTest extends BaseTest {
     @DisplayName("generate id normal test")
     @Test
     public void testGenerateNormal(){
-        String res = IdGenerateUtil.generate(13);
+        String res = IdGenerateUtil.getInstance().generate(13);
         Assertions.assertNotNull(res);
         Assertions.assertEquals(13, res.length());
     }
@@ -28,7 +28,7 @@ public class IdGenerateUtilTest extends BaseTest {
     @DisplayName("generate id with over length test")
     @Test
     public void testGenerateOverLength(){
-        String res = IdGenerateUtil.generate(19);
+        String res = IdGenerateUtil.getInstance().generate(19);
         Assertions.assertNotNull(res);
         Assertions.assertEquals(19, res.length());
     }
@@ -36,7 +36,7 @@ public class IdGenerateUtilTest extends BaseTest {
     @DisplayName("generate id with zero length test")
     @Test
     public void testGenerateZeroLength(){
-        String res = IdGenerateUtil.generate(0);
+        String res = IdGenerateUtil.getInstance().generate(0);
         Assertions.assertNotNull(res);
         Assertions.assertEquals(0, res.length());
     }

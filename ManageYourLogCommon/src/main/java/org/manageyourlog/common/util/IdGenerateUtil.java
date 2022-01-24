@@ -6,7 +6,13 @@ package org.manageyourlog.common.util;
  */
 public class IdGenerateUtil {
 
-    public static String generate(int length){
+    private static final IdGenerateUtil INSTANCE = new IdGenerateUtil();
+
+    public static IdGenerateUtil getInstance(){
+        return INSTANCE;
+    }
+
+    public String generate(int length){
         if(length == 0){
             return "";
         }
@@ -23,4 +29,6 @@ public class IdGenerateUtil {
         }
         return res.toString();
     }
+
+    private IdGenerateUtil(){}
 }

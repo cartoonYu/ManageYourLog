@@ -46,7 +46,7 @@ public class ReceiveLogByKafka {
             if(log.isInfoEnabled()){
                 log.info("receive data: {}, time: {}", receiveData, LocalDateTime.now());
             }
-            UploadLogRecordReq recordReq = GsonUtil.readJsonObject(receiveData, UploadLogRecordReq.class);
+            UploadLogRecordReq recordReq = GsonUtil.getInstance().readJsonObject(receiveData, UploadLogRecordReq.class);
             asyncReceiveLog.receive(recordReq);
         }
     }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.common.util.ReadJsonUtil;
-import org.manageyourlog.server.model.builder.repository.MockDataConverter;
+import org.manageyourlog.server.repository.builder.MockDataBuilder;
 import org.manageyourlog.server.dao.mock.model.LogRecordIndexMockEntity;
 import org.manageyourlog.server.dao.mock.model.LogRecordMockEntity;
 import org.manageyourlog.server.model.LogRecord;
@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2021/10/27 09:20
  */
 @DisplayName("mock data converter test")
-public class MockDataConverterTest extends BaseTest {
+public class MockDataBuilderTest extends BaseTest {
 
     private static List<LogRecordMockEntity> mockLogRecord;
 
@@ -29,7 +29,7 @@ public class MockDataConverterTest extends BaseTest {
     @DisplayName("convert test")
     @Test
     public void testConvert(){
-        List<LogRecord> logRecords = MockDataConverter.getInstance().convert(mockLogRecord, mockLogRecordIndex);
+        List<LogRecord> logRecords = MockDataBuilder.getInstance().convert(mockLogRecord, mockLogRecordIndex);
         Assertions.assertNotNull(logRecords);
         Assertions.assertEquals(1, logRecords.size());
     }
@@ -38,7 +38,7 @@ public class MockDataConverterTest extends BaseTest {
     public static void init(){
         mockLogRecord = ReadJsonUtil.readArray("logRecordData.json", LogRecordMockEntity.class);
         mockLogRecordIndex = ReadJsonUtil.readArray("logRecordIndexData.json", LogRecordIndexMockEntity.class);
-        System.out.println(GsonUtil.writeJson(mockLogRecord));
-        System.out.println(GsonUtil.writeJson(mockLogRecordIndex));
+        System.out.println(GsonUtil.getInstance().writeJson(mockLogRecord));
+        System.out.println(GsonUtil.getInstance().writeJson(mockLogRecordIndex));
     }
 }

@@ -1,7 +1,7 @@
 package org.manageyourlog.server.repository;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.manageyourlog.server.model.builder.repository.MysqlEntityConverter;
+import org.manageyourlog.server.repository.builder.MysqlEntityBuilder;
 import org.manageyourlog.server.dao.mysql.*;
 import org.manageyourlog.server.dao.mysql.mapper.LogRecordIndexMapper;
 import org.manageyourlog.server.dao.mysql.mapper.LogRecordMapper;
@@ -34,14 +34,14 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
 
     @Override
     public boolean save(LogRecord logRecord) {
-        ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> logInfos = MysqlEntityConverter.convertToPo(logRecord);
+        ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> logInfos = MysqlEntityBuilder.getInstance().convertToPo(logRecord);
         return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, (mapper) -> mapper.insert(logInfos.getLeft()) == 1, false)
                 && mysqlDatasourceOperate.executeDML(LogRecordIndexMapper.class, (mapper) -> mapper.batchInsert(logInfos.getRight()) == logInfos.getRight().size(), true);
     }
 
     @Override
     public boolean save(List<LogRecord> logRecords) {
-        List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> logInfos = MysqlEntityConverter.convertToPo(logRecords);
+        List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> logInfos = MysqlEntityBuilder.getInstance().convertToPo(logRecords);
         List<LogRecordMysqlPO> logRecordPos = logInfos.stream().map(ImmutablePair::getLeft).collect(Collectors.toList());
         List<LogRecordIndexMysqlPO> logRecordIndexPos = logInfos.stream().map(ImmutablePair::getRight).flatMap(Collection::stream).collect(Collectors.toList());
         return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, (mapper) -> mapper.batchInsert(logRecordPos) == logRecordPos.size(), false)
@@ -61,7 +61,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
         List<LogRecordIndexMysqlPO> indexMysqlPOS = mysqlDatasourceOperate.executeDQL(LogRecordIndexMapper.class, (mapper) -> mapper.getByIndexIds(indexIds));
-        return MysqlEntityConverter.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlPOS);
+        return MysqlEntityBuilder.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlPOS);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository{
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
         List<LogRecordIndexMysqlPO> indexMysqlPOS = mysqlDatasourceOperate.executeDQL(LogRecordIndexMapper.class, (mapper) -> mapper.getByIndexIds(indexIds));
-        return MysqlEntityConverter.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlPOS);
+        return MysqlEntityBuilder.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlPOS);
     }
 
     private List<String> getIndexIdFromRecordList(List<LogRecordMysqlPO> recordMysqlPOS){

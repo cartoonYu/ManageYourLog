@@ -33,7 +33,7 @@ public class BaseTestWithMvc {
         return mockMvc
                 .perform(
                         MockMvcRequestBuilders.post(urlTemplate)
-                                .content(GsonUtil.writeJson(data).getBytes(StandardCharsets.UTF_8))
+                                .content(GsonUtil.getInstance().writeJson(data).getBytes(StandardCharsets.UTF_8))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andReturn()

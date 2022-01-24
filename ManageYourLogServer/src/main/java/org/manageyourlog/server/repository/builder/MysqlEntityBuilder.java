@@ -1,4 +1,4 @@
-package org.manageyourlog.server.model.builder.repository;
+package org.manageyourlog.server.repository.builder;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -22,11 +22,11 @@ import static java.util.Optional.ofNullable;
  * @author cartoon
  * @date 2021/11/25 20:34
  */
-public class MysqlEntityConverter {
+public class MysqlEntityBuilder {
 
-    private static final MysqlEntityConverter INSTANCE = new MysqlEntityConverter();
+    private static final MysqlEntityBuilder INSTANCE = new MysqlEntityBuilder();
 
-    public static MysqlEntityConverter getInstance(){
+    public static MysqlEntityBuilder getInstance(){
         return INSTANCE;
     }
 
@@ -83,8 +83,8 @@ public class MysqlEntityConverter {
      * @param logRecords model list
      * @return record and its index list
      */
-    public static List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> convertToPo(List<LogRecord> logRecords){
-        return logRecords.stream().map(MysqlEntityConverter::convertToPo).collect(Collectors.toList());
+    public List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> convertToPo(List<LogRecord> logRecords){
+        return logRecords.stream().map(this::convertToPo).collect(Collectors.toList());
     }
 
     /**
@@ -92,7 +92,7 @@ public class MysqlEntityConverter {
      * @param logRecord model
      * @return record and its index list po
      */
-    public static ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> convertToPo(LogRecord logRecord){
+    public ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> convertToPo(LogRecord logRecord){
         //convert log model to po
         LogRecordMysqlPO logRecordMysqlPO = new LogRecordMysqlPO();
         logRecordMysqlPO.setRecordId(logRecord.getRecordId())
@@ -103,7 +103,7 @@ public class MysqlEntityConverter {
                 .setVersion(logRecord.getVersion())
                 .setCreateTime(logRecord.getCreateTime())
                 .setModifyTime(logRecord.getModifyTime());
-        if(CollectionUtil.judgeIsNotEmpty(logRecord.getIndexList())){
+        if(CollectionUtil.getInstance().judgeIsNotEmpty(logRecord.getIndexList())){
             logRecordMysqlPO.setIndexIds(logRecord.getIndexList().stream().map(LogRecordIndex::getIndexId).collect(Collectors.joining(LogRecordMysqlRepository.indexSplitCharacter)));
         }
         //convert index model to po

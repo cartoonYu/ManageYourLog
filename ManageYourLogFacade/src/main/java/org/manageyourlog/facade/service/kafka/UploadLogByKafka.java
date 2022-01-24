@@ -28,7 +28,7 @@ public class UploadLogByKafka implements UploadLog {
     @Override
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        String dataStr = GsonUtil.writeJson(uploadLogRecordReq);
+        String dataStr = GsonUtil.getInstance().writeJson(uploadLogRecordReq);
         uploadLogByKafkaConfig.sendMessage(dataStr, log);
         return new UploadLogResp<>(true);
     }

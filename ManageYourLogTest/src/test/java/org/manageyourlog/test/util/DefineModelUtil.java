@@ -84,7 +84,7 @@ public class DefineModelUtil {
 
     public static LogRecord defineLogRecord(){
         LogRecord record = new LogRecord();
-        String recordId = IdGenerateUtil.generate(13);
+        String recordId = IdGenerateUtil.getInstance().generate(13);
         record.setRecordId(recordId)
                 .setContent("111")
                 .setOperatorSort("user")
@@ -99,7 +99,7 @@ public class DefineModelUtil {
 
     private static LogRecordIndex defineLogRecordIndex(String recordId){
         LogRecordIndex logRecordIndex = new LogRecordIndex();
-        logRecordIndex.setIndexId(IdGenerateUtil.generate(13))
+        logRecordIndex.setIndexId(IdGenerateUtil.getInstance().generate(13))
                 .setLogRecordId(recordId)
                 .setLogRecordIndexSort(LogRecordIndexSort.Id)
                 .setIndexValue("111")

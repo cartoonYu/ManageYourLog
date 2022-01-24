@@ -1,4 +1,4 @@
-package org.manageyourlog.server.model.builder.service;
+package org.manageyourlog.server.model.builder;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
@@ -14,11 +14,11 @@ import static java.util.Optional.ofNullable;
  * @author cartoon
  * @date 2021/10/30 17:42
  */
-public class LogRecordConverter {
+public class LogRecordBuilder {
 
-    private static final LogRecordConverter INSTANCE = new LogRecordConverter();
+    private static final LogRecordBuilder INSTANCE = new LogRecordBuilder();
 
-    public static LogRecordConverter getInstance(){
+    public static LogRecordBuilder getInstance(){
         return INSTANCE;
     }
 

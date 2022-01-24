@@ -18,7 +18,7 @@ public class DemoController {
 
     @PostMapping("/query")
     public String query(@RequestBody QueryReq queryReq){
-        log.info("call query interface, req: {}", GsonUtil.writeJson(queryReq));
+        log.info("call query interface, req: {}", GsonUtil.getInstance().writeJson(queryReq));
         return "mock call query interface";
     }
 }

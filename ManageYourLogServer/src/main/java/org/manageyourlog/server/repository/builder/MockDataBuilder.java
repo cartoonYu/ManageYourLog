@@ -1,4 +1,4 @@
-package org.manageyourlog.server.model.builder.repository;
+package org.manageyourlog.server.repository.builder;
 
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
@@ -6,7 +6,6 @@ import org.manageyourlog.server.dao.mock.model.LogRecordIndexMockEntity;
 import org.manageyourlog.server.dao.mock.model.LogRecordMockEntity;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
-import org.manageyourlog.server.model.builder.service.LogRecordConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,11 +15,11 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 2021/10/26 00:29
  */
-public class MockDataConverter {
+public class MockDataBuilder {
 
-    private static final MockDataConverter INSTANCE = new MockDataConverter();
+    private static final MockDataBuilder INSTANCE = new MockDataBuilder();
 
-    public static MockDataConverter getInstance(){
+    public static MockDataBuilder getInstance(){
         return INSTANCE;
     }
 

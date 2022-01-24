@@ -10,11 +10,17 @@ import static java.util.Optional.ofNullable;
  */
 public class CollectionUtil {
 
-    public static boolean judgeIsEmpty(Collection<?> collection){
+    private static final CollectionUtil INSTANCE = new CollectionUtil();
+
+    public static CollectionUtil getInstance(){
+        return INSTANCE;
+    }
+
+    public boolean judgeIsEmpty(Collection<?> collection){
         return ofNullable(collection).map(Collection::isEmpty).orElse(true);
     }
 
-    public static boolean judgeIsNotEmpty(Collection<?> collection){
+    public boolean judgeIsNotEmpty(Collection<?> collection){
         return ofNullable(collection).map(source -> !source.isEmpty()).orElse(false);
     }
 }

@@ -15,7 +15,7 @@ public class HttpRegisterImpl implements HttpRegister{
     @Override
     public <T> T register(Class<T> httpService, String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(GsonUtil.formGsonObject()))
+                .addConverterFactory(GsonConverterFactory.create(GsonUtil.getInstance().formGsonObject()))
                 .baseUrl(baseUrl)
                 .build();
         return retrofit.create(httpService);
