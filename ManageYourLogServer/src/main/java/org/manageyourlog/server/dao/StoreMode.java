@@ -8,13 +8,13 @@ public enum StoreMode {
 
     Mysql("mysql");
 
-    private String info;
+    private String mode;
 
-    StoreMode(String info) {
-        this.info = info;
+    StoreMode(String mode) {
+        this.mode = mode;
     }
 
-    public String getInfo() {
-        return info;
+    public String getMode() {
+        return mode;
     }
 }

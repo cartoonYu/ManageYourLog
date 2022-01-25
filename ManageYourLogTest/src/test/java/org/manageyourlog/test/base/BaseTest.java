@@ -3,16 +3,23 @@ package org.manageyourlog.test.base;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.test.ManageYourLogTestApplication;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -22,13 +29,29 @@ import java.util.*;
  * @since 2021/10/05 17:52
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(classes = ManageYourLogTestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = ManageYourLogTestApplication.class)
+@AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 public abstract class BaseTest implements ApplicationContextAware, EnvironmentAware {
 
     protected static ApplicationContext context;
 
     protected static Environment environment;
+
+    @Autowired
+    protected MockMvc mockMvc;
+
+    protected <T> String post(String urlTemplate, T data) throws Exception {
+        return mockMvc
+                .perform(
+                        MockMvcRequestBuilders.post(urlTemplate)
+                                .content(GsonUtil.getInstance().writeJson(data).getBytes(StandardCharsets.UTF_8))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                )
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+    }
 
     /**
      * get all incoming class type's implement class object by spring

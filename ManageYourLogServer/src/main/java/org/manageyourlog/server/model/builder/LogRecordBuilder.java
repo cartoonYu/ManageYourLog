@@ -1,14 +1,14 @@
 package org.manageyourlog.server.model.builder;
 
+import org.manageyourlog.common.util.IdGenerateUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordIndexReq;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.LogRecordIndex;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Optional.ofNullable;
 
 /**
  * @author cartoon
@@ -22,29 +22,32 @@ public class LogRecordBuilder {
         return INSTANCE;
     }
 
-    public LogRecord convert(UploadLogRecordReq uploadLogRecordReq){
-        return ofNullable(uploadLogRecordReq).map(req -> {
-            LogRecord logRecord = new LogRecord();
-            logRecord.setContent(req.getContent())
-                    .setOperatorSort(req.getOperatorSort())
-                    .setOperator(req.getOperator())
-                    .setLogRecordSort(req.getLogRecordSort())
-                    .setIndexList(convertIndex(req.getIndexList()));
-            return logRecord;
-        }).orElse(null);
+    public LogRecord build(UploadLogRecordReq uploadLogRecordReq, LocalDateTime uploadTime){
+        String recordId = IdGenerateUtil.getInstance().generate(13);
+        LogRecord logRecord = new LogRecord();
+        logRecord.setRecordId(recordId)
+                .setContent(uploadLogRecordReq.getContent())
+                .setOperatorSort(uploadLogRecordReq.getOperatorSort())
+                .setOperator(uploadLogRecordReq.getOperator())
+                .setLogRecordSort(uploadLogRecordReq.getLogRecordSort())
+                .setIndexList(convertIndex(recordId, uploadTime, uploadLogRecordReq.getIndexList()))
+                .setVersion(1)
+                .setCreateTime(uploadTime)
+                .setModifyTime(uploadTime);
+        return logRecord;
     }
 
-    private List<LogRecordIndex> convertIndex(List<UploadLogRecordIndexReq> indexReqList){
-        return ofNullable(indexReqList)
-                .map(indexList ->
-                        indexList.stream()
-                                .map(req -> {
-                                    LogRecordIndex index = new LogRecordIndex();
-                                    index.setLogRecordIndexSort(req.getLogRecordIndexSort())
-                                            .setIndexValue(req.getIndexValue());
-                                    return index;
-                                })
-                                .collect(Collectors.toList()))
-                .orElse(null);
+    private List<LogRecordIndex> convertIndex(String recordId, LocalDateTime logTime, List<UploadLogRecordIndexReq> indexReqList){
+        return indexReqList.stream().map(index -> {
+            LogRecordIndex res = new LogRecordIndex();
+            res.setIndexId(IdGenerateUtil.getInstance().generate(13))
+                    .setLogRecordId(recordId)
+                    .setLogRecordIndexSort(index.getLogRecordIndexSort())
+                    .setIndexValue(index.getIndexValue())
+                    .setVersion(1)
+                    .setCreateTime(logTime)
+                    .setModifyTime(logTime);
+            return res;
+        }).collect(Collectors.toList());
     }
 }

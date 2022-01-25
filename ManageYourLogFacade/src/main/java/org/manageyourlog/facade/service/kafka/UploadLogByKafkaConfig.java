@@ -6,13 +6,14 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
+import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
+import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +24,7 @@ import java.util.Properties;
  * @date 2022/1/13 20:54
  */
 @Component
-@Conditional(UploadLogByKafkaLoadCondition.class)
+@UploadLogLoadCondition(mode = UploadLogMode.kafka)
 public class UploadLogByKafkaConfig implements DisposableBean {
 
     @Autowired

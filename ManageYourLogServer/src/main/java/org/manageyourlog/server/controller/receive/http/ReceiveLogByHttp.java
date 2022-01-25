@@ -2,6 +2,8 @@ package org.manageyourlog.server.controller.receive.http;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
+import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +20,7 @@ import java.util.List;
  * @date 2021/10/31 17:06
  */
 @RestController
-@Conditional(ReceiveLogByHttpCondition.class)
+@ReceiveLogLoadCondition(mode = ReceiveLogMode.http)
 public class ReceiveLogByHttp {
 
     @Autowired

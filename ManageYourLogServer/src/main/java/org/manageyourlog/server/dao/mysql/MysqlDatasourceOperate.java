@@ -3,6 +3,8 @@ package org.manageyourlog.server.dao.mysql;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.manageyourlog.server.dao.ReceiveLogDaoLoadCondition;
+import org.manageyourlog.server.dao.StoreMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Conditional;
@@ -20,7 +22,7 @@ import java.util.function.Function;
  * @date 2022/1/4 23:23
  */
 @Component
-@Conditional({MysqlLoadCondition.class})
+@ReceiveLogDaoLoadCondition(mode = StoreMode.Mysql)
 public class MysqlDatasourceOperate {
 
     @Autowired

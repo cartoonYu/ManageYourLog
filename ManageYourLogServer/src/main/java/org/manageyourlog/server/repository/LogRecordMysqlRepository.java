@@ -1,6 +1,8 @@
 package org.manageyourlog.server.repository;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.manageyourlog.server.dao.ReceiveLogDaoLoadCondition;
+import org.manageyourlog.server.dao.StoreMode;
 import org.manageyourlog.server.repository.builder.MysqlEntityBuilder;
 import org.manageyourlog.server.dao.mysql.*;
 import org.manageyourlog.server.dao.mysql.mapper.LogRecordIndexMapper;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
  * @date 2021/11/25 20:30
  */
 @Repository
-@Conditional({MysqlLoadCondition.class})
+@ReceiveLogDaoLoadCondition(mode = StoreMode.Mysql)
 public class LogRecordMysqlRepository implements LogRecordRepository{
 
     public static final String indexSplitCharacter = ",";

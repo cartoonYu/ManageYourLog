@@ -3,14 +3,14 @@ package org.manageyourlog.server.dao.mysql;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.manageyourlog.server.dao.StoreDatasourceEnum;
+import org.manageyourlog.server.dao.ReceiveLogDaoLoadCondition;
+import org.manageyourlog.server.dao.StoreMode;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -24,10 +24,12 @@ import java.util.Properties;
  * @date 2021/12/30 21:06
  */
 @Configuration
-@Conditional({MysqlLoadCondition.class})
+@ReceiveLogDaoLoadCondition(mode = StoreMode.Mysql)
 @MapperScan(basePackages = MysqlDatasourceConfig.packageName,
                 sqlSessionTemplateRef = "mysqlTemplate")
 public class MysqlDatasourceConfig {
+
+    private final String mysqlDatasource = "mysqlDatasource";
 
     public static final String packageName = "org/manageyourlog/server/dao/mysql/mapper";
 
@@ -35,14 +37,14 @@ public class MysqlDatasourceConfig {
 
     public SqlSessionFactory sqlSessionFactory;
 
-    @Bean(name = StoreDatasourceEnum.mysql)
+    @Bean(name = mysqlDatasource)
     public HikariDataSource getDataSource(@Qualifier("mysqlProperties") Properties properties){
         HikariConfig hikariConfig = new HikariConfig(properties);
         return new HikariDataSource(hikariConfig);
     }
 
     @Bean("mysqlSqlSessionFactory")
-    public SqlSessionFactory createSqlSessionFactory(@Qualifier(StoreDatasourceEnum.mysql) DataSource dataSource) throws Exception {
+    public SqlSessionFactory createSqlSessionFactory(@Qualifier(mysqlDatasource) DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + mapperLocation));
@@ -58,7 +60,7 @@ public class MysqlDatasourceConfig {
     }
 
     @Bean("mysqlPlatformTransactionManager")
-    public PlatformTransactionManager platformTransactionManager(@Qualifier(StoreDatasourceEnum.mysql) DataSource mysqlDataSource){
+    public PlatformTransactionManager platformTransactionManager(@Qualifier(mysqlDatasource) DataSource mysqlDataSource){
         return new DataSourceTransactionManager(mysqlDataSource);
     }
 

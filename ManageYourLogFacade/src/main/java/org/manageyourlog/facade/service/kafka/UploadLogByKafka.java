@@ -1,14 +1,12 @@
 package org.manageyourlog.facade.service.kafka;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
+import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,7 +17,7 @@ import java.util.List;
  * @date 2022/1/9 15:23
  */
 @Service
-@Conditional(UploadLogByKafkaLoadCondition.class)
+@UploadLogLoadCondition(mode = UploadLogMode.kafka)
 public class UploadLogByKafka implements UploadLog {
 
     @Autowired

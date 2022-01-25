@@ -17,4 +17,6 @@ upload:
         name: dubbo
         port: 20882
         serialization: nativejava
+    server:
+      url: http://127.0.0.1:8080
 

@@ -6,8 +6,9 @@ import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.http.UploadLogInterface;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
+import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * @since 2021/11/03 09:02
  */
 @Service
-@Conditional(UploadLogByHttpLoadCondition.class)
+@UploadLogLoadCondition(mode = UploadLogMode.http)
 public class UploadLogByHttp implements UploadLog {
 
     @Autowired

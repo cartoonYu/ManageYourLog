@@ -6,12 +6,13 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.manageyourlog.common.config.ApplicationConfig;
 import org.manageyourlog.server.config.ApplicationConfigKey;
+import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
+import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import java.util.Properties;
 
@@ -20,7 +21,7 @@ import java.util.Properties;
  * @date 2022/1/10 00:07
  */
 @Component
-@Conditional(ReceiveLogByKafkaCondition.class)
+@ReceiveLogLoadCondition(mode = ReceiveLogMode.mq)
 public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Autowired

@@ -1,16 +1,16 @@
-package org.manageyourlog.test;
+package org.manageyourlog.test.base;
 
-import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.ExcludePackages;
 import org.junit.platform.suite.api.SelectPackages;
-import org.junit.runner.RunWith;
-import org.manageyourlog.test.base.BaseTest;
+import org.junit.platform.suite.api.Suite;
 
 /**
  * @author cartoon
  * @version 1.0
  * @since 2021/10/06 16:12
  */
-@RunWith(JUnitPlatform.class)
+@Suite
 @SelectPackages({"org.manageyourlog.test"})
+@ExcludePackages({"org.manageyourlog.test.base"})
 public class TestAll extends BaseTest {
 }

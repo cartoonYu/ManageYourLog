@@ -5,9 +5,10 @@ import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.manageyourlog.server.config.ApplicationConfigKey;
+import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
+import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +18,7 @@ import javax.annotation.PostConstruct;
  * @date 2022/1/16 17:03
  */
 @Configuration
-@Conditional(ReceiveLogByRpcCondition.class)
+@ReceiveLogLoadCondition(mode = ReceiveLogMode.rpc)
 @DubboComponentScan("org.manageyourlog.server.controller.receive.rpc")
 public class ReceiveLogByRpcConfig{
 

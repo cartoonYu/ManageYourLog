@@ -21,7 +21,8 @@ public abstract class AbstractLoadCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        return matches(context, configKey(), allMatchConfig) || matches(context, configKey(), matchSpecifyCondition());
+        return matches(context, configKey(), allMatchConfig)
+                || matches(context, configKey(), matchSpecifyCondition(metadata));
     }
 
     private boolean matches(ConditionContext context, String configKey, String configuration){
@@ -32,12 +33,11 @@ public abstract class AbstractLoadCondition implements Condition {
         String config = environment.getProperty(configKey);
         return Optional.ofNullable(config).map(value -> {
             List<String> loadList = Arrays.stream(value.split(splitSeparator)).toList();
-            boolean judgeFlag = loadList.stream().anyMatch(configuration::contains);
-            return judgeFlag;
+            return loadList.stream().anyMatch(configuration::contains);
         }).orElse(false);
     }
 
     protected abstract String configKey();
 
-    protected abstract String matchSpecifyCondition();
+    protected abstract String matchSpecifyCondition(AnnotatedTypeMetadata metadata);
 }

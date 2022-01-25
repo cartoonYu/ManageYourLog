@@ -4,10 +4,11 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
+import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author cartoon
  * @date 2022/1/16 17:07
  */
-@Conditional(ReceiveLogByRpcCondition.class)
+@ReceiveLogLoadCondition(mode = ReceiveLogMode.rpc)
 @DubboService
 @Service
 public class ReceiveLogByRpc implements UploadLog {

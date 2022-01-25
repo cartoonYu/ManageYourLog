@@ -5,6 +5,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
+import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
+import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +27,7 @@ import java.time.LocalDateTime;
  */
 @Component
 @EnableScheduling
-@Conditional(ReceiveLogByKafkaCondition.class)
+@ReceiveLogLoadCondition(mode = ReceiveLogMode.mq)
 public class ReceiveLogByKafka {
 
     private static final Logger log = LoggerFactory.getLogger(ReceiveLogByKafka.class);

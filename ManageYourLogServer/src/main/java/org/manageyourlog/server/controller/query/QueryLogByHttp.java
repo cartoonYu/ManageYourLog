@@ -15,5 +15,4 @@ public class QueryLogByHttp {
     @Autowired
     private QueryLogService queryLogService;
 
-
 }

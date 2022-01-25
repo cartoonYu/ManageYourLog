@@ -3,11 +3,11 @@ package org.manageyourlog.test;
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
-import org.manageyourlog.server.dao.mysql.MysqlLoadCondition;
+import org.manageyourlog.server.dao.ReceiveLogDaoLoadCondition;
+import org.manageyourlog.server.dao.StoreMode;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,7 +19,7 @@ import static java.util.Optional.ofNullable;
  * @date 2021/11/21 21:46
  */
 @Component
-@Conditional({MysqlLoadCondition.class})
+@ReceiveLogDaoLoadCondition(mode = StoreMode.Mysql)
 public class InitMysqlData implements InitializingBean, DisposableBean {
 
     @Value("${mariadb.baseDir}")

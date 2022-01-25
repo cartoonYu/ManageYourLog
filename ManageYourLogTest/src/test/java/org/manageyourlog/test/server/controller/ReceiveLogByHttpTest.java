@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.test.base.BaseTestWithMvc;
+import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
 
 /**
@@ -14,7 +14,7 @@ import org.manageyourlog.test.util.DefineModelUtil;
  * @since 2021/11/01 22:55
  */
 @DisplayName("receive log controller test")
-public class ReceiveLogByHttpTest extends BaseTestWithMvc {
+public class ReceiveLogByHttpTest extends BaseTest {
 
     @DisplayName("receive single log test")
     @Test

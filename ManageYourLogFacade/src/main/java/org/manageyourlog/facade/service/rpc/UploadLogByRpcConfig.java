@@ -3,12 +3,12 @@ package org.manageyourlog.facade.service.rpc;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
-import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
+import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
+import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -18,8 +18,8 @@ import javax.annotation.PostConstruct;
  * @date 2022/1/16 17:03
  */
 @Configuration
-@Conditional(UploadLogByRpcCondition.class)
 @EnableDubbo
+@UploadLogLoadCondition(mode = UploadLogMode.rpc)
 public class UploadLogByRpcConfig {
 
     @Autowired
