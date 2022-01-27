@@ -4,6 +4,7 @@ import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
 import org.manageyourlog.server.controller.receive.ReceiveLogMode;
@@ -23,7 +24,7 @@ import javax.annotation.PostConstruct;
 public class ReceiveLogByRpcConfig{
 
     @Autowired
-    private org.manageyourlog.common.config.ApplicationConfig config;
+    private ApplicationConfigUtil config;
 
     private String ip;
 

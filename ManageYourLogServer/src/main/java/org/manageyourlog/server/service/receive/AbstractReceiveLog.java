@@ -1,7 +1,7 @@
 package org.manageyourlog.server.service.receive;
 
-import org.manageyourlog.common.constants.Error;
-import org.manageyourlog.common.util.CollectionUtil;
+import org.apache.commons.collections4.CollectionUtils;
+import org.manageyourlog.common.constants.HandleError;
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
@@ -30,7 +30,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     public UploadLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
         //1. judge income request data illegal
         if(!judgeParamIllegal(uploadLogRecordReq)){
-            return new UploadLogResp<>(Error.paramMiss);
+            return new UploadLogResp<>(HandleError.PARAM_MISS);
         }
         //2. transfer request data to domain entity
         LogRecord logRecord = LogRecordBuilder.getInstance().build(uploadLogRecordReq, getUploadTime(uploadLogRecordReq));
@@ -43,7 +43,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     public UploadLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs) {
         //1. judge income request data illegal
         if(!judgeParamIllegal(uploadLogRecordReqs)){
-            return new UploadLogResp<>(Error.paramMiss);
+            return new UploadLogResp<>(HandleError.PARAM_MISS);
         }
         //2. transfer request data to domain entity
         List<LogRecord> logRecords = uploadLogRecordReqs.stream().map(req -> LogRecordBuilder.getInstance().build(req, getUploadTime(req))).collect(Collectors.toList());
@@ -75,7 +75,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq uploadLogRecordReq);
 
     private boolean judgeParamIllegal(List<UploadLogRecordReq> uploadLogRecordReqs){
-        if(CollectionUtil.getInstance().judgeIsEmpty(uploadLogRecordReqs)){
+        if(CollectionUtils.isEmpty(uploadLogRecordReqs)){
             return false;
         }
         for(UploadLogRecordReq req : uploadLogRecordReqs){

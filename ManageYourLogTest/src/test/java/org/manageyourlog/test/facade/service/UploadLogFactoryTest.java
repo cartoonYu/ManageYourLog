@@ -3,7 +3,7 @@ package org.manageyourlog.test.facade.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.UploadLogByDefault;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class UploadLogFactoryTest extends BaseTest{
 
     @Spy
-    private ApplicationConfig applicationConfig;
+    private ApplicationConfigUtil applicationConfigUtil;
 
     @Autowired
     @InjectMocks
@@ -33,8 +33,8 @@ public class UploadLogFactoryTest extends BaseTest{
     @DisplayName("upload log service factory test")
     @Test
     public void testInitBeanDefault(){
-        applicationConfig.setEnvironment(BaseTest.environment);
-        Mockito.when(applicationConfig.get(ApplicationConfigKey.uploadLogMode.getKey())).thenReturn(Optional.empty());
+        applicationConfigUtil.setEnvironment(BaseTest.environment);
+        Mockito.when(applicationConfigUtil.get(ApplicationConfigKey.uploadLogMode.getKey())).thenReturn(Optional.empty());
         UploadLog uploadLog = uploadLogFactory.initPrimarySendLogService();
         Assertions.assertTrue(uploadLog instanceof UploadLogByDefault);
     }

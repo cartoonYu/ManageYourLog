@@ -9,6 +9,8 @@
 
 #### common
 1. README.md 编写
-3. swagger 使用
-4. 日志打印统一开关
-5. dubbo hessian 序列化失败
+2. swagger 使用
+3. 日志打印统一开关
+4. dubbo hessian 序列化失败
+5. 增加注释
+6. 1.0 版本 release

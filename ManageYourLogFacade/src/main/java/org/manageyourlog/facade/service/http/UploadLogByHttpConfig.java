@@ -1,6 +1,6 @@
 package org.manageyourlog.facade.service.http;
 
-import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
 import org.manageyourlog.facade.service.factory.UploadLogMode;
@@ -18,14 +18,14 @@ import javax.annotation.PostConstruct;
 public class UploadLogByHttpConfig {
 
     @Autowired
-    private ApplicationConfig applicationConfig;
+    private ApplicationConfigUtil applicationConfigUtil;
 
 
     private String baseUrl;
 
     @PostConstruct
     private void init(){
-        applicationConfig.get(ApplicationConfigKey.uploadLogServerUrl.getKey(), (baseUrl) -> this.baseUrl = baseUrl);
+        applicationConfigUtil.get(ApplicationConfigKey.uploadLogServerUrl.getKey(), (baseUrl) -> this.baseUrl = baseUrl);
     }
 
     public String getBaseUrl() {

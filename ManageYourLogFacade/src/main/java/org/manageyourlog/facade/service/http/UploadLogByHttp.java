@@ -1,7 +1,7 @@
 package org.manageyourlog.facade.service.http;
 
-import org.manageyourlog.common.constants.Error;
-import org.manageyourlog.common.util.http.HttpRegister;
+import org.manageyourlog.common.constants.HandleError;
+import org.manageyourlog.common.util.http.HttpRegisterUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.http.UploadLogInterface;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
@@ -27,9 +27,6 @@ public class UploadLogByHttp implements UploadLog {
     @Autowired
     private UploadLogByHttpConfig uploadLogByHttpConfig;
 
-    @Autowired
-    private HttpRegister httpRegister;
-
     private UploadLogInterface uploadLogInterface;
 
     @Override
@@ -39,7 +36,7 @@ public class UploadLogByHttp implements UploadLog {
             return res.execute().body();
         } catch (Exception e){
             log.error("upload log, upload log error", e);
-            return new UploadLogResp<>(Error.uploadLogFail);
+            return new UploadLogResp<>(HandleError.UPLOAD_LOG_FAIL);
         }
     }
 
@@ -50,13 +47,13 @@ public class UploadLogByHttp implements UploadLog {
             return res.execute().body();
         } catch (Exception e){
             log.error("upload log, upload log error", e);
-            return new UploadLogResp<>(Error.uploadLogFail);
+            return new UploadLogResp<>(HandleError.UPLOAD_LOG_FAIL);
         }
     }
 
     @PostConstruct
     private void init(){
         String baseUrl = uploadLogByHttpConfig.getBaseUrl();
-        uploadLogInterface = httpRegister.register(UploadLogInterface.class, baseUrl);
+        uploadLogInterface = HttpRegisterUtil.getInstance().register(UploadLogInterface.class, baseUrl);
     }
 }

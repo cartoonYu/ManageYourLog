@@ -3,10 +3,16 @@ package org.manageyourlog.common.constants;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ * log sort
+ * @author cartoon
+ * @date 2022/1/27 16:34
+ * @version v1.0
+ */
 public enum LogRecordSort implements Serializable {
 
     DEFAULT(0L, "default"),
-    Operate(1L, "operate");
+    OPERATE(1L, "operate");
 
     private final Long sortId;
 

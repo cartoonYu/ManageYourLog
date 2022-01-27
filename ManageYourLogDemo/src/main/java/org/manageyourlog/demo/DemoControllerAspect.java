@@ -33,14 +33,14 @@ public class DemoControllerAspect {
             String content = String.format("%s operate %s", queryReq.getUserId(), queryReq.getOrderId());
 
             UploadLogRecordIndexReq uploadLogRecordIndexReq = new UploadLogRecordIndexReq();
-            uploadLogRecordIndexReq.setLogRecordIndexSort(LogRecordIndexSort.Id)
+            uploadLogRecordIndexReq.setLogRecordIndexSort(LogRecordIndexSort.ID)
                     .setIndexValue(queryReq.getOrderId());
 
             UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
             uploadLogRecordReq.setContent(content)
                             .setOperatorSort("user")
                                     .setOperator(queryReq.getOrderId())
-                                            .setLogRecordSort(LogRecordSort.Operate)
+                                            .setLogRecordSort(LogRecordSort.OPERATE)
                                                     .setIndexList(ImmutableList.of(uploadLogRecordIndexReq));
             sendLog.upload(uploadLogRecordReq);
             return data;

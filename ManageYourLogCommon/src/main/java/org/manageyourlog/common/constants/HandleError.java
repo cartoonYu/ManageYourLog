@@ -3,21 +3,20 @@ package org.manageyourlog.common.constants;
 import java.io.Serializable;
 
 /**
+ * error code enum, use to indicate reason of handle fail to client or server
  * @author cartoon
  * @date 2021/10/30 17:55
  */
-public enum Error implements Serializable {
+public enum HandleError implements Serializable {
 
-    paramMiss(101, "param is miss, param property is miss"),
-    uploadUrlMiss(200, "upload url is miss, please check config"),
-    propertyMiss(201, "property is miss, please check property file"),
-    uploadLogFail(301, "upload log fail");
+    PARAM_MISS(101, "param is miss, param property is miss"),
+    UPLOAD_LOG_FAIL(301, "upload log fail");
 
     private final Integer code;
 
     private final String msg;
 
-    Error(Integer code, String msg) {
+    HandleError(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

@@ -1,6 +1,6 @@
 package org.manageyourlog.facade.service.factory;
 
-import org.manageyourlog.common.util.loadCondition.AbstractLoadCondition;
+import org.manageyourlog.common.util.loadCondition.BaseLoadCondition;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
@@ -10,7 +10,7 @@ import java.util.Map;
  * @author cartoon
  * @date 2022/1/23 22:44
  */
-public class UploadLogLoadConfig extends AbstractLoadCondition {
+public class UploadLogLoadConfig extends BaseLoadCondition {
 
     @Override
     protected String configKey() {

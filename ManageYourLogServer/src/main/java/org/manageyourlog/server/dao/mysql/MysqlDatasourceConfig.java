@@ -25,15 +25,15 @@ import java.util.Properties;
  */
 @Configuration
 @ReceiveLogDaoLoadCondition(mode = StoreMode.Mysql)
-@MapperScan(basePackages = MysqlDatasourceConfig.packageName,
+@MapperScan(basePackages = MysqlDatasourceConfig.PACKAGE_NAME,
                 sqlSessionTemplateRef = "mysqlTemplate")
 public class MysqlDatasourceConfig {
 
     private final String mysqlDatasource = "mysqlDatasource";
 
-    public static final String packageName = "org/manageyourlog/server/dao/mysql/mapper";
+    public static final String PACKAGE_NAME = "org/manageyourlog/server/dao/mysql/mapper";
 
-    public static final String mapperLocation = "mapper/*.xml";
+    public static final String MAPPER_LOCATION = "mapper/*.xml";
 
     public SqlSessionFactory sqlSessionFactory;
 
@@ -47,9 +47,9 @@ public class MysqlDatasourceConfig {
     public SqlSessionFactory createSqlSessionFactory(@Qualifier(mysqlDatasource) DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + mapperLocation));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + MAPPER_LOCATION));
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage(packageName);
+        sqlSessionFactoryBean.setTypeAliasesPackage(PACKAGE_NAME);
         sqlSessionFactory = sqlSessionFactoryBean.getObject();
         return sqlSessionFactory;
     }

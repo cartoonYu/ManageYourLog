@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
 import org.manageyourlog.server.controller.receive.ReceiveLogMode;
@@ -25,7 +25,7 @@ import java.util.Properties;
 public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Autowired
-    private ApplicationConfig applicationConfig;
+    private ApplicationConfigUtil applicationConfigUtil;
 
     private KafkaConsumer<String, String> kafkaConsumer;
 
@@ -33,7 +33,7 @@ public class ReceiveLogByKafkaConfig implements DisposableBean {
     public KafkaConsumer<String, String> consumer(@Qualifier("receiveByKafkaConfig") Properties config){
         Properties consumeConfig = getConsumeConfig(config);
         kafkaConsumer = new KafkaConsumer<>(consumeConfig);
-        applicationConfig.get(ApplicationConfigKey.receiveLogKafkaTopic.getKey(), (topic) -> kafkaConsumer.subscribe(ImmutableList.of(topic)));
+        applicationConfigUtil.get(ApplicationConfigKey.receiveLogKafkaTopic.getKey(), (topic) -> kafkaConsumer.subscribe(ImmutableList.of(topic)));
         return kafkaConsumer;
     }
 

@@ -37,4 +37,6 @@ public class ReadJsonUtil {
         }
         return res;
     }
+
+    private ReadJsonUtil(){}
 }

@@ -1,6 +1,6 @@
 package org.manageyourlog.server.repository.factory;
 
-import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.common.util.factory.BaseFactory;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.manageyourlog.server.repository.LogRecordRepository;
@@ -20,12 +20,12 @@ import java.util.Optional;
 public class StoreRepositoryFactory extends BaseFactory {
 
     @Autowired
-    private ApplicationConfig applicationConfig;
+    private ApplicationConfigUtil applicationConfigUtil;
 
     @Bean
     @Primary
     public LogRecordRepository initPrimaryRepository(){
-        Optional<String> storeMode = applicationConfig.get(ApplicationConfigKey.storeMode.getKey());
+        Optional<String> storeMode = applicationConfigUtil.get(ApplicationConfigKey.storeMode.getKey());
         Class<?> storeClass = RepositoryMode.defaultMode.getClassType();
         if(storeMode.isPresent()){
             for(RepositoryMode repositoryMode : RepositoryMode.values()){

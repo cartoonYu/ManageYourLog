@@ -4,6 +4,7 @@ import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
 import org.manageyourlog.facade.service.factory.UploadLogMode;
@@ -23,7 +24,7 @@ import javax.annotation.PostConstruct;
 public class UploadLogByRpcConfig {
 
     @Autowired
-    private org.manageyourlog.common.config.ApplicationConfig config;
+    private ApplicationConfigUtil config;
 
     private String ip;
 

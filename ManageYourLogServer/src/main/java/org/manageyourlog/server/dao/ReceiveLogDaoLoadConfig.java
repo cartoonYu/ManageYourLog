@@ -1,6 +1,6 @@
 package org.manageyourlog.server.dao;
 
-import org.manageyourlog.common.util.loadCondition.AbstractLoadCondition;
+import org.manageyourlog.common.util.loadCondition.BaseLoadCondition;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
@@ -10,7 +10,7 @@ import java.util.Map;
  * @author cartoon
  * @date 2022/1/24 20:16
  */
-public class ReceiveLogDaoLoadConfig extends AbstractLoadCondition {
+public class ReceiveLogDaoLoadConfig extends BaseLoadCondition {
 
     @Override
     protected String configKey() {

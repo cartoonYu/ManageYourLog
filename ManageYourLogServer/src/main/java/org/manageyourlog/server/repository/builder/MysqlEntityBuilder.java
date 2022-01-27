@@ -1,10 +1,10 @@
 package org.manageyourlog.server.repository.builder;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manageyourlog.common.constants.LogRecordIndexSort;
 import org.manageyourlog.common.constants.LogRecordSort;
-import org.manageyourlog.common.util.CollectionUtil;
 import org.manageyourlog.server.dao.mysql.model.LogRecordIndexMysqlPO;
 import org.manageyourlog.server.dao.mysql.model.LogRecordMysqlPO;
 import org.manageyourlog.server.model.LogRecord;
@@ -103,8 +103,8 @@ public class MysqlEntityBuilder {
                 .setVersion(logRecord.getVersion())
                 .setCreateTime(logRecord.getCreateTime())
                 .setModifyTime(logRecord.getModifyTime());
-        if(CollectionUtil.getInstance().judgeIsNotEmpty(logRecord.getIndexList())){
-            logRecordMysqlPO.setIndexIds(logRecord.getIndexList().stream().map(LogRecordIndex::getIndexId).collect(Collectors.joining(LogRecordMysqlRepository.indexSplitCharacter)));
+        if(CollectionUtils.isNotEmpty(logRecord.getIndexList())){
+            logRecordMysqlPO.setIndexIds(logRecord.getIndexList().stream().map(LogRecordIndex::getIndexId).collect(Collectors.joining(LogRecordMysqlRepository.INDEX_SPLIT_CHARACTER)));
         }
         //convert index model to po
         List<LogRecordIndexMysqlPO> indexMysqlPOS = ofNullable(logRecord.getIndexList()).map(

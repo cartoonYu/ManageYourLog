@@ -3,7 +3,7 @@ package org.manageyourlog.test.server.repository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.manageyourlog.server.repository.DefaultLogRecordRepository;
 import org.manageyourlog.server.repository.LogRecordRepository;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class StoreRepositoryFactoryTest extends BaseTest {
 
     @Spy
-    private ApplicationConfig applicationConfig;
+    private ApplicationConfigUtil applicationConfigUtil;
 
     @Autowired
     @InjectMocks
@@ -34,8 +34,8 @@ public class StoreRepositoryFactoryTest extends BaseTest {
     @DisplayName("init bean default test")
     @Test
     public void testInitBeanDefault(){
-        applicationConfig.setEnvironment(BaseTest.environment);
-        Mockito.when(applicationConfig.get(ApplicationConfigKey.storeMode.getKey())).thenReturn(Optional.empty());
+        applicationConfigUtil.setEnvironment(BaseTest.environment);
+        Mockito.when(applicationConfigUtil.get(ApplicationConfigKey.storeMode.getKey())).thenReturn(Optional.empty());
         LogRecordRepository logRecordRepository = storeRepositoryFactory.initPrimaryRepository();
         Assertions.assertTrue(logRecordRepository instanceof DefaultLogRecordRepository);
     }

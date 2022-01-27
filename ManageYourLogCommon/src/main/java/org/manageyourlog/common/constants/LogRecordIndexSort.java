@@ -3,10 +3,16 @@ package org.manageyourlog.common.constants;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ * log index sort
+ * @author cartoon
+ * @date 2022/1/27 16:29
+ * @version v1.0
+ */
 public enum LogRecordIndexSort implements Serializable {
 
-    Date(1L, "date"),
-    Id(2L, "id");
+    DATE(1L, "date"),
+    ID(2L, "id");
 
     private final Long sortId;
 

@@ -1,6 +1,6 @@
 package org.manageyourlog.facade.model.resp;
 
-import org.manageyourlog.common.constants.Error;
+import org.manageyourlog.common.constants.HandleError;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ public class UploadLogResp<T> implements Serializable {
 
     private Boolean hasAbnormal;
 
-    private Error failResult;
+    private HandleError failResult;
 
     private T successResult;
 
@@ -24,7 +24,7 @@ public class UploadLogResp<T> implements Serializable {
         this.successResult = successResult;
     }
 
-    public UploadLogResp(Error failResult) {
+    public UploadLogResp(HandleError failResult) {
         hasAbnormal = true;
         this.failResult = failResult;
     }
@@ -33,7 +33,7 @@ public class UploadLogResp<T> implements Serializable {
         return hasAbnormal;
     }
 
-    public Error getFailResult() {
+    public HandleError getFailResult() {
         return failResult;
     }
 

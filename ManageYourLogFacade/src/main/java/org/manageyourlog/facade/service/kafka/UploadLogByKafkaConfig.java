@@ -4,7 +4,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.manageyourlog.common.config.ApplicationConfig;
+import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
 import org.manageyourlog.facade.service.factory.UploadLogMode;
@@ -28,7 +28,7 @@ import java.util.Properties;
 public class UploadLogByKafkaConfig implements DisposableBean {
 
     @Autowired
-    private ApplicationConfig applicationConfig;
+    private ApplicationConfigUtil applicationConfigUtil;
 
     private String topic;
 
@@ -71,6 +71,6 @@ public class UploadLogByKafkaConfig implements DisposableBean {
 
     @PostConstruct
     private void init(){
-        applicationConfig.get(ApplicationConfigKey.uploadLogKafkaTopic.getKey()).ifPresent(topicValue -> this.topic = topicValue);
+        applicationConfigUtil.get(ApplicationConfigKey.uploadLogKafkaTopic.getKey()).ifPresent(topicValue -> this.topic = topicValue);
     }
 }

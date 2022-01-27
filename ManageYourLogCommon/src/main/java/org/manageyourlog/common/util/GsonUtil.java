@@ -4,7 +4,6 @@ import com.google.gson.*;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,6 +16,8 @@ import java.util.List;
 public class GsonUtil {
 
     private static final GsonUtil INSTANCE = new GsonUtil();
+
+    private static final String TIME_FORMATTER = "yyyy-MM-dd HH:mm:ss";
 
     public static GsonUtil getInstance(){
         return INSTANCE;
@@ -35,23 +36,23 @@ public class GsonUtil {
     }
 
     public <T> List<T> readJson(String sourceStr, Class<T> classType){
-        Type type = new ParameterizedTypeImpl(classType);
+        Type type = new ParameterizedTypeImpl<>(classType);
         return formGsonObject().fromJson(sourceStr, type);
     }
 
     public Gson formGsonObject(){
         return new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))))
-                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern(TIME_FORMATTER))))
+                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), DateTimeFormatter.ofPattern(TIME_FORMATTER)))
                 .serializeNulls()
                 .create();
     }
 
-    private static class ParameterizedTypeImpl implements ParameterizedType {
+    private static class ParameterizedTypeImpl<T> implements ParameterizedType {
 
-        Class clazz;
+        Class<T> clazz;
 
-        public ParameterizedTypeImpl(Class clz) {
+        public ParameterizedTypeImpl(Class<T> clz) {
             clazz = clz;
         }
         @Override

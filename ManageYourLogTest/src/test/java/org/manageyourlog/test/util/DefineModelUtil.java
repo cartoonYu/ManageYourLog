@@ -71,13 +71,13 @@ public class DefineModelUtil {
 
     public static UploadLogRecordReq defineLogRecordReq(){
         UploadLogRecordIndexReq uploadLogRecordIndexReq = new UploadLogRecordIndexReq();
-        uploadLogRecordIndexReq.setLogRecordIndexSort(LogRecordIndexSort.Id)
+        uploadLogRecordIndexReq.setLogRecordIndexSort(LogRecordIndexSort.ID)
                 .setIndexValue("111");
         UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
         uploadLogRecordReq.setContent("111")
                 .setOperatorSort("user")
                 .setOperator("cartoon")
-                .setLogRecordSort(LogRecordSort.Operate)
+                .setLogRecordSort(LogRecordSort.OPERATE)
                 .setIndexList(ImmutableList.of(uploadLogRecordIndexReq));
         return uploadLogRecordReq;
     }
@@ -89,7 +89,7 @@ public class DefineModelUtil {
                 .setContent("111")
                 .setOperatorSort("user")
                 .setOperator("cartoon")
-                .setLogRecordSort(LogRecordSort.Operate)
+                .setLogRecordSort(LogRecordSort.OPERATE)
                 .setIndexList(ImmutableList.of(defineLogRecordIndex(recordId)))
                 .setVersion(1)
                 .setCreateTime(LocalDateTime.now())
@@ -101,7 +101,7 @@ public class DefineModelUtil {
         LogRecordIndex logRecordIndex = new LogRecordIndex();
         logRecordIndex.setIndexId(IdGenerateUtil.getInstance().generate(13))
                 .setLogRecordId(recordId)
-                .setLogRecordIndexSort(LogRecordIndexSort.Id)
+                .setLogRecordIndexSort(LogRecordIndexSort.ID)
                 .setIndexValue("111")
                 .setVersion(1)
                 .setCreateTime(LocalDateTime.now())
