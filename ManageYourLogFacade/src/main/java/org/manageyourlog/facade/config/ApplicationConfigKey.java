@@ -7,7 +7,7 @@ package org.manageyourlog.facade.config;
 public enum ApplicationConfigKey {
 
     uploadLogMode("upload.log.mode", "upload log mode"),
-    uploadLogServerUrl("upload.log.server.url", "upload log to http server"),
+    uploadLogHttpUrl("upload.log.http.url", "upload log to http server"),
     uploadLogKafkaTopic("upload.log.kafka.topic", "upload log to kafka topic"),
     uploadLogRpcIp("upload.log.rpc.ip", "upload log rpc ip address"),
     uploadLogRpcPort("upload.log.rpc.port", "upload log rpc port"),

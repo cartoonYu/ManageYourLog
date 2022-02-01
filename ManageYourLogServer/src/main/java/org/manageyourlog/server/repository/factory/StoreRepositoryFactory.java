@@ -26,7 +26,7 @@ public class StoreRepositoryFactory extends BaseFactory {
     @Primary
     public LogRecordRepository initPrimaryRepository(){
         Optional<String> storeMode = applicationConfigUtil.get(ApplicationConfigKey.storeMode.getKey());
-        Class<?> storeClass = RepositoryMode.defaultMode.getClassType();
+        Class<?> storeClass = RepositoryMode.mysql.getClassType();
         if(storeMode.isPresent()){
             for(RepositoryMode repositoryMode : RepositoryMode.values()){
                 if(repositoryMode.getMode().equals(storeMode.get())){

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
+ * gson util, package gson operation
  * @author cartoon
  * @version 1.0
  * @since 2021/12/24 01:26

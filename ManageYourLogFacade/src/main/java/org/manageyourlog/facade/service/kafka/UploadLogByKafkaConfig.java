@@ -4,6 +4,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
@@ -34,7 +35,14 @@ public class UploadLogByKafkaConfig implements DisposableBean {
 
     private KafkaProducer<String, String> kafkaProducer;
 
-    public boolean sendMessage(String dataStr, Logger logger){
+    /**
+     * send data tool
+     * @param data
+     * @param logger
+     * @return send result
+     */
+    public <T> boolean sendMessage(T data, Logger logger){
+        String dataStr = GsonUtil.getInstance().writeJson(data);
         if(logger.isInfoEnabled()){
             logger.info("send message though kafka: {}", dataStr);
         }

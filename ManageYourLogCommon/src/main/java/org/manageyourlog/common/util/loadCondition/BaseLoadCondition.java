@@ -32,8 +32,9 @@ public abstract class BaseLoadCondition implements Condition {
      */
     @Override
     public boolean matches(@NonNull ConditionContext context, @NonNull AnnotatedTypeMetadata metadata) {
+        Optional<String> specifyCondition = matchSpecifyCondition(metadata);
         return matches(context, configKey(), ALL_MATCH_CONFIG)
-                || matches(context, configKey(), matchSpecifyCondition(metadata));
+                || (specifyCondition.isPresent() && matches(context, configKey(), specifyCondition.get()));
     }
 
     /**
@@ -66,5 +67,5 @@ public abstract class BaseLoadCondition implements Condition {
      * @param metadata use to get annotation value tool
      * @return config value
      */
-    protected abstract String matchSpecifyCondition(AnnotatedTypeMetadata metadata);
+    protected abstract Optional<String> matchSpecifyCondition(AnnotatedTypeMetadata metadata);
 }

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.facade.http.UploadLogInterface;
+import org.manageyourlog.facade.service.http.UploadLogInterface;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
 import org.manageyourlog.facade.service.http.UploadLogByHttp;

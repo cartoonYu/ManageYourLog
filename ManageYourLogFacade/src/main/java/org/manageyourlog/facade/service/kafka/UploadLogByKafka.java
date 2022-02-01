@@ -1,6 +1,5 @@
 package org.manageyourlog.facade.service.kafka;
 
-import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
@@ -26,8 +25,7 @@ public class UploadLogByKafka implements UploadLog {
     @Override
     public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        String dataStr = GsonUtil.getInstance().writeJson(uploadLogRecordReq);
-        uploadLogByKafkaConfig.sendMessage(dataStr, log);
+        uploadLogByKafkaConfig.sendMessage(uploadLogRecordReq, log);
         return new UploadLogResp<>(true);
     }
 

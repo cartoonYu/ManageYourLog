@@ -1,6 +1,5 @@
 package org.manageyourlog.server.repository.factory;
 
-import org.manageyourlog.server.repository.DefaultLogRecordRepository;
 import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 
 /**
@@ -10,7 +9,6 @@ import org.manageyourlog.server.repository.LogRecordMysqlRepository;
  */
 public enum RepositoryMode {
 
-    defaultMode("default", DefaultLogRecordRepository.class),
     mysql("mysql", LogRecordMysqlRepository.class);
 
     private final String mode;

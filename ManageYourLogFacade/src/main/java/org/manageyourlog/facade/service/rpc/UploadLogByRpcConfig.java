@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 
 /**
+ * define dubbo with nacos config
  * @author cartoon
  * @date 2022/1/16 17:03
  */
@@ -26,16 +27,34 @@ public class UploadLogByRpcConfig {
     @Autowired
     private ApplicationConfigUtil config;
 
+    /**
+     * nacos ip
+     */
     private String ip;
 
+    /**
+     * nacos port
+     */
     private Integer port;
 
+    /**
+     * indicate client application name
+     */
     private String applicationName;
 
+    /**
+     * indicate client protocol
+     */
     private String protocolName;
 
+    /**
+     * indicate client protocol port
+     */
     private Integer protocolPort;
 
+    /**
+     * indicate client protocol serialization
+     */
     private String protocolSerialization;
 
     @Bean("uploadLogByRpcApplicationBean")

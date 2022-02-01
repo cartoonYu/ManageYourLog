@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
+ * get upload log base url from config
  * @author cartoon
  * @date 2022/1/9 15:49
  */
@@ -20,12 +21,11 @@ public class UploadLogByHttpConfig {
     @Autowired
     private ApplicationConfigUtil applicationConfigUtil;
 
-
     private String baseUrl;
 
     @PostConstruct
     private void init(){
-        applicationConfigUtil.get(ApplicationConfigKey.uploadLogServerUrl.getKey(), (baseUrl) -> this.baseUrl = baseUrl);
+        applicationConfigUtil.get(ApplicationConfigKey.uploadLogHttpUrl.getKey(), (baseUrl) -> this.baseUrl = baseUrl);
     }
 
     public String getBaseUrl() {

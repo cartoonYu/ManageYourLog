@@ -5,6 +5,7 @@ import org.manageyourlog.facade.config.ApplicationConfigKey;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author cartoon
@@ -18,9 +19,12 @@ public class UploadLogLoadConfig extends BaseLoadCondition {
     }
 
     @Override
-    protected String matchSpecifyCondition(AnnotatedTypeMetadata metadata) {
+    protected Optional<String> matchSpecifyCondition(AnnotatedTypeMetadata metadata) {
         Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(UploadLogLoadCondition.class.getName());
         assert annotationAttributes != null;
-        return ((UploadLogMode) annotationAttributes.get("mode")).getMode();
+        if(annotationAttributes.get("mode") instanceof UploadLogMode uploadLogMode){
+            return Optional.ofNullable(uploadLogMode.getMode());
+        }
+        return Optional.empty();
     }
 }

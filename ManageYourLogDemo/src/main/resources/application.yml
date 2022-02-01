@@ -3,7 +3,7 @@ spring:
     name: ManageYourLogDemo
 upload:
   log:
-    mode: rpc
+    mode: kafka
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092
@@ -17,6 +17,6 @@ upload:
         name: dubbo
         port: 20882
         serialization: nativejava
-    server:
+    http:
       url: http://127.0.0.1:8080
 

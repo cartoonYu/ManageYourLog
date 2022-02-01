@@ -1,6 +1,7 @@
 package org.manageyourlog.common.util;
 
 /**
+ * id generate tool
  * @author cartoon
  * @date 2021/10/23 17:51
  */
@@ -12,6 +13,11 @@ public class IdGenerateUtil {
         return INSTANCE;
     }
 
+    /**
+     * generate id with specific length by nano timestamp
+     * @param length specific length
+     * @return id with specific length
+     */
     public String generate(int length){
         if(length == 0){
             return "";

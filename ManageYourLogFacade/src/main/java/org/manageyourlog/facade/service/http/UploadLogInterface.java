@@ -1,4 +1,4 @@
-package org.manageyourlog.facade.http;
+package org.manageyourlog.facade.service.http;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.model.resp.UploadLogResp;
@@ -9,10 +9,10 @@ import retrofit2.http.POST;
 import java.util.List;
 
 /**
+ * upload log by http define
  * @author cartoon
  * @date 2021/12/19 17:01
  */
-
 public interface UploadLogInterface {
 
     @POST("/receiveSingleLog")

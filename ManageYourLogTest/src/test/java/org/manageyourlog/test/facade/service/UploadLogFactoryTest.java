@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.manageyourlog.common.util.config.ApplicationConfigUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.config.ApplicationConfigKey;
-import org.manageyourlog.facade.service.UploadLogByDefault;
 import org.manageyourlog.facade.service.factory.UploadLogFactory;
+import org.manageyourlog.facade.service.http.UploadLogByHttp;
 import org.manageyourlog.test.base.BaseTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -36,7 +36,7 @@ public class UploadLogFactoryTest extends BaseTest{
         applicationConfigUtil.setEnvironment(BaseTest.environment);
         Mockito.when(applicationConfigUtil.get(ApplicationConfigKey.uploadLogMode.getKey())).thenReturn(Optional.empty());
         UploadLog uploadLog = uploadLogFactory.initPrimarySendLogService();
-        Assertions.assertTrue(uploadLog instanceof UploadLogByDefault);
+        Assertions.assertTrue(uploadLog instanceof UploadLogByHttp);
     }
 
 }
