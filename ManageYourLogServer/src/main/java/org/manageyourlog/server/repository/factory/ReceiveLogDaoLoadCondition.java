@@ -1,4 +1,4 @@
-package org.manageyourlog.server.dao;
+package org.manageyourlog.server.repository.factory;
 
 import org.springframework.context.annotation.Conditional;
 

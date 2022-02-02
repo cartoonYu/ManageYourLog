@@ -30,16 +30,16 @@ public class SyncReceiveLogTest extends BaseTest {
     @Test
     public void testReceiveSingleLogNormal(){
         UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertFalse(uploadRes.isHasAbnormal());
-        Assertions.assertTrue(uploadRes.getSuccessResult());
+        Assertions.assertFalse(uploadRes.hasAbnormal());
+        Assertions.assertTrue(uploadRes.successResult());
     }
 
     @DisplayName("receive log list normal test")
     @Test
     public void testUploadLogListNormal(){
         UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertFalse(uploadRes.isHasAbnormal());
-        Assertions.assertTrue(uploadRes.getSuccessResult());
+        Assertions.assertFalse(uploadRes.hasAbnormal());
+        Assertions.assertTrue(uploadRes.successResult());
     }
 
     @BeforeAll

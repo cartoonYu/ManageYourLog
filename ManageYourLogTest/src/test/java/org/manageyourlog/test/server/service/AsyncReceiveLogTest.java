@@ -33,8 +33,8 @@ public class AsyncReceiveLogTest extends BaseTest {
     public void testReceiveSingleLogNormal(){
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertFalse(uploadRes.isHasAbnormal());
-        Assertions.assertTrue(uploadRes.getSuccessResult());
+        Assertions.assertFalse(uploadRes.hasAbnormal());
+        Assertions.assertTrue(uploadRes.successResult());
     }
 
     @DisplayName("receive log list normal test")
@@ -42,24 +42,24 @@ public class AsyncReceiveLogTest extends BaseTest {
     public void testReceiveLogListNormal(){
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertFalse(uploadRes.isHasAbnormal());
-        Assertions.assertTrue(uploadRes.getSuccessResult());
+        Assertions.assertFalse(uploadRes.hasAbnormal());
+        Assertions.assertTrue(uploadRes.successResult());
     }
 
     @DisplayName("receive single log using non upload time test")
     @Test
     public void testReceiveSingleLogWithoutUploadTime(){
         UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertTrue(uploadRes.isHasAbnormal());
-        Assertions.assertNull(uploadRes.getSuccessResult());
+        Assertions.assertTrue(uploadRes.hasAbnormal());
+        Assertions.assertNull(uploadRes.successResult());
     }
 
     @DisplayName("receive log list using non upload time test")
     @Test
     public void testReceiveLogListWithoutUploadTime(){
         UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertTrue(uploadRes.isHasAbnormal());
-        Assertions.assertNull(uploadRes.getSuccessResult());
+        Assertions.assertTrue(uploadRes.hasAbnormal());
+        Assertions.assertNull(uploadRes.successResult());
     }
 
     @BeforeEach

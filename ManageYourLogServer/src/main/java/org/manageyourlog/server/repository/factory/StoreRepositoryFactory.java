@@ -26,11 +26,11 @@ public class StoreRepositoryFactory extends BaseFactory {
     @Primary
     public LogRecordRepository initPrimaryRepository(){
         Optional<String> storeMode = applicationConfigUtil.get(ApplicationConfigKey.storeMode.getKey());
-        Class<?> storeClass = RepositoryMode.mysql.getClassType();
+        Class<?> storeClass = StoreMode.Mysql.getClassType();
         if(storeMode.isPresent()){
-            for(RepositoryMode repositoryMode : RepositoryMode.values()){
-                if(repositoryMode.getMode().equals(storeMode.get())){
-                    storeClass = repositoryMode.getClassType();
+            for(StoreMode mode : StoreMode.values()){
+                if(mode.getMode().equals(storeMode.get())){
+                    storeClass = mode.getClassType();
                 }
             }
         } else {

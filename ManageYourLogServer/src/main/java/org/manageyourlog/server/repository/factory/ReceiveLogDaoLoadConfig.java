@@ -1,7 +1,6 @@
-package org.manageyourlog.server.dao;
+package org.manageyourlog.server.repository.factory;
 
 import org.manageyourlog.common.util.loadCondition.BaseLoadCondition;
-import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.manageyourlog.server.config.ApplicationConfigKey;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
@@ -16,15 +15,15 @@ public class ReceiveLogDaoLoadConfig extends BaseLoadCondition {
 
     @Override
     protected String configKey() {
-        return ApplicationConfigKey.receiveLogLoadMode.getKey();
+        return ApplicationConfigKey.storeLoadMode.getKey();
     }
 
     @Override
     protected Optional<String> matchSpecifyCondition(AnnotatedTypeMetadata metadata) {
         Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(ReceiveLogDaoLoadCondition.class.getName());
         assert annotationAttributes != null;
-        if(annotationAttributes.get("mode") instanceof UploadLogMode uploadLogMode){
-            return Optional.ofNullable(uploadLogMode.getMode());
+        if(annotationAttributes.get("mode") instanceof StoreMode storeMode){
+            return Optional.ofNullable(storeMode.getMode());
         }
         return Optional.empty();
     }

@@ -2,42 +2,32 @@ package org.manageyourlog.facade.model.resp;
 
 import org.manageyourlog.common.constants.HandleError;
 
-import java.io.Serializable;
-
 /**
  * @author cartoon
- * @date 2021/10/30 17:54
+ * @date 2022/2/2 22:01
  */
-public class UploadLogResp<T> implements Serializable {
-
-    private Boolean hasAbnormal;
-
-    private HandleError failResult;
-
-    private T successResult;
-
-    public UploadLogResp() {
-    }
+public record UploadLogResp<T>(Boolean hasAbnormal, T successResult, HandleError failResult) {
 
     public UploadLogResp(T successResult) {
-        hasAbnormal = false;
-        this.successResult = successResult;
+        this(false, successResult, null);
     }
 
     public UploadLogResp(HandleError failResult) {
-        hasAbnormal = true;
-        this.failResult = failResult;
+        this(true, null, failResult);
     }
 
-    public Boolean isHasAbnormal() {
+    @Override
+    public Boolean hasAbnormal() {
         return hasAbnormal;
     }
 
-    public HandleError getFailResult() {
-        return failResult;
+    @Override
+    public T successResult() {
+        return successResult;
     }
 
-    public T getSuccessResult() {
-        return successResult;
+    @Override
+    public HandleError failResult() {
+        return failResult;
     }
 }

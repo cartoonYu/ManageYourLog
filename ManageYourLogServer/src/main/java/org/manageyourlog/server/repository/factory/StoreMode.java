@@ -4,18 +4,17 @@ import org.manageyourlog.server.repository.LogRecordMysqlRepository;
 
 /**
  * @author cartoon
- * @version 1.0
- * @since 2021/11/15 23:48
+ * @date 2022/1/3 00:28
  */
-public enum RepositoryMode {
+public enum StoreMode {
 
-    mysql("mysql", LogRecordMysqlRepository.class);
+    Mysql("mysql", LogRecordMysqlRepository.class);
 
     private final String mode;
 
     private final Class<?> classType;
 
-    RepositoryMode(String mode, Class<?> classType) {
+    StoreMode(String mode, Class<?> classType) {
         this.mode = mode;
         this.classType = classType;
     }

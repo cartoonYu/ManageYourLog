@@ -21,9 +21,9 @@ receive:
         port: 20881
         serialization: nativejava
 store:
-  mode: default
+  mode: mysql
   load:
-    mode: default
+    mode: mysql
   mysql:
     jdbcUrl: jdbc:mysql://cartoon-ali.com:3306/ManageYourLog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
     username: test
