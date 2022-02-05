@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.facade.service.http.UploadLogInterface;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
 import org.manageyourlog.facade.service.http.UploadLogByHttp;
@@ -32,19 +32,19 @@ public class UploadLogByHttpTest extends BaseTest{
     @Test
     public void testUploadSingleLog(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
-        Mockito.when(uploadLogInterface.uploadSingleLog(ArgumentMatchers.eq(uploadLogRecordReq))).thenReturn(DefineModelUtil.defineHttpResponse(new UploadLogResp<>(true)));
-        UploadLogResp<Boolean> uploadLogResp = uploadLog.upload(uploadLogRecordReq);
-        Assertions.assertFalse(uploadLogResp.hasAbnormal());
-        Assertions.assertTrue(uploadLogResp.successResult());
+        Mockito.when(uploadLogInterface.uploadSingleLog(ArgumentMatchers.eq(uploadLogRecordReq))).thenReturn(DefineModelUtil.defineHttpResponse(new OperateLogResp<>(true)));
+        OperateLogResp<Boolean> operateLogResp = uploadLog.upload(uploadLogRecordReq);
+        Assertions.assertFalse(operateLogResp.isHasAbnormal());
+        Assertions.assertTrue(operateLogResp.getSuccessResult());
     }
 
     @DisplayName("upload log list by http")
     @Test
     public void testUploadLogList(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
-        Mockito.when(uploadLogInterface.uploadLogList(ArgumentMatchers.eq(ImmutableList.of(uploadLogRecordReq)))).thenReturn(DefineModelUtil.defineHttpResponse(new UploadLogResp<>(true)));
-        UploadLogResp<Boolean> uploadLogResp = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertFalse(uploadLogResp.hasAbnormal());
-        Assertions.assertTrue(uploadLogResp.successResult());
+        Mockito.when(uploadLogInterface.uploadLogList(ArgumentMatchers.eq(ImmutableList.of(uploadLogRecordReq)))).thenReturn(DefineModelUtil.defineHttpResponse(new OperateLogResp<>(true)));
+        OperateLogResp<Boolean> operateLogResp = uploadLog.upload(ImmutableList.of(uploadLogRecordReq));
+        Assertions.assertFalse(operateLogResp.isHasAbnormal());
+        Assertions.assertTrue(operateLogResp.getSuccessResult());
     }
 }

@@ -27,14 +27,13 @@ public class StoreRepositoryFactory extends BaseFactory {
     public LogRecordRepository initPrimaryRepository(){
         Optional<String> storeMode = applicationConfigUtil.get(ApplicationConfigKey.storeMode.getKey());
         Class<?> storeClass = StoreMode.Mysql.getClassType();
-        if(storeMode.isPresent()){
-            for(StoreMode mode : StoreMode.values()){
-                if(mode.getMode().equals(storeMode.get())){
-                    storeClass = mode.getClassType();
-                }
-            }
-        } else {
+        if(storeMode.isEmpty()){
             log.warn("init store repository, have not determine store mode, back to default class type: {}", storeClass.getSimpleName());
+            return (LogRecordRepository) applicationContext.getBean(storeClass);
+        }
+        Optional<StoreMode> selectStoreMode = StoreMode.parse(storeMode.get());
+        if(selectStoreMode.isPresent()){
+            storeClass = selectStoreMode.get().getClassType();
         }
         log.info("init store repository, class type: {}", storeClass.getSimpleName());
         return (LogRecordRepository) applicationContext.getBean(storeClass);

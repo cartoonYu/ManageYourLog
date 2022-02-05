@@ -1,7 +1,7 @@
 package org.manageyourlog.facade.service.http;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -16,9 +16,9 @@ import java.util.List;
 public interface UploadLogInterface {
 
     @POST("/receiveSingleLog")
-    Call<UploadLogResp<Boolean>> uploadSingleLog(@Body UploadLogRecordReq log);
+    Call<OperateLogResp<Boolean>> uploadSingleLog(@Body UploadLogRecordReq log);
 
     @POST("/receiveLogList")
-    Call<UploadLogResp<Boolean>> uploadLogList(@Body List<UploadLogRecordReq> logList);
+    Call<OperateLogResp<Boolean>> uploadLogList(@Body List<UploadLogRecordReq> logList);
 
 }

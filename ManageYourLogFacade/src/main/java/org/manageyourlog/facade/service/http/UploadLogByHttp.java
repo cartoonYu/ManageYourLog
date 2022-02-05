@@ -4,7 +4,7 @@ import org.manageyourlog.common.constants.HandleError;
 import org.manageyourlog.common.util.http.HttpRegisterUtil;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
 import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +29,24 @@ public class UploadLogByHttp implements UploadLog {
     private UploadLogInterface uploadLogInterface;
 
     @Override
-    public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
-        Call<UploadLogResp<Boolean>> res = uploadLogInterface.uploadSingleLog(uploadLogRecordReq);
+    public OperateLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
+        Call<OperateLogResp<Boolean>> res = uploadLogInterface.uploadSingleLog(uploadLogRecordReq);
         try {
             return res.execute().body();
         } catch (Exception e){
             log.error("upload log, upload log error", e);
-            return new UploadLogResp<>(HandleError.UPLOAD_LOG_FAIL);
+            return new OperateLogResp<>(HandleError.UPLOAD_LOG_FAIL);
         }
     }
 
     @Override
-    public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
-        Call<UploadLogResp<Boolean>> res = uploadLogInterface.uploadLogList(uploadLogRecordReqs);
+    public OperateLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
+        Call<OperateLogResp<Boolean>> res = uploadLogInterface.uploadLogList(uploadLogRecordReqs);
         try {
             return res.execute().body();
         } catch (Exception e){
             log.error("upload log, upload log error", e);
-            return new UploadLogResp<>(HandleError.UPLOAD_LOG_FAIL);
+            return new OperateLogResp<>(HandleError.UPLOAD_LOG_FAIL);
         }
     }
 

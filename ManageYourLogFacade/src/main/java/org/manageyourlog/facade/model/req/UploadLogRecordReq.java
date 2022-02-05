@@ -4,7 +4,6 @@ import org.manageyourlog.common.constants.LogRecordSort;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,16 +12,34 @@ import java.util.List;
  */
 public class UploadLogRecordReq implements Serializable {
 
+    /**
+     * log content
+     */
     private String content;
 
+    /**
+     * log operator sort
+     */
     private String operatorSort;
 
+    /**
+     * log operator
+     */
     private String operator;
 
+    /**
+     * log sort
+     */
     private LogRecordSort logRecordSort;
 
+    /**
+     * log index list
+     */
     private List<UploadLogRecordIndexReq> indexList;
 
+    /**
+     * log upload time
+     */
     private LocalDateTime uploadTime;
 
     public String getContent() {

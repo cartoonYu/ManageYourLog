@@ -1,6 +1,7 @@
 package org.manageyourlog.facade.config;
 
 /**
+ * list all config key that facade package use independently
  * @author cartoon
  * @date 2022/1/2 18:31
  */

@@ -1,7 +1,7 @@
 package org.manageyourlog.server.controller.receive.http;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
 import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.manageyourlog.server.service.receive.ReceiveLog;
@@ -27,12 +27,12 @@ public class ReceiveLogByHttp {
     private ReceiveLog syncReceiveLog;
 
     @PostMapping("/receiveSingleLog")
-    public UploadLogResp<Boolean> uploadSingleLog(@RequestBody UploadLogRecordReq req){
+    public OperateLogResp<Boolean> uploadSingleLog(@RequestBody UploadLogRecordReq req){
         return syncReceiveLog.receive(req);
     }
 
     @PostMapping("/receiveLogList")
-    public UploadLogResp<Boolean> uploadLogList(@RequestBody List<UploadLogRecordReq> req){
+    public OperateLogResp<Boolean> uploadLogList(@RequestBody List<UploadLogRecordReq> req){
         return syncReceiveLog.receive(req);
     }
 }

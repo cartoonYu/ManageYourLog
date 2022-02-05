@@ -10,8 +10,14 @@ import java.io.Serializable;
  */
 public class UploadLogRecordIndexReq implements Serializable {
 
+    /**
+     * index sort
+     */
     private LogRecordIndexSort logRecordIndexSort;
 
+    /**
+     * value for search log
+     */
     private String indexValue;
 
     public LogRecordIndexSort getLogRecordIndexSort() {

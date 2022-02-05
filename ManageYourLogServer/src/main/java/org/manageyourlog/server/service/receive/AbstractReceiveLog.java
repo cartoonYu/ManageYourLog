@@ -4,7 +4,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.manageyourlog.common.constants.HandleError;
 import org.manageyourlog.common.util.GsonUtil;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.server.model.LogRecord;
 import org.manageyourlog.server.model.builder.LogRecordBuilder;
 import org.manageyourlog.server.repository.LogRecordRepository;
@@ -27,29 +27,29 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     private LogRecordRepository logRecordRepository;
 
     @Override
-    public UploadLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
+    public OperateLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
         //1. judge income request data illegal
         if(!judgeParamIllegal(uploadLogRecordReq)){
-            return new UploadLogResp<>(HandleError.PARAM_MISS);
+            return new OperateLogResp<>(HandleError.PARAM_MISS);
         }
         //2. transfer request data to domain entity
         LogRecord logRecord = LogRecordBuilder.getInstance().build(uploadLogRecordReq, getUploadTime(uploadLogRecordReq));
         //3. call repository to store
         boolean saveRes = logRecordRepository.save(logRecord);
-        return new UploadLogResp<>(saveRes);
+        return new OperateLogResp<>(saveRes);
     }
 
     @Override
-    public UploadLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs) {
+    public OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs) {
         //1. judge income request data illegal
         if(!judgeParamIllegal(uploadLogRecordReqs)){
-            return new UploadLogResp<>(HandleError.PARAM_MISS);
+            return new OperateLogResp<>(HandleError.PARAM_MISS);
         }
         //2. transfer request data to domain entity
         List<LogRecord> logRecords = uploadLogRecordReqs.stream().map(req -> LogRecordBuilder.getInstance().build(req, getUploadTime(req))).collect(Collectors.toList());
         //3. call repository to store
         boolean saveRes = logRecordRepository.save(logRecords);
-        return new UploadLogResp<>(saveRes);
+        return new OperateLogResp<>(saveRes);
     }
 
     protected boolean judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq){

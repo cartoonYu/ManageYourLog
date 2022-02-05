@@ -3,7 +3,7 @@ package org.manageyourlog.server.controller.receive.rpc;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.server.controller.receive.ReceiveLogLoadCondition;
 import org.manageyourlog.server.controller.receive.ReceiveLogMode;
 import org.manageyourlog.server.service.receive.ReceiveLog;
@@ -27,12 +27,12 @@ public class ReceiveLogByRpc implements UploadLog {
     private ReceiveLog syncReceiveLog;
 
     @Override
-    public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
+    public OperateLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
         return syncReceiveLog.receive(uploadLogRecordReq);
     }
 
     @Override
-    public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
+    public OperateLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
         return syncReceiveLog.receive(uploadLogRecordReqs);
     }
 }

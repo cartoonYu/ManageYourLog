@@ -2,7 +2,7 @@ package org.manageyourlog.facade.service.kafka;
 
 import org.manageyourlog.facade.UploadLog;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.facade.service.factory.UploadLogLoadCondition;
 import org.manageyourlog.facade.service.factory.UploadLogMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,15 @@ public class UploadLogByKafka implements UploadLog {
     private UploadLogByKafkaConfig uploadLogByKafkaConfig;
 
     @Override
-    public UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
+    public OperateLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         uploadLogByKafkaConfig.sendMessage(uploadLogRecordReq, log);
-        return new UploadLogResp<>(true);
+        return new OperateLogResp<>(true);
     }
 
     @Override
-    public UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
+    public OperateLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
         uploadLogRecordReqs.forEach(this::upload);
-        return new UploadLogResp<>(true);
+        return new OperateLogResp<>(true);
     }
 }

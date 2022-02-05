@@ -29,11 +29,11 @@ public class UploadLogFactory extends BaseFactory {
         Class<?> sendLogClass = UploadLogByDefault.class;
         if(uploadMode.isEmpty()){
             log.warn("init send log service, have not determine store mode, back to default class type: {}", sendLogClass.getSimpleName());
-        } else {
-            Optional<UploadLogMode> uploadLogMode = UploadLogMode.parse(uploadMode.get());
-            if(uploadLogMode.isPresent()){
-                sendLogClass = uploadLogMode.get().getHandleClass();
-            }
+            return (UploadLog) applicationContext.getBean(sendLogClass);
+        }
+        Optional<UploadLogMode> uploadLogMode = UploadLogMode.parse(uploadMode.get());
+        if(uploadLogMode.isPresent()){
+            sendLogClass = uploadLogMode.get().getHandleClass();
         }
         log.info("init send log service, class type: {}", sendLogClass.getSimpleName());
         return (UploadLog) applicationContext.getBean(sendLogClass);

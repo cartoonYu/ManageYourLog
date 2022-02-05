@@ -1,7 +1,7 @@
 package org.manageyourlog.facade;
 
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public interface UploadLog {
 
     Logger log = LoggerFactory.getLogger(UploadLog.class);
 
-    UploadLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq);
+    OperateLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq);
 
-    UploadLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs);
+    OperateLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs);
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
@@ -32,34 +32,34 @@ public class AsyncReceiveLogTest extends BaseTest {
     @Test
     public void testReceiveSingleLogNormal(){
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertFalse(uploadRes.hasAbnormal());
-        Assertions.assertTrue(uploadRes.successResult());
+        OperateLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
+        Assertions.assertFalse(uploadRes.isHasAbnormal());
+        Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @DisplayName("receive log list normal test")
     @Test
     public void testReceiveLogListNormal(){
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertFalse(uploadRes.hasAbnormal());
-        Assertions.assertTrue(uploadRes.successResult());
+        OperateLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
+        Assertions.assertFalse(uploadRes.isHasAbnormal());
+        Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @DisplayName("receive single log using non upload time test")
     @Test
     public void testReceiveSingleLogWithoutUploadTime(){
-        UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertTrue(uploadRes.hasAbnormal());
-        Assertions.assertNull(uploadRes.successResult());
+        OperateLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
+        Assertions.assertFalse(uploadRes.isHasAbnormal());
+        Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @DisplayName("receive log list using non upload time test")
     @Test
     public void testReceiveLogListWithoutUploadTime(){
-        UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertTrue(uploadRes.hasAbnormal());
-        Assertions.assertNull(uploadRes.successResult());
+        OperateLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
+        Assertions.assertFalse(uploadRes.isHasAbnormal());
+        Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @BeforeEach

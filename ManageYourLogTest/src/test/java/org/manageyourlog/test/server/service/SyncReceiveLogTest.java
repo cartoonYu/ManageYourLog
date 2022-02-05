@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manageyourlog.facade.model.req.UploadLogRecordReq;
-import org.manageyourlog.facade.model.resp.UploadLogResp;
+import org.manageyourlog.facade.model.resp.OperateLogResp;
 import org.manageyourlog.server.service.receive.ReceiveLog;
 import org.manageyourlog.test.base.BaseTest;
 import org.manageyourlog.test.util.DefineModelUtil;
@@ -29,17 +29,17 @@ public class SyncReceiveLogTest extends BaseTest {
     @DisplayName("receive single log normal test")
     @Test
     public void testReceiveSingleLogNormal(){
-        UploadLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertFalse(uploadRes.hasAbnormal());
-        Assertions.assertTrue(uploadRes.successResult());
+        OperateLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
+        Assertions.assertFalse(uploadRes.isHasAbnormal());
+        Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @DisplayName("receive log list normal test")
     @Test
     public void testUploadLogListNormal(){
-        UploadLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertFalse(uploadRes.hasAbnormal());
-        Assertions.assertTrue(uploadRes.successResult());
+        OperateLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
+        Assertions.assertFalse(uploadRes.isHasAbnormal());
+        Assertions.assertTrue(uploadRes.getSuccessResult());
     }
 
     @BeforeAll
