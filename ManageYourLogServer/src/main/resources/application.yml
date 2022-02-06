@@ -3,7 +3,7 @@ server:
 receive:
   log:
     load:
-      mode: http,mq,rpc
+      mode: http
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092
@@ -29,3 +29,6 @@ store:
     username: test
     password: $Qwe13579
     driverClassName: com.mysql.cj.jdbc.Driver
+query:
+  log:
+    mode: http

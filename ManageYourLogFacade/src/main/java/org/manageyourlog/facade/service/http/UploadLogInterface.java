@@ -15,10 +15,10 @@ import java.util.List;
  */
 public interface UploadLogInterface {
 
-    @POST("/receiveSingleLog")
+    @POST("/receive/singleLog")
     Call<OperateLogResp<Boolean>> uploadSingleLog(@Body UploadLogRecordReq log);
 
-    @POST("/receiveLogList")
+    @POST("/receive/logList")
     Call<OperateLogResp<Boolean>> uploadLogList(@Body List<UploadLogRecordReq> logList);
 
 }

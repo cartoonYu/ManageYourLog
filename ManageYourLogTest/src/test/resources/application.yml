@@ -1,7 +1,7 @@
 upload:
   log:
     mode: all
-    server:
+    http:
       url: http://127.0.0.1:8080
     kafka:
       bootstrap:
@@ -16,7 +16,6 @@ upload:
         name: dubbo
         port: 20882
         serialization: nativejava
-
 receive:
   log:
     load:

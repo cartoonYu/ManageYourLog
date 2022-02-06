@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
+ * determine primary send log service
  * @author cartoon
  * @date 2021/11/5 20:55
  */

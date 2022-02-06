@@ -21,6 +21,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
+ * receive log by kafka
  * @author cartoon
  * @description
  * @date 2020/3/24 8:24 PM

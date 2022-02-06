@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
+ * mysql operate layer
  * @author cartoon
  * @date 2022/1/4 23:23
  */

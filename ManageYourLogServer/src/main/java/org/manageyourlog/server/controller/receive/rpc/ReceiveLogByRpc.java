@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * receive log by rpc
  * @author cartoon
  * @date 2022/1/16 17:07
  */
