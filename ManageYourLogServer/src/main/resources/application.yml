@@ -31,4 +31,5 @@ store:
     driverClassName: com.mysql.cj.jdbc.Driver
 query:
   log:
-    mode: http
+    load:
+      mode: http

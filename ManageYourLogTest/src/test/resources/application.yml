@@ -2,7 +2,7 @@ upload:
   log:
     mode: all
     http:
-      url: http://127.0.0.1:8080
+      url: http://127.0.0.1:8000
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092
@@ -45,6 +45,9 @@ store:
     username:
     password:
     driverClassName: com.mysql.cj.jdbc.Driver
+query:
+  log:
+    mode: http
 mariadb:
   baseDir: ../local/base
   dataDir: ../local/data
