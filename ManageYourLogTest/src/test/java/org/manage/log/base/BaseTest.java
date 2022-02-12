@@ -1,11 +1,10 @@
-package org.manage.log.test.base;
+package org.manage.log.base;
 
-import org.apache.dubbo.remoting.http.servlet.ServletManager;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.manage.log.common.util.GsonUtil;
-import org.manage.log.test.ManageYourLogTestApplication;
+import org.manage.log.ManageYourLogTestApplication;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,8 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -35,13 +32,11 @@ import java.util.*;
 @SpringBootTest(classes = ManageYourLogTestApplication.class)
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-public abstract class BaseTest {
+public class BaseTest implements ApplicationContextAware, EnvironmentAware {
 
-    @Autowired
-    protected ApplicationContext context;
+    protected static ApplicationContext context;
 
-    @Autowired
-    protected Environment environment;
+    protected static Environment environment;
 
     @Autowired
     protected MockMvc mockMvc;
@@ -82,5 +77,14 @@ public abstract class BaseTest {
         return res;
     }
 
+    @Override
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+        context = applicationContext;
+    }
+
+    @Override
+    public void setEnvironment(@NonNull Environment environment) {
+        BaseTest.environment = environment;
+    }
 }
 

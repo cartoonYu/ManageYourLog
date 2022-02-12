@@ -1,4 +1,4 @@
-package org.manage.log.test.facade.service;
+package org.manage.log.facade.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +8,7 @@ import org.manage.log.facade.UploadLog;
 import org.manage.log.facade.config.ApplicationConfigKey;
 import org.manage.log.facade.service.UploadLogByDefault;
 import org.manage.log.facade.service.factory.UploadLogFactory;
-import org.manage.log.test.base.BaseTest;
+import org.manage.log.base.BaseTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.Spy;

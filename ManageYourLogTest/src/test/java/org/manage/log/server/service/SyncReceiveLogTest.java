@@ -1,4 +1,4 @@
-package org.manage.log.test.server.service;
+package org.manage.log.server.service;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.manage.log.facade.model.req.UploadLogRecordReq;
 import org.manage.log.facade.model.resp.OperateLogResp;
 import org.manage.log.server.receive.service.ReceiveLog;
-import org.manage.log.test.base.BaseTest;
-import org.manage.log.test.util.DefineModelUtil;
+import org.manage.log.base.BaseTest;
+import org.manage.log.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

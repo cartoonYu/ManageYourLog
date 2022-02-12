@@ -1,4 +1,4 @@
-package org.manage.log.test.server.repository;
+package org.manage.log.server.repository;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -7,9 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.manage.log.server.model.LogRecord;
-import org.manage.log.server.repository.LogRecordRepository;
-import org.manage.log.test.base.BaseTest;
-import org.manage.log.test.util.DefineModelUtil;
+import org.manage.log.base.BaseTest;
+import org.manage.log.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ public class LogRecordRepositoryTest extends BaseTest {
 
     private static String indexValue = "111";
 
-    private List<LogRecordRepository> logRecordRepositoryList;
+    private List<LogRecordRepository> logRecordRepositoryList = getAllImplement(LogRecordRepository.class);
 
     @Order(1)
     @DisplayName("single log save test")
@@ -85,9 +84,5 @@ public class LogRecordRepositoryTest extends BaseTest {
         LogRecord logRecord1 = DefineModelUtil.defineLogRecord();
         logRecord1.getIndexList().get(0).setIndexId("2222");
         Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(logRecord1));
-    }
-
-    public LogRecordRepositoryTest() {
-        logRecordRepositoryList = getAllImplement(LogRecordRepository.class);
     }
 }

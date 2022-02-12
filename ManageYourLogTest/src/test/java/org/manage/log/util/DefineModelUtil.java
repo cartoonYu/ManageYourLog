@@ -1,4 +1,4 @@
-package org.manage.log.test.util;
+package org.manage.log.util;
 
 import com.google.common.collect.ImmutableList;
 import okhttp3.Request;

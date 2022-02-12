@@ -1,4 +1,4 @@
-package org.manage.log.test.base;
+package org.manage.log.base;
 
 import org.junit.platform.suite.api.ExcludePackages;
 import org.junit.platform.suite.api.SelectPackages;
@@ -10,7 +10,7 @@ import org.junit.platform.suite.api.Suite;
  * @since 2021/10/06 16:12
  */
 @Suite
-@SelectPackages({"org.manage.log.test"})
-@ExcludePackages({"org.manage.log.test.base"})
+@SelectPackages({"org.manage.log"})
+@ExcludePackages({"org.manage.log.base"})
 public class TestAll extends BaseTest {
 }

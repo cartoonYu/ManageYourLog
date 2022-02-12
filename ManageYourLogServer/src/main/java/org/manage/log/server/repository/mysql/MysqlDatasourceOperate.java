@@ -50,11 +50,11 @@ public class MysqlDatasourceOperate {
         } catch (Exception e) {
             platformTransactionManager.rollback(transactionStatus);
             throw e;
-        }
-        if(isEndCall){
-            sqlSession.close();
-            platformTransactionManager.commit(transactionStatus);
-            executeInfos.remove();
+        } finally {
+            if(isEndCall){
+                sqlSession.close();
+                executeInfos.remove();
+            }
         }
         return executeRes;
     }

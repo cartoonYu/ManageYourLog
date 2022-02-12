@@ -1,4 +1,4 @@
-package org.manage.log.test.facade.service;
+package org.manage.log.facade.service;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
@@ -8,8 +8,8 @@ import org.manage.log.facade.model.resp.OperateLogResp;
 import org.manage.log.facade.service.http.UploadLogInterface;
 import org.manage.log.facade.model.req.UploadLogRecordReq;
 import org.manage.log.facade.service.http.UploadLogByHttp;
-import org.manage.log.test.base.BaseTest;
-import org.manage.log.test.util.DefineModelUtil;
+import org.manage.log.base.BaseTest;
+import org.manage.log.util.DefineModelUtil;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

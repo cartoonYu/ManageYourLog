@@ -1,10 +1,9 @@
-package org.manage.log.test.common.util;
+package org.manage.log.common.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manage.log.test.base.BaseTest;
-import org.manage.log.common.util.IdGenerateUtil;
+import org.manage.log.base.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

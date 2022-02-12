@@ -1,4 +1,4 @@
-package org.manage.log.test.server.controller;
+package org.manage.log.server.controller;
 
 /**
  * @author cartoon

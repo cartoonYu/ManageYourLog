@@ -1,4 +1,4 @@
-package org.manage.log.test;
+package org.manage.log;
 
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;

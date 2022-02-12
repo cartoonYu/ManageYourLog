@@ -1,4 +1,4 @@
-package org.manage.log.test;
+package org.manage.log;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

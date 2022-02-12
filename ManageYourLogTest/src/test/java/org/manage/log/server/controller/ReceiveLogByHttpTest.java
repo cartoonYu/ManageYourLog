@@ -1,12 +1,12 @@
-package org.manage.log.test.server.controller;
+package org.manage.log.server.controller;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manage.log.facade.model.req.UploadLogRecordReq;
-import org.manage.log.test.base.BaseTest;
-import org.manage.log.test.util.DefineModelUtil;
+import org.manage.log.base.BaseTest;
+import org.manage.log.util.DefineModelUtil;
 
 /**
  * @author cartoon

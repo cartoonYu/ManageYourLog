@@ -1,4 +1,4 @@
-package org.manage.log.test.server.repository;
+package org.manage.log.server.repository.factory;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -7,8 +7,7 @@ import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.server.config.ApplicationConfigKey;
 import org.manage.log.server.repository.mysql.LogRecordMysqlRepository;
 import org.manage.log.server.repository.LogRecordRepository;
-import org.manage.log.server.repository.factory.StoreRepositoryFactory;
-import org.manage.log.test.base.BaseTest;
+import org.manage.log.base.BaseTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.Spy;
