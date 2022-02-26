@@ -10,6 +10,6 @@ insert into LogRecordIndex(
     indexId, logRecordId, sort, indexValue, version,
     createTime, modifyTime)
     value(
-      '111', '111', '1', 'id', 1,
+      '111', '111', 'id', '111', 1,
       '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );

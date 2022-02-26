@@ -1,4 +1,4 @@
-package org.manage.log.server.controller;
+package org.manage.log.server.receive.access.layer;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Assertions;

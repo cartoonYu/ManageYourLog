@@ -1,5 +1,6 @@
 package org.manage.log.base;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +18,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -40,6 +44,18 @@ public class BaseTest implements ApplicationContextAware, EnvironmentAware {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    protected <T> String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList) throws Exception{
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate);
+        MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+        paramToDataList.forEach((param) -> paramMap.add(param.getLeft(), param.getRight()));
+        requestBuilder.params(paramMap);
+        return mockMvc
+                .perform(requestBuilder)
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+    }
 
     protected <T> String post(String urlTemplate, T data) throws Exception {
         return mockMvc
