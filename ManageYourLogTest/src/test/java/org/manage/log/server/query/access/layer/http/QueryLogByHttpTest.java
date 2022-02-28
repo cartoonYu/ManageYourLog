@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manage.log.base.BaseTest;
 
+
 /**
  * @author cartoon
  * @date 2022/2/7 14:13
@@ -14,10 +15,11 @@ import org.manage.log.base.BaseTest;
 @DisplayName("query log by http test")
 public class QueryLogByHttpTest extends BaseTest {
 
+
     @DisplayName("query by index list")
     @Test
     public void testQueryByIndex() throws Exception{
-        String result = get("/query/queryByIndex", ImmutableList.of(ImmutablePair.of("index", "111")));
-        Assertions.assertNotNull(result);
+        String queryResult = get("/query/queryByIndex", ImmutableList.of(ImmutablePair.of("index", "111")));
+        Assertions.assertNotNull(queryResult);
     }
 }

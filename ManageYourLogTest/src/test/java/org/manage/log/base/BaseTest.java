@@ -20,11 +20,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+
 
 /**
  * base test which divide web container
@@ -46,15 +45,14 @@ public class BaseTest implements ApplicationContextAware, EnvironmentAware {
     protected MockMvc mockMvc;
 
     protected <T> String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList) throws Exception{
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate);
-        MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
-        paramToDataList.forEach((param) -> paramMap.add(param.getLeft(), param.getRight()));
-        requestBuilder.params(paramMap);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate).accept(MediaType.APPLICATION_JSON_VALUE);
+        paramToDataList.forEach((param) -> requestBuilder.queryParam(param.getLeft(), param.getRight()));
         return mockMvc
                 .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn()
                 .getResponse()
-                .getContentAsString();
+                .getContentAsString(StandardCharsets.UTF_8);
     }
 
     protected <T> String post(String urlTemplate, T data) throws Exception {
@@ -64,9 +62,10 @@ public class BaseTest implements ApplicationContextAware, EnvironmentAware {
                                 .content(GsonUtil.getInstance().writeJson(data).getBytes(StandardCharsets.UTF_8))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn()
                 .getResponse()
-                .getContentAsString();
+                .getContentAsString(StandardCharsets.UTF_8);
     }
 
     /**

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manage.log.facade.model.req.UploadLogRecordReq;
 import org.manage.log.facade.model.resp.OperateLogResp;
-import org.manage.log.server.receive.service.ReceiveLog;
 import org.manage.log.base.BaseTest;
 import org.manage.log.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;

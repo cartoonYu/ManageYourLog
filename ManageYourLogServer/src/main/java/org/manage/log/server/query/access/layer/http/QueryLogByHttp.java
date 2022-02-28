@@ -11,10 +11,7 @@ import org.manage.log.server.query.service.QueryLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -40,7 +37,7 @@ public class QueryLogByHttp {
 
     private LocalDateTimeFormatUtil localDateTimeFormatUtil;
 
-    @GetMapping( "/queryByIndex")
+    @GetMapping(value = "/queryByIndex")
     public List<QueryLogResp> queryByIndex(@RequestParam("index") String index){
         return Optional.ofNullable(index).map(value -> {
             List<LogRecord> res = queryLogService.getLogs(value);
