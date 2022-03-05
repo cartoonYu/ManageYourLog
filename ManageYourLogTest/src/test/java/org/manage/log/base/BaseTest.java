@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -44,9 +45,22 @@ public class BaseTest implements ApplicationContextAware, EnvironmentAware {
     @Autowired
     protected MockMvc mockMvc;
 
-    protected <T> String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList) throws Exception{
+    protected String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList) throws Exception{
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate).accept(MediaType.APPLICATION_JSON_VALUE);
         paramToDataList.forEach((param) -> requestBuilder.queryParam(param.getLeft(), param.getRight()));
+        return mockMvc
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8);
+    }
+
+    protected String get(String urlTemplate, ImmutablePair<String, String>... paramToDataList) throws Exception{
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate).accept(MediaType.APPLICATION_JSON_VALUE);
+        Arrays.stream(paramToDataList).forEach(param -> {
+            requestBuilder.queryParam(param.getLeft(), param.getRight());
+        });
         return mockMvc
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -76,6 +90,7 @@ public class BaseTest implements ApplicationContextAware, EnvironmentAware {
      */
     protected <T> List<T> getAllImplement(Class<T> classType){
         Map<String, T> allImplement = context.getBeansOfType(classType);
+
         List<T> res = new ArrayList<>();
         boolean alreadyAdd = false;
         for(T implement : allImplement.values()){
