@@ -42,7 +42,7 @@ The conception about this project is that provide a unified entrance for parse, 
 <dependency>
     <groupId>org</groupId>
     <artifactId>ManageYourLogFacade</artifactId>
-    <version>1.0.0.SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
