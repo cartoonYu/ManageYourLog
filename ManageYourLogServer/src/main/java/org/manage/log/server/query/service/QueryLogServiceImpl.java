@@ -1,5 +1,6 @@
 package org.manage.log.server.query.service;
 
+import com.google.common.collect.ImmutableList;
 import org.manage.log.server.model.LogRecord;
 import org.manage.log.server.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author cartoon
@@ -20,16 +23,24 @@ public class QueryLogServiceImpl implements QueryLogService {
 
     @Override
     public List<LogRecord> getLogs(String index) {
-        return logRecordRepository.getByIndex(index);
+        return Optional.ofNullable(index).map(value -> logRecordRepository.getByIndex(index)).orElse(ImmutableList.of());
     }
 
     @Override
     public List<LogRecord> getLogs(LocalDateTime startTime, LocalDateTime endTime) {
+        if(Objects.isNull(startTime) || Objects.isNull(endTime)){
+            log.warn("query log, query between time, param is illegal, startTime: {}, endTime: {}", startTime, endTime);
+            return ImmutableList.of();
+        }
         return logRecordRepository.getByTime(startTime, endTime);
     }
 
     @Override
     public List<LogRecord> getLogs(String index, LocalDateTime startTime, LocalDateTime endTime) {
+        if(Objects.isNull(startTime) || Objects.isNull(endTime) || Objects.isNull(index)){
+            log.warn("query log, query between time, param is illegal, startTime: {}, endTime: {}", startTime, endTime);
+            return ImmutableList.of();
+        }
         return logRecordRepository.getByIndexAndTime(index, startTime, endTime);
     }
 }

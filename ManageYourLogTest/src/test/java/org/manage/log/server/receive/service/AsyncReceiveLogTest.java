@@ -28,24 +28,6 @@ public class AsyncReceiveLogTest extends BaseTest {
 
     private static UploadLogRecordReq uploadLogRecordReq;
 
-    @DisplayName("receive single log normal test")
-    @Test
-    public void testReceiveSingleLogNormal(){
-        uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        OperateLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
-        Assertions.assertFalse(uploadRes.isHasAbnormal());
-        Assertions.assertTrue(uploadRes.getSuccessResult());
-    }
-
-    @DisplayName("receive log list normal test")
-    @Test
-    public void testReceiveLogListNormal(){
-        uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        OperateLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
-        Assertions.assertFalse(uploadRes.isHasAbnormal());
-        Assertions.assertTrue(uploadRes.getSuccessResult());
-    }
-
     @DisplayName("receive single log using non upload time test")
     @Test
     public void testReceiveSingleLogWithoutUploadTime(){
