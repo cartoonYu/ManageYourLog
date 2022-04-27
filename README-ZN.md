@@ -38,7 +38,7 @@
 ```xml
 <dependency>
     <groupId>org</groupId>
-    <artifactId>ManageYourLogFacade</artifactId>
+    <artifactId>ManageYourLogUpload</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -47,13 +47,13 @@
 
 3. 组装日志上传 pojo
 ```
-org.manage.log.facade.model.req.UploadLogRecordReq
+org.manage.log.upload.model.req.UploadLogRecordReq
 ```
 
 3. 调用对应方法进行上传
 ```
-org.manage.log.facade.UploadLog.upload(org.manage.log.facade.model.req.UploadLogRecordReq)
-org.manage.log.facade.UploadLog.upload(java.util.List<org.manage.log.facade.model.req.UploadLogRecordReq>)
+org.manage.log.upload.UploadLog.upload(org.manage.log.upload.model.req.UploadLogRecordReq)
+org.manage.log.upload.UploadLog.upload(java.util.List<org.manage.log.upload.model.req.UploadLogRecordReq>)
 ```
 
 

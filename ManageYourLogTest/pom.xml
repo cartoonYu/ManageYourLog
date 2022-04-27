@@ -83,18 +83,35 @@
 
         <dependency>
             <groupId>org</groupId>
-            <artifactId>ManageYourLogServer</artifactId>
+            <artifactId>ManageYourLogQuery</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org</groupId>
-            <artifactId>ManageYourLogFacade</artifactId>
+            <artifactId>ManageYourLogReceive</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>ManageYourLogUpload</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>ManageYourLogRepository</artifactId>
         </dependency>
 
         <dependency>
             <groupId>ch.vorburger.mariaDB4j</groupId>
             <artifactId>mariaDB4j</artifactId>
             <version>2.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>ManageYourLogBaseTest</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
         </dependency>
 
 

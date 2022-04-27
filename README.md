@@ -41,7 +41,7 @@ The conception about this project is that provide a unified entrance for parse, 
 ```xml
 <dependency>
     <groupId>org</groupId>
-    <artifactId>ManageYourLogFacade</artifactId>
+    <artifactId>ManageYourLogUpload</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -50,13 +50,13 @@ The conception about this project is that provide a unified entrance for parse, 
 
 3. package upload log pojo
 ```
-org.manage.log.facade.model.req.UploadLogRecordReq
+org.manage.log.upload.model.req.UploadLogRecordReq
 ```
 
 3. call method to upload
 ```
-org.manage.log.facade.UploadLog.upload(org.manage.log.facade.model.req.UploadLogRecordReq)
-org.manage.log.facade.UploadLog.upload(java.util.List<org.manage.log.facade.model.req.UploadLogRecordReq>)
+org.manage.log.upload.UploadLog.upload(org.manage.log.upload.model.req.UploadLogRecordReq)
+org.manage.log.upload.UploadLog.upload(java.util.List<org.manage.log.upload.model.req.UploadLogRecordReq>)
 ```
 
 

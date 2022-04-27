@@ -6,9 +6,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.facade.UploadLog;
-import org.manage.log.facade.model.req.UploadLogRecordIndexReq;
-import org.manage.log.facade.model.req.UploadLogRecordReq;
+import org.manage.log.upload.UploadLog;
+import org.manage.log.upload.model.req.UploadLogRecordIndexReq;
+import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
