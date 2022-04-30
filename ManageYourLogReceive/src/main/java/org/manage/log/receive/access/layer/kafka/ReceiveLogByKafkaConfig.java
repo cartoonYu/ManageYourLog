@@ -22,7 +22,7 @@ import java.util.Properties;
  * @date 2022/1/10 00:07
  */
 @Component
-@ReceiveLogLoadCondition(mode = ReceiveLogMode.mq)
+@ReceiveLogLoadCondition(mode = ReceiveLogMode.kafka)
 public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Autowired

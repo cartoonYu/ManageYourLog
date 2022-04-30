@@ -9,6 +9,7 @@ import org.manage.log.common.util.loadCondition.BaseLoadMode;
 public enum ReceiveLogMode implements BaseLoadMode {
 
     http("http"),
+    kafka("kafka"),
     mq("mq"),
     rpc("rpc");
 
