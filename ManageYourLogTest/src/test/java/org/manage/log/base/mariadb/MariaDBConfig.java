@@ -1,4 +1,4 @@
-package org.manage.log.test.base.mariadb;
+package org.manage.log.base.mariadb;
 
 import ch.vorburger.mariadb4j.DB;
 

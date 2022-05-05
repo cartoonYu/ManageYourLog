@@ -1,12 +1,10 @@
-package org.manage.log.test.base.util;
+package org.manage.log.util;
 
 import okhttp3.Request;
 import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.io.IOException;
 
 /**
  * @author cartoon
@@ -17,7 +15,7 @@ public class DefineHttpResponseUtil {
     public static <T> Call<T> defineHttpResponse(T data){
         return new Call<T>() {
             @Override
-            public Response<T> execute() throws IOException {
+            public Response<T> execute() {
                 return Response.success(data);
             }
 

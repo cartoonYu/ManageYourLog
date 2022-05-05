@@ -1,4 +1,4 @@
-package org.manage.log.test.base.mariadb;
+package org.manage.log.base.mariadb;
 
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;
@@ -12,7 +12,7 @@ import static java.util.Optional.ofNullable;
  * @author cartoon
  * @date 2022/4/5 16:38
  */
-public abstract class InitMysqlData {
+public abstract class InitMysqlDataUtil {
 
     protected void start() throws Exception{
         MariaDBConfig config = getConfig();

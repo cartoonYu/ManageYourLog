@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 @DisplayName("id generate util test")
 public class IdGenerateUtilTest extends BaseTest {
 
-    private static final Logger log = LoggerFactory.getLogger(IdGenerateUtilTest.class);
-
     @DisplayName("generate id normal test")
     @Test
     public void testGenerateNormal(){

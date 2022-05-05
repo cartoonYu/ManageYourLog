@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manage.log.base.BaseTest;
-import org.manage.log.test.base.util.DefineHttpResponseUtil;
+import org.manage.log.util.DefineHttpResponseUtil;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.manage.log.upload.model.resp.OperateLogResp;
 import org.manage.log.upload.service.http.UploadLogByHttp;

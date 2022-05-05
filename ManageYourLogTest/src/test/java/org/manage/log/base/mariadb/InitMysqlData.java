@@ -1,9 +1,8 @@
-package org.manage.log;
+package org.manage.log.base.mariadb;
 
 import com.google.common.collect.ImmutableList;
 import org.manage.log.repository.factory.StoreRepositoryLoadCondition;
 import org.manage.log.repository.factory.StoreRepositoryMode;
-import org.manage.log.test.base.mariadb.MariaDBConfig;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StoreRepositoryLoadCondition(mode = StoreRepositoryMode.Mysql)
-public class InitMysqlData extends org.manage.log.test.base.mariadb.InitMysqlData implements InitializingBean, DisposableBean {
+public class InitMysqlData extends InitMysqlDataUtil implements InitializingBean, DisposableBean {
 
     @Value("${mariadb.baseDir}")
     private String baseDir;

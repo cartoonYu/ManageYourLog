@@ -55,13 +55,6 @@
             <artifactId>ManageYourLogRepository</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org</groupId>
-            <artifactId>ManageYourLogBaseTest</artifactId>
-            <version>1.0.0</version>
-            <scope>test</scope>
-        </dependency>
-
 
     </dependencies>
 

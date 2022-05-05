@@ -22,7 +22,6 @@
         <module>ManageYourLogTest</module>
         <module>ManageYourLogCommon</module>
         <module>ManageYourLogRepository</module>
-        <module>ManageYourLogBaseTest</module>
         <module>ManageYourLogUpload</module>
     </modules>
 
