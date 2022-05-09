@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.log.repository.mysql.mapper.LogRecordMapper">
+
+    <sql id="Base_Column_List">
+        recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime
+    </sql>
+
+    <insert id="insert" parameterType="org.manage.log.repository.mysql.model.LogRecordMysqlPO">
+        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
+        value (#{recordId}, #{content}, #{operatorSort}, #{operator}, #{logRecordSort}, #{indexIds}, #{version}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <insert id="batchInsert" parameterType="org.manage.log.repository.mysql.model.LogRecordMysqlPO">
+        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
+        values
+        <foreach collection="logRecordMysqlPOS" item="logRecordMysqlPO" separator="," open="(" close=")">
+            #{logRecordMysqlPO.recordId},
+            #{logRecordMysqlPO.content},
+            #{logRecordMysqlPO.operatorSort},
+            #{logRecordMysqlPO.operator},
+            #{logRecordMysqlPO.logRecordSort},
+            #{logRecordMysqlPO.indexIds},
+            #{logRecordMysqlPO.version},
+            #{logRecordMysqlPO.createTime},
+            #{logRecordMysqlPO.modifyTime}
+        </foreach>
+    </insert>
+
+    <select id="getById" resultType="org.manage.log.repository.mysql.model.LogRecordMysqlPO">
+        select <include refid="Base_Column_List"/> from LogRecord
+        <where>
+            recordId in
+            <foreach collection="recordIds" open="(" close=")" item="recordId" separator=",">
+                #{recordId}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="getByTime" resultType="org.manage.log.repository.mysql.model.LogRecordMysqlPO">
+        select <include refid="Base_Column_List"/> from LogRecord
+        where modifyTime between #{startTime} and #{endTime}
+    </select>
+
+    <select id="getByIndexAndTime" resultType="org.manage.log.repository.mysql.model.LogRecordMysqlPO">
+        select <include refid="Base_Column_List"/> from LogRecord
+        <where>
+            recordId in
+            <foreach collection="recordIds" open="(" close=")" item="recordId" separator=",">
+                #{recordId}
+            </foreach>
+            and modifyTime between #{startTime} and #{endTime}
+        </where>
+    </select>
+</mapper>

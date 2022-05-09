@@ -8,4 +8,3 @@
 #### common
 2. swagger 使用
 3. dubbo hessian 序列化失败
-4. 1.0 版本 release
