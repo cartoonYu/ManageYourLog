@@ -3,7 +3,7 @@ server:
 receive:
   log:
     load:
-      mode: http
+      mode: rpc
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092
@@ -19,7 +19,7 @@ receive:
       protocol:
         name: dubbo
         port: 20881
-        serialization: nativejava
+        serialization: hessian2
 store:
   mode: mysql
   load:

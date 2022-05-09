@@ -1,8 +1,6 @@
 upload:
   log:
     mode: all
-    http:
-      url: http://127.0.0.1:8000
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092

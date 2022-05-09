@@ -1,7 +1,6 @@
 package org.manage.log.upload.service.factory;
 
 import org.manage.log.common.util.loadCondition.BaseLoadMode;
-import org.manage.log.upload.service.http.UploadLogByHttp;
 import org.manage.log.upload.service.kafka.UploadLogByKafka;
 import org.manage.log.upload.service.rpc.UploadLogByRpc;
 
@@ -14,7 +13,6 @@ import java.util.Optional;
  */
 public enum UploadLogMode implements BaseLoadMode {
 
-    http("http", UploadLogByHttp.class),
     kafka("kafka", UploadLogByKafka.class),
     rpc("rpc", UploadLogByRpc.class);
 
