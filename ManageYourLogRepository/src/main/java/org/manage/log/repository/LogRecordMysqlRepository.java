@@ -1,12 +1,12 @@
 package org.manage.log.repository;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.manage.log.repository.model.LogRecord;
+import org.manage.log.common.model.LogRecord;
 import org.manage.log.repository.mysql.MysqlDatasourceOperate;
 import org.manage.log.repository.factory.StoreRepositoryLoadCondition;
 import org.manage.log.repository.mysql.mapper.LogRecordIndexMapper;
 import org.manage.log.repository.factory.StoreRepositoryMode;
-import org.manage.log.repository.builder.MysqlEntityBuilder;
+import org.manage.log.repository.mysql.builder.MysqlEntityBuilder;
 import org.manage.log.repository.mysql.mapper.LogRecordMapper;
 import org.manage.log.repository.mysql.model.LogRecordIndexMysqlPO;
 import org.manage.log.repository.mysql.model.LogRecordMysqlPO;

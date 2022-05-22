@@ -1,4 +1,4 @@
-package org.manage.log.repository.builder;
+package org.manage.log.repository.mysql.builder;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.collections4.CollectionUtils;
@@ -6,8 +6,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.repository.LogRecordMysqlRepository;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.repository.model.LogRecord;
-import org.manage.log.repository.model.LogRecordIndex;
+import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.model.LogRecordIndex;
 import org.manage.log.repository.mysql.model.LogRecordIndexMysqlPO;
 import org.manage.log.repository.mysql.model.LogRecordMysqlPO;
 

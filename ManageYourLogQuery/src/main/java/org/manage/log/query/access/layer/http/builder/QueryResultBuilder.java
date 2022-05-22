@@ -3,8 +3,8 @@ package org.manage.log.query.access.layer.http.builder;
 import org.manage.log.query.access.layer.http.model.QueryLogResp;
 import org.manage.log.common.util.LocalDateTimeFormatUtil;
 import org.manage.log.query.access.layer.http.model.QueryLogIndexResp;
-import org.manage.log.repository.model.LogRecord;
-import org.manage.log.repository.model.LogRecordIndex;
+import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.model.LogRecordIndex;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,8 +1,8 @@
 package org.manage.log.receive.access.layer.builder;
 
 import org.manage.log.common.util.IdGenerateUtil;
-import org.manage.log.repository.model.LogRecord;
-import org.manage.log.repository.model.LogRecordIndex;
+import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.model.LogRecordIndex;
 import org.manage.log.upload.model.req.UploadLogRecordIndexReq;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 

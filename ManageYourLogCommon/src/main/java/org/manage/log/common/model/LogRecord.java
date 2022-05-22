@@ -1,4 +1,4 @@
-package org.manage.log.repository.model;
+package org.manage.log.common.model;
 
 
 import org.manage.log.common.constants.LogRecordSort;

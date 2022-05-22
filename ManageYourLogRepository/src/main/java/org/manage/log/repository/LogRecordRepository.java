@@ -1,6 +1,6 @@
 package org.manage.log.repository;
 
-import org.manage.log.repository.model.LogRecord;
+import org.manage.log.common.model.LogRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

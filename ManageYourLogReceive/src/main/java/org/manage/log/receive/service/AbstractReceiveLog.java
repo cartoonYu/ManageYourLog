@@ -5,7 +5,7 @@ import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.util.GsonUtil;
 import org.manage.log.receive.access.layer.builder.LogRecordBuilder;
 import org.manage.log.repository.LogRecordRepository;
-import org.manage.log.repository.model.LogRecord;
+import org.manage.log.common.model.LogRecord;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.manage.log.upload.model.resp.OperateLogResp;
 import org.springframework.beans.factory.annotation.Autowired;
