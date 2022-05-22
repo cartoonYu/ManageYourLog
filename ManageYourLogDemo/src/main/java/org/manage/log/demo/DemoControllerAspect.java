@@ -1,6 +1,5 @@
 package org.manage.log.demo;
 
-import com.google.common.collect.ImmutableList;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,6 +10,8 @@ import org.manage.log.upload.model.req.UploadLogRecordIndexReq;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 /**
  * @author cartoon
@@ -41,7 +42,7 @@ public class DemoControllerAspect {
                             .setOperatorSort("user")
                                     .setOperator(queryReq.getOrderId())
                                             .setLogRecordSort(LogRecordSort.OPERATE)
-                                                    .setIndexList(ImmutableList.of(uploadLogRecordIndexReq));
+                                                    .setIndexList(Collections.singletonList(uploadLogRecordIndexReq));
             sendLog.upload(uploadLogRecordReq);
             return data;
         } catch (Throwable throwable) {

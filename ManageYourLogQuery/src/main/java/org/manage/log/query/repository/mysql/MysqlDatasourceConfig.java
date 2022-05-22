@@ -31,7 +31,7 @@ public class MysqlDatasourceConfig {
 
     private final String mysqlDatasource = "mysqlDatasource";
 
-    public static final String PACKAGE_NAME = "org/manage/log/repository/mysql/mapper";
+    public static final String PACKAGE_NAME = "org/manage/log/query/repository/mysql/mapper";
 
     public static final String MAPPER_LOCATION = "mapper/*.xml";
 
