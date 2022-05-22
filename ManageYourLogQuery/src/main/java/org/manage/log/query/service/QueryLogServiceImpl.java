@@ -1,8 +1,8 @@
 package org.manage.log.query.service;
 
 import com.google.common.collect.ImmutableList;
-import org.manage.log.repository.LogRecordRepository;
 import org.manage.log.common.model.LogRecord;
+import org.manage.log.query.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -21,7 +21,6 @@
         <module>ManageYourLogQuery</module>
         <module>ManageYourLogTest</module>
         <module>ManageYourLogCommon</module>
-        <module>ManageYourLogRepository</module>
         <module>ManageYourLogUpload</module>
     </modules>
 
@@ -94,12 +93,6 @@
             <dependency>
                 <groupId>org</groupId>
                 <artifactId>ManageYourLogTest</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogRepository</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
