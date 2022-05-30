@@ -1,9 +1,9 @@
 package org.manage.log.query.repository;
 
+import com.google.common.collect.ImmutableList;
 import org.manage.log.common.model.LogRecord;
-import org.manage.log.query.repository.factory.StoreRepositoryLoadCondition;
-import org.manage.log.query.repository.factory.StoreRepositoryMode;
-import org.manage.log.query.repository.mysql.MysqlDatasourceOperate;
+import org.manage.log.query.repository.factory.QueryRepositoryLoadCondition;
+import org.manage.log.query.repository.factory.QueryRepositoryMode;
 import org.manage.log.query.repository.mysql.builder.MysqlEntityBuilder;
 import org.manage.log.query.repository.mysql.mapper.LogRecordIndexMapper;
 import org.manage.log.query.repository.mysql.mapper.LogRecordMapper;
@@ -24,45 +24,51 @@ import java.util.stream.Collectors;
  * @date 2021/11/25 20:30
  */
 @Repository
-@StoreRepositoryLoadCondition(mode = StoreRepositoryMode.Mysql)
+@QueryRepositoryLoadCondition(mode = QueryRepositoryMode.Mysql)
 public class LogRecordMysqlRepository implements LogRecordRepository {
 
     public static final String INDEX_SPLIT_CHARACTER = ",";
 
     @Autowired
-    private MysqlDatasourceOperate mysqlDatasourceOperate;
+    private LogRecordIndexMapper logRecordIndexMapper;
+
+    @Autowired
+    private LogRecordMapper logRecordMapper;
 
     @Override
     public List<LogRecord> getByIndex(String index) {
-        List<LogRecordIndexMysqlPO> indexPoList = mysqlDatasourceOperate.executeDQL(LogRecordIndexMapper.class, mapper -> mapper.getByIndex(index));
+        List<LogRecordIndexMysqlPO> indexPoList = logRecordIndexMapper.getByIndex(index);
         return getIndexListByIndexList(indexPoList);
     }
 
     @Override
     public List<LogRecord> getByTime(LocalDateTime startTime, LocalDateTime endTime) {
-        List<LogRecordMysqlPO> logRecordMysqlPoList = mysqlDatasourceOperate.executeDQL(LogRecordMapper.class, mapper -> mapper.getByTime(startTime, endTime));
+        List<LogRecordMysqlPO> logRecordMysqlPoList = logRecordMapper.getByTime(startTime, endTime);
         //get all index id which is related to log record
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
-        List<LogRecordIndexMysqlPO> indexMysqlList = mysqlDatasourceOperate.executeDQL(LogRecordIndexMapper.class, mapper -> mapper.getByIndexIds(indexIds));
+        List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexIds(indexIds);
         return MysqlEntityBuilder.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlList);
     }
 
     @Override
     public List<LogRecord> getByIndexAndTime(String index, LocalDateTime startTime, LocalDateTime endTime) {
-        List<LogRecordIndexMysqlPO> indexMysqlList = mysqlDatasourceOperate.executeDQL(LogRecordIndexMapper.class, mapper -> mapper.getByIndexAndTime(index, startTime, endTime));
+        List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexAndTime(index, startTime, endTime);
         return getIndexListByIndexList(indexMysqlList);
     }
 
     private List<LogRecord> getIndexListByIndexList(List<LogRecordIndexMysqlPO> sourceIndexMysqlList){
+        if(sourceIndexMysqlList.isEmpty()){
+            return ImmutableList.of();
+        }
         //get all record id from index list
         List<String> recordIds = sourceIndexMysqlList.stream().map(LogRecordIndexMysqlPO::getLogRecordId).toList();
         //get record by id from database
-        List<LogRecordMysqlPO> logRecordMysqlPoList = mysqlDatasourceOperate.executeDQL(LogRecordMapper.class, mapper -> mapper.getById(recordIds));
+        List<LogRecordMysqlPO> logRecordMysqlPoList = logRecordMapper.getById(recordIds);
         //get all index id which is related to log record
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
-        List<LogRecordIndexMysqlPO> indexMysqlList = mysqlDatasourceOperate.executeDQL(LogRecordIndexMapper.class, mapper -> mapper.getByIndexIds(indexIds));
+        List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexIds(indexIds);
         return MysqlEntityBuilder.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlList);
     }
 

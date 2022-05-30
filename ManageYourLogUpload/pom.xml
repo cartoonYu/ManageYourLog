@@ -46,6 +46,7 @@
             <artifactId>dubbo-registry-nacos</artifactId>
         </dependency>
 
+
     </dependencies>
 
 

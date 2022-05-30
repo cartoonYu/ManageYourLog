@@ -3,8 +3,8 @@ package org.manage.log.query.repository.mysql;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.manage.log.query.repository.factory.StoreRepositoryLoadCondition;
-import org.manage.log.query.repository.factory.StoreRepositoryMode;
+import org.manage.log.query.repository.factory.QueryRepositoryLoadCondition;
+import org.manage.log.query.repository.factory.QueryRepositoryMode;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -24,7 +24,7 @@ import java.util.Properties;
  * @date 2021/12/30 21:06
  */
 @Configuration
-@StoreRepositoryLoadCondition(mode = StoreRepositoryMode.Mysql)
+@QueryRepositoryLoadCondition(mode = QueryRepositoryMode.Mysql)
 @MapperScan(basePackages = MysqlDatasourceConfig.PACKAGE_NAME,
                 sqlSessionTemplateRef = "mysqlTemplate")
 public class MysqlDatasourceConfig {
