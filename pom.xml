@@ -21,6 +21,8 @@
         <module>ManageYourLogQuery</module>
         <module>ManageYourLogCommon</module>
         <module>ManageYourLogUpload</module>
+        <module>ManageYourLogConfig</module>
+        <module>ManageYourLogBaseTest</module>
     </modules>
 
     <properties>
@@ -70,7 +72,6 @@
             <groupId>ch.vorburger.mariaDB4j</groupId>
             <artifactId>mariaDB4j</artifactId>
             <version>2.4.0</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -121,10 +122,21 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>ManageYourLogBaseTest</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>ManageYourLogCommon</artifactId>
+                <version>1.0.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>org</groupId>
@@ -141,12 +153,6 @@
             <dependency>
                 <groupId>org</groupId>
                 <artifactId>ManageYourLogCommon</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogTest</artifactId>
                 <version>1.0.0</version>
             </dependency>
 

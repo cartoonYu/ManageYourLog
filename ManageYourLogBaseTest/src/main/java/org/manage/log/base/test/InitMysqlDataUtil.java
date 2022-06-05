@@ -1,8 +1,9 @@
-package org.manage.log.query.base.mariadb;
+package org.manage.log.base.test;
 
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
+import com.google.common.collect.ImmutableList;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -44,6 +45,13 @@ public abstract class InitMysqlDataUtil {
         });
     }
 
-    public abstract MariaDBConfig getConfig();
-
+    public MariaDBConfig getConfig(){
+        MariaDBConfig mariaDBConfig = new MariaDBConfig();
+        mariaDBConfig.setBaseDir("../local/base")
+                .setDataDir("../local/data")
+                .setPort(3306)
+                .setSchemaList(ImmutableList.of("script/MysqlSchema.sql"))
+                .setDataList(ImmutableList.of("script/MysqlData.sql"));
+        return mariaDBConfig;
+    }
 }

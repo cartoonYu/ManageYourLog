@@ -1,6 +1,7 @@
-package org.manage.log.query.base.mariadb;
+package org.manage.log.base.test;
 
 import ch.vorburger.mariadb4j.DB;
+import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;

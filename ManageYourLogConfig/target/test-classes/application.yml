@@ -7,7 +7,3 @@ store:
     username:
     password:
     driverClassName: com.mysql.cj.jdbc.Driver
-query:
-  log:
-    load:
-      mode: http
