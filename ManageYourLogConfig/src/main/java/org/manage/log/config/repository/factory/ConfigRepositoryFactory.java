@@ -4,7 +4,9 @@ import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.BaseFactory;
 import org.manage.log.config.repository.LogConfigRepository;
 import org.manage.log.config.repository.config.ApplicationConfigKey;
+import org.manage.log.config.repository.factory.cache.CacheStoreRepositoryMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,19 @@ public class ConfigRepositoryFactory extends BaseFactory {
 
     @Bean
     @Primary
-    public LogConfigRepository initPrimaryRepository(){
+    public LogConfigRepository initPrimaryRepository(@Qualifier("actualConfigRepository") LogConfigRepository actualConfigRepository){
+        Optional<String> cacheMode = applicationConfigUtil.get(ApplicationConfigKey.cacheMode.getKey());
+        if(cacheMode.isEmpty()){
+            return actualConfigRepository;
+        }
+        Optional<CacheStoreRepositoryMode> selectCacheMode = CacheStoreRepositoryMode.parse(cacheMode.get());
+        Class<?> cacheClass = selectCacheMode.isEmpty() ? CacheStoreRepositoryMode.Redis.getClassType() : selectCacheMode.get().getClassType();
+        log.info("init cache store repository, class type: {}", cacheClass.getSimpleName());
+        return (LogConfigRepository) applicationContext.getBean(cacheClass);
+    }
+
+    @Bean("actualConfigRepository")
+    public LogConfigRepository initActualRepository(){
         Optional<String> storeMode = applicationConfigUtil.get(ApplicationConfigKey.storeMode.getKey());
         Class<?> storeClass = StoreRepositoryMode.Mysql.getClassType();
         if(storeMode.isEmpty()){
@@ -38,4 +52,6 @@ public class ConfigRepositoryFactory extends BaseFactory {
         log.info("init store repository, class type: {}", storeClass.getSimpleName());
         return (LogConfigRepository) applicationContext.getBean(storeClass);
     }
+
+
 }

@@ -6,7 +6,7 @@ import org.manage.log.config.repository.mysql.model.LogConfigMysqlPO;
 import java.util.List;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2022/6/5 18:32
  */
 @Mapper

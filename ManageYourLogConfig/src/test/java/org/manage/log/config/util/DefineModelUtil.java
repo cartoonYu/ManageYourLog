@@ -9,7 +9,7 @@ import org.manage.log.common.util.IdGenerateUtil;
 import java.time.LocalDateTime;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @date 2022/6/5 18:55
  */
 public class DefineModelUtil {

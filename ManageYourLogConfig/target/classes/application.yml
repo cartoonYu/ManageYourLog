@@ -7,3 +7,5 @@ store:
     username: test
     password: $Qwe13579
     driverClassName: com.mysql.cj.jdbc.Driver
+cache:
+  mode: redis

@@ -1,6 +1,8 @@
 package org.manage.log.config.repository;
 
 import org.manage.log.common.model.LogConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -9,6 +11,8 @@ import java.util.List;
  * @date 2022/6/4 17:48
  */
 public interface LogConfigRepository {
+
+    Logger log = LoggerFactory.getLogger(LogConfigRepository.class);
 
     boolean add(LogConfig logConfig);
 

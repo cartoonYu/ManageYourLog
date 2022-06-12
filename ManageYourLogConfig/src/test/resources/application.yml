@@ -7,3 +7,5 @@ store:
     username:
     password:
     driverClassName: com.mysql.cj.jdbc.Driver
+cache:
+  mode: redis
