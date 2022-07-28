@@ -7,7 +7,6 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.lang.NonNull;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * base class assign to load class by configuration
@@ -64,7 +63,7 @@ public abstract class BaseLoadCondition implements Condition {
         Environment environment = context.getEnvironment();
         String config = environment.getProperty(configKey);
         return Optional.ofNullable(config).map(value -> {
-            List<String> loadList = Arrays.stream(value.split(CONFIG_VALUE_SPLIT_SEPARATOR)).collect(Collectors.toList());
+            List<String> loadList = Arrays.stream(value.split(CONFIG_VALUE_SPLIT_SEPARATOR)).toList();
             return loadList.stream().anyMatch(configuration::contains);
         }).orElse(false);
     }
