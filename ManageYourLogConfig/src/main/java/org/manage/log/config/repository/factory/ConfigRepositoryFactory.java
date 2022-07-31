@@ -35,6 +35,7 @@ public class ConfigRepositoryFactory extends BaseFactory{
         return initPrimaryBean(ApplicationConfigKey.cacheMode.getKey(), CacheStoreRepositoryMode.Redis, CacheStoreRepositoryMode.values(), LogConfigRepository.class);
     }
 
+
     @Bean("actualConfigRepository")
     public LogConfigRepository initActualRepository(){
         return initPrimaryBean(ApplicationConfigKey.storeMode.getKey(), StoreRepositoryMode.Mysql, StoreRepositoryMode.values(), LogConfigRepository.class);

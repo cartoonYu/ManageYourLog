@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class UploadLogFactory extends BaseFactory {
 
-    @Bean
+    /*@Bean
     @Primary
     public UploadLog initPrimarySendLogService(){
         return initPrimaryBean(ApplicationConfigKey.uploadLogMode.getKey(), UploadLogMode.defaultMode, UploadLogMode.values(), UploadLog.class);
-    }
+    }*/
 }

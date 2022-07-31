@@ -2,6 +2,8 @@ package org.manage.log.query.repository;
 
 import com.google.common.collect.ImmutableList;
 import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.util.factory.InitPrimary;
+import org.manage.log.query.repository.config.ApplicationConfigKey;
 import org.manage.log.query.repository.factory.QueryRepositoryLoadCondition;
 import org.manage.log.query.repository.factory.QueryRepositoryMode;
 import org.manage.log.query.repository.mysql.builder.MysqlEntityBuilder;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
  */
 @Repository
 @QueryRepositoryLoadCondition(mode = QueryRepositoryMode.Mysql)
+@InitPrimary(configKey = "store.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class)
 public class LogRecordMysqlRepository implements LogRecordRepository {
 
     public static final String INDEX_SPLIT_CHARACTER = ",";
