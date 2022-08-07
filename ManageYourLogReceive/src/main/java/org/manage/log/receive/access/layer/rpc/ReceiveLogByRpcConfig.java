@@ -5,8 +5,7 @@ import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
-import org.manage.log.receive.access.layer.ReceiveLogLoadCondition;
-import org.manage.log.receive.access.layer.ReceiveLogMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.config.ApplicationConfigKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +18,8 @@ import javax.annotation.PostConstruct;
  * @date 2022/1/16 17:03
  */
 @Configuration
-@ReceiveLogLoadCondition(mode = ReceiveLogMode.rpc)
 @DubboComponentScan("org.manage.log.receive.access.layer.rpc")
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc", defaultClass = ReceiveLogByRpc.class, implementClass = ReceiveLogByRpc.class, needPrimary = false)
 public class ReceiveLogByRpcConfig{
 
     @Autowired

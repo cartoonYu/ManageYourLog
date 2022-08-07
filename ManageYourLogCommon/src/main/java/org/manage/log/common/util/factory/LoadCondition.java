@@ -1,4 +1,4 @@
-package org.manage.log.common.util.loadCondition;
+package org.manage.log.common.util.factory;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
@@ -9,17 +9,15 @@ import org.springframework.lang.NonNull;
 import java.util.*;
 
 /**
- * base class assign to load class by configuration
  * @author cartoon
- * @date 2022/1/12 10:27
+ * @version 1.0
+ * @since 2022/08/07 16:40
  */
-public abstract class BaseLoadCondition implements Condition {
+public class LoadCondition implements Condition {
 
     private static final String CONFIG_VALUE_SPLIT_SEPARATOR = ",";
 
     private static final String ALL_MATCH_CONFIG = "all";
-
-    protected abstract LoadConditionPojo conditionPojo();
 
     /**
      * match and load matched classes
@@ -32,21 +30,11 @@ public abstract class BaseLoadCondition implements Condition {
      */
     @Override
     public boolean matches(@NonNull ConditionContext context, @NonNull AnnotatedTypeMetadata metadata) {
-        LoadConditionPojo loadConditionPojo = conditionPojo();
-        return matchesAll(context, loadConditionPojo) || matchSpecify(context, metadata, loadConditionPojo);
-    }
+        Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(LoadBean.class.getName());
 
-    private boolean matchesAll(ConditionContext context, LoadConditionPojo loadConditionPojo){
-        return matches(context, loadConditionPojo.getConfigKey(), ALL_MATCH_CONFIG);
-    }
-
-    private boolean matchSpecify(ConditionContext context, AnnotatedTypeMetadata metadata, LoadConditionPojo loadConditionPojo){
-        Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(loadConditionPojo.getLoadConditionClass().getName());
-        return Optional.ofNullable(annotationAttributes).map(conditionData -> {
-            Object loadCondition = annotationAttributes.get("mode");
-            String specifyMode = ((BaseLoadMode) loadCondition).getMode();
-            return matches(context, loadConditionPojo.getConfigKey(), specifyMode);
-        }).orElse(false);
+        String mode = (String) annotationAttributes.get("mode");
+        String configKey = (String) annotationAttributes.get("loadConfigKey");
+        return matches(context, configKey, ALL_MATCH_CONFIG) || matches(context, configKey, mode);
     }
 
     /**
@@ -67,5 +55,4 @@ public abstract class BaseLoadCondition implements Condition {
             return loadList.stream().anyMatch(configuration::contains);
         }).orElse(false);
     }
-
 }

@@ -3,8 +3,9 @@ package org.manage.log.receive.repository.mysql;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.manage.log.receive.repository.factory.ReceiveRepositoryLoadCondition;
-import org.manage.log.receive.repository.factory.ReceiveRepositoryMode;
+import org.manage.log.common.util.factory.LoadBean;
+import org.manage.log.receive.repository.LogRecordMysqlRepository;
+import org.manage.log.receive.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ import java.util.function.Function;
  * @date 2022/1/4 23:23
  */
 @Component
-@ReceiveRepositoryLoadCondition(mode = ReceiveRepositoryMode.Mysql)
+@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
 public class MysqlDatasourceOperate {
 
     @Autowired

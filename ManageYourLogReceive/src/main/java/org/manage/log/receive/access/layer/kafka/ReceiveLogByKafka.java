@@ -4,8 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.manage.log.common.util.GsonUtil;
-import org.manage.log.receive.access.layer.ReceiveLogLoadCondition;
-import org.manage.log.receive.access.layer.ReceiveLogMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.service.ReceiveLog;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import java.time.LocalDateTime;
  */
 @Component
 @EnableScheduling
-@ReceiveLogLoadCondition(mode = ReceiveLogMode.kafka)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", defaultClass = ReceiveLogByKafka.class, implementClass = ReceiveLogByKafka.class, needPrimary = false)
 public class ReceiveLogByKafka {
 
     private static final Logger log = LoggerFactory.getLogger(ReceiveLogByKafka.class);

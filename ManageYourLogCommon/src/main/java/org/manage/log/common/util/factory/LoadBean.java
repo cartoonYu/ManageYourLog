@@ -1,14 +1,19 @@
 package org.manage.log.common.util.factory;
 
 
+import org.springframework.context.annotation.Conditional;
+
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @Documented
-public @interface InitPrimary {
+@Conditional(LoadCondition.class)
+public @interface LoadBean {
 
-    String configKey();
+    String primaryConfigKey() default "";
+
+    String loadConfigKey();
 
     String mode();
 
@@ -16,5 +21,5 @@ public @interface InitPrimary {
 
     Class<?> implementClass();
 
-
+    boolean needPrimary() default true;
 }

@@ -2,8 +2,7 @@ package org.manage.log.receive.repository;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.LogRecord;
-import org.manage.log.receive.repository.factory.ReceiveRepositoryLoadCondition;
-import org.manage.log.receive.repository.factory.ReceiveRepositoryMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.repository.mysql.MysqlDatasourceOperate;
 import org.manage.log.receive.repository.mysql.builder.MysqlEntityBuilder;
 import org.manage.log.receive.repository.mysql.mapper.LogRecordIndexMapper;
@@ -22,7 +21,7 @@ import java.util.List;
  * @date 2021/11/25 20:30
  */
 @Repository
-@ReceiveRepositoryLoadCondition(mode = ReceiveRepositoryMode.Mysql)
+@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class)
 public class LogRecordMysqlRepository implements LogRecordRepository {
 
     public static final String INDEX_SPLIT_CHARACTER = ",";

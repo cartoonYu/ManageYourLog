@@ -1,8 +1,9 @@
 package org.manage.log.query.base;
 
 import org.manage.log.base.test.InitMysqlDataUtil;
-import org.manage.log.query.repository.factory.QueryRepositoryLoadCondition;
-import org.manage.log.query.repository.factory.QueryRepositoryMode;
+import org.manage.log.common.util.factory.LoadBean;
+import org.manage.log.query.repository.LogRecordMysqlRepository;
+import org.manage.log.query.repository.LogRecordRepository;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/21 21:46
  */
 @Component
-@QueryRepositoryLoadCondition(mode = QueryRepositoryMode.Mysql)
+@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
 public class InitMysqlData extends InitMysqlDataUtil implements InitializingBean, DisposableBean {
 
     @Override

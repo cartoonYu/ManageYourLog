@@ -1,8 +1,7 @@
 package org.manage.log.receive.access.layer.rpc;
 
 import org.apache.dubbo.config.annotation.DubboService;
-import org.manage.log.receive.access.layer.ReceiveLogLoadCondition;
-import org.manage.log.receive.access.layer.ReceiveLogMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.service.ReceiveLog;
 import org.manage.log.upload.UploadLog;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
@@ -18,9 +17,9 @@ import java.util.List;
  * @author cartoon
  * @date 2022/1/16 17:07
  */
-@ReceiveLogLoadCondition(mode = ReceiveLogMode.rpc)
 @DubboService
 @Service
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc", defaultClass = ReceiveLogByRpc.class, implementClass = ReceiveLogByRpc.class, needPrimary = false)
 public class ReceiveLogByRpc implements UploadLog {
 
     @Autowired

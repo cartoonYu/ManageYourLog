@@ -5,8 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
-import org.manage.log.receive.access.layer.ReceiveLogLoadCondition;
-import org.manage.log.receive.access.layer.ReceiveLogMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.config.ApplicationConfigKey;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import java.util.Properties;
  * @date 2022/1/10 00:07
  */
 @Component
-@ReceiveLogLoadCondition(mode = ReceiveLogMode.kafka)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", defaultClass = ReceiveLogByKafka.class, implementClass = ReceiveLogByKafka.class, needPrimary = false)
 public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Autowired

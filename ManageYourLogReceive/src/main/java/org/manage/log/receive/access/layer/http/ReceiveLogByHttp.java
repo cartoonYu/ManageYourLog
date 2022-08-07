@@ -1,7 +1,6 @@
 package org.manage.log.receive.access.layer.http;
 
-import org.manage.log.receive.access.layer.ReceiveLogLoadCondition;
-import org.manage.log.receive.access.layer.ReceiveLogMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.service.ReceiveLog;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.manage.log.upload.model.resp.OperateLogResp;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/receive")
-@ReceiveLogLoadCondition(mode = ReceiveLogMode.http)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "http", defaultClass = ReceiveLogByHttp.class, implementClass = ReceiveLogByHttp.class, needPrimary = false)
 public class ReceiveLogByHttp {
 
     @Autowired

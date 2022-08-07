@@ -20,9 +20,9 @@ import java.util.*;
  * @since 2022/07/31 17:54
  */
 @Component
-public class BaseFactoryV2 implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
+public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
 
-    protected final Logger log = LoggerFactory.getLogger(BaseFactoryV2.class);
+    protected final Logger log = LoggerFactory.getLogger(InitPrimaryBean.class);
 
     private Environment environment;
 
@@ -32,19 +32,22 @@ public class BaseFactoryV2 implements BeanDefinitionRegistryPostProcessor, Envir
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         String packageName = "org.manage.log";
         Reflections reflections = new Reflections(packageName);
-        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(InitPrimary.class);
+        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(LoadBean.class);
         for (Class<?> c : classes) {
-            if(!c.isAnnotationPresent(InitPrimary.class)){
+            if(!c.isAnnotationPresent(LoadBean.class)){
                 continue;
             }
-            InitPrimary initPrimary = c.getDeclaredAnnotation(InitPrimary.class);
-            String configValue = environment.getProperty(initPrimary.configKey());
+            LoadBean loadBean = c.getDeclaredAnnotation(LoadBean.class);
+            if(!loadBean.needPrimary()){
+                continue;
+            }
+            String configValue = environment.getProperty(loadBean.primaryConfigKey());
             if(Objects.isNull(configValue)){
-                log.warn("init primary bean, init class type: {}, have not determine mode, back to default class type: {}", initPrimary.implementClass().getSimpleName(), initPrimary.defaultClass().getSimpleName());
-                setPrimary(initPrimary.defaultClass(), initPrimary.implementClass(), beanDefinitionRegistry);
+                log.warn("init primary bean, init class type: {}, have not determine mode, back to default class type: {}", loadBean.implementClass().getSimpleName(), loadBean.defaultClass().getSimpleName());
+                setPrimary(loadBean.defaultClass(), loadBean.implementClass(), beanDefinitionRegistry);
             } else {
-                if(configValue.equals(initPrimary.mode())){
-                    setPrimary(c, initPrimary.implementClass(), beanDefinitionRegistry);
+                if(configValue.equals(loadBean.mode())){
+                    setPrimary(c, loadBean.implementClass(), beanDefinitionRegistry);
                 }
             }
         }

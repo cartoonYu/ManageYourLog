@@ -1,9 +1,8 @@
 package org.manage.log.config.repository.mysql;
 
 import org.manage.log.common.model.LogConfig;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.config.repository.LogConfigRepository;
-import org.manage.log.config.repository.factory.StoreRepositoryLoadCondition;
-import org.manage.log.config.repository.factory.StoreRepositoryMode;
 import org.manage.log.config.repository.mysql.builder.LogConfigMysqlBuilder;
 import org.manage.log.config.repository.mysql.mapper.LogConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
  * @author cartoon
  * @date 2022/6/4 17:52
  */
-@StoreRepositoryLoadCondition(mode = StoreRepositoryMode.Mysql)
+@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogConfigMysqlRepository.class, implementClass = LogConfigRepository.class)
 @Repository
 public class LogConfigMysqlRepository implements LogConfigRepository {
 

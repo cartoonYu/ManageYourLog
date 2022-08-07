@@ -1,13 +1,11 @@
 package org.manage.log.upload.service.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.manage.log.common.util.factory.InitPrimary;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.upload.UploadLog;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.manage.log.upload.model.resp.OperateLogResp;
 import org.manage.log.upload.service.UploadLogByDefault;
-import org.manage.log.upload.service.factory.UploadLogLoadCondition;
-import org.manage.log.upload.service.factory.UploadLogMode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +15,7 @@ import java.util.List;
  * @date 2022/1/19 21:36
  */
 @Service
-@InitPrimary(configKey = "upload.log.mode", mode = "rpc", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class)
-@UploadLogLoadCondition(mode = UploadLogMode.rpc)
+@LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "rpc", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class)
 public class UploadLogByRpc implements UploadLog {
 
     @DubboReference

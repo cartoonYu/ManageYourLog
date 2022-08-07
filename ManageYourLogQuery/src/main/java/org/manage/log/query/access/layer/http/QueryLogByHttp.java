@@ -1,10 +1,9 @@
 package org.manage.log.query.access.layer.http;
 
-import org.manage.log.query.access.layer.QueryLogMode;
+import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.query.access.layer.http.builder.QueryResultBuilder;
 import org.manage.log.query.access.layer.http.model.QueryLogResp;
 import org.manage.log.common.util.LocalDateTimeFormatUtil;
-import org.manage.log.query.access.layer.QueryLogLoadCondition;
 import org.manage.log.query.service.QueryLogService;
 import org.manage.log.common.model.LogRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/query")
-@QueryLogLoadCondition(mode = QueryLogMode.http)
+@LoadBean(primaryConfigKey = "query.log.load.mode", loadConfigKey = "query.log.load.mode", mode = "http", defaultClass = QueryLogByHttp.class, implementClass = QueryLogByHttp.class)
 public class QueryLogByHttp {
 
     @Autowired
