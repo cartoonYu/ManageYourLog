@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @date 2021/11/25 20:30
  */
 @Repository
-@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class)
+@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql")
 public class LogRecordMysqlRepository implements LogRecordRepository {
 
     public static final String INDEX_SPLIT_CHARACTER = ",";

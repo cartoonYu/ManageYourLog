@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @author cartoon
  * @date 2022/6/4 17:52
  */
-@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogConfigMysqlRepository.class, implementClass = LogConfigRepository.class)
+@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql")
 @Repository
 public class LogConfigMysqlRepository implements LogConfigRepository {
 

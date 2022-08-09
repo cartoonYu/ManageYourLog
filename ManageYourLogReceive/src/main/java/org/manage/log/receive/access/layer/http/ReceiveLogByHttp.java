@@ -20,7 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/receive")
-@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "http", defaultClass = ReceiveLogByHttp.class, implementClass = ReceiveLogByHttp.class, needPrimary = false)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "http",  needPrimary = false)
 public class ReceiveLogByHttp {
 
     @Autowired

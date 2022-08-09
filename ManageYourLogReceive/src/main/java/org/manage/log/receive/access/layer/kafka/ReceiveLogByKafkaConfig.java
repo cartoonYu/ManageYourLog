@@ -21,7 +21,7 @@ import java.util.Properties;
  * @date 2022/1/10 00:07
  */
 @Component
-@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", defaultClass = ReceiveLogByKafka.class, implementClass = ReceiveLogByKafka.class, needPrimary = false)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", needPrimary = false)
 public class ReceiveLogByKafkaConfig implements DisposableBean {
 
     @Autowired

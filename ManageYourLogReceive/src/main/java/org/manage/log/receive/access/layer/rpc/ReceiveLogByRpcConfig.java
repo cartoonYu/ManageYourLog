@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
  */
 @Configuration
 @DubboComponentScan("org.manage.log.receive.access.layer.rpc")
-@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc", defaultClass = ReceiveLogByRpc.class, implementClass = ReceiveLogByRpc.class, needPrimary = false)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc", needPrimary = false)
 public class ReceiveLogByRpcConfig{
 
     @Autowired

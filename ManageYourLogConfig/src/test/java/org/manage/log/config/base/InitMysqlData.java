@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/21 21:46
  */
 @Component
-@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogConfigMysqlRepository.class, implementClass = LogConfigRepository.class, needPrimary = false)
+@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", needPrimary = false)
 public class InitMysqlData extends InitMysqlDataUtil implements InitializingBean, DisposableBean {
 
     @Override

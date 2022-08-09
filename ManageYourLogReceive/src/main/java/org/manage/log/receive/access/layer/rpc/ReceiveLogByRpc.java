@@ -19,7 +19,7 @@ import java.util.List;
  */
 @DubboService
 @Service
-@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc", defaultClass = ReceiveLogByRpc.class, implementClass = ReceiveLogByRpc.class, needPrimary = false)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc")
 public class ReceiveLogByRpc implements UploadLog {
 
     @Autowired

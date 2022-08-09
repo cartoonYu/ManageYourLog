@@ -6,9 +6,7 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
-import org.manage.log.upload.UploadLog;
 import org.manage.log.upload.config.ApplicationConfigKey;
-import org.manage.log.upload.service.UploadLogByDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +20,7 @@ import javax.annotation.PostConstruct;
  */
 @Configuration
 @EnableDubbo
-@LoadBean(loadConfigKey = "upload.log.mode", mode = "rpc", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class, needPrimary = false)
+@LoadBean(loadConfigKey = "upload.log.mode", mode = "rpc", needPrimary = false)
 public class UploadLogByRpcConfig {
 
     @Autowired

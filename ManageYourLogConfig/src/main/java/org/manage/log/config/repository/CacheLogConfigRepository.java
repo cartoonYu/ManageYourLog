@@ -2,7 +2,6 @@ package org.manage.log.config.repository;
 
 import org.manage.log.common.model.LogConfig;
 import org.manage.log.common.util.factory.LoadBean;
-import org.manage.log.config.repository.mysql.LogConfigMysqlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -13,7 +12,7 @@ import java.util.List;
  * @author cartoon
  * @date 2022/6/9 11:51
  */
-@LoadBean(primaryConfigKey = "cache.mode", loadConfigKey = "cache.mode", mode = "redis", defaultClass = LogConfigMysqlRepository.class, implementClass = LogConfigRepository.class)
+@LoadBean(primaryConfigKey = "cache.mode", loadConfigKey = "cache.mode", mode = "redis")
 @Repository
 public class CacheLogConfigRepository implements LogConfigRepository{
 

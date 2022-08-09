@@ -4,8 +4,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.manage.log.common.util.factory.LoadBean;
-import org.manage.log.query.repository.LogRecordMysqlRepository;
-import org.manage.log.query.repository.LogRecordRepository;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -25,7 +23,7 @@ import java.util.Properties;
  * @date 2021/12/30 21:06
  */
 @Configuration
-@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
+@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", needPrimary = false)
 @MapperScan(basePackages = MysqlDatasourceConfig.PACKAGE_NAME,
                 sqlSessionTemplateRef = "mysqlTemplate")
 public class MysqlDatasourceConfig {

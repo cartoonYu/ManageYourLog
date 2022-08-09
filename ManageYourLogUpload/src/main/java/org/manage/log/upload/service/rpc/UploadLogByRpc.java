@@ -5,7 +5,6 @@ import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.upload.UploadLog;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.manage.log.upload.model.resp.OperateLogResp;
-import org.manage.log.upload.service.UploadLogByDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
  * @date 2022/1/19 21:36
  */
 @Service
-@LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "rpc", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class)
+@LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "rpc")
 public class UploadLogByRpc implements UploadLog {
 
     @DubboReference

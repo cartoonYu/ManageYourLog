@@ -4,7 +4,6 @@ import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.upload.UploadLog;
 import org.manage.log.upload.model.req.UploadLogRecordReq;
 import org.manage.log.upload.model.resp.OperateLogResp;
-import org.manage.log.upload.service.UploadLogByDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import java.util.List;
  * @date 2022/1/9 15:23
  */
 @Service
-@LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "kafka", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class)
+@LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "kafka")
 public class UploadLogByKafka implements UploadLog {
 
     @Autowired

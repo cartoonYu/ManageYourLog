@@ -7,9 +7,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.manage.log.common.util.GsonUtil;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
-import org.manage.log.upload.UploadLog;
 import org.manage.log.upload.config.ApplicationConfigKey;
-import org.manage.log.upload.service.UploadLogByDefault;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ import java.util.Properties;
  * @date 2022/1/13 20:54
  */
 @Component
-@LoadBean(loadConfigKey = "upload.log.mode", mode = "kafka", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class, needPrimary = false)
+@LoadBean(loadConfigKey = "upload.log.mode", mode = "kafka", needPrimary = false)
 public class UploadLogByKafkaConfig implements DisposableBean {
 
     @Autowired

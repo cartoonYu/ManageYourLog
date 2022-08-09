@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/query")
-@LoadBean(primaryConfigKey = "query.log.load.mode", loadConfigKey = "query.log.load.mode", mode = "http", defaultClass = QueryLogByHttp.class, implementClass = QueryLogByHttp.class)
+@LoadBean(primaryConfigKey = "query.log.load.mode", loadConfigKey = "query.log.load.mode", mode = "http")
 public class QueryLogByHttp {
 
     @Autowired

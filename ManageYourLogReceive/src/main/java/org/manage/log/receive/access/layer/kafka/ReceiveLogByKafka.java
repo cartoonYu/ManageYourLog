@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  */
 @Component
 @EnableScheduling
-@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", defaultClass = ReceiveLogByKafka.class, implementClass = ReceiveLogByKafka.class, needPrimary = false)
+@LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", needPrimary = false)
 public class ReceiveLogByKafka {
 
     private static final Logger log = LoggerFactory.getLogger(ReceiveLogByKafka.class);
