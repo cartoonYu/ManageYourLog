@@ -49,7 +49,7 @@ public abstract class InitMysqlDataUtil {
         MariaDBConfig mariaDBConfig = new MariaDBConfig();
         mariaDBConfig.setBaseDir("../local/base")
                 .setDataDir("../local/data")
-                .setPort(3306)
+                .setPort(13306)
                 .setSchemaList(ImmutableList.of("script/MysqlSchema.sql"))
                 .setDataList(ImmutableList.of("script/MysqlData.sql"));
         return mariaDBConfig;

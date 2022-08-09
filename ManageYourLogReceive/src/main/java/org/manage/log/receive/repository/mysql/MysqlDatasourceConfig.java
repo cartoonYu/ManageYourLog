@@ -27,7 +27,7 @@ import java.util.Properties;
 @Configuration
 @MapperScan(basePackages = MysqlDatasourceConfig.PACKAGE_NAME,
                 sqlSessionTemplateRef = "mysqlTemplate")
-@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
+@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
 public class MysqlDatasourceConfig {
 
     private final String mysqlDatasource = "mysqlDatasource";

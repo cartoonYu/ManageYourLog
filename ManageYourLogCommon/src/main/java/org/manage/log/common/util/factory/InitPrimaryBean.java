@@ -10,6 +10,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
+import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -26,7 +27,7 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
 
     private Environment environment;
 
-    private Set<Class<?>> hasLoadPrimaryClass = new HashSet<>();
+    private final Set<Class<?>> hasLoadPrimaryClass = new HashSet<>();
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
@@ -59,9 +60,7 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
             return;
         }
         String className = selectClass.getSimpleName();
-        StringBuilder builder = new StringBuilder();
-        builder.append(Character.toLowerCase(className.charAt(0))).append(className.substring(1));
-        BeanDefinition beanDefinition = beanDefinitionRegistry.getBeanDefinition(builder.toString());
+        BeanDefinition beanDefinition = beanDefinitionRegistry.getBeanDefinition(Character.toLowerCase(className.charAt(0)) + className.substring(1));
         beanDefinition.setPrimary(true);
         hasLoadPrimaryClass.add(implementClass);
     }

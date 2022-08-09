@@ -23,7 +23,7 @@ import java.util.function.Function;
  * @date 2022/1/4 23:23
  */
 @Component
-@LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
+@LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", defaultClass = LogRecordMysqlRepository.class, implementClass = LogRecordRepository.class, needPrimary = false)
 public class MysqlDatasourceOperate {
 
     @Autowired

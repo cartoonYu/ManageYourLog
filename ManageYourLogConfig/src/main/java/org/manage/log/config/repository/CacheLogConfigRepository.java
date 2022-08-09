@@ -23,19 +23,19 @@ public class CacheLogConfigRepository implements LogConfigRepository{
 
     @Override
     public boolean add(LogConfig logConfig) {
-        log.info("test");
+        log.info("data from redis");
         return actualConfigRepository.add(logConfig);
     }
 
     @Override
     public LogConfig getByConfigName(String configName) {
-        log.info("test");
+        log.info("data from redis");
         return actualConfigRepository.getByConfigName(configName);
     }
 
     @Override
     public List<LogConfig> getAll() {
-        log.info("test");
+        log.info("data from redis");
         return actualConfigRepository.getAll();
     }
 }

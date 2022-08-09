@@ -26,7 +26,7 @@ import java.util.Properties;
  * @date 2022/1/13 20:54
  */
 @Component
-@LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "kafka", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class, needPrimary = false)
+@LoadBean(loadConfigKey = "upload.log.mode", mode = "kafka", defaultClass = UploadLogByDefault.class, implementClass = UploadLog.class, needPrimary = false)
 public class UploadLogByKafkaConfig implements DisposableBean {
 
     @Autowired
