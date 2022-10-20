@@ -2,6 +2,7 @@ package org.manage.log.common.model;
 
 
 import org.manage.log.common.constants.LogRecordSort;
+import org.manage.log.common.constants.OperatorSort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,22 +14,46 @@ import java.util.List;
  */
 public class LogRecord {
 
+    /**
+     * record id, identify record single
+     */
     private String recordId;
 
+    /**
+     * record source content
+     */
     private String content;
 
-    private String operatorSort;
+    /**
+     * operate record sort
+     */
+    private OperatorSort operatorSort;
 
+    /**
+     * operate current record handles
+     */
     private String operator;
 
+    /**
+     * record sort
+     */
     private LogRecordSort logRecordSort;
 
+    /**
+     * record index list
+     */
     private List<LogRecordIndex> indexList;
 
     private Integer version;
 
+    /**
+     * record create time
+     */
     private LocalDateTime createTime;
 
+    /**
+     * record last modify time
+     */
     private LocalDateTime modifyTime;
 
     public String getRecordId() {
@@ -49,13 +74,13 @@ public class LogRecord {
         return this;
     }
 
-    public String getOperatorSort() {
-        return operatorSort;
-    }
-
-    public LogRecord setOperatorSort(String operatorSort) {
+    public LogRecord setOperatorSort(OperatorSort operatorSort) {
         this.operatorSort = operatorSort;
         return this;
+    }
+
+    public OperatorSort getOperatorSort() {
+        return operatorSort;
     }
 
     public String getOperator() {

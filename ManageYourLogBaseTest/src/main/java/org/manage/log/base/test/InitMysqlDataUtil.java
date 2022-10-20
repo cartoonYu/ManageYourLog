@@ -15,13 +15,20 @@ import static java.util.Optional.ofNullable;
  */
 public abstract class InitMysqlDataUtil {
 
+    /**
+     * start mariadb util
+     *
+     * <p>it will read config from {@link InitMysqlDataUtil#getConfig()}, use config to start mariadb and execute DDL script and DML script by config determine
+     * @throws Exception
+     */
     protected void start() throws Exception{
         MariaDBConfig config = getConfig();
         if(!config.getMariaDbIsStart().get()){
             DBConfigurationBuilder configBuilder = DBConfigurationBuilder.newBuilder();
-            configBuilder.setPort(config.getPort());
-            configBuilder.setDataDir(config.getDataDir());
-            configBuilder.setBaseDir(config.getBaseDir());
+            configBuilder
+                    .setPort(config.getPort())
+                    .setDataDir(config.getDataDir())
+                    .setBaseDir(config.getBaseDir());
             DB db = DB.newEmbeddedDB(configBuilder.build());
             db.start();
             for(String schema : config.getSchemaList()){
@@ -35,6 +42,9 @@ public abstract class InitMysqlDataUtil {
         }
     }
 
+    /**
+     * stop mariadb when program exit
+     */
     protected void stop(){
         ofNullable(getConfig().getDb()).ifPresent(obj -> {
             try {
@@ -45,13 +55,18 @@ public abstract class InitMysqlDataUtil {
         });
     }
 
-    public MariaDBConfig getConfig(){
+    /**
+     * determine start mariadb config
+     * <p>sub class can overwrite this to determine specify config</p>
+     * @return mariadb config
+     */
+    protected MariaDBConfig getConfig(){
         MariaDBConfig mariaDBConfig = new MariaDBConfig();
         mariaDBConfig.setBaseDir("../local/base")
                 .setDataDir("../local/data")
                 .setPort(13306)
-                .setSchemaList(ImmutableList.of("script/MysqlSchema.sql"))
-                .setDataList(ImmutableList.of("script/MysqlData.sql"));
+                .addSchemaScript("script/MysqlSchema.sql")
+                .addDataScript("script/MysqlData.sql");
         return mariaDBConfig;
     }
 }

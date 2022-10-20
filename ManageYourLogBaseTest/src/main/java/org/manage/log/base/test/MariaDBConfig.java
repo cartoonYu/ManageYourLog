@@ -1,8 +1,9 @@
 package org.manage.log.base.test;
 
 import ch.vorburger.mariadb4j.DB;
-import com.google.common.collect.ImmutableList;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -15,12 +16,12 @@ public class MariaDBConfig {
     /**
      * database schema script
      */
-    private List<String> schemaList;
+    private List<String> schemaList = new ArrayList<>();
 
     /**
      * database data script
      */
-    private List<String> dataList;
+    private List<String> dataList = new ArrayList<>();
 
     /**
      * database schema directory
@@ -95,8 +96,8 @@ public class MariaDBConfig {
         return schemaList;
     }
 
-    public MariaDBConfig setSchemaList(List<String> schemaList) {
-        this.schemaList = schemaList;
+    public MariaDBConfig addSchemaScript(String... schemaList){
+        this.schemaList.addAll(Arrays.asList(schemaList));
         return this;
     }
 
@@ -104,8 +105,8 @@ public class MariaDBConfig {
         return dataList;
     }
 
-    public MariaDBConfig setDataList(List<String> dataList) {
-        this.dataList = dataList;
+    public MariaDBConfig addDataScript(String... dataList) {
+        this.dataList.addAll(Arrays.asList(dataList));
         return this;
     }
 }

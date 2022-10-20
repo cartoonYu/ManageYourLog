@@ -1,5 +1,6 @@
 package org.manage.log.receive.access.layer.builder;
 
+import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.util.IdGenerateUtil;
 import org.manage.log.common.model.LogRecord;
 import org.manage.log.common.model.LogRecordIndex;
@@ -27,7 +28,7 @@ public class LogRecordBuilder {
         LogRecord logRecord = new LogRecord();
         logRecord.setRecordId(recordId)
                 .setContent(uploadLogRecordReq.getContent())
-                .setOperatorSort(uploadLogRecordReq.getOperatorSort())
+                .setOperatorSort(OperatorSort.parse(uploadLogRecordReq.getOperatorSort()))
                 .setOperator(uploadLogRecordReq.getOperator())
                 .setLogRecordSort(uploadLogRecordReq.getLogRecordSort())
                 .setIndexList(convertIndex(recordId, uploadTime, uploadLogRecordReq.getIndexList()))

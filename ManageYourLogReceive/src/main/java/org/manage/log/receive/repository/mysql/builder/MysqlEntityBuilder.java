@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
+import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.LogRecord;
 import org.manage.log.common.model.LogRecordIndex;
 import org.manage.log.receive.repository.LogRecordMysqlRepository;
@@ -57,7 +58,7 @@ public class MysqlEntityBuilder {
             LogRecord logRecord = new LogRecord();
             logRecord.setRecordId(po.getRecordId())
                     .setContent(po.getContent())
-                    .setOperatorSort(po.getOperatorSort())
+                    .setOperatorSort(OperatorSort.parse(po.getOperatorSort()))
                     .setOperator(po.getOperator())
                     .setLogRecordSort(LogRecordSort.parse(po.getLogRecordSort()))
                     .setVersion(po.getVersion())
@@ -97,7 +98,7 @@ public class MysqlEntityBuilder {
         LogRecordMysqlPO logRecordMysqlPO = new LogRecordMysqlPO();
         logRecordMysqlPO.setRecordId(logRecord.getRecordId())
                 .setContent(logRecord.getContent())
-                .setOperatorSort(logRecord.getOperatorSort())
+                .setOperatorSort(logRecord.getOperatorSort().getSortDescription())
                 .setOperator(logRecord.getOperator())
                 .setLogRecordSort(logRecord.getLogRecordSort().getSortDescription())
                 .setVersion(logRecord.getVersion())

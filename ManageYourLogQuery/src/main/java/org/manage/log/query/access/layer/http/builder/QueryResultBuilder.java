@@ -25,7 +25,7 @@ public class QueryResultBuilder {
     }
 
     public List<QueryLogResp> build(List<LogRecord> sourceLog){
-        return sourceLog.stream().map(source -> new QueryLogResp(source.getContent(), source.getOperatorSort(), source.getOperator(),
+        return sourceLog.stream().map(source -> new QueryLogResp(source.getContent(), source.getOperatorSort().getSortDescription(), source.getOperator(),
                                 source.getLogRecordSort().getSortDescription(), buildIndex(source.getIndexList()),
                                 source.getVersion(), timeFormatUtil.format(source.getCreateTime()), timeFormatUtil.format(source.getModifyTime()))).collect(Collectors.toList());
     }

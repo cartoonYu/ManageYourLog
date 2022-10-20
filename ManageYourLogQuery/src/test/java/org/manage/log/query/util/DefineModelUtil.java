@@ -3,6 +3,7 @@ package org.manage.log.query.util;
 import com.google.common.collect.ImmutableList;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
+import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.LogRecord;
 import org.manage.log.common.model.LogRecordIndex;
 import org.manage.log.common.util.IdGenerateUtil;
@@ -22,7 +23,7 @@ public class DefineModelUtil {
         String recordId = IdGenerateUtil.getInstance().generate(13);
         record.setRecordId(recordId)
                 .setContent("111")
-                .setOperatorSort("user")
+                .setOperatorSort(OperatorSort.USER)
                 .setOperator("cartoon")
                 .setLogRecordSort(LogRecordSort.OPERATE)
                 .setIndexList(ImmutableList.of(defineLogRecordIndex(recordId)))

@@ -9,7 +9,7 @@ import java.util.Arrays;
 public enum OperatorSort {
 
     DEFAULT(0L, "default"),
-    OPERATE(1L, "operate");
+    USER(1L, "USER");
 
     private final Long sortId;
 
