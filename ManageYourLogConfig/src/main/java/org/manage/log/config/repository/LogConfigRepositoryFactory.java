@@ -19,7 +19,7 @@ public class LogConfigRepositoryFactory implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
-    private  final List<String> cacheRepositoryName = ImmutableList.of("cacheLogConfigRepository");
+    private final List<String> cacheRepositoryName = ImmutableList.of("cacheLogConfigRepository");
 
     @Bean("actualConfigRepository")
     public LogConfigRepository initActualRepository(){

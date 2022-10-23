@@ -49,11 +49,12 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
 
     private void setPrimary(Class<?> selectClass, BeanDefinitionRegistry beanDefinitionRegistry){
         //judge current class if hava init primary before
-        judgeHavePrimaryBefore(selectClass);
+        boolean havePrimaryBefore = judgeHavePrimaryBefore(selectClass);
+        if(havePrimaryBefore){
+            return;
+        }
         //init primary class
-        String className = selectClass.getSimpleName();
-        BeanDefinition beanDefinition = beanDefinitionRegistry.getBeanDefinition(Character.toLowerCase(className.charAt(0)) + className.substring(1));
-        beanDefinition.setPrimary(true);
+        setPrimary(beanDefinitionRegistry, selectClass);
         //add init primary class to set to prevent repeated init
         tagHaveInitPrimary(selectClass);
     }
@@ -80,6 +81,21 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
         return false;
     }
 
+    /**
+     * set primary to given class
+     * @param beanDefinitionRegistry
+     * @param selectClass
+     */
+    private void setPrimary(BeanDefinitionRegistry beanDefinitionRegistry, Class<?> selectClass){
+        String className = selectClass.getSimpleName();
+        BeanDefinition beanDefinition = beanDefinitionRegistry.getBeanDefinition(Character.toLowerCase(className.charAt(0)) + className.substring(1));
+        beanDefinition.setPrimary(true);
+    }
+
+    /**
+     * tag have init primary after init class
+     * @param selectClass init primary class type
+     */
     private void tagHaveInitPrimary(Class<?> selectClass){
         // select class has implement interface
         Type[] genericInterfaces = selectClass.getGenericInterfaces();
@@ -88,7 +104,7 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
             hasLoadPrimaryClass.add(genericInterface.getTypeName());
         }
         // select class hasn't implemented interface
-        if(hasLoadPrimaryClass.contains(selectClass.getTypeName())){
+        if(!hasLoadPrimaryClass.contains(selectClass.getTypeName())){
             log.info("init primary, load primary class, class name: {}", selectClass.getTypeName());
             hasLoadPrimaryClass.add(selectClass.getTypeName());
         }
