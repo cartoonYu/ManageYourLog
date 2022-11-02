@@ -1,20 +1,36 @@
-package org.manage.log.common.util;
+package org.manage.log.common;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.logging.Log;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.LogConfig;
 import org.manage.log.common.model.LogRecord;
 import org.manage.log.common.model.LogRecordIndex;
+import org.manage.log.common.util.LocalDateTimeFormatUtil;
 
 import java.time.LocalDateTime;
+
 
 /**
  * @author cartoon
  * @since 2022/10/23 18:52
  */
 public class MockData {
+
+    public static LogConfig initLogConfig(){
+        LogConfig logConfig = new LogConfig();
+        logConfig.setRuleId("111")
+                .setRuleName("test")
+                .setLogRecordSort(LogRecordSort.DEFAULT)
+                .setOperatorSort(OperatorSort.DEFAULT)
+                .setIndexSort(LogRecordIndexSort.ID)
+                .setDescription("test")
+                .setVersion(1L)
+                .setCreateTime(LocalDateTime.now())
+                .setModifyTime(LocalDateTime.now());
+        return logConfig;
+    }
 
     public static LogRecord initLogRecord(){
         LogRecord logRecord = new LogRecord();
@@ -23,7 +39,7 @@ public class MockData {
                 .setOperatorSort(OperatorSort.DEFAULT)
                 .setOperator("test")
                 .setLogRecordSort(LogRecordSort.DEFAULT)
-                .setIndexList(ImmutableList.of(initLogRecordIndex()))
+                .addIndexList(ImmutableList.of(initLogRecordIndex()))
                 .setVersion(1)
                 .setCreateTime(LocalDateTimeFormatUtil.getInstance().format("2022-10-23 00:00:00"))
                 .setModifyTime(LocalDateTimeFormatUtil.getInstance().format("2022-10-23 00:00:00"));

@@ -24,7 +24,7 @@ public class LogConfigMysqlBuilder {
                 .setDescription(source.getDescription())
                 .setVersion(source.getVersion())
                 .setCreateTime(source.getCreateTime())
-                .setModifyName(source.getModifyName());
+                .setModifyTime(source.getModifyTime());
         return res;
     }
 
@@ -38,7 +38,7 @@ public class LogConfigMysqlBuilder {
                 .setDescription(source.getDescription())
                 .setVersion(source.getVersion())
                 .setCreateTime(source.getCreateTime())
-                .setModifyName(source.getModifyName());
+                .setModifyTime(source.getModifyTime());
         return res;
     }
 

@@ -28,7 +28,7 @@ public class LogConfig {
 
     private LocalDateTime createTime;
 
-    private LocalDateTime modifyName;
+    private LocalDateTime modifyTime;
 
     public String getRuleId() {
         return ruleId;
@@ -102,12 +102,11 @@ public class LogConfig {
         return this;
     }
 
-    public LocalDateTime getModifyName() {
-        return modifyName;
+    public LocalDateTime getModifyTime() {
+        return modifyTime;
     }
 
-    public LogConfig setModifyName(LocalDateTime modifyName) {
-        this.modifyName = modifyName;
-        return this;
+    public void setModifyTime(LocalDateTime modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }

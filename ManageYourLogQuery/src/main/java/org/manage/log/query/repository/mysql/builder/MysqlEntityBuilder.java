@@ -64,7 +64,7 @@ public class MysqlEntityBuilder {
                     .setVersion(po.getVersion())
                     .setCreateTime(po.getCreateTime())
                     .setModifyTime(po.getModifyTime())
-                    .setIndexList(logRecordIndexMysqlPOList.stream().map(indexPo -> {
+                    .addIndexList(logRecordIndexMysqlPOList.stream().map(indexPo -> {
                         LogRecordIndex logRecordIndex = new LogRecordIndex();
                         logRecordIndex.setIndexId(indexPo.getIndexId())
                                 .setLogRecordId(indexPo.getLogRecordId())

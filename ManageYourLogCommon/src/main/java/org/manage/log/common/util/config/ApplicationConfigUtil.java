@@ -30,7 +30,7 @@ public class ApplicationConfigUtil implements EnvironmentAware {
      */
     public Optional<String> get(String configKey){
         String config = environment.getProperty(configKey);
-        return Objects.isNull(config) ? Optional.empty() : Optional.of(config);
+        return Optional.ofNullable(config);
     }
 
     /**
@@ -40,7 +40,7 @@ public class ApplicationConfigUtil implements EnvironmentAware {
      */
     public void get(String configKey, Consumer<String> consumer){
         Optional<String> config = get(configKey);
-        if(!config.isPresent()){
+        if(config.isEmpty()){
             log.warn("application config, get config by key fail, key: {}", configKey);
         }
         config.ifPresent(consumer);

@@ -31,7 +31,7 @@ public class LogRecordBuilder {
                 .setOperatorSort(OperatorSort.parse(uploadLogRecordReq.getOperatorSort()))
                 .setOperator(uploadLogRecordReq.getOperator())
                 .setLogRecordSort(uploadLogRecordReq.getLogRecordSort())
-                .setIndexList(convertIndex(recordId, uploadTime, uploadLogRecordReq.getIndexList()))
+                .addIndexList(convertIndex(recordId, uploadTime, uploadLogRecordReq.getIndexList()))
                 .setVersion(1)
                 .setCreateTime(uploadTime)
                 .setModifyTime(uploadTime);

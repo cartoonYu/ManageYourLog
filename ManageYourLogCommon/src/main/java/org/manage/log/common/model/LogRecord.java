@@ -5,7 +5,9 @@ import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author cartoon
@@ -42,7 +44,7 @@ public class LogRecord {
     /**
      * record index list
      */
-    private List<LogRecordIndex> indexList;
+    private List<LogRecordIndex> indexList = new ArrayList<>();
 
     private Integer version;
 
@@ -105,10 +107,22 @@ public class LogRecord {
         return indexList;
     }
 
-    public LogRecord setIndexList(List<LogRecordIndex> indexList) {
-        this.indexList = indexList;
+    public LogRecord addIndex(LogRecordIndex index){
+        if(Objects.isNull(index)){
+            return this;
+        }
+        this.indexList.add(index);
         return this;
     }
+
+    public LogRecord addIndexList(List<LogRecordIndex> indexList){
+        if(Objects.isNull(indexList)){
+            return this;
+        }
+        this.indexList.addAll(indexList);
+        return this;
+    }
+
 
     public Integer getVersion() {
         return version;
