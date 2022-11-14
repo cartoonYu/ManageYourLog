@@ -10,7 +10,7 @@
 
     <insert id="add" parameterType = "org.manage.log.config.repository.mysql.model.LogConfigMysqlPO">
         insert into LogConfig(ruleId, ruleName, logRecordSort, operatorSort, indexSort, description, version, createTime, modifyTime)
-        value (#{ruleId}, #{ruleName}, #{logRecordSort}, #{operatorSort}, #{indexSort}, #{description}, #{version}, #{createTime}, #{modifyName})
+        value (#{ruleId}, #{ruleName}, #{logRecordSort}, #{operatorSort}, #{indexSort}, #{description}, #{version}, #{createTime}, #{modifyTime})
     </insert>
 
     <select id="getByConfigName" resultType="org.manage.log.config.repository.mysql.model.LogConfigMysqlPO">

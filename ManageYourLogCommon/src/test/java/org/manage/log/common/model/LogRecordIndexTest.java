@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.manage.log.common.MockData;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @since 2022/10/31 15:41
  */
 @DisplayName("log record index test")

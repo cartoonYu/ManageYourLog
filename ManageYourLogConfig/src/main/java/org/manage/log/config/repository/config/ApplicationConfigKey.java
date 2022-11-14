@@ -6,9 +6,7 @@ package org.manage.log.config.repository.config;
  */
 public enum ApplicationConfigKey {
 
-    storeMode("store.mode", "store log method"),
-    storeLoadMode("store.load.mode", "load store mode"),
-    cacheMode("cache.mode", "cache config mode");
+    CACHE_EXPIRE("CACHE_EXPIRE", "cache expire, unit: second");
 
     private String key;
 

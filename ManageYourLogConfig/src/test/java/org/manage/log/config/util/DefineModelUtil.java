@@ -24,7 +24,7 @@ public class DefineModelUtil {
                 .setDescription("test")
                 .setVersion(1L)
                 .setCreateTime(LocalDateTime.now())
-                .setModifyName(LocalDateTime.now());
+                .setModifyTime(LocalDateTime.now());
         return logConfig;
     }
 }

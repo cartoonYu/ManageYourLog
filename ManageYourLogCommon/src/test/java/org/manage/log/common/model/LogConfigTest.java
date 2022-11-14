@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.manage.log.common.MockData;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @since 2022/10/24 16:36
  */
 @DisplayName("log config test")

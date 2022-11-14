@@ -1,5 +1,0 @@
-application:
-  config:
-    util:
-      test:
-        normal: exist

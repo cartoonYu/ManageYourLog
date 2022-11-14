@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @since 2022/10/23 23:30
  */
 @DisplayName("operator sort enum test")

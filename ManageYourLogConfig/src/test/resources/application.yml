@@ -8,4 +8,5 @@ store:
     password:
     driverClassName: com.mysql.cj.jdbc.Driver
 cache:
-  mode: redis
+  mode: cache
+  expire: 100
