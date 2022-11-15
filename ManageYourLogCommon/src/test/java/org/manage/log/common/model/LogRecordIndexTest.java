@@ -1,10 +1,10 @@
 package org.manage.log.common.model;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manage.log.common.MockData;
+import org.manage.log.common.model.log.LogRecordIndex;
 
 /**
  * @author cartoon

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.query.access.layer.http.builder.QueryResultBuilder;
 import org.manage.log.query.access.layer.http.model.QueryLogResp;
 import org.manage.log.query.base.BaseTest;

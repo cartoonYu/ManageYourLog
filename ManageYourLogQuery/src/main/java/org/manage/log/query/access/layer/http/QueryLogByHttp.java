@@ -5,7 +5,7 @@ import org.manage.log.query.access.layer.http.builder.QueryResultBuilder;
 import org.manage.log.query.access.layer.http.model.QueryLogResp;
 import org.manage.log.common.util.LocalDateTimeFormatUtil;
 import org.manage.log.query.service.QueryLogService;
-import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.model.log.LogRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

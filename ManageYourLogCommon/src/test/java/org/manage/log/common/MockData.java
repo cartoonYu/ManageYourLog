@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableList;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
-import org.manage.log.common.model.LogConfig;
-import org.manage.log.common.model.LogRecord;
-import org.manage.log.common.model.LogRecordIndex;
+import org.manage.log.common.model.config.LogConfig;
+import org.manage.log.common.model.log.LogRecord;
+import org.manage.log.common.model.log.LogRecordIndex;
 import org.manage.log.common.util.LocalDateTimeFormatUtil;
 
 import java.time.LocalDateTime;

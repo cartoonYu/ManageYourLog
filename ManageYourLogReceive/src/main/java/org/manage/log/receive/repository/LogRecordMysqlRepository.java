@@ -1,7 +1,7 @@
 package org.manage.log.receive.repository;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.manage.log.common.model.LogRecord;
+import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.repository.mysql.MysqlDatasourceOperate;
 import org.manage.log.receive.repository.mysql.builder.MysqlEntityBuilder;

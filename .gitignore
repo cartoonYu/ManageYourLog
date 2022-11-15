@@ -10,7 +10,8 @@ ManageYourLogReceive/target
 ManageYourLogRepository/target
 ManageYourLogTest/target
 ManageYourLogUpload/target
-ManageYourLogConfig/target
+ManageYourLogConfig/ManageYourLogConfigProvider/target
+ManageYourLogConfig/ManageYourLogConfigFacade/target
 
 *.iml
 data

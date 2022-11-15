@@ -1,0 +1,12 @@
+store:
+  mode: mysql
+  load:
+    mode: mysql
+  mysql:
+    jdbcUrl: jdbc:mysql://localhost:13306/ManageYourLog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+    username:
+    password:
+    driverClassName: com.mysql.cj.jdbc.Driver
+cache:
+  mode: cache
+  expire: 100
