@@ -1,5 +1,7 @@
 package org.manage.log.config.facade.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
 /**
@@ -24,7 +26,7 @@ public class LogConfigDto {
 
     private LocalDateTime modifyTime;
 
-    public String ruleName() {
+    public String getRuleName() {
         return ruleName;
     }
 
@@ -33,7 +35,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public String logRecordSort() {
+    public String getLogRecordSort() {
         return logRecordSort;
     }
 
@@ -42,7 +44,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public String operatorSort() {
+    public String getOperatorSort() {
         return operatorSort;
     }
 
@@ -51,7 +53,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public String indexSort() {
+    public String getIndexSort() {
         return indexSort;
     }
 
@@ -60,7 +62,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public String description() {
+    public String getDescription() {
         return description;
     }
 
@@ -69,7 +71,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public Long version() {
+    public Long getVersion() {
         return version;
     }
 
@@ -78,7 +80,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public LocalDateTime createTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
@@ -87,7 +89,7 @@ public class LogConfigDto {
         return this;
     }
 
-    public LocalDateTime modifyTime() {
+    public LocalDateTime getModifyTime() {
         return modifyTime;
     }
 

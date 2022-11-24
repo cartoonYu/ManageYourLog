@@ -1,10 +1,16 @@
 package org.manage.log.config.provider.base;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.manage.log.common.util.GsonUtil;
 import org.manage.log.config.provider.ManageYourLogConfigProviderApplication;
+import org.manage.log.config.provider.ManageYourLogConfigProviderTestApplication;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,10 +20,13 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 
 /**
@@ -27,7 +36,7 @@ import java.nio.charset.StandardCharsets;
  * @since 2021/10/05 17:52
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(classes = ManageYourLogConfigProviderApplication.class)
+@SpringBootTest(classes = ManageYourLogConfigProviderTestApplication.class)
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 public class BaseTest implements EnvironmentAware {
@@ -38,6 +47,9 @@ public class BaseTest implements EnvironmentAware {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public void setEnvironment(Environment environment) {
@@ -55,6 +67,36 @@ public class BaseTest implements EnvironmentAware {
                 .andReturn()
                 .getResponse()
                 .getContentAsString(StandardCharsets.UTF_8);
+    }
+
+    protected String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList) throws Exception{
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate).contentType(MediaType.APPLICATION_JSON_VALUE);
+        paramToDataList.forEach((param) -> requestBuilder.queryParam(param.getLeft(), param.getRight()));
+        MvcResult mvcResult =  mockMvc
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        return mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    }
+
+    protected <T> T get(String urlTemplate, Class<T> classType) throws Exception{
+        String sourceResponse = get(urlTemplate, ImmutableList.of());
+        return objectMapper.readValue(sourceResponse, classType);
+    }
+
+    protected <T> T get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList, Class<T> classType) throws Exception{
+        String sourceResponse = get(urlTemplate, paramToDataList);
+        return objectMapper.readValue(sourceResponse, classType);
+    }
+
+    protected <T> List<T> getList(String urlTemplate, Class<T> classType) throws Exception{
+        String sourceResponse = get(urlTemplate, ImmutableList.of());
+        return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
+    }
+
+    protected <T> List<T> getList(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList, Class<T> classType) throws Exception{
+        String sourceResponse = get(urlTemplate, paramToDataList);
+        return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
     }
 }
 

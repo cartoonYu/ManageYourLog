@@ -26,7 +26,7 @@ public class DefineModelUtil {
                 .setOperatorSort(OperatorSort.USER)
                 .setOperator("cartoon")
                 .setLogRecordSort(LogRecordSort.OPERATE)
-                .setIndexList(ImmutableList.of(defineLogRecordIndex(recordId)))
+                .addIndexList(ImmutableList.of(defineLogRecordIndex(recordId)))
                 .setVersion(1)
                 .setCreateTime(LocalDateTime.now())
                 .setModifyTime(LocalDateTime.now());

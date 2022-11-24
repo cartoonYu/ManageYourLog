@@ -34,6 +34,7 @@ public class LogConfigConverter {
                     .setOperatorSort(logConfig.getOperatorSort().getSortDescription())
                     .setIndexSort(logConfig.getIndexSort().getSortDescription())
                     .setVersion(logConfig.getVersion())
+                    .setDescription(logConfig.getDescription())
                     .setCreateTime(logConfig.getCreateTime())
                     .setModifyTime(logConfig.getModifyTime());
         return logConfigDto;
