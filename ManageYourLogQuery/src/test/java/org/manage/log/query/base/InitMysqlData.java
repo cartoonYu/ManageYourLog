@@ -1,9 +1,7 @@
 package org.manage.log.query.base;
 
-import org.manage.log.base.test.InitMysqlDataUtil;
+import org.manage.log.base.test.mariadb.InitMysqlDataUtil;
 import org.manage.log.common.util.factory.LoadBean;
-import org.manage.log.query.repository.LogRecordMysqlRepository;
-import org.manage.log.query.repository.LogRecordRepository;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;

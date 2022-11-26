@@ -5,12 +5,12 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.manage.log.base.test.base.test.BaseTest;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.config.facade.dto.LogConfigDto;
 import org.manage.log.config.facade.dto.UploadLogConfigDto;
-import org.manage.log.config.provider.base.BaseTest;
 
 import java.util.List;
 

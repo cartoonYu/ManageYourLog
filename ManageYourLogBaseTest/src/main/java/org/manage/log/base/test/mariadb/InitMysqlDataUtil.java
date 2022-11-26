@@ -1,9 +1,8 @@
-package org.manage.log.base.test;
+package org.manage.log.base.test.mariadb;
 
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
-import com.google.common.collect.ImmutableList;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

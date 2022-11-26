@@ -17,7 +17,7 @@ public class UploadLogConfigDto {
 
     private String description;
 
-    public String ruleName() {
+    public String getRuleName() {
         return ruleName;
     }
 
@@ -26,7 +26,7 @@ public class UploadLogConfigDto {
         return this;
     }
 
-    public String logRecordSort() {
+    public String getLogRecordSort() {
         return logRecordSort;
     }
 
@@ -35,7 +35,7 @@ public class UploadLogConfigDto {
         return this;
     }
 
-    public String operatorSort() {
+    public String getOperatorSort() {
         return operatorSort;
     }
 
@@ -44,7 +44,7 @@ public class UploadLogConfigDto {
         return this;
     }
 
-    public String indexSort() {
+    public String getIndexSort() {
         return indexSort;
     }
 
@@ -53,7 +53,7 @@ public class UploadLogConfigDto {
         return this;
     }
 
-    public String description() {
+    public String getDescription() {
         return description;
     }
 

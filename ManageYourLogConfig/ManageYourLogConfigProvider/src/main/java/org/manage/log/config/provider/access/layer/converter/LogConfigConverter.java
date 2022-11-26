@@ -42,9 +42,9 @@ public class LogConfigConverter {
 
     public LogConfig convertToBo(UploadLogConfigDto uploadLogConfigDto){
         return LogConfigFactory.getInstance()
-                .build(uploadLogConfigDto.ruleName(), LogRecordSort.parse(uploadLogConfigDto.logRecordSort()),
-                        OperatorSort.parse(uploadLogConfigDto.operatorSort()), LogRecordIndexSort.parse(uploadLogConfigDto.indexSort()),
-                        uploadLogConfigDto.description());
+                .build(uploadLogConfigDto.getRuleName(), LogRecordSort.parse(uploadLogConfigDto.getLogRecordSort()),
+                        OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), LogRecordIndexSort.parse(uploadLogConfigDto.getIndexSort()),
+                        uploadLogConfigDto.getDescription());
     }
 
     private LogConfigConverter(){}

@@ -1,4 +1,4 @@
-package org.manage.log.common.config;
+package org.manage.log.base.test.base.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -19,6 +19,7 @@ public class SerializingConfig {
         ObjectMapper mapper =  new ObjectMapper();
         mapper.registerModule(new Jdk8Module());
         mapper.registerModule(new JavaTimeModule());
+
         return mapper;
     }
 }

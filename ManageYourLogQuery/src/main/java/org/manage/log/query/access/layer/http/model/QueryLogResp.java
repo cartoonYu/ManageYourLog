@@ -1,5 +1,6 @@
 package org.manage.log.query.access.layer.http.model;
 
+
 import java.util.List;
 
 /**

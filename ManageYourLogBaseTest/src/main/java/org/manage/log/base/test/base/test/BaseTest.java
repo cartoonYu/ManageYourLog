@@ -1,16 +1,11 @@
-package org.manage.log.config.provider.base;
+package org.manage.log.base.test.base.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.manage.log.common.util.GsonUtil;
-import org.manage.log.config.provider.ManageYourLogConfigProviderApplication;
-import org.manage.log.config.provider.ManageYourLogConfigProviderTestApplication;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,15 +23,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-
 /**
- * base test which divide web container
  * @author cartoon
- * @version 1.0
- * @since 2021/10/05 17:52
+ * @since 2022/11/24 21:07
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(classes = ManageYourLogConfigProviderTestApplication.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 public class BaseTest implements EnvironmentAware {
@@ -60,7 +52,7 @@ public class BaseTest implements EnvironmentAware {
         return mockMvc
                 .perform(
                         MockMvcRequestBuilders.post(urlTemplate)
-                                .content(GsonUtil.getInstance().writeJson(data).getBytes(StandardCharsets.UTF_8))
+                                .content(objectMapper.writeValueAsString(data).getBytes(StandardCharsets.UTF_8))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -99,4 +91,3 @@ public class BaseTest implements EnvironmentAware {
         return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
     }
 }
-

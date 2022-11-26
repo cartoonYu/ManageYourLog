@@ -3,6 +3,7 @@ package org.manage.log.common.base;
 import org.junit.platform.suite.api.ExcludePackages;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
+import org.manage.log.base.test.base.test.BaseTest;
 
 /**
  * @author cartoon
@@ -12,5 +13,5 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectPackages({"org.manage.log.common"})
 @ExcludePackages({"org.manage.log.common.base"})
-public class CommonTestAll {
+public class CommonTestAll extends BaseTest {
 }

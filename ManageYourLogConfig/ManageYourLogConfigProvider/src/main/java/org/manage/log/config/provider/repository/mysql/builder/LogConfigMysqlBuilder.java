@@ -6,6 +6,8 @@ import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.config.provider.repository.mysql.model.LogConfigMysqlPO;
 
+import java.util.Objects;
+
 /**
  * @author cartoon
  * @date 2022/6/4 17:53
@@ -29,6 +31,9 @@ public class LogConfigMysqlBuilder {
     }
 
     public LogConfig convert(LogConfigMysqlPO source){
+        if(Objects.isNull(source)){
+            return null;
+        }
         LogConfig res = new LogConfig();
         res.setRuleId(source.getRuleId())
                 .setRuleName(source.getRuleName())
