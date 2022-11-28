@@ -4,6 +4,7 @@ import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.config.provider.repository.LogConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class LogConfigServiceImpl implements LogConfigService {
 
     @Override
     public LogConfig getConfigByName(String configName) {
+        Assert.notNull(configName, "config name must not null");
         return logConfigRepository.getByConfigName(configName);
     }
 

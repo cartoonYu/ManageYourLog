@@ -1,7 +1,5 @@
 package org.manage.log.upload;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
-import org.manage.log.common.constants.LogRecordSort;
 import org.springframework.stereotype.Indexed;
 
 import java.lang.annotation.*;
@@ -16,15 +14,7 @@ import java.lang.annotation.*;
 @Indexed
 public @interface Log {
 
-    String content();
+    String ruleName();
 
-    String operatorSort();
-
-    String operator();
-
-    LogRecordSort recordSort();
-
-    LogRecordIndexSort indexSort();
-
-    String indexValue();
+    boolean paramIsObject();
 }

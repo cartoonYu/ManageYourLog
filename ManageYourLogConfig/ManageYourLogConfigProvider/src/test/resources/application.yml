@@ -10,3 +10,11 @@ store:
 cache:
   mode: cache
   expire: 100
+dubbo:
+  registry:
+    address: nacos://cartoon-ali.com:8848
+  application:
+    name: ManageLogConfig
+  protocol:
+    port: -1
+    name: dubbo

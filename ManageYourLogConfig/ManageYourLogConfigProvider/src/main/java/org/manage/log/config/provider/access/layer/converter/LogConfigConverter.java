@@ -9,6 +9,7 @@ import org.manage.log.config.facade.dto.LogConfigDto;
 import org.manage.log.config.facade.dto.UploadLogConfigDto;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -24,10 +25,13 @@ public class LogConfigConverter {
     }
 
     public List<LogConfigDto> convertToDto(List<LogConfig> logConfigs){
-        return logConfigs.stream().map(this::convertToDto).collect(Collectors.toList());
+        return logConfigs.stream().filter(Objects::nonNull).map(this::convertToDto).collect(Collectors.toList());
     }
 
     public LogConfigDto convertToDto(LogConfig logConfig){
+        if(Objects.isNull(logConfig)){
+            return null;
+        }
         LogConfigDto logConfigDto = new LogConfigDto();
         logConfigDto.setRuleName(logConfig.getRuleName())
                     .setLogRecordSort(logConfig.getLogRecordSort().getSortDescription())

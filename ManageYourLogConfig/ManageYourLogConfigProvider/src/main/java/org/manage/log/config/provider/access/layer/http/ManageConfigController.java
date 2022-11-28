@@ -1,6 +1,5 @@
-package org.manage.log.config.provider.access.layer;
+package org.manage.log.config.provider.access.layer.http;
 
-import org.apache.ibatis.annotations.Param;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.config.facade.dto.LogConfigDto;
 import org.manage.log.config.facade.dto.UploadLogConfigDto;

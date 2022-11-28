@@ -6,7 +6,7 @@ import org.manage.log.config.facade.dto.LogConfigDto;
  * @author cartoon
  * @since 2022/11/15 20:30
  */
-public interface ConfigService {
+public interface LogConfigFacade {
 
     LogConfigDto getByName(String configName);
 }

@@ -58,6 +58,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>ManageYourLogConfigFacade</artifactId>
+        </dependency>
+
     </dependencies>
 
 
