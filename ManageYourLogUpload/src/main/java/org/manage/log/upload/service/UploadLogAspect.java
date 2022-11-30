@@ -39,5 +39,6 @@ public class UploadLogAspect {
         Log logAnnotation = annotationMethod.getAnnotation(Log.class);
         LogConfigDto logConfigDto = logConfigFacade.getByName(logAnnotation.ruleName());
         log.info(GsonUtil.getInstance().writeJson(logAnnotation));
+        log.info("config, data: {}", GsonUtil.getInstance().writeJson(logConfigDto));
     }
 }

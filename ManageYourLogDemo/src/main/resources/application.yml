@@ -17,4 +17,14 @@ upload:
         name: dubbo
         port: 20882
         serialization: hessian2
+dubbo:
+  protocol:
+    port: -1
+    name: dubbo
+  registry:
+    address: nacos://cartoon-ali.com:8848
+  cloud:
+    subscribed-services: dubbo-spring-cloud-provider
+  application:
+    name: consumer
 

@@ -1,7 +1,5 @@
 package org.manage.log.config.facade.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.LocalDateTime;
 
 /**

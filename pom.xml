@@ -23,8 +23,6 @@
         <module>ManageYourLogUpload</module>
         <module>ManageYourLogConfig</module>
         <module>ManageYourLogBaseTest</module>
-        <module>ManageYourLogConfig/ManageYourLogConfigFacade</module>
-        <module>ManageYourLogConfig/ManageYourLogConfigProvider</module>
     </modules>
 
     <properties>
@@ -89,12 +87,6 @@
             <dependency>
                 <groupId>org</groupId>
                 <artifactId>ManageYourLogQuery</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogCommon</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
