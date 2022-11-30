@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+database Database as ManageLog
+autonumber
+
+group rpc 上传日志
+ManageLogDemo -> ManageLogUploadFacade: aspect 获取数据
+ManageLogUploadFacade -> ManageLogReceive: rpc/http/kafka，数据为业务数据，configName
+ManageLogReceive -> ManageLogCommon: 使用工具类
+ManageLogReceive -> ManageLogConfig: 抓取配置
+ManageLogReceive -> ManageLog: 落地数据
+end
+
+group 自主使用 facade 上传日志
+AnotherJavaProject -> ManageLogUploadFacade: 自己组装数据，使用 facade 提供的策略上传
+ManageLogUploadFacade -> ManageLogReceive: rpc/http/kafka，数据为业务数据，configName
+ManageLogReceive -> ManageLogCommon: 使用工具类
+ManageLogReceive -> ManageLogConfig: 抓取配置
+ManageLogReceive -> ManageLog: 落地数据
+end
+
+group 自主上传日志
+AnotherProject -> ManageLogReceive: http/kafka，数据为业务数据，configName
+ManageLogReceive -> ManageLogCommon: 使用工具类
+ManageLogReceive -> ManageLogConfig: 抓取配置
+ManageLogReceive -> ManageLog: 落地数据
+end
+
+group 日志查询
+ManageLog -> ManageLogQuery: 获取数据
+ManageLogQuery -> ManageLogQueryFacade: rpc 提供
+ManageLogQuery -> AnotherProject: http 提供（默认）
+end
+@enduml
