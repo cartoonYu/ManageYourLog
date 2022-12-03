@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manage.log.base.test.base.test.BaseTest;
+import org.manage.log.base.test.BaseTest;
 import org.manage.log.query.access.layer.http.model.QueryLogResp;
 
 import java.util.Collections;

@@ -22,12 +22,12 @@
     <dependencies>
         <dependency>
             <groupId>org</groupId>
-            <artifactId>ManageYourLogCommon</artifactId>
+            <artifactId>ManageLogCommon</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org</groupId>
-            <artifactId>ManageYourLogUpload</artifactId>
+            <artifactId>ManageLogUpload</artifactId>
         </dependency>
 
         <dependency>
@@ -76,7 +76,7 @@
 
         <dependency>
             <groupId>org</groupId>
-            <artifactId>ManageYourLogBaseTest</artifactId>
+            <artifactId>ManageLogBaseTest</artifactId>
             <scope>test</scope>
         </dependency>
 

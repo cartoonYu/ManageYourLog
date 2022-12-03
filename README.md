@@ -41,7 +41,7 @@ The conception about this project is that provide a unified entrance for parse, 
 ```xml
 <dependency>
     <groupId>org</groupId>
-    <artifactId>ManageYourLogUpload</artifactId>
+    <artifactId>ManageLogUpload</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```

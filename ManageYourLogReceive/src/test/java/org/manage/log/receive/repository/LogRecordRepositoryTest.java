@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.manage.log.base.test.base.test.BaseTest;
+import org.manage.log.base.test.BaseTest;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.receive.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;

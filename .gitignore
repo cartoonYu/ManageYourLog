@@ -2,14 +2,15 @@
 .mvn
 mvnw
 mvnw.cmd
-ManageYourLogBaseTest/target
-ManageYourLogCommon/target
-ManageYourLogDemo/target
+ManageLogBaseTest/target
+ManageLogCommon/target
+ManageLogDemo/target
 ManageYourLogQuery/target
 ManageYourLogReceive/target
 ManageYourLogRepository/target
 ManageYourLogTest/target
 ManageYourLogUpload/target
+ManageLogUpload/target
 ManageYourLogConfig/ManageYourLogConfigProvider/target
 ManageYourLogConfig/ManageYourLogConfigFacade/target
 
