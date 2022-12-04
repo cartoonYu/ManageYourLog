@@ -24,6 +24,7 @@
         <module>ManageLogCommon</module>
         <module>ManageLogDemo</module>
         <module>ManageLogUpload</module>
+        <module>ManageLogReceive</module>
     </modules>
 
     <properties>

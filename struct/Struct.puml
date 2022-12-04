@@ -8,7 +8,7 @@ ManageLogDemo -> ManageLogUploadFacade: aspect 获取数据
 ManageLogUploadFacade -> ManageLogReceive: rpc/http/kafka，数据为业务数据，configName
 ManageLogReceive -> ManageLogCommon: 使用工具类
 ManageLogReceive -> ManageLogConfig: 抓取配置
-ManageLogReceive -> ManageLog: 落地数据
+ManageLogReceive -> ManageLog: （同步/异步）落地数据
 end
 
 group 自主使用 facade 上传日志
