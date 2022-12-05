@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.log.receive.provider.repository.mysql.mapper.LogRecordMapper">
+
+    <sql id="Base_Column_List">
+        recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime
+    </sql>
+
+    <insert id="insert" parameterType="org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
+        value (#{recordId}, #{content}, #{operatorSort}, #{operator}, #{logRecordSort}, #{indexIds}, #{version}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <insert id="batchInsert" parameterType="org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
+        values
+        <foreach collection="logRecordMysqlPOS" item="logRecordMysqlPO" separator="," open="(" close=")">
+            #{logRecordMysqlPO.recordId},
+            #{logRecordMysqlPO.content},
+            #{logRecordMysqlPO.operatorSort},
+            #{logRecordMysqlPO.operator},
+            #{logRecordMysqlPO.logRecordSort},
+            #{logRecordMysqlPO.indexIds},
+            #{logRecordMysqlPO.version},
+            #{logRecordMysqlPO.createTime},
+            #{logRecordMysqlPO.modifyTime}
+        </foreach>
+    </insert>
+</mapper>

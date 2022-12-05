@@ -5,8 +5,9 @@ mvnw.cmd
 ManageLogBaseTest/target
 ManageLogCommon/target
 ManageLogDemo/target
+ManageLogReceive/ManageLogReceiveFacade/target
+ManageLogReceive/ManageLogReceiveProvider/target
 ManageYourLogQuery/target
-ManageYourLogReceive/target
 ManageYourLogRepository/target
 ManageYourLogTest/target
 ManageYourLogUpload/target

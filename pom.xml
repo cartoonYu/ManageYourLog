@@ -17,13 +17,11 @@
     <description>ManageYourLog</description>
 
     <modules>
-        <module>ManageYourLogReceive</module>
         <module>ManageYourLogQuery</module>
         <module>ManageYourLogConfig</module>
         <module>ManageLogBaseTest</module>
         <module>ManageLogCommon</module>
         <module>ManageLogDemo</module>
-        <module>ManageLogUpload</module>
         <module>ManageLogReceive</module>
     </modules>
 
@@ -76,19 +74,7 @@
 
             <dependency>
                 <groupId>org</groupId>
-                <artifactId>ManageYourLogReceive</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
                 <artifactId>ManageYourLogQuery</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageLogUpload</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -126,6 +112,12 @@
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
                 <version>0.10.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>ManageLogReceiveFacade</artifactId>
+                <version>1.0.0</version>
             </dependency>
 
         </dependencies>
