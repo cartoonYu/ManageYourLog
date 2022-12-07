@@ -23,6 +23,8 @@
         <module>ManageLogCommon</module>
         <module>ManageLogDemo</module>
         <module>ManageLogReceive</module>
+        <module>ManageLogQuery</module>
+        <module>ManageLogQuery/ManageLogQueryProvider</module>
     </modules>
 
     <properties>
@@ -117,6 +119,12 @@
             <dependency>
                 <groupId>org</groupId>
                 <artifactId>ManageLogReceiveFacade</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>ManageLogQueryFacade</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
