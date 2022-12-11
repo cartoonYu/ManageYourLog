@@ -16,7 +16,8 @@ public enum ApplicationConfigKey {
     receiveLogRpcProtocolName("receive.log.rpc.protocol.name", "receive log rpc protocol name"),
     receiveLogRpcProtocolPort("receive.log.rpc.protocol.port", "receive log rpc protocol port"),
     receiveLogRpcSerialization("receive.log.rpc.protocol.serialization", "receive log rpc protocol serialization"),
-    queryLogLoadMode("query.log.load.mode", "load query log mode"),;
+    queryLogLoadMode("query.log.load.mode", "load query log mode"),
+    receiveLogConfigCacheExpireSecond("receive.log.config.cache.expire.second", "cache expire, unit: second");
 
     private String key;
 

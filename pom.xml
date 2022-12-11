@@ -17,8 +17,6 @@
     <description>ManageYourLog</description>
 
     <modules>
-        <module>ManageYourLogQuery</module>
-        <module>ManageYourLogConfig</module>
         <module>ManageLogBaseTest</module>
         <module>ManageLogCommon</module>
         <module>ManageLogDemo</module>
@@ -75,12 +73,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogQuery</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-registry-nacos</artifactId>
                 <version>3.0.5</version>
@@ -95,12 +87,6 @@
             <dependency>
                 <groupId>org</groupId>
                 <artifactId>ManageLogBaseTest</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogConfigFacade</artifactId>
                 <version>1.0.0</version>
             </dependency>
 

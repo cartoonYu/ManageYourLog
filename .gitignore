@@ -7,13 +7,9 @@ ManageLogCommon/target
 ManageLogDemo/target
 ManageLogReceive/ManageLogReceiveFacade/target
 ManageLogReceive/ManageLogReceiveProvider/target
-ManageYourLogQuery/target
-ManageYourLogRepository/target
-ManageYourLogTest/target
-ManageYourLogUpload/target
-ManageLogUpload/target
-ManageYourLogConfig/ManageYourLogConfigProvider/target
-ManageYourLogConfig/ManageYourLogConfigFacade/target
+ManageLogQuery/ManageLogQueryFacade/target
+ManageLogQuery/ManageLogQueryProvider/target
+
 
 *.iml
 data

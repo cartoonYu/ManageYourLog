@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.LogRecordIndex;
 import org.manage.log.common.util.IdGenerateUtil;
@@ -52,5 +53,19 @@ public class DefineModelUtil {
                 .setCreateTime(LocalDateTime.now())
                 .setModifyTime(LocalDateTime.now());
         return logRecordIndex;
+    }
+
+    public static LogConfig defineLogConfig(){
+        LogConfig logConfig = new LogConfig();
+        logConfig.setRuleId(IdGenerateUtil.getInstance().generate(13))
+                .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
+                .setLogRecordSort(LogRecordSort.DEFAULT)
+                .setOperatorSort(OperatorSort.DEFAULT)
+                .setIndexSort(LogRecordIndexSort.ID)
+                .setDescription("test")
+                .setVersion(1L)
+                .setCreateTime(LocalDateTime.now())
+                .setModifyTime(LocalDateTime.now());
+        return logConfig;
     }
 }

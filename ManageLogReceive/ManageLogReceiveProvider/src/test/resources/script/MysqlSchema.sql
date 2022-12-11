@@ -14,6 +14,7 @@ CREATE TABLE `LogRecord` (
                              `modifyTime` datetime NOT NULL COMMENT 'record modify time',
                              UNIQUE KEY `LogRecord_recordId_uindex` (`recordId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 drop table if exists LogRecordIndex;
 CREATE TABLE `LogRecordIndex` (
                                   `indexId` varchar(100) NOT NULL DEFAULT '' COMMENT 'index id',
@@ -24,4 +25,19 @@ CREATE TABLE `LogRecordIndex` (
                                   `createTime` datetime DEFAULT NULL,
                                   `modifyTime` datetime DEFAULT NULL,
                                   UNIQUE KEY `LogRecordIndex_indexId_uindex` (`indexId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+drop table if exists LogConfig;
+CREATE TABLE `LogConfig` (
+                             `ruleId` varchar(100) NOT NULL DEFAULT '' COMMENT 'rule id',
+                             `ruleName` varchar(200) NOT NULL DEFAULT '' COMMENT 'rule name',
+                             `logRecordSort` varchar(30) NOT NULL DEFAULT '' COMMENT 'log record sort',
+                             `operatorSort` varchar(30) DEFAULT '' COMMENT 'log operator sort',
+                             `indexSort` varchar(50) NOT NULL DEFAULT '' COMMENT 'index sort',
+                             `description` varchar(200) NOT NULL DEFAULT '',
+                             `version` int NOT NULL DEFAULT '1' COMMENT 'log version',
+                             `createTime` datetime NOT NULL COMMENT 'config create time',
+                             `modifyTime` datetime NOT NULL COMMENT 'config modify time',
+                             UNIQUE KEY `LogConfig_ruleId_uindex` (`ruleId`),
+                             UNIQUE KEY `LogConfig_ruleName_uindex` (`ruleName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
