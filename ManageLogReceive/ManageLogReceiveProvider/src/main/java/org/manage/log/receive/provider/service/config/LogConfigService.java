@@ -3,6 +3,7 @@ package org.manage.log.receive.provider.service.config;
 import org.manage.log.common.model.config.LogConfig;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author cartoon
@@ -12,7 +13,7 @@ public interface LogConfigService {
 
     boolean add(LogConfig logConfig);
 
-    LogConfig getConfigByName(String configName);
+    Optional<LogConfig> getConfigByName(String configName);
 
     List<LogConfig> getAll();
 }

@@ -1,12 +1,15 @@
 package org.manage.log.common.model.config.builder;
 
 
-import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
+import org.manage.log.common.model.config.LogIndexConfig;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author cartoon
@@ -20,7 +23,7 @@ public class LogConfigBuilder {
 
     private OperatorSort operatorSort;
 
-    private LogRecordIndexSort indexSort;
+    private List<LogIndexConfig> indexConfigList = new ArrayList<>();
 
     private String description;
 
@@ -55,13 +58,16 @@ public class LogConfigBuilder {
         return this;
     }
 
-    public LogConfigBuilder setIndexSort(LogRecordIndexSort indexSort) {
-        this.indexSort = indexSort;
+    public LogConfigBuilder setDescription(String description) {
+        this.description = description;
         return this;
     }
 
-    public LogConfigBuilder setDescription(String description) {
-        this.description = description;
+    public LogConfigBuilder setIndexConfigList(List<LogIndexConfig> indexConfigList){
+        if(Objects.isNull(indexConfigList)){
+            return this;
+        }
+        this.indexConfigList.addAll(indexConfigList);
         return this;
     }
 
@@ -72,7 +78,7 @@ public class LogConfigBuilder {
                 .setRuleName(ruleName)
                 .setLogRecordSort(logRecordSort)
                 .setOperatorSort(operatorSort)
-                .setIndexSort(indexSort)
+                .addIndexConfig(indexConfigList)
                 .setDescription(description)
                 .setVersion(version)
                 .setCreateTime(createTime)

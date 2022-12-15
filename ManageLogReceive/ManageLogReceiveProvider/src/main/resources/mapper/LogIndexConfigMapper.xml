@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper">
+
+    <sql id="Base_Column_List">
+        ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime
+    </sql>
+
+    <insert id="addList">
+        insert into LogIndexConfig(ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime)
+        values
+        <foreach collection="poList" item="po" open="(" close=")" separator=",">
+            #{po.ruleId}, #{po.ruleName}, #{po.logConfigId}, #{po.sort}, #{po.valueIndex}, #{po.description}, #{po.version}, #{po.createTime}, #{po.modifyTime}
+        </foreach>
+    </insert>
+
+    <select id="getByLogConfigId" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
+        select <include refid="Base_Column_List"/> from LogIndexConfig where logConfigId = #{logConfigId}
+    </select>
+
+    <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
+        select <include refid="Base_Column_List"/> from LogIndexConfig
+    </select>
+</mapper>

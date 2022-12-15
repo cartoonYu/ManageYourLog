@@ -4,17 +4,20 @@ import java.time.LocalDateTime;
 
 /**
  * @author cartoon
- * @date 2022/6/4 17:58
+ * @version 1.0
+ * @since 2022/12/11 10:59
  */
-public class LogConfigMysqlPO {
+public class LogIndexConfigMysqlPO {
 
     private String ruleId;
 
     private String ruleName;
 
-    private String logRecordSort;
+    private String logConfigId;
 
-    private String operatorSort;
+    private String sort;
+
+    private Long valueIndex;
 
     private String description;
 
@@ -28,7 +31,7 @@ public class LogConfigMysqlPO {
         return ruleId;
     }
 
-    public LogConfigMysqlPO setRuleId(String ruleId) {
+    public LogIndexConfigMysqlPO setRuleId(String ruleId) {
         this.ruleId = ruleId;
         return this;
     }
@@ -37,26 +40,31 @@ public class LogConfigMysqlPO {
         return ruleName;
     }
 
-    public LogConfigMysqlPO setRuleName(String ruleName) {
+    public LogIndexConfigMysqlPO setRuleName(String ruleName) {
         this.ruleName = ruleName;
         return this;
     }
 
-    public String getLogRecordSort() {
-        return logRecordSort;
-    }
-
-    public LogConfigMysqlPO setLogRecordSort(String logRecordSort) {
-        this.logRecordSort = logRecordSort;
+    public LogIndexConfigMysqlPO setLogConfigId(String logConfigId) {
+        this.logConfigId = logConfigId;
         return this;
     }
 
-    public String getOperatorSort() {
-        return operatorSort;
+    public String getSort() {
+        return sort;
     }
 
-    public LogConfigMysqlPO setOperatorSort(String operatorSort) {
-        this.operatorSort = operatorSort;
+    public LogIndexConfigMysqlPO setSort(String sort) {
+        this.sort = sort;
+        return this;
+    }
+
+    public Long getValueIndex() {
+        return valueIndex;
+    }
+
+    public LogIndexConfigMysqlPO setValueIndex(Long valueIndex) {
+        this.valueIndex = valueIndex;
         return this;
     }
 
@@ -64,7 +72,7 @@ public class LogConfigMysqlPO {
         return description;
     }
 
-    public LogConfigMysqlPO setDescription(String description) {
+    public LogIndexConfigMysqlPO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -73,7 +81,7 @@ public class LogConfigMysqlPO {
         return version;
     }
 
-    public LogConfigMysqlPO setVersion(Long version) {
+    public LogIndexConfigMysqlPO setVersion(Long version) {
         this.version = version;
         return this;
     }
@@ -82,7 +90,7 @@ public class LogConfigMysqlPO {
         return createTime;
     }
 
-    public LogConfigMysqlPO setCreateTime(LocalDateTime createTime) {
+    public LogIndexConfigMysqlPO setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
         return this;
     }
@@ -91,7 +99,12 @@ public class LogConfigMysqlPO {
         return modifyTime;
     }
 
-    public void setModifyTime(LocalDateTime modifyTime) {
+    public LogIndexConfigMysqlPO setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
+        return this;
+    }
+
+    public String getLogConfigId() {
+        return logConfigId;
     }
 }

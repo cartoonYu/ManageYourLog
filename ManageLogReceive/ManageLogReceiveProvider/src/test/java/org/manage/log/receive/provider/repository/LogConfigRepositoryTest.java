@@ -31,7 +31,7 @@ public class LogConfigRepositoryTest extends BaseTest {
     @Test
     @Order(1)
     public void getByConfigName(){
-        logConfigRepositories.forEach(logConfigRepository -> Assertions.assertNotNull(logConfigRepository.getByConfigName("orderOperate")));
+        logConfigRepositories.forEach(logConfigRepository -> Assertions.assertTrue(logConfigRepository.getByConfigName("orderOperate").isPresent()));
     }
 
     @DisplayName("get all test")

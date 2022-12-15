@@ -5,6 +5,9 @@ import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author cartoon
@@ -20,7 +23,7 @@ public class LogConfig {
 
     private OperatorSort operatorSort;
 
-    private LogRecordIndexSort indexSort;
+    private List<LogIndexConfig> indexConfigList = new ArrayList<>();
 
     private String description;
 
@@ -66,15 +69,6 @@ public class LogConfig {
         return this;
     }
 
-    public LogRecordIndexSort getIndexSort() {
-        return indexSort;
-    }
-
-    public LogConfig setIndexSort(LogRecordIndexSort indexSort) {
-        this.indexSort = indexSort;
-        return this;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -108,5 +102,21 @@ public class LogConfig {
 
     public void setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public List<LogIndexConfig> getIndexConfigList() {
+        return indexConfigList;
+    }
+
+    public LogConfig addIndexConfig(LogIndexConfig logIndexConfig){
+        if(Objects.nonNull(logIndexConfig)){
+            indexConfigList.add(logIndexConfig);
+        }
+        return this;
+    }
+
+    public LogConfig addIndexConfig(List<LogIndexConfig> indexConfigList){
+        this.indexConfigList.addAll(indexConfigList.stream().filter(Objects::nonNull).toList());
+        return this;
     }
 }

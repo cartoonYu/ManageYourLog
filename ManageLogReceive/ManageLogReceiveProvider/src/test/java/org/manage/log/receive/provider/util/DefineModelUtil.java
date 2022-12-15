@@ -5,6 +5,7 @@ import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
+import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.LogRecordIndex;
 import org.manage.log.common.util.IdGenerateUtil;
@@ -61,11 +62,24 @@ public class DefineModelUtil {
                 .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
                 .setLogRecordSort(LogRecordSort.DEFAULT)
                 .setOperatorSort(OperatorSort.DEFAULT)
-                .setIndexSort(LogRecordIndexSort.ID)
+                .addIndexConfig(defineLogIndexConfig())
                 .setDescription("test")
                 .setVersion(1L)
                 .setCreateTime(LocalDateTime.now())
                 .setModifyTime(LocalDateTime.now());
         return logConfig;
+    }
+
+    private static LogIndexConfig defineLogIndexConfig(){
+        LogIndexConfig logIndexConfig = new LogIndexConfig();
+        logIndexConfig.setRuleId(IdGenerateUtil.getInstance().generate(13))
+                .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
+                .setLogRecordIndexSort(LogRecordIndexSort.ID)
+                .setValueIndex(0L)
+                .setDescription("test")
+                .setVersion(1L)
+                .setCreateTime(LocalDateTime.now())
+                .setModifyTime(LocalDateTime.now());
+        return logIndexConfig;
     }
 }

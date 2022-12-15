@@ -4,9 +4,12 @@ import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
+import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.model.config.builder.LogConfigFactory;
-import org.manage.log.receive.facade.dto.config.LogConfigDto;
-import org.manage.log.receive.facade.dto.config.UploadLogConfigDto;
+import org.manage.log.common.model.config.builder.LogIndexConfigFactory;
+import org.manage.log.receive.facade.dto.config.query.LogConfigDto;
+import org.manage.log.receive.facade.dto.config.execute.UploadLogConfigDto;
+import org.manage.log.receive.facade.dto.config.query.LogIndexConfigDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +39,7 @@ public class LogConfigConverter {
         logConfigDto.setRuleName(logConfig.getRuleName())
                     .setLogRecordSort(logConfig.getLogRecordSort().getSortDescription())
                     .setOperatorSort(logConfig.getOperatorSort().getSortDescription())
-                    .setIndexSort(logConfig.getIndexSort().getSortDescription())
+                    .setIndexConfigList(convertToIndexConfigDto(logConfig.getIndexConfigList()))
                     .setVersion(logConfig.getVersion())
                     .setDescription(logConfig.getDescription())
                     .setCreateTime(logConfig.getCreateTime())
@@ -44,10 +47,28 @@ public class LogConfigConverter {
         return logConfigDto;
     }
 
+    private List<LogIndexConfigDto> convertToIndexConfigDto(List<LogIndexConfig> logIndexConfigs){
+        return logIndexConfigs.stream().map(logConfig -> {
+            LogIndexConfigDto logIndexConfigDto = new LogIndexConfigDto();
+            logIndexConfigDto.setRuleName(logConfig.getRuleName())
+                    .setLogRecordIndexSort(logConfig.getLogRecordIndexSort().getSortDescription())
+                    .setValueIndex(logConfig.getValueIndex())
+                    .setDescription(logConfig.getDescription())
+                    .setVersion(logConfig.getVersion())
+                    .setCreateTime(logConfig.getCreateTime())
+                    .setModifyTime(logConfig.getModifyTime());
+            return logIndexConfigDto;
+        }).toList();
+    }
+
     public LogConfig convertToBo(UploadLogConfigDto uploadLogConfigDto){
+        List<LogIndexConfig> logIndexConfigList = uploadLogConfigDto.getIndexConfigList().stream().map(indexConfig ->
+                LogIndexConfigFactory.getInstance()
+                        .build(indexConfig.getRuleName(), LogRecordIndexSort.parse(indexConfig.getLogRecordIndexSort()),
+                                indexConfig.getValueIndex(), indexConfig.getDescription())).toList();
         return LogConfigFactory.getInstance()
                 .build(uploadLogConfigDto.getRuleName(), LogRecordSort.parse(uploadLogConfigDto.getLogRecordSort()),
-                        OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), LogRecordIndexSort.parse(uploadLogConfigDto.getIndexSort()),
+                        OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), logIndexConfigList,
                         uploadLogConfigDto.getDescription());
     }
 

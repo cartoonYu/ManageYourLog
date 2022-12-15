@@ -1,8 +1,8 @@
 package org.manage.log.receive.provider.access.layer.http;
 
 import org.manage.log.common.model.config.LogConfig;
-import org.manage.log.receive.facade.dto.config.LogConfigDto;
-import org.manage.log.receive.facade.dto.config.UploadLogConfigDto;
+import org.manage.log.receive.facade.dto.config.query.LogConfigDto;
+import org.manage.log.receive.facade.dto.config.execute.UploadLogConfigDto;
 import org.manage.log.receive.provider.access.layer.builder.LogConfigConverter;
 import org.manage.log.receive.provider.service.config.LogConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,9 @@ public class ManageConfigController {
     @GetMapping("/getByName")
     @ResponseBody
     public LogConfigDto getByName(@RequestParam("name") String name){
-        LogConfig config = logConfigService.getConfigByName(name);
-        return LogConfigConverter.getInstance().convertToDto(config);
+        return logConfigService.getConfigByName(name)
+                .map(config -> LogConfigConverter.getInstance().convertToDto(config))
+                .orElse(null);
     }
 
     @GetMapping("/getAll")

@@ -13,11 +13,6 @@ import java.time.LocalDateTime;
 public class AsyncReceiveLog extends AbstractReceiveLog {
 
     @Override
-    protected boolean judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq) {
-        return super.judgeParamIllegal(uploadLogRecordReq);
-    }
-
-    @Override
     protected LocalDateTime getUploadTime(UploadLogRecordReq uploadLogRecordReq) {
         return uploadLogRecordReq.getUploadTime();
     }

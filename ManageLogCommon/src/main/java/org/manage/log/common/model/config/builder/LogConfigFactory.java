@@ -5,8 +5,11 @@ import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
+import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.util.IdGenerateUtil;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * @author cartoon
@@ -25,12 +28,10 @@ public class LogConfigFactory {
         Assert.notNull(logConfig.getRuleName(), "config name must not null");
         Assert.notNull(logConfig.getLogRecordSort(), "config record sort must not null");
         Assert.notNull(logConfig.getOperatorSort(), "config operator sort must not null");
-        Assert.notNull(logConfig.getIndexSort(), "config index sort must not null");
+        Assert.notNull(logConfig.getIndexConfigList(), "config index list must not null");
         Assert.notNull(logConfig.getVersion(), "config version must not null");
         Assert.notNull(logConfig.getCreateTime(), "config create time must not null");
         Assert.notNull(logConfig.getModifyTime(), "config modify time must not null");
-
-
     }
 
     public String generateRuleId(){
@@ -38,12 +39,12 @@ public class LogConfigFactory {
     }
 
     public LogConfig build(String ruleName, LogRecordSort logRecordSort, OperatorSort operatorSort,
-                           LogRecordIndexSort indexSort, String description){
+                           List<LogIndexConfig> logIndexConfigs, String description){
         return LogConfigBuilder.instance(this)
                 .setRuleName(ruleName)
                 .setLogRecordSort(logRecordSort)
                 .setOperatorSort(operatorSort)
-                .setIndexSort(indexSort)
+                .setIndexConfigList(logIndexConfigs)
                 .setDescription(description)
                 .build();
     }

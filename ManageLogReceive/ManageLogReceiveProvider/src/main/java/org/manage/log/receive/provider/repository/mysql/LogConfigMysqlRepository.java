@@ -3,6 +3,7 @@ package org.manage.log.receive.provider.repository.mysql;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
@@ -10,11 +11,18 @@ import org.manage.log.receive.provider.config.ApplicationConfigKey;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.mysql.builder.LogConfigMysqlBuilder;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogConfigMapper;
+import org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper;
+import org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO;
+import org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -31,31 +39,54 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
     private LogConfigMapper logConfigMapper;
 
     @Autowired
+    private LogIndexConfigMapper logIndexConfigMapper;
+
+    @Autowired
     private ApplicationConfigUtil applicationConfigUtil;
 
     private LoadingCache<String, LogConfig> CACHE;
 
     private static final LogConfigMysqlBuilder builder = LogConfigMysqlBuilder.getInstance();
 
+    @Resource
+    private TransactionTemplate transactionTemplate;
 
     @Override
     public boolean add(LogConfig logConfig) {
-        return logConfigMapper.add(builder.convert(logConfig)) == 1;
+        return Boolean.TRUE.equals(transactionTemplate.execute(status -> {
+            ImmutablePair<LogConfigMysqlPO, List<LogIndexConfigMysqlPO>> mysqlPo = builder.convert(logConfig);
+            List<LogIndexConfigMysqlPO> indexList = mysqlPo.getRight();
+            if (logIndexConfigMapper.addList(indexList) != indexList.size()) {
+                return false;
+            }
+            return logConfigMapper.add(mysqlPo.getLeft()) == 1;
+        }));
     }
 
     @Override
-    public LogConfig getByConfigName(String configName) {
+    public Optional<LogConfig> getByConfigName(String configName) {
         try {
-            return CACHE.get(configName);
+            return Optional.of(CACHE.get(configName));
         } catch (ExecutionException e) {
             log.error("get by config name, get from cache error", e);
         }
-        return builder.convert(logConfigMapper.getByConfigName(configName));
+        LogConfigMysqlPO logConfig = logConfigMapper.getByConfigName(configName);
+        if(Objects.isNull(logConfig)){
+            return Optional.empty();
+        }
+        List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.getRuleId());
+        return Optional.of(builder.convert(logConfig, logIndexConfigList));
     }
 
     @Override
     public List<LogConfig> getAll() {
-        return logConfigMapper.getAll().stream().map(builder::convert).collect(Collectors.toList());
+        List<LogConfigMysqlPO> configMysqlPoList = logConfigMapper.getAll();
+        List<LogIndexConfigMysqlPO> configIndexMysqlPoList = logIndexConfigMapper.getAll();
+
+        return configMysqlPoList.stream().map(configMysqlPo -> {
+            List<LogIndexConfigMysqlPO> indexConfigList = configIndexMysqlPoList.stream().filter(index -> configMysqlPo.getRuleId().equals(index.getLogConfigId())).toList();
+            return builder.convert(configMysqlPo, indexConfigList);
+        }).collect(Collectors.toList());
     }
 
     @PostConstruct
@@ -66,7 +97,12 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
                 .build(new CacheLoader<>() {
                     @Override
                     public LogConfig load(String configName) {
-                        return builder.convert(logConfigMapper.getByConfigName(configName));
+                        LogConfigMysqlPO logConfig = logConfigMapper.getByConfigName(configName);
+                        if(Objects.isNull(logConfig)){
+                            return null;
+                        }
+                        List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.getRuleId());
+                        return builder.convert(logConfig, logIndexConfigList);
                     }
                 });
     }

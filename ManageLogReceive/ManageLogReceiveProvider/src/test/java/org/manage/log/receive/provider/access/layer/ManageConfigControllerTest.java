@@ -9,8 +9,9 @@ import org.manage.log.base.test.BaseTest;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
-import org.manage.log.receive.facade.dto.config.LogConfigDto;
-import org.manage.log.receive.facade.dto.config.UploadLogConfigDto;
+import org.manage.log.receive.facade.dto.config.query.LogConfigDto;
+import org.manage.log.receive.facade.dto.config.execute.UploadLogConfigDto;
+import org.manage.log.receive.facade.dto.config.execute.UploadLogIndexConfigDto;
 
 import java.util.List;
 
@@ -25,10 +26,16 @@ public class ManageConfigControllerTest extends BaseTest {
     @Test
     @Order(1)
     public void testAdd(){
+        UploadLogIndexConfigDto indexConfig = new UploadLogIndexConfigDto();
+        indexConfig.setRuleName("test")
+                .setLogRecordIndexSort(LogRecordIndexSort.ID.getSortDescription())
+                .setValueIndex(0L)
+                .setDescription("test");
+
         UploadLogConfigDto uploadLogConfigDto = new UploadLogConfigDto();
         uploadLogConfigDto.setRuleName(mockConfigName)
                         .setOperatorSort(OperatorSort.USER.getSortDescription())
-                                .setIndexSort(LogRecordIndexSort.ID.getSortDescription())
+                                .setIndexConfigList(ImmutableList.of(indexConfig))
                                         .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
                                                 .setDescription("test");
         try {
@@ -64,7 +71,7 @@ public class ManageConfigControllerTest extends BaseTest {
     private void baseAssert(LogConfigDto logConfigDto){
         Assertions.assertNotNull(logConfigDto.getRuleName());
         Assertions.assertNotNull(logConfigDto.getOperatorSort());
-        Assertions.assertNotNull(logConfigDto.getIndexSort());
+        Assertions.assertNotNull(logConfigDto.getIndexConfigList());
         Assertions.assertNotNull(logConfigDto.getLogRecordSort());
         Assertions.assertNotNull(logConfigDto.getDescription());
     }

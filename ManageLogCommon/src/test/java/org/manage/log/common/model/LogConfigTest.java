@@ -21,7 +21,7 @@ public class LogConfigTest {
         Assertions.assertNotNull(logConfig.getRuleName());
         Assertions.assertNotNull(logConfig.getLogRecordSort());
         Assertions.assertNotNull(logConfig.getOperatorSort());
-        Assertions.assertNotNull(logConfig.getIndexSort());
+        Assertions.assertNotNull(logConfig.getIndexConfigList());
         Assertions.assertNotNull(logConfig.getDescription());
         Assertions.assertNotNull(logConfig.getVersion());
         Assertions.assertNotNull(logConfig.getCreateTime());

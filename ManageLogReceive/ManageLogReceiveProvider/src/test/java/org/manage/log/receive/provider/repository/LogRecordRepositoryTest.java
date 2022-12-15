@@ -30,7 +30,7 @@ public class LogRecordRepositoryTest extends BaseTest {
     public void testSaveSingleLog(){
         logRecordRepositoryList.forEach(logRecordRepository -> {
             LogRecord logRecord = DefineModelUtil.defineLogRecord();
-            Assertions.assertTrue(logRecordRepository.save(logRecord));
+            Assertions.assertTrue(logRecordRepository.save(ImmutableList.of(logRecord)));
         });
     }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author cartoon
@@ -24,7 +25,7 @@ public class LogConfigServiceImpl implements LogConfigService {
     }
 
     @Override
-    public LogConfig getConfigByName(String configName) {
+    public Optional<LogConfig> getConfigByName(String configName) {
         Assert.notNull(configName, "config name must not null");
         return logConfigRepository.getByConfigName(configName);
     }

@@ -1,5 +1,7 @@
-package org.manage.log.receive.facade.dto.config;
+package org.manage.log.receive.facade.dto.config.execute;
 
+
+import java.util.List;
 
 /**
  * @author cartoon
@@ -13,7 +15,7 @@ public class UploadLogConfigDto {
 
     private String operatorSort;
 
-    private String indexSort;
+    private List<UploadLogIndexConfigDto> indexConfigList;
 
     private String description;
 
@@ -44,12 +46,12 @@ public class UploadLogConfigDto {
         return this;
     }
 
-    public String getIndexSort() {
-        return indexSort;
+    public List<UploadLogIndexConfigDto> getIndexConfigList() {
+        return indexConfigList;
     }
 
-    public UploadLogConfigDto setIndexSort(String indexSort) {
-        this.indexSort = indexSort;
+    public UploadLogConfigDto setIndexConfigList(List<UploadLogIndexConfigDto> indexConfigList) {
+        this.indexConfigList = indexConfigList;
         return this;
     }
 

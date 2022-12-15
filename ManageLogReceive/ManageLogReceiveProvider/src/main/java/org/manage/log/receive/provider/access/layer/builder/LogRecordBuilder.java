@@ -37,4 +37,6 @@ public class LogRecordBuilder {
         return logRecord;*/
         return new LogRecord();
     }
+
+
 }

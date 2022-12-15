@@ -1,16 +1,21 @@
 package org.manage.log.receive.provider.service;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.collections4.CollectionUtils;
 import org.manage.log.common.constants.HandleError;
+import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.access.layer.builder.LogRecordBuilder;
+import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,19 +30,12 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     @Autowired
     private LogRecordRepository logRecordRepository;
 
+    @Autowired
+    private LogConfigRepository logConfigRepository;
+
     @Override
     public OperateLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
-        //1. judge income request data illegal
-        if(!judgeParamIllegal(uploadLogRecordReq)){
-            return new OperateLogResp<>(HandleError.PARAM_MISS);
-        }
-        //2. transfer request data to domain entity
-        //todo 获取 config 配置，format 具体日志，转换领域模型并落库
-        LogRecord logRecord = LogRecordBuilder.getInstance().build(uploadLogRecordReq, getUploadTime(uploadLogRecordReq));
-        //3. call repository to store
-        //todo 转换领域模型并传参
-        boolean saveRes = logRecordRepository.save(new LogRecord());
-        return new OperateLogResp<>(saveRes);
+        return receive(ImmutableList.of(uploadLogRecordReq));
     }
 
     @Override
@@ -47,10 +45,15 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
             return new OperateLogResp<>(HandleError.PARAM_MISS);
         }
         //2. transfer request data to domain entity
+        //todo 获取 config 配置，format 具体日志，转换领域模型并落库
         List<LogRecord> logRecords = uploadLogRecordReqs.stream().map(req -> LogRecordBuilder.getInstance().build(req, getUploadTime(req))).collect(Collectors.toList());
         //3. call repository to store
         boolean saveRes = logRecordRepository.save(logRecords);
         return new OperateLogResp<>(saveRes);
+    }
+
+    private List<LogRecord> execute(List<LogConfig> logConfigs){
+        return new ArrayList<>();
     }
 
     protected boolean judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq){

@@ -5,12 +5,12 @@
 <mapper namespace="org.manage.log.receive.provider.repository.mysql.mapper.LogConfigMapper">
 
     <sql id="Base_Column_List">
-        ruleId, ruleName, logRecordSort, operatorSort, indexSort, description, version, createTime, modifyTime
+        ruleId, ruleName, logRecordSort, operatorSort, description, version, createTime, modifyTime
     </sql>
 
     <insert id="add" parameterType = "org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO">
-        insert into LogConfig(ruleId, ruleName, logRecordSort, operatorSort, indexSort, description, version, createTime, modifyTime)
-        value (#{ruleId}, #{ruleName}, #{logRecordSort}, #{operatorSort}, #{indexSort}, #{description}, #{version}, #{createTime}, #{modifyTime})
+        insert into LogConfig(ruleId, ruleName, logRecordSort, operatorSort, description, version, createTime, modifyTime)
+        value (#{ruleId}, #{ruleName}, #{logRecordSort}, #{operatorSort}, #{description}, #{version}, #{createTime}, #{modifyTime})
     </insert>
 
     <select id="getByConfigName" resultType="org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO">

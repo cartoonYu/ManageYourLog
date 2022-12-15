@@ -1,6 +1,8 @@
-package org.manage.log.receive.facade.dto.config;
+package org.manage.log.receive.facade.dto.config.query;
+
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author cartoon
@@ -14,7 +16,7 @@ public class LogConfigDto {
 
     private String operatorSort;
 
-    private String indexSort;
+    private List<LogIndexConfigDto> indexConfigList;
 
     private String description;
 
@@ -51,15 +53,6 @@ public class LogConfigDto {
         return this;
     }
 
-    public String getIndexSort() {
-        return indexSort;
-    }
-
-    public LogConfigDto setIndexSort(String indexSort) {
-        this.indexSort = indexSort;
-        return this;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -93,6 +86,15 @@ public class LogConfigDto {
 
     public LogConfigDto setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
+        return this;
+    }
+
+    public List<LogIndexConfigDto> getIndexConfigList() {
+        return indexConfigList;
+    }
+
+    public LogConfigDto setIndexConfigList(List<LogIndexConfigDto> indexConfigList) {
+        this.indexConfigList = indexConfigList;
         return this;
     }
 }
