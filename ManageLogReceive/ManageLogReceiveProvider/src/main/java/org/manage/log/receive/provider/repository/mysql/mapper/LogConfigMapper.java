@@ -17,5 +17,7 @@ public interface LogConfigMapper {
 
     LogConfigMysqlPO getByConfigName(String configName);
 
+    List<LogConfigMysqlPO> getByConfigNameList(List<String> configNames);
+
     List<LogConfigMysqlPO> getAll();
 }

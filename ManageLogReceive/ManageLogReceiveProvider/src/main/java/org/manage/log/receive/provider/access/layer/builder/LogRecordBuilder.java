@@ -22,7 +22,7 @@ public class LogRecordBuilder {
         return INSTANCE;
     }
 
-    public LogRecord build(UploadLogRecordReq uploadLogRecordReq, LocalDateTime uploadTime){
+    public LogRecord build(UploadLogRecordReq uploadLogRecordReq){
         /*String recordId = IdGenerateUtil.getInstance().generate(13);
         LogRecord logRecord = new LogRecord();
         logRecord.setRecordId(recordId)

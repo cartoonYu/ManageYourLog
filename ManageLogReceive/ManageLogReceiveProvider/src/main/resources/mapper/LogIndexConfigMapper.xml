@@ -8,8 +8,12 @@
         ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime
     </sql>
 
+    <sql id = "TABLE_NAME">
+        LogIndexConfig
+    </sql>
+
     <insert id="addList">
-        insert into LogIndexConfig(ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime)
+        insert into <include refid="TABLE_NAME"/>(ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime)
         values
         <foreach collection="poList" item="po" open="(" close=")" separator=",">
             #{po.ruleId}, #{po.ruleName}, #{po.logConfigId}, #{po.sort}, #{po.valueIndex}, #{po.description}, #{po.version}, #{po.createTime}, #{po.modifyTime}
@@ -17,10 +21,19 @@
     </insert>
 
     <select id="getByLogConfigId" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
-        select <include refid="Base_Column_List"/> from LogIndexConfig where logConfigId = #{logConfigId}
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/> where logConfigId = #{logConfigId}
     </select>
 
     <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
-        select <include refid="Base_Column_List"/> from LogIndexConfig
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
+    </select>
+
+    <select id="getByConfigNameList" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
+        select <include refid="Base_Column_List"/>
+        from <include refid="TABLE_NAME"/>
+        where logConfigId in
+        <foreach collection="logConfigIdList" item="logConfigId" open="(" close=")" separator=",">
+            #{logConfigId}
+        </foreach>
     </select>
 </mapper>

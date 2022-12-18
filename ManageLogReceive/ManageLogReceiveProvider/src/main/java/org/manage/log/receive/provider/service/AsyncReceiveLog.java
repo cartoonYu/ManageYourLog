@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class AsyncReceiveLog extends AbstractReceiveLog {
 
     @Override
-    protected LocalDateTime getUploadTime(UploadLogRecordReq uploadLogRecordReq) {
-        return uploadLogRecordReq.getUploadTime();
+    protected LocalDateTime getUploadTime(LocalDateTime incomingUploadTime) {
+        return incomingUploadTime;
     }
 }

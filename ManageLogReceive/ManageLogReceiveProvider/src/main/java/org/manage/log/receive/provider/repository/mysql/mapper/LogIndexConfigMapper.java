@@ -18,4 +18,6 @@ public interface LogIndexConfigMapper {
     List<LogIndexConfigMysqlPO> getAll();
 
     List<LogIndexConfigMysqlPO> getByLogConfigId(String logConfigId);
+
+    List<LogIndexConfigMysqlPO> getByConfigNameList(List<String> logConfigIdList);
 }

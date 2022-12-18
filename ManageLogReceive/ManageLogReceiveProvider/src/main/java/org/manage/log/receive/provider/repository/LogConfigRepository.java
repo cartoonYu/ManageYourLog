@@ -19,5 +19,7 @@ public interface LogConfigRepository {
 
     Optional<LogConfig> getByConfigName(String configName);
 
+    List<LogConfig> getByConfigNameList(List<String> configNameList);
+
     List<LogConfig> getAll();
 }

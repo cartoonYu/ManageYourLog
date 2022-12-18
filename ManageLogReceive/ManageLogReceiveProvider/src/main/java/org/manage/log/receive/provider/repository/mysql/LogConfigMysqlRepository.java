@@ -1,9 +1,11 @@
 package org.manage.log.receive.provider.repository.mysql;
 
+import com.alibaba.nacos.shaded.com.google.common.collect.Sets;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.dubbo.common.context.LifecycleAdapter;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
@@ -20,11 +22,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -76,6 +77,36 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         }
         List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.getRuleId());
         return Optional.of(builder.convert(logConfig, logIndexConfigList));
+    }
+
+    @Override
+    public List<LogConfig> getByConfigNameList(List<String> configNameList) {
+        //get config from cache
+        List<LogConfig> configFromCache = new ArrayList<>();
+        try {
+            configFromCache = CACHE.getAll(configNameList).values().asList();
+        } catch (Exception e){
+            log.warn("get by config name, get from cache error", e);
+        }
+        //calculate diff with cache and source config name list
+        List<String> configNameFromCache = configFromCache.stream().map(LogConfig::getRuleName).toList();
+        List<String> needLoadFromDatabaseConfigNameList = configNameList.stream()
+                                                                .filter(sourceConfigName -> !configNameFromCache.contains(sourceConfigName))
+                                                                .toList();
+        if(needLoadFromDatabaseConfigNameList.isEmpty()){
+            return configFromCache;
+        }
+        //get data from database
+        List<LogConfigMysqlPO> configPoFromDatabase = logConfigMapper.getByConfigNameList(needLoadFromDatabaseConfigNameList);
+        List<String> logConfigIdFromDatabase = configPoFromDatabase.stream().map(LogConfigMysqlPO::getRuleId).toList();
+        List<LogIndexConfigMysqlPO> indexConfigFromDatabase = logIndexConfigMapper.getByConfigNameList(logConfigIdFromDatabase);
+        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = indexConfigFromDatabase.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::getLogConfigId));
+        List<LogConfig> configFromDatabase = configPoFromDatabase.stream().
+                                                    map(config -> builder.convert(config, configIdToIndexMap.getOrDefault(config.getRuleId(), new ArrayList<>())))
+                                                    .toList();
+        //merge two result list and return
+        configFromCache.addAll(configFromDatabase);
+        return configFromCache;
     }
 
     @Override

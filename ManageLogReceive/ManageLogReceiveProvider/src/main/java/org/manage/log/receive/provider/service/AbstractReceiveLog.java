@@ -12,6 +12,7 @@ import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -40,19 +41,31 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
     @Override
     public OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs) {
-        //1. judge income request data illegal
+        //judge income request data illegal
         if(!judgeParamIllegal(uploadLogRecordReqs)){
             return new OperateLogResp<>(HandleError.PARAM_MISS);
         }
-        //2. transfer request data to domain entity
-        //todo 获取 config 配置，format 具体日志，转换领域模型并落库
-        List<LogRecord> logRecords = uploadLogRecordReqs.stream().map(req -> LogRecordBuilder.getInstance().build(req, getUploadTime(req))).collect(Collectors.toList());
-        //3. call repository to store
+        //transfer request data to domain entity
+        //get log config from repository
+        List<String> configNameList = uploadLogRecordReqs.stream().map(UploadLogRecordReq::getConfigName).toList();
+        List<LogConfig> configList = logConfigRepository.getByConfigNameList(configNameList);
+        //format log by log formatter and value list, construct log index list todo
+        //transfer to log domain model todo
+        List<LogRecord> logRecords = uploadLogRecordReqs.stream().map(req -> LogRecordBuilder.getInstance().build(req)).collect(Collectors.toList());
+        //call repository to store
         boolean saveRes = logRecordRepository.save(logRecords);
         return new OperateLogResp<>(saveRes);
     }
 
-    private List<LogRecord> execute(List<LogConfig> logConfigs){
+    private List<LogRecord> executeLog(List<LogConfig> logConfigs, List<List<String>> values, List<LocalDateTime> uploadTimeList){
+        Assert.isTrue(logConfigs.size() == values.size(), "receive log, config list size must equals value list size");
+        Assert.isTrue(logConfigs.size() == uploadTimeList.size(), "receive log, config list size must equals upload time list size");
+        for(int index = 0; index < logConfigs.size(); index++){
+            LogConfig logConfig = logConfigs.get(index);
+            List<String> valueList = values.get(index);
+            LocalDateTime uploadTime = uploadTimeList.get(index);
+
+        }
         return new ArrayList<>();
     }
 
@@ -65,7 +78,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         return true;
     }
 
-    protected abstract LocalDateTime getUploadTime(UploadLogRecordReq uploadLogRecordReq);
+    protected abstract LocalDateTime getUploadTime(LocalDateTime incomingUploadTime);
 
     private boolean judgeParamIllegal(List<UploadLogRecordReq> uploadLogRecordReqs){
         if(CollectionUtils.isEmpty(uploadLogRecordReqs)){
