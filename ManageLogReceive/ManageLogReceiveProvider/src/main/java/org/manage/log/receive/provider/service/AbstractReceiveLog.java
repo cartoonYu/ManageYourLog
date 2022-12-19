@@ -18,7 +18,9 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -49,23 +51,16 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         //get log config from repository
         List<String> configNameList = uploadLogRecordReqs.stream().map(UploadLogRecordReq::getConfigName).toList();
         List<LogConfig> configList = logConfigRepository.getByConfigNameList(configNameList);
-        //format log by log formatter and value list, construct log index list todo
-        //transfer to log domain model todo
-        List<LogRecord> logRecords = uploadLogRecordReqs.stream().map(req -> LogRecordBuilder.getInstance().build(req)).collect(Collectors.toList());
+        //format log by log formatter and value list, construct log index list
+        List<LogRecord> logRecordList = executeLog(configList, uploadLogRecordReqs);
         //call repository to store
-        boolean saveRes = logRecordRepository.save(logRecords);
+        boolean saveRes = logRecordRepository.save(logRecordList);
         return new OperateLogResp<>(saveRes);
     }
 
-    private List<LogRecord> executeLog(List<LogConfig> logConfigs, List<List<String>> values, List<LocalDateTime> uploadTimeList){
-        Assert.isTrue(logConfigs.size() == values.size(), "receive log, config list size must equals value list size");
-        Assert.isTrue(logConfigs.size() == uploadTimeList.size(), "receive log, config list size must equals upload time list size");
-        for(int index = 0; index < logConfigs.size(); index++){
-            LogConfig logConfig = logConfigs.get(index);
-            List<String> valueList = values.get(index);
-            LocalDateTime uploadTime = uploadTimeList.get(index);
-
-        }
+    private List<LogRecord> executeLog(List<LogConfig> configList, List<UploadLogRecordReq> uploadLogRecordReqs){
+        Map<String, LogConfig> configNameToConfig = configList.stream().collect(Collectors.toMap(LogConfig::getRuleName, Function.identity()));
+        //format log content and others, call factory to build domain object
         return new ArrayList<>();
     }
 
