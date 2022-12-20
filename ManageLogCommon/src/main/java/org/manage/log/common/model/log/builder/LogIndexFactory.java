@@ -6,6 +6,10 @@ import org.manage.log.common.util.IdGenerateUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author cartoon
  * @version 1.0
@@ -16,6 +20,12 @@ public class LogIndexFactory {
 
     public String generateIndexId(){
         return IdGenerateUtil.getInstance().generate(13);
+    }
+
+    public List<LogRecordIndex> build(String logRecordId, Map<String, LogRecordIndexSort> valueToSortMap){
+        List<LogRecordIndex> indexList = new ArrayList<>();
+        valueToSortMap.forEach((value, indexSort) -> indexList.add(build(logRecordId, indexSort, value)));
+        return indexList;
     }
 
     public LogRecordIndex build(String logRecordId, LogRecordIndexSort indexSort, String value){
