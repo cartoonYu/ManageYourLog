@@ -1,6 +1,5 @@
 package org.manage.log.common.model.config;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.constants.LogRecordSort;
 import org.manage.log.common.constants.OperatorSort;
 
