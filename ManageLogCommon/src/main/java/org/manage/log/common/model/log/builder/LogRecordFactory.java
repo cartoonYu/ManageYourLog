@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -27,13 +28,15 @@ public class LogRecordFactory {
     }
 
     public LogRecord build(String content, OperatorSort operatorSort, String operator,
-                           LogRecordSort logRecordSort, Map<String, LogRecordIndexSort> indexValueToIndexSortMap){
+                           LogRecordSort logRecordSort, Map<String, LogRecordIndexSort> indexValueToIndexSortMap,
+                           LocalDateTime createTime){
         return LogRecordBuilder.getInstance(this, indexFactory)
                 .setContent(content)
                 .setOperatorSort(operatorSort)
                 .setOperator(operator)
                 .setLogRecordSort(logRecordSort)
                 .setIndexValueToIndexSortMap(indexValueToIndexSortMap)
+                .setCreateTime(createTime)
                 .build();
     }
 

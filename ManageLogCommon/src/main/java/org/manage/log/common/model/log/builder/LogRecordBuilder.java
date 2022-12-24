@@ -33,7 +33,7 @@ public class LogRecordBuilder {
 
     private Integer version = 1;
 
-    private LocalDateTime createTime = LocalDateTime.now();
+    private LocalDateTime createTime;
 
     private LocalDateTime modifyTime = LocalDateTime.now();
 
@@ -74,6 +74,11 @@ public class LogRecordBuilder {
             return this;
         }
         this.indexValueToIndexSortMap.putAll(indexValueToIndexSortMap);
+        return this;
+    }
+
+    public LogRecordBuilder setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
         return this;
     }
 

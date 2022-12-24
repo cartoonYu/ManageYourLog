@@ -8,10 +8,8 @@ import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO;
-
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author cartoon
@@ -38,7 +36,7 @@ public class LogConfigMysqlBuilder {
                     .setCreateTime(indexConfig.getCreateTime())
                     .setModifyTime(indexConfig.getModifyTime());
             return result;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     private LogConfigMysqlPO convertToLogConfig(LogConfig source){
@@ -47,6 +45,7 @@ public class LogConfigMysqlBuilder {
                 .setRuleName(source.getRuleName())
                 .setLogRecordSort(source.getLogRecordSort().getSortDescription())
                 .setOperatorSort(source.getOperatorSort().getSortDescription())
+                .setContentTemplate(source.getContentTemplate())
                 .setDescription(source.getDescription())
                 .setVersion(source.getVersion())
                 .setCreateTime(source.getCreateTime())
@@ -63,6 +62,7 @@ public class LogConfigMysqlBuilder {
                 .setRuleName(source.getRuleName())
                 .setLogRecordSort(LogRecordSort.parse(source.getLogRecordSort()))
                 .setOperatorSort(OperatorSort.parse(source.getOperatorSort()))
+                .setContentTemplate(source.getContentTemplate())
                 .addIndexConfig(convert(indexList))
                 .setDescription(source.getDescription())
                 .setVersion(source.getVersion())
@@ -72,7 +72,7 @@ public class LogConfigMysqlBuilder {
     }
 
     private List<LogIndexConfig> convert(List<LogIndexConfigMysqlPO> indexList){
-        return indexList.stream().map(this::convert).collect(Collectors.toList());
+        return indexList.stream().map(this::convert).toList();
     }
 
     private LogIndexConfig convert(LogIndexConfigMysqlPO index){
@@ -91,4 +91,5 @@ public class LogConfigMysqlBuilder {
     public static LogConfigMysqlBuilder getInstance(){
         return INSTANCE;
     }
+
 }

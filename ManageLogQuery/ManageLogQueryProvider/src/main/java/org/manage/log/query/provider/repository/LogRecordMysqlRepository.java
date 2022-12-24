@@ -3,6 +3,7 @@ package org.manage.log.query.provider.repository;
 import com.google.common.collect.ImmutableList;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.util.factory.LoadBean;
+import org.manage.log.query.provider.repository.config.ApplicationConfigKey;
 import org.manage.log.query.provider.repository.mysql.builder.MysqlEntityBuilder;
 import org.manage.log.query.provider.repository.mysql.mapper.LogRecordIndexMapper;
 import org.manage.log.query.provider.repository.mysql.mapper.LogRecordMapper;

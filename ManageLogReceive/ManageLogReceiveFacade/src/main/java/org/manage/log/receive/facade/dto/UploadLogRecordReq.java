@@ -13,6 +13,8 @@ public class UploadLogRecordReq implements Serializable {
 
     private String configName;
 
+    private String operator;
+
     private List<String> valueList;
 
     private LocalDateTime uploadTime;
@@ -41,6 +43,15 @@ public class UploadLogRecordReq implements Serializable {
 
     public UploadLogRecordReq setUploadTime(LocalDateTime uploadTime) {
         this.uploadTime = uploadTime;
+        return this;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public UploadLogRecordReq setOperator(String operator) {
+        this.operator = operator;
         return this;
     }
 }

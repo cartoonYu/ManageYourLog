@@ -16,6 +16,8 @@ public class LogConfigMysqlPO {
 
     private String operatorSort;
 
+    private String contentTemplate;
+
     private String description;
 
     private Long version;
@@ -93,5 +95,14 @@ public class LogConfigMysqlPO {
 
     public void setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getContentTemplate() {
+        return contentTemplate;
+    }
+
+    public LogConfigMysqlPO setContentTemplate(String contentTemplate) {
+        this.contentTemplate = contentTemplate;
+        return this;
     }
 }

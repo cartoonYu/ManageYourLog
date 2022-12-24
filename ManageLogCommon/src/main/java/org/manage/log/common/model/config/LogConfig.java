@@ -22,6 +22,8 @@ public class LogConfig {
 
     private OperatorSort operatorSort;
 
+    private String contentTemplate;
+
     private List<LogIndexConfig> indexConfigList = new ArrayList<>();
 
     private String description;
@@ -116,6 +118,15 @@ public class LogConfig {
 
     public LogConfig addIndexConfig(List<LogIndexConfig> indexConfigList){
         this.indexConfigList.addAll(indexConfigList.stream().filter(Objects::nonNull).toList());
+        return this;
+    }
+
+    public String getContentTemplate() {
+        return contentTemplate;
+    }
+
+    public LogConfig setContentTemplate(String contentTemplate) {
+        this.contentTemplate = contentTemplate;
         return this;
     }
 }
