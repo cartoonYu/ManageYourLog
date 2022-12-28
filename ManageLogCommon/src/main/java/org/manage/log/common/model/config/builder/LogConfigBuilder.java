@@ -23,6 +23,8 @@ public class LogConfigBuilder {
 
     private OperatorSort operatorSort;
 
+    private String contentTemplate;
+
     private List<LogIndexConfig> indexConfigList = new ArrayList<>();
 
     private String description;
@@ -58,6 +60,11 @@ public class LogConfigBuilder {
         return this;
     }
 
+    public LogConfigBuilder setContentTemplate(String contentTemplate) {
+        this.contentTemplate = contentTemplate;
+        return this;
+    }
+
     public LogConfigBuilder setDescription(String description) {
         this.description = description;
         return this;
@@ -78,6 +85,7 @@ public class LogConfigBuilder {
                 .setRuleName(ruleName)
                 .setLogRecordSort(logRecordSort)
                 .setOperatorSort(operatorSort)
+                .setContentTemplate(contentTemplate)
                 .addIndexConfig(indexConfigList)
                 .setDescription(description)
                 .setVersion(version)

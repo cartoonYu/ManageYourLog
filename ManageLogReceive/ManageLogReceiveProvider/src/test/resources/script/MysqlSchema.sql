@@ -33,6 +33,7 @@ CREATE TABLE `LogConfig` (
                              `ruleName` varchar(200) NOT NULL DEFAULT '' COMMENT 'rule name',
                              `logRecordSort` varchar(30) NOT NULL DEFAULT '' COMMENT 'log record sort',
                              `operatorSort` varchar(30) DEFAULT '' COMMENT 'log operator sort',
+                             `contentTemplate` text NOT NULL COMMENT 'log content template',
                              `description` varchar(200) NOT NULL DEFAULT '',
                              `version` int NOT NULL DEFAULT '1' COMMENT 'log version',
                              `createTime` datetime NOT NULL COMMENT 'config create time',

@@ -12,6 +12,7 @@ import org.manage.log.receive.provider.repository.mysql.LogRecordMysqlRepository
 import org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.LogRecordMysqlPO;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -121,8 +122,8 @@ public class LogRecordMysqlBuilder {
                                     .setModifyTime(index.getModifyTime());
                             return indexMysqlPO;
                         }
-                ).collect(Collectors.toList())
-        ).orElse(ImmutableList.of());
+                ).toList()
+        ).orElse(Collections.emptyList());
         return ImmutablePair.of(logRecordMysqlPO, indexMysqlPOS);
     }
 }

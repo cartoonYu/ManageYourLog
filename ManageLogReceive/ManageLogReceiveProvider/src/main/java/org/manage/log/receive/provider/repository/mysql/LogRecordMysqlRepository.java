@@ -4,7 +4,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
-import org.manage.log.receive.provider.repository.mysql.MysqlDatasourceOperate;
 import org.manage.log.receive.provider.repository.mysql.builder.LogRecordMysqlBuilder;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogRecordIndexMapper;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogRecordMapper;
@@ -33,8 +32,12 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
     @Override
     public boolean save(LogRecord logRecord) {
         ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> logInfos = LogRecordMysqlBuilder.getInstance().convertToPo(logRecord);
-        return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, mapper -> mapper.insert(logInfos.getLeft()) == 1, false)
-                && mysqlDatasourceOperate.executeDML(LogRecordIndexMapper.class, mapper -> mapper.batchInsert(logInfos.getRight()) == logInfos.getRight().size(), true);
+        if(!logInfos.getRight().isEmpty()){
+            if(!mysqlDatasourceOperate.executeDML(LogRecordIndexMapper.class, mapper -> mapper.batchInsert(logInfos.getRight()) == logInfos.getRight().size())){
+                return false;
+            }
+        }
+        return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, mapper -> mapper.insert(logInfos.getLeft()) == 1, true);
     }
 
     @Override
@@ -42,7 +45,11 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
         List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> logInfos = LogRecordMysqlBuilder.getInstance().convertToPo(logRecords);
         List<LogRecordMysqlPO> logRecordPos = logInfos.stream().map(ImmutablePair::getLeft).toList();
         List<LogRecordIndexMysqlPO> logRecordIndexPos = logInfos.stream().map(ImmutablePair::getRight).flatMap(Collection::stream).toList();
-        return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, mapper -> mapper.batchInsert(logRecordPos) == logRecordPos.size(), false)
-                && mysqlDatasourceOperate.executeDML(LogRecordIndexMapper.class, mapper -> mapper.batchInsert(logRecordIndexPos) == logRecordIndexPos.size(), true);
+        if(logRecordIndexPos.isEmpty()){
+            if(!mysqlDatasourceOperate.executeDML(LogRecordIndexMapper.class, mapper -> mapper.batchInsert(logRecordIndexPos) == logRecordIndexPos.size())){
+                return false;
+            }
+        }
+        return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, mapper -> mapper.batchInsert(logRecordPos) == logRecordPos.size(), true);
     }
 }

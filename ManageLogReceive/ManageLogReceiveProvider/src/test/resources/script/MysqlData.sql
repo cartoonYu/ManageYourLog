@@ -16,9 +16,9 @@ insert into LogRecordIndex(
     );
 
 insert into LogConfig (
-    ruleId, ruleName, logRecordSort, operatorSort,
+    ruleId, ruleName, logRecordSort, operatorSort, contentTemplate,
     description, version, createTime, modifyTime)
     value(
-        '1', 'orderOperate', 'operate', 'USER',
+        '1', 'orderOperate', 'operate', 'USER', 'order operate, operator: %s',
         'order operate', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );

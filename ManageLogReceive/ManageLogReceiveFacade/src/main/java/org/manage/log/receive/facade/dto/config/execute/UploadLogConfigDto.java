@@ -15,6 +15,8 @@ public class UploadLogConfigDto {
 
     private String operatorSort;
 
+    private String contentTemplate;
+
     private List<UploadLogIndexConfigDto> indexConfigList;
 
     private String description;
@@ -61,6 +63,15 @@ public class UploadLogConfigDto {
 
     public UploadLogConfigDto setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String getContentTemplate() {
+        return contentTemplate;
+    }
+
+    public UploadLogConfigDto setContentTemplate(String contentTemplate) {
+        this.contentTemplate = contentTemplate;
         return this;
     }
 }

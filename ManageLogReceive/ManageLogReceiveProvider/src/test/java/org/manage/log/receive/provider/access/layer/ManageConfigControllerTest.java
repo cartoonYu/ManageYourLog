@@ -37,6 +37,7 @@ public class ManageConfigControllerTest extends BaseTest {
                         .setOperatorSort(OperatorSort.USER.getSortDescription())
                                 .setIndexConfigList(ImmutableList.of(indexConfig))
                                         .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
+                                            .setContentTemplate("test content template")
                                                 .setDescription("test");
         try {
             Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));

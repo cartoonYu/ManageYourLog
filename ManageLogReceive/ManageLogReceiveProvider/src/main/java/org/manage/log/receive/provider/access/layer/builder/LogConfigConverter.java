@@ -68,7 +68,7 @@ public class LogConfigConverter {
                                 indexConfig.getValueIndex(), indexConfig.getDescription())).toList();
         return LogConfigFactory.getInstance()
                 .build(uploadLogConfigDto.getRuleName(), LogRecordSort.parse(uploadLogConfigDto.getLogRecordSort()),
-                        OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), logIndexConfigList,
+                        OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), uploadLogConfigDto.getContentTemplate(), logIndexConfigList,
                         uploadLogConfigDto.getDescription());
     }
 

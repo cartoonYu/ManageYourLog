@@ -23,9 +23,9 @@ public class DefineModelUtil {
     public static UploadLogRecordReq defineLogRecordReq(){
         UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
-        uploadLogRecordReq.setConfigName("test");
-        //todo 具体值确定
-        uploadLogRecordReq.setValueList(ImmutableList.of());
+        uploadLogRecordReq.setConfigName("orderOperate");
+        uploadLogRecordReq.setOperator("cartoon");
+        uploadLogRecordReq.setValueList(ImmutableList.of("cartoon"));
         return uploadLogRecordReq;
     }
 
@@ -62,6 +62,7 @@ public class DefineModelUtil {
                 .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
                 .setLogRecordSort(LogRecordSort.DEFAULT)
                 .setOperatorSort(OperatorSort.DEFAULT)
+                .setContentTemplate("test content template")
                 .addIndexConfig(defineLogIndexConfig())
                 .setDescription("test")
                 .setVersion(1L)

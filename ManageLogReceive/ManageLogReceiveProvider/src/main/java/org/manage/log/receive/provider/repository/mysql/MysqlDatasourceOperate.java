@@ -34,6 +34,10 @@ public class MysqlDatasourceOperate {
 
     private ThreadLocal<ImmutablePair<SqlSession, TransactionStatus>> executeInfos;
 
+    public <T, R> R executeDML(Class<T> classType, Function<T, R> executeFunction){
+        return executeDML(classType, executeFunction, false);
+    }
+
     public <T, R> R executeDML(Class<T> classType, Function<T, R> executeFunction, boolean isEndCall){
         ImmutablePair<SqlSession, TransactionStatus> executeInfo = executeInfos.get();
         if(Objects.isNull(executeInfo)){
