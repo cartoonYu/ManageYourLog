@@ -8,11 +8,6 @@
         recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime
     </sql>
 
-    <insert id="insert" parameterType="org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO">
-        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
-        value (#{recordId}, #{content}, #{operatorSort}, #{operator}, #{logRecordSort}, #{indexIds}, #{version}, #{createTime}, #{modifyTime})
-    </insert>
-
     <insert id="batchInsert" parameterType="org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO">
         insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
         values

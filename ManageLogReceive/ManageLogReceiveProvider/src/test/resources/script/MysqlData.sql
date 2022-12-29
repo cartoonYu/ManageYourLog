@@ -22,3 +22,11 @@ insert into LogConfig (
         '1', 'orderOperate', 'operate', 'USER', 'order operate, operator: %s',
         'order operate', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );
+
+insert into LogIndexConfig (
+    ruleId, ruleName, logConfigId, sort, valueIndex,
+    description, version, createTime, modifyTime)
+    value(
+        '1', 'orderOperateIndex', 1, 'date', 0,
+        'order operate index', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
+    );

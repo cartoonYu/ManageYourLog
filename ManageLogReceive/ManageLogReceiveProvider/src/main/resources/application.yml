@@ -3,7 +3,7 @@ server:
 receive:
   log:
     load:
-      mode: rpc
+      mode: all
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092

@@ -1,5 +1,6 @@
 package org.manage.log.receive.provider.service;
 
+import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
@@ -45,7 +46,12 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     @Override
     public OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs) {
         //judge income request data illegal
-        judgeParamIllegal(uploadLogRecordReqs);
+        try {
+            judgeParamIllegal(uploadLogRecordReqs);
+        } catch (IllegalArgumentException e){
+            return new OperateLogResp<>(HandleError.PARAM_MISS.getCode(), e.getMessage());
+        }
+
         //transfer request data to domain entity
         //get log config from repository
         List<String> configNameList = uploadLogRecordReqs.stream().map(UploadLogRecordReq::getConfigName).toList();
@@ -72,13 +78,13 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
                 }
                 return logRecordFactory.build(content, logConfig.getOperatorSort(), uploadReq.getOperator(),
                                                                 config.getLogRecordSort(), indexValueToIndexSortMap,
-                                            getUploadTime(uploadReq.getUploadTime()));
+                                            getUploadTime(uploadReq));
 
             }).orElse(null);
         }).filter(Objects::nonNull).toList();
     }
 
-    protected abstract LocalDateTime getUploadTime(LocalDateTime incomingUploadTime);
+    protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);
 
     private void judgeParamIllegal(List<UploadLogRecordReq> uploadLogRecordReqs){
         Assert.notNull(uploadLogRecordReqs, "receive log, upload request must not be null");

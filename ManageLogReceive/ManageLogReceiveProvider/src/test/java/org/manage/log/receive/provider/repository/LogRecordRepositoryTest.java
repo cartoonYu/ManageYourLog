@@ -25,16 +25,6 @@ public class LogRecordRepositoryTest extends BaseTest {
     private List<LogRecordRepository> logRecordRepositoryList;
 
     @Order(1)
-    @DisplayName("single log save test")
-    @Test
-    public void testSaveSingleLog(){
-        logRecordRepositoryList.forEach(logRecordRepository -> {
-            LogRecord logRecord = DefineModelUtil.defineLogRecord();
-            Assertions.assertTrue(logRecordRepository.save(ImmutableList.of(logRecord)));
-        });
-    }
-
-    @Order(2)
     @DisplayName("log list save test")
     @Test
     public void testSaveLogList(){
@@ -48,14 +38,14 @@ public class LogRecordRepositoryTest extends BaseTest {
     private LogRecordRepository logRecordRepository;
 
     @DisplayName("test rollback")
-    @Order(4)
+    @Order(2)
     @Test
     public void testRollback(){
         LogRecord logRecord = DefineModelUtil.defineLogRecord();
         logRecord.getIndexList().get(0).setIndexId("2222");
-        logRecordRepository.save(logRecord);
+        logRecordRepository.save(ImmutableList.of(logRecord));
         LogRecord logRecord1 = DefineModelUtil.defineLogRecord();
         logRecord1.getIndexList().get(0).setIndexId("2222");
-        Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(logRecord1));
+        Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(ImmutableList.of(logRecord1)));
     }
 }

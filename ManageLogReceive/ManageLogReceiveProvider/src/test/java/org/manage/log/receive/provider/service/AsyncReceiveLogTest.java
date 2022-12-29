@@ -45,5 +45,6 @@ public class AsyncReceiveLogTest extends BaseTest {
     @BeforeEach
     public void init(){
         uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
+        uploadLogRecordReq.setUploadTime(null);
     }
 }

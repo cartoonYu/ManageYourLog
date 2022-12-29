@@ -10,7 +10,5 @@ public interface LogRecordRepository {
 
     Logger log = LoggerFactory.getLogger(LogRecordRepository.class);
 
-    boolean save(LogRecord logRecord);
-
     boolean save(List<LogRecord> logRecords);
 }

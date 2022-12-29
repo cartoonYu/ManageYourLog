@@ -1,7 +1,7 @@
 receive:
   log:
     load:
-      mode: kafka
+      mode: http
     kafka:
       bootstrap:
         servers: cartoon-ali.com:9092

@@ -1,11 +1,9 @@
 package org.manage.log.receive.provider.repository.mysql;
 
-import com.alibaba.nacos.shaded.com.google.common.collect.Sets;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.dubbo.common.context.LifecycleAdapter;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
@@ -25,7 +23,6 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -117,7 +114,7 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         return configMysqlPoList.stream().map(configMysqlPo -> {
             List<LogIndexConfigMysqlPO> indexConfigList = configIndexMysqlPoList.stream().filter(index -> configMysqlPo.getRuleId().equals(index.getLogConfigId())).toList();
             return builder.convert(configMysqlPo, indexConfigList);
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     @PostConstruct

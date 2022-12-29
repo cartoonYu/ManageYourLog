@@ -1,6 +1,5 @@
 package org.manage.log.receive.facade.dto;
 
-import org.manage.log.common.constants.HandleError;
 
 import java.io.Serializable;
 
@@ -15,7 +14,7 @@ import java.io.Serializable;
  * you can get operate result as follows rule<br/>
  * 1. call method isHasAbnormal to judge operate result<br/>
  * 2. if step 1 is true, call method getSuccessResult to get success operate result<br/>
- * 3. if step 1 is false, call method getFailResult to get fail operate result</p>
+ * 3. if step 1 is false, call method getAbnormalCode to get fail operate code or getAbnormalMessage to get abnormal message</p>
  * <p>
  * you can package operate result as follows rule<br/>
  * 1. only can passing correct/wrong result though constructor
@@ -27,7 +26,9 @@ public class OperateLogResp<T> implements Serializable {
 
     private Boolean hasAbnormal;
 
-    private HandleError failResult;
+    private String abnormalCode;
+
+    private String abnormalMessage;
 
     private T successResult;
 
@@ -36,20 +37,25 @@ public class OperateLogResp<T> implements Serializable {
         this.successResult = successResult;
     }
 
-    public OperateLogResp(HandleError failResult) {
+    public OperateLogResp(String abnormalCode, String abnormalMessage){
         hasAbnormal = true;
-        this.failResult = failResult;
+        this.abnormalCode = abnormalCode;
+        this.abnormalMessage = abnormalMessage;
     }
 
     public Boolean isHasAbnormal() {
         return hasAbnormal;
     }
 
-    public HandleError getFailResult() {
-        return failResult;
-    }
-
     public T getSuccessResult() {
         return successResult;
+    }
+
+    public String getAbnormalCode() {
+        return abnormalCode;
+    }
+
+    public String getAbnormalMessage() {
+        return abnormalMessage;
     }
 }

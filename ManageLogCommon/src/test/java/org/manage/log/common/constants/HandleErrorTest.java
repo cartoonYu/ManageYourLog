@@ -18,10 +18,10 @@ public class HandleErrorTest {
     @DisplayName("[normal] test code is not null and in range")
     @Test
     public void testCodeIsNotNullAndInRange(){
-        List<Integer> codeList = getCode();
+        List<String> codeList = getCode();
         codeList.forEach(code -> {
             Assertions.assertNotNull(code);
-            Assertions.assertTrue(100 <= code && code <= 1000, "code must between 100 and 1000");
+            Assertions.assertTrue(100 <= Integer.parseInt(code) && Integer.parseInt(code) <= 1000, "code must between 100 and 1000");
         });
     }
 
@@ -32,7 +32,7 @@ public class HandleErrorTest {
         msgList.forEach(Assertions::assertNotNull);
     }
 
-    private List<Integer> getCode(){
+    private List<String> getCode(){
         return Arrays.stream(HandleError.values()).map(HandleError::getCode).collect(Collectors.toList());
     }
 

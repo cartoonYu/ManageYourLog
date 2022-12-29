@@ -1,5 +1,6 @@
 package org.manage.log.receive.provider.service;
 
+import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 public class SyncReceiveLog extends AbstractReceiveLog {
 
     @Override
-    protected LocalDateTime getUploadTime(LocalDateTime incomingUploadTime) {
+    protected LocalDateTime getUploadTime(UploadLogRecordReq request) {
         return LocalDateTime.now();
     }
 }

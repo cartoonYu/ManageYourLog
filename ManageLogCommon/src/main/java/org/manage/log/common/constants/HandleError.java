@@ -9,19 +9,19 @@ import java.io.Serializable;
  */
 public enum HandleError implements Serializable {
 
-    PARAM_MISS(101, "param is miss, param property is miss"),
-    UPLOAD_LOG_FAIL(301, "upload log fail");
+    PARAM_MISS("101", "param is miss, param property is miss"),
+    UPLOAD_LOG_FAIL("301", "upload log fail");
 
-    private final Integer code;
+    private final String code;
 
     private final String msg;
 
-    HandleError(Integer code, String msg) {
+    HandleError(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
