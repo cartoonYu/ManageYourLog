@@ -19,6 +19,8 @@ public class LogIndexConfig {
 
     private Long valueIndex;
 
+    private String valueIndexKey;
+
     private String description;
 
     private Long version;
@@ -58,8 +60,12 @@ public class LogIndexConfig {
         return valueIndex;
     }
 
-    public LogIndexConfig setValueIndex(Long valueIndex) {
-        this.valueIndex = valueIndex;
+    public String getValueIndexKey() {
+        return valueIndexKey;
+    }
+
+    public LogIndexConfig setValueIndexKey(String valueIndexKey) {
+        this.valueIndexKey = valueIndexKey;
         return this;
     }
 

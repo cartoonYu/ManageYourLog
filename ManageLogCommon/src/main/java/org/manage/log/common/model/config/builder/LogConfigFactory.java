@@ -27,7 +27,6 @@ public class LogConfigFactory {
         Assert.notNull(logConfig.getLogRecordSort(), "config record sort must not null");
         Assert.notNull(logConfig.getOperatorSort(), "config operator sort must not null");
         Assert.notNull(logConfig.getContentTemplate(), "config content template must not null");
-        Assert.notNull(logConfig.getIndexConfigList(), "config index list must not null");
         Assert.notNull(logConfig.getVersion(), "config version must not null");
         Assert.notNull(logConfig.getCreateTime(), "config create time must not null");
         Assert.notNull(logConfig.getModifyTime(), "config modify time must not null");

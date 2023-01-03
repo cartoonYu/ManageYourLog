@@ -16,8 +16,8 @@ public class LogIndexConfigBuilder {
     private String ruleName;
 
     private LogRecordIndexSort logRecordIndexSort;
-
-    private Long valueIndex;
+    
+    private String valueIndexKey;
 
     private String description;
 
@@ -43,11 +43,11 @@ public class LogIndexConfigBuilder {
         return this;
     }
 
-    public LogIndexConfigBuilder setValueIndex(Long valueIndex) {
-        if(Objects.isNull(valueIndex)){
+    public LogIndexConfigBuilder setValueIndexKey(String valueIndexKey) {
+        if(Objects.isNull(valueIndexKey)){
             return this;
         }
-        this.valueIndex = valueIndex;
+        this.valueIndexKey = valueIndexKey;
         return this;
     }
 
@@ -74,7 +74,7 @@ public class LogIndexConfigBuilder {
         config.setRuleId(logIndexConfigFactory.generateRuleId());
         config.setRuleName(ruleName);
         config.setLogRecordIndexSort(logRecordIndexSort);
-        config.setValueIndex(valueIndex);
+        config.setValueIndexKey(valueIndexKey);
         config.setDescription(description);
         config.setVersion(version);
         config.setCreateTime(createTime);

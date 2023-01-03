@@ -22,7 +22,7 @@ public class LogIndexConfigFactory {
         Assert.notNull(logIndexConfig.getRuleId(), "rule id must not be null");
         Assert.notNull(logIndexConfig.getRuleName(), "rule name must not be null");
         Assert.notNull(logIndexConfig.getLogRecordIndexSort(), "log record index sort must not be null");
-        Assert.notNull(logIndexConfig.getValueIndex(), "value index sort must not be null");
+        Assert.notNull(logIndexConfig.getValueIndexKey(), "value index key must not be null");
         Assert.notNull(logIndexConfig.getVersion(), "version must not be null");
         Assert.notNull(logIndexConfig.getCreateTime(), "create time must not be null");
         Assert.notNull(logIndexConfig.getModifyTime(), "modify time must not be null");
@@ -33,11 +33,11 @@ public class LogIndexConfigFactory {
     }
 
     public LogIndexConfig build(String ruleName, LogRecordIndexSort logRecordIndexSort,
-                                Long valueIndex, String description){
+                                String valueIndexKey, String description){
         return LogIndexConfigBuilder.getInstance(this)
                 .setRuleName(ruleName)
                 .setLogRecordIndexSort(logRecordIndexSort)
-                .setValueIndex(valueIndex)
+                .setValueIndexKey(valueIndexKey)
                 .setDescription(description).build();
     }
 }
