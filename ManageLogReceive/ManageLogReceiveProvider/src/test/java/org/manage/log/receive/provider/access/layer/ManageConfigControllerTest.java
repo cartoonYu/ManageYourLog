@@ -29,7 +29,7 @@ public class ManageConfigControllerTest extends BaseTest {
         UploadLogIndexConfigDto indexConfig = new UploadLogIndexConfigDto();
         indexConfig.setRuleName("test")
                 .setLogRecordIndexSort(LogRecordIndexSort.ID.getSortDescription())
-                .setValueIndex(0L)
+                .setValueIndexKey("userId")
                 .setDescription("test");
 
         UploadLogConfigDto uploadLogConfigDto = new UploadLogConfigDto();
@@ -37,7 +37,7 @@ public class ManageConfigControllerTest extends BaseTest {
                         .setOperatorSort(OperatorSort.USER.getSortDescription())
                                 .setIndexConfigList(ImmutableList.of(indexConfig))
                                         .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
-                                            .setContentTemplate("test content template")
+                                            .setContentTemplate("test content template, userId: #{userId}")
                                                 .setDescription("test");
         try {
             Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
@@ -45,6 +45,25 @@ public class ManageConfigControllerTest extends BaseTest {
             Assertions.fail(e.getMessage());
         }
     }
+
+    @Test
+    @Order(1)
+    public void testAddWithoutIndex(){
+
+        UploadLogConfigDto uploadLogConfigDto = new UploadLogConfigDto();
+        uploadLogConfigDto.setRuleName("testWithoutIndex")
+                .setOperatorSort(OperatorSort.USER.getSortDescription())
+                .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
+                .setContentTemplate("test content template")
+                .setDescription("test");
+        try {
+            Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+        }
+    }
+
+
 
     @Test
     @Order(2)

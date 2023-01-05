@@ -1,5 +1,6 @@
 package org.manage.log.receive.provider.service;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogConfig;
@@ -10,6 +11,7 @@ import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
+import org.manage.log.receive.provider.service.config.LogConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -18,6 +20,8 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
@@ -32,8 +36,8 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     @Autowired
     private LogRecordRepository logRecordRepository;
 
-    @Autowired
-    private LogConfigRepository logConfigRepository;
+    @Resource
+    private LogConfigService logConfigService;
 
     @Resource
     private LogRecordFactory logRecordFactory;
@@ -55,7 +59,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         //transfer request data to domain entity
         //get log config from repository
         List<String> configNameList = uploadLogRecordReqs.stream().map(UploadLogRecordReq::getConfigName).toList();
-        List<LogConfig> configList = logConfigRepository.getByConfigNameList(configNameList);
+        List<LogConfig> configList = logConfigService.getByConfigNameList(configNameList);
         //format log by log formatter and value list, construct log index list
         List<LogRecord> logRecordList = executeLog(configList, uploadLogRecordReqs);
         //call repository to store
@@ -70,11 +74,11 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
             LogConfig logConfig = configNameToConfig.get(uploadReq.getConfigName());
             return ofNullable(logConfig).map(config -> {
                 //format content by content template
-                String content = String.format(config.getContentTemplate(), uploadReq.getValueList());
+                String content = formatContent(config, uploadReq.getValuePropertyToValueMap());
                 //get index value from value list according by index config
                 Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>();
                 for(LogIndexConfig logIndexConfig : config.getIndexConfigList()){
-                    indexValueToIndexSortMap.put(uploadReq.getValueList().get(logIndexConfig.getValueIndex().intValue()), logIndexConfig.getLogRecordIndexSort());
+                    indexValueToIndexSortMap.put(uploadReq.getValuePropertyToValueMap().get(logIndexConfig.getValueIndexKey()), logIndexConfig.getLogRecordIndexSort());
                 }
                 return logRecordFactory.build(content, logConfig.getOperatorSort(), uploadReq.getOperator(),
                                                                 config.getLogRecordSort(), indexValueToIndexSortMap,
@@ -82,6 +86,15 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
             }).orElse(null);
         }).filter(Objects::nonNull).toList();
+    }
+
+    private String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
+        List<ImmutablePair<String, String>> extractValueKeyList = logConfigService.extractValueKey(logConfig);
+        String content = logConfig.getContentTemplate();
+        for(ImmutablePair<String, String> extractValueKey : extractValueKeyList){
+            content = content.replace(extractValueKey.getLeft(), valuePropertyToValueMap.get(extractValueKey.getRight()));
+        }
+        return content;
     }
 
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);

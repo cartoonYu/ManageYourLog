@@ -19,14 +19,14 @@ insert into LogConfig (
     ruleId, ruleName, logRecordSort, operatorSort, contentTemplate,
     description, version, createTime, modifyTime)
     value(
-        '1', 'orderOperate', 'operate', 'USER', 'order operate, operator: %s',
+        '1', 'orderOperate', 'operate', 'USER', 'order operate, operator: #{userId.}',
         'order operate', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );
 
 insert into LogIndexConfig (
-    ruleId, ruleName, logConfigId, sort, valueIndex,
+    ruleId, ruleName, logConfigId, sort, valueIndexKey,
     description, version, createTime, modifyTime)
     value(
-        '1', 'orderOperateIndex', 1, 'date', 0,
+        '1', 'orderOperateIndex', 1, 'date', 'userId',
         'order operate index', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );

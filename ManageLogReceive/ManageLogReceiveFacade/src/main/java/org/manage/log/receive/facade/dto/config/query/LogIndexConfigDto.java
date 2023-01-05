@@ -13,7 +13,7 @@ public class LogIndexConfigDto {
 
     private String logRecordIndexSort;
 
-    private Long valueIndex;
+    private String valueIndexKey;
 
     private String description;
 
@@ -41,12 +41,12 @@ public class LogIndexConfigDto {
         return this;
     }
 
-    public Long getValueIndex() {
-        return valueIndex;
+    public String getValueIndexKey() {
+        return valueIndexKey;
     }
 
-    public LogIndexConfigDto setValueIndex(Long valueIndex) {
-        this.valueIndex = valueIndex;
+    public LogIndexConfigDto setValueIndexKey(String valueIndexKey) {
+        this.valueIndexKey = valueIndexKey;
         return this;
     }
 

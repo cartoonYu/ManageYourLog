@@ -19,6 +19,8 @@ public class LogIndexConfigMysqlPO {
 
     private Long valueIndex;
 
+    private String valueIndexKey;
+
     private String description;
 
     private Long version;
@@ -65,6 +67,15 @@ public class LogIndexConfigMysqlPO {
 
     public LogIndexConfigMysqlPO setValueIndex(Long valueIndex) {
         this.valueIndex = valueIndex;
+        return this;
+    }
+
+    public String getValueIndexKey() {
+        return valueIndexKey;
+    }
+
+    public LogIndexConfigMysqlPO setValueIndexKey(String valueIndexKey) {
+        this.valueIndexKey = valueIndexKey;
         return this;
     }
 

@@ -12,6 +12,8 @@ import org.manage.log.common.util.IdGenerateUtil;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author cartoon
@@ -25,7 +27,9 @@ public class DefineModelUtil {
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         uploadLogRecordReq.setConfigName("orderOperate");
         uploadLogRecordReq.setOperator("cartoon");
-        uploadLogRecordReq.setValueList(ImmutableList.of("cartoon"));
+        Map<String, String> valuePropertyToValueMap = new HashMap<>();
+        valuePropertyToValueMap.put("userId", "cartoon");
+        uploadLogRecordReq.setValuePropertyToValueMap(valuePropertyToValueMap);
         return uploadLogRecordReq;
     }
 
@@ -76,7 +80,7 @@ public class DefineModelUtil {
         logIndexConfig.setRuleId(IdGenerateUtil.getInstance().generate(13))
                 .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
                 .setLogRecordIndexSort(LogRecordIndexSort.ID)
-                .setValueIndex(0L)
+                .setValueIndexKey("test")
                 .setDescription("test")
                 .setVersion(1L)
                 .setCreateTime(LocalDateTime.now())

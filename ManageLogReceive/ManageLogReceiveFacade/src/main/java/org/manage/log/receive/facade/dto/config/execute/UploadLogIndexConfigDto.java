@@ -10,7 +10,7 @@ public class UploadLogIndexConfigDto {
 
     private String logRecordIndexSort;
 
-    private Long valueIndex;
+    private String valueIndexKey;
 
     private String description;
 
@@ -32,12 +32,12 @@ public class UploadLogIndexConfigDto {
         return this;
     }
 
-    public Long getValueIndex() {
-        return valueIndex;
+    public String getValueIndexKey() {
+        return valueIndexKey;
     }
 
-    public UploadLogIndexConfigDto setValueIndex(Long valueIndex) {
-        this.valueIndex = valueIndex;
+    public UploadLogIndexConfigDto setValueIndexKey(String valueIndexKey) {
+        this.valueIndexKey = valueIndexKey;
         return this;
     }
 

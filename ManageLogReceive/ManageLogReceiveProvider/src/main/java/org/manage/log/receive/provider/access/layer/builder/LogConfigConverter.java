@@ -11,6 +11,7 @@ import org.manage.log.receive.facade.dto.config.query.LogConfigDto;
 import org.manage.log.receive.facade.dto.config.execute.UploadLogConfigDto;
 import org.manage.log.receive.facade.dto.config.query.LogIndexConfigDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -52,7 +53,7 @@ public class LogConfigConverter {
             LogIndexConfigDto logIndexConfigDto = new LogIndexConfigDto();
             logIndexConfigDto.setRuleName(logConfig.getRuleName())
                     .setLogRecordIndexSort(logConfig.getLogRecordIndexSort().getSortDescription())
-                    .setValueIndex(logConfig.getValueIndex())
+                    .setValueIndexKey(logConfig.getValueIndexKey())
                     .setDescription(logConfig.getDescription())
                     .setVersion(logConfig.getVersion())
                     .setCreateTime(logConfig.getCreateTime())
@@ -62,10 +63,13 @@ public class LogConfigConverter {
     }
 
     public LogConfig convertToBo(UploadLogConfigDto uploadLogConfigDto){
-        List<LogIndexConfig> logIndexConfigList = uploadLogConfigDto.getIndexConfigList().stream().map(indexConfig ->
-                LogIndexConfigFactory.getInstance()
-                        .build(indexConfig.getRuleName(), LogRecordIndexSort.parse(indexConfig.getLogRecordIndexSort()),
-                                indexConfig.getValueIndex(), indexConfig.getDescription())).toList();
+        List<LogIndexConfig> logIndexConfigList = new ArrayList<>();
+        if(Objects.nonNull(uploadLogConfigDto.getIndexConfigList())){
+            logIndexConfigList.addAll(uploadLogConfigDto.getIndexConfigList().stream().map(indexConfig ->
+                    LogIndexConfigFactory.getInstance()
+                            .build(indexConfig.getRuleName(), LogRecordIndexSort.parse(indexConfig.getLogRecordIndexSort()),
+                                    indexConfig.getValueIndexKey(), indexConfig.getDescription())).toList());
+        }
         return LogConfigFactory.getInstance()
                 .build(uploadLogConfigDto.getRuleName(), LogRecordSort.parse(uploadLogConfigDto.getLogRecordSort()),
                         OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), uploadLogConfigDto.getContentTemplate(), logIndexConfigList,

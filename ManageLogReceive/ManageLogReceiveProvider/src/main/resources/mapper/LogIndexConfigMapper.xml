@@ -5,7 +5,7 @@
 <mapper namespace="org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper">
 
     <sql id="Base_Column_List">
-        ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime
+        ruleId, ruleName, logConfigId, sort, valueIndexKey, description, version, createTime, modifyTime
     </sql>
 
     <sql id = "TABLE_NAME">
@@ -13,10 +13,10 @@
     </sql>
 
     <insert id="addList">
-        insert into <include refid="TABLE_NAME"/>(ruleId, ruleName, logConfigId, sort, valueIndex, description, version, createTime, modifyTime)
+        insert into <include refid="TABLE_NAME"/>(ruleId, ruleName, logConfigId, sort, valueIndexKey, description, version, createTime, modifyTime)
         values
         <foreach collection="poList" item="po" open="(" close=")" separator=",">
-            #{po.ruleId}, #{po.ruleName}, #{po.logConfigId}, #{po.sort}, #{po.valueIndex}, #{po.description}, #{po.version}, #{po.createTime}, #{po.modifyTime}
+            #{po.ruleId}, #{po.ruleName}, #{po.logConfigId}, #{po.sort}, #{po.valueIndexKey}, #{po.description}, #{po.version}, #{po.createTime}, #{po.modifyTime}
         </foreach>
     </insert>
 

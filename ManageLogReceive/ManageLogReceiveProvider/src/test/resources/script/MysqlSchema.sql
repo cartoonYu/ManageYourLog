@@ -48,7 +48,7 @@ CREATE TABLE `LogIndexConfig` (
                              `ruleName` varchar(200) NOT NULL DEFAULT '' COMMENT 'rule name',
                              `logConfigId` varchar(100) NOT NULL COMMENT 'related config id',
                              `sort` varchar(50) NOT NULL DEFAULT '' COMMENT 'index sort',
-                             `valueIndex` int NOT NULL COMMENT 'value at log index',
+                             `valueIndexKey` varchar(256) NOT NULL COMMENT 'value key',
                              `description` varchar(200) NOT NULL DEFAULT '',
                              `version` int NOT NULL DEFAULT '1' COMMENT 'log version',
                              `createTime` datetime NOT NULL COMMENT 'config create time',

@@ -54,7 +54,7 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         return Boolean.TRUE.equals(transactionTemplate.execute(status -> {
             ImmutablePair<LogConfigMysqlPO, List<LogIndexConfigMysqlPO>> mysqlPo = builder.convert(logConfig);
             List<LogIndexConfigMysqlPO> indexList = mysqlPo.getRight();
-            if (logIndexConfigMapper.addList(indexList) != indexList.size()) {
+            if (!indexList.isEmpty() && logIndexConfigMapper.addList(indexList) != indexList.size()) {
                 return false;
             }
             return logConfigMapper.add(mysqlPo.getLeft()) == 1;
