@@ -3,7 +3,6 @@ package org.manage.log.query.provider.service;
 import com.google.common.collect.ImmutableList;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.query.provider.repository.LogRecordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,8 +17,7 @@ import java.util.Optional;
 @Service
 public class QueryLogServiceImpl implements QueryLogService {
 
-    @Autowired
-    private LogRecordRepository logRecordRepository;
+    private final LogRecordRepository logRecordRepository;
 
     @Override
     public List<LogRecord> getLogs(String index) {
@@ -42,5 +40,9 @@ public class QueryLogServiceImpl implements QueryLogService {
             return ImmutableList.of();
         }
         return logRecordRepository.getByIndexAndTime(index, startTime, endTime);
+    }
+
+    public QueryLogServiceImpl(LogRecordRepository logRecordRepository) {
+        this.logRecordRepository = logRecordRepository;
     }
 }

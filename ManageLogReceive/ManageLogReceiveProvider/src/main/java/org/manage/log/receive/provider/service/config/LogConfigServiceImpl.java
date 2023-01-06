@@ -3,7 +3,6 @@ package org.manage.log.receive.provider.service.config;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -21,8 +20,7 @@ import java.util.regex.Pattern;
 @Service
 public class LogConfigServiceImpl implements LogConfigService {
 
-    @Autowired
-    private LogConfigRepository logConfigRepository;
+    private final LogConfigRepository logConfigRepository;
 
     @Override
     public boolean add(LogConfig logConfig) {
@@ -70,5 +68,9 @@ public class LogConfigServiceImpl implements LogConfigService {
     @Override
     public List<LogConfig> getAll() {
         return logConfigRepository.getAll();
+    }
+
+    public LogConfigServiceImpl(LogConfigRepository logConfigRepository) {
+        this.logConfigRepository = logConfigRepository;
     }
 }

@@ -9,19 +9,13 @@ import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.builder.LogRecordFactory;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
-import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
 import org.manage.log.receive.provider.service.config.LogConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
@@ -33,14 +27,11 @@ import static java.util.Optional.ofNullable;
 @Service
 public abstract class AbstractReceiveLog implements ReceiveLog {
 
-    @Autowired
-    private LogRecordRepository logRecordRepository;
+    private final LogRecordRepository logRecordRepository;
 
-    @Resource
-    private LogConfigService logConfigService;
+    private final LogConfigService logConfigService;
 
-    @Resource
-    private LogRecordFactory logRecordFactory;
+    private final LogRecordFactory logRecordFactory;
 
     @Override
     public OperateLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
@@ -107,9 +98,16 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     }
 
     protected void judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq){
-
         Assert.notNull(uploadLogRecordReq, "receive log, upload req must not be null");
         Assert.notNull(uploadLogRecordReq.getConfigName(), "receive log, config name must not be null");
         Assert.notNull(uploadLogRecordReq.getOperator(), "receive log, operator must not be null");
+    }
+
+    public AbstractReceiveLog(LogRecordRepository logRecordRepository,
+                                LogConfigService logConfigService,
+                                LogRecordFactory logRecordFactory) {
+        this.logRecordRepository = logRecordRepository;
+        this.logConfigService = logConfigService;
+        this.logRecordFactory = logRecordFactory;
     }
 }

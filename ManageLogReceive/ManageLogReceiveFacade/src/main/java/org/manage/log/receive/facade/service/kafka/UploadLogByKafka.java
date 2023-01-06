@@ -4,7 +4,6 @@ import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.facade.UploadLog;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,8 +17,7 @@ import java.util.List;
 @LoadBean(primaryConfigKey = "upload.log.mode", loadConfigKey = "upload.log.mode", mode = "kafka")
 public class UploadLogByKafka implements UploadLog {
 
-    @Autowired
-    private UploadLogByKafkaConfig uploadLogByKafkaConfig;
+    private final UploadLogByKafkaConfig uploadLogByKafkaConfig;
 
     @Override
     public OperateLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
@@ -32,5 +30,9 @@ public class UploadLogByKafka implements UploadLog {
     public OperateLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
         uploadLogRecordReqs.forEach(this::upload);
         return new OperateLogResp<>(true);
+    }
+
+    public UploadLogByKafka(UploadLogByKafkaConfig uploadLogByKafkaConfig) {
+        this.uploadLogByKafkaConfig = uploadLogByKafkaConfig;
     }
 }

@@ -9,7 +9,6 @@ import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.service.ReceiveLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,13 +30,9 @@ public class ReceiveLogByKafka {
 
     private static final Logger log = LoggerFactory.getLogger(ReceiveLogByKafka.class);
 
-    @Autowired
-    @Qualifier("receiveByKafkaConsumer")
-    private KafkaConsumer<String, String> consumer;
+    private final KafkaConsumer<String, String> consumer;
 
-    @Autowired
-    @Qualifier("asyncReceiveLog")
-    private ReceiveLog asyncReceiveLog;
+    private final ReceiveLog asyncReceiveLog;
 
     @Scheduled(fixedDelayString = "${receive.log.kafka.rate}")
     public void execute(){
@@ -50,5 +45,11 @@ public class ReceiveLogByKafka {
             UploadLogRecordReq recordReq = GsonUtil.getInstance().readJsonObject(receiveData, UploadLogRecordReq.class);
             asyncReceiveLog.receive(recordReq);
         }
+    }
+
+    public ReceiveLogByKafka(@Qualifier("receiveByKafkaConsumer") KafkaConsumer<String, String> consumer,
+                             ReceiveLog asyncReceiveLog) {
+        this.consumer = consumer;
+        this.asyncReceiveLog = asyncReceiveLog;
     }
 }

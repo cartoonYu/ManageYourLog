@@ -1,6 +1,9 @@
 package org.manage.log.receive.provider.service;
 
+import org.manage.log.common.model.log.builder.LogRecordFactory;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
+import org.manage.log.receive.provider.repository.LogRecordRepository;
+import org.manage.log.receive.provider.service.config.LogConfigService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -22,5 +25,11 @@ public class AsyncReceiveLog extends AbstractReceiveLog {
     protected void judgeParamIllegal(UploadLogRecordReq uploadLogRecordReq) {
         super.judgeParamIllegal(uploadLogRecordReq);
         Assert.notNull(uploadLogRecordReq.getUploadTime(), "upload time must not be null");
+    }
+
+    public AsyncReceiveLog(LogRecordRepository logRecordRepository,
+                            LogConfigService logConfigService,
+                            LogRecordFactory logRecordFactory) {
+        super(logRecordRepository, logConfigService, logRecordFactory);
     }
 }

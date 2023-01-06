@@ -6,13 +6,10 @@ import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.query.facade.model.QueryLogResp;
 import org.manage.log.query.provider.access.layer.builder.QueryResultBuilder;
 import org.manage.log.query.provider.service.QueryLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -25,12 +22,11 @@ import java.util.List;
 @LoadBean(primaryConfigKey = "query.log.load.mode", loadConfigKey = "query.log.load.mode", mode = "http")
 public class QueryLogByHttp {
 
-    @Autowired
-    private QueryLogService queryLogService;
+    private final QueryLogService queryLogService;
 
-    private QueryResultBuilder queryResultBuilder;
+    private final QueryResultBuilder queryResultBuilder;
 
-    private LocalDateTimeFormatUtil localDateTimeFormatUtil;
+    private final LocalDateTimeFormatUtil localDateTimeFormatUtil;
 
     @GetMapping(value = "/queryByIndex")
     public List<QueryLogResp> queryByIndex(@RequestParam("index") String index){
@@ -50,9 +46,9 @@ public class QueryLogByHttp {
         return queryResultBuilder.build(res);
     }
 
-    @PostConstruct
-    private void init(){
-        queryResultBuilder = QueryResultBuilder.getInstance();
-        localDateTimeFormatUtil = LocalDateTimeFormatUtil.getInstance();
+    public QueryLogByHttp(QueryLogService queryLogService) {
+        this.queryLogService = queryLogService;
+        this.queryResultBuilder = QueryResultBuilder.getInstance();
+        this.localDateTimeFormatUtil = LocalDateTimeFormatUtil.getInstance();
     }
 }

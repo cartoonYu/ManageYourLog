@@ -8,7 +8,6 @@ import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.provider.config.ApplicationConfigKey;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +23,7 @@ import java.util.Properties;
 @LoadBean(loadConfigKey = "receive.log.load.mode", mode = "kafka", needPrimary = false)
 public class ReceiveLogByKafkaConfig implements DisposableBean {
 
-    @Autowired
-    private ApplicationConfigUtil applicationConfigUtil;
+    private final ApplicationConfigUtil applicationConfigUtil;
 
     private KafkaConsumer<String, String> kafkaConsumer;
 
@@ -55,5 +53,9 @@ public class ReceiveLogByKafkaConfig implements DisposableBean {
     public void destroy() {
         kafkaConsumer.unsubscribe();
         kafkaConsumer.close();
+    }
+
+    public ReceiveLogByKafkaConfig(ApplicationConfigUtil applicationConfigUtil) {
+        this.applicationConfigUtil = applicationConfigUtil;
     }
 }

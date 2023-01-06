@@ -9,8 +9,8 @@ import org.manage.log.base.test.BaseTest;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.util.DefineModelUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
+import javax.annotation.Resource;
 
 /**
  * @author cartoon
@@ -20,8 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 @DisplayName("async receive log test")
 public class AsyncReceiveLogTest extends BaseTest {
 
-    @Autowired
-    @Qualifier("asyncReceiveLog")
+    @Resource(name = "asyncReceiveLog")
     private ReceiveLog receiveLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;

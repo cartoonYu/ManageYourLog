@@ -10,12 +10,10 @@ import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.facade.config.ApplicationConfigKey;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Properties;
 
 /**
@@ -26,7 +24,6 @@ import java.util.Properties;
 @LoadBean(loadConfigKey = "upload.log.mode", mode = "kafka", needPrimary = false)
 public class UploadLogByKafkaConfig implements DisposableBean {
 
-    @Autowired
     private ApplicationConfigUtil applicationConfigUtil;
 
     private static final String TOPIC = "ManageLog";
@@ -79,8 +76,7 @@ public class UploadLogByKafkaConfig implements DisposableBean {
         kafkaProducer.close();
     }
 
-    @PostConstruct
-    private void init(){
-
+    public UploadLogByKafkaConfig(ApplicationConfigUtil applicationConfigUtil) {
+        this.applicationConfigUtil = applicationConfigUtil;
     }
 }

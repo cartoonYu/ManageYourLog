@@ -6,8 +6,6 @@ import org.manage.log.receive.facade.UploadLog;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.service.ReceiveLog;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +20,7 @@ import java.util.List;
 @LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc")
 public class ReceiveLogByRpc implements UploadLog {
 
-    @Autowired
-    @Qualifier("syncReceiveLog")
-    private ReceiveLog syncReceiveLog;
+    private final ReceiveLog syncReceiveLog;
 
     @Override
     public OperateLogResp<Boolean> upload(UploadLogRecordReq uploadLogRecordReq) {
@@ -34,5 +30,9 @@ public class ReceiveLogByRpc implements UploadLog {
     @Override
     public OperateLogResp<Boolean> upload(List<UploadLogRecordReq> uploadLogRecordReqs) {
         return syncReceiveLog.receive(uploadLogRecordReqs);
+    }
+
+    public ReceiveLogByRpc(ReceiveLog syncReceiveLog) {
+        this.syncReceiveLog = syncReceiveLog;
     }
 }

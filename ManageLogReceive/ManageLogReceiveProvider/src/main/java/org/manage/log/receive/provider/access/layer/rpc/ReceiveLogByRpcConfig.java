@@ -7,11 +7,8 @@ import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.provider.config.ApplicationConfigKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
 
 /**
  * @author cartoon
@@ -21,9 +18,6 @@ import javax.annotation.PostConstruct;
 @DubboComponentScan("org.manage.log.receive.access.layer.rpc")
 @LoadBean(loadConfigKey = "receive.log.load.mode", mode = "rpc", needPrimary = false)
 public class ReceiveLogByRpcConfig{
-
-    @Autowired
-    private ApplicationConfigUtil config;
 
     private String ip;
 
@@ -64,8 +58,7 @@ public class ReceiveLogByRpcConfig{
         return protocolConfig;
     }
 
-    @PostConstruct
-    private void init(){
+    public ReceiveLogByRpcConfig(ApplicationConfigUtil config) {
         config.get(ApplicationConfigKey.receiveLogRpcIp.getKey(), (value) -> ip = value);
         config.get(ApplicationConfigKey.receiveLogRpcPort.getKey(), (value) -> port = Integer.parseInt(value));
         config.get(ApplicationConfigKey.receiveLogRpcApplicationName.getKey(), (value) -> applicationName = value);

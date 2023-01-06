@@ -5,7 +5,6 @@ import org.manage.log.receive.facade.dto.config.query.LogConfigDto;
 import org.manage.log.receive.facade.dto.config.execute.UploadLogConfigDto;
 import org.manage.log.receive.provider.access.layer.builder.LogConfigConverter;
 import org.manage.log.receive.provider.service.config.LogConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +17,7 @@ import java.util.List;
 @RequestMapping("/config")
 public class ManageConfigController {
 
-    @Autowired
-    private LogConfigService logConfigService;
+    private final LogConfigService logConfigService;
 
     @PostMapping("/add")
     public boolean add(@RequestBody UploadLogConfigDto uploadLogConfigDto){
@@ -40,5 +38,10 @@ public class ManageConfigController {
     public List<LogConfigDto> getAll(){
         List<LogConfig> configList = logConfigService.getAll();
         return LogConfigConverter.getInstance().convertToDto(configList);
+    }
+
+
+    public ManageConfigController(LogConfigService logConfigService) {
+        this.logConfigService = logConfigService;
     }
 }

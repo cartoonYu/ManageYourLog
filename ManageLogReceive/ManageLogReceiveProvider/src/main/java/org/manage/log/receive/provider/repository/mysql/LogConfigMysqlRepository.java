@@ -14,11 +14,9 @@ import org.manage.log.receive.provider.repository.mysql.mapper.LogConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -33,16 +31,11 @@ import java.util.stream.Collectors;
 @Repository
 public class LogConfigMysqlRepository implements LogConfigRepository {
 
-    @Autowired
-    private LogConfigMapper logConfigMapper;
+    private final LogConfigMapper logConfigMapper;
 
-    @Autowired
-    private LogIndexConfigMapper logIndexConfigMapper;
+    private final LogIndexConfigMapper logIndexConfigMapper;
 
-    @Autowired
-    private ApplicationConfigUtil applicationConfigUtil;
-
-    private LoadingCache<String, LogConfig> CACHE;
+    private final LoadingCache<String, LogConfig> CACHE;
 
     private static final LogConfigMysqlBuilder builder = LogConfigMysqlBuilder.getInstance();
 
@@ -117,8 +110,12 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         }).toList();
     }
 
-    @PostConstruct
-    private void init(){
+    public LogConfigMysqlRepository(LogConfigMapper logConfigMapper,
+                                        LogIndexConfigMapper logIndexConfigMapper,
+                                        ApplicationConfigUtil applicationConfigUtil) {
+        this.logConfigMapper = logConfigMapper;
+        this.logIndexConfigMapper = logIndexConfigMapper;
+
         CACHE = CacheBuilder.newBuilder()
                 .maximumSize(10000)
                 .expireAfterWrite(applicationConfigUtil.get(ApplicationConfigKey.receiveLogConfigCacheExpireSecond.getKey()).map(Long::parseLong).orElse(1L), TimeUnit.SECONDS)
@@ -134,4 +131,5 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
                     }
                 });
     }
+
 }

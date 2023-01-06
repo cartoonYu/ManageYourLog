@@ -4,14 +4,11 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.manage.log.common.util.factory.LoadBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import javax.annotation.PostConstruct;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -24,13 +21,9 @@ import java.util.function.Function;
 @LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", needPrimary = false)
 public class MysqlDatasourceOperate {
 
-    @Autowired
-    @Qualifier("mysqlPlatformTransactionManager")
-    private PlatformTransactionManager platformTransactionManager;
+    private final PlatformTransactionManager platformTransactionManager;
 
-    @Autowired
-    @Qualifier("mysqlSqlSessionFactory")
-    private SqlSessionFactory sqlSessionFactory;
+    private final SqlSessionFactory sqlSessionFactory;
 
     private ThreadLocal<ImmutablePair<SqlSession, TransactionStatus>> executeInfos;
 
@@ -62,16 +55,10 @@ public class MysqlDatasourceOperate {
         return executeRes;
     }
 
-    public <T, R> R executeDQL(Class<T> classType, Function<T, R> executeFunction){
-        try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            T mapper = sqlSession.getMapper(classType);
-            return executeFunction.apply(mapper);
-        }
-    }
-
-    @PostConstruct
-    public void init(){
+    public MysqlDatasourceOperate(@Qualifier("mysqlPlatformTransactionManager") PlatformTransactionManager platformTransactionManager,
+                                  @Qualifier("mysqlSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+        this.platformTransactionManager = platformTransactionManager;
+        this.sqlSessionFactory = sqlSessionFactory;
         executeInfos = new ThreadLocal<>();
     }
-
 }

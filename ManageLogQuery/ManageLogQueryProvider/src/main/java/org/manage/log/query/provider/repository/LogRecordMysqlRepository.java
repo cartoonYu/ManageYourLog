@@ -3,13 +3,11 @@ package org.manage.log.query.provider.repository;
 import com.google.common.collect.ImmutableList;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.util.factory.LoadBean;
-import org.manage.log.query.provider.repository.config.ApplicationConfigKey;
 import org.manage.log.query.provider.repository.mysql.builder.MysqlEntityBuilder;
 import org.manage.log.query.provider.repository.mysql.mapper.LogRecordIndexMapper;
 import org.manage.log.query.provider.repository.mysql.mapper.LogRecordMapper;
 import org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO;
 import org.manage.log.query.provider.repository.mysql.model.LogRecordMysqlPO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -29,11 +27,9 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
 
     public static final String INDEX_SPLIT_CHARACTER = ",";
 
-    @Autowired
-    private LogRecordIndexMapper logRecordIndexMapper;
+    private final LogRecordIndexMapper logRecordIndexMapper;
 
-    @Autowired
-    private LogRecordMapper logRecordMapper;
+    private final LogRecordMapper logRecordMapper;
 
     @Override
     public List<LogRecord> getByIndex(String index) {
@@ -78,5 +74,11 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
                 .map(indexId -> Arrays.stream(indexId.split(INDEX_SPLIT_CHARACTER)).collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .toList();
+    }
+
+    public LogRecordMysqlRepository(LogRecordIndexMapper logRecordIndexMapper,
+                                        LogRecordMapper logRecordMapper) {
+        this.logRecordIndexMapper = logRecordIndexMapper;
+        this.logRecordMapper = logRecordMapper;
     }
 }

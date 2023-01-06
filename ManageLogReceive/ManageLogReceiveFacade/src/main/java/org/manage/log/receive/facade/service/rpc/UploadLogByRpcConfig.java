@@ -7,11 +7,8 @@ import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
 import org.manage.log.receive.facade.config.ApplicationConfigKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
 
 /**
  * define dubbo with nacos config
@@ -22,9 +19,6 @@ import javax.annotation.PostConstruct;
 @EnableDubbo
 @LoadBean(loadConfigKey = "upload.log.mode", mode = "rpc", needPrimary = false)
 public class UploadLogByRpcConfig {
-
-    @Autowired
-    private ApplicationConfigUtil config;
 
     /**
      * nacos ip
@@ -83,8 +77,7 @@ public class UploadLogByRpcConfig {
         return protocolConfig;
     }
 
-    @PostConstruct
-    private void init(){
+    public UploadLogByRpcConfig(ApplicationConfigUtil config) {
         config.get(ApplicationConfigKey.uploadLogUrl.getKey(), (value) -> ip = value);
         config.get(ApplicationConfigKey.uploadLogPort.getKey(), (value) -> port = Integer.parseInt(value));
     }
