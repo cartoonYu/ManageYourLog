@@ -1,8 +1,8 @@
 package org.manage.log.common.model.log.builder;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
-import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordSort;
+import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.LogRecordIndex;
 
@@ -98,16 +98,17 @@ public class LogRecordBuilder {
     public LogRecord build(){
         recordId = logRecordFactory.generateRecordId();
         List<LogRecordIndex> indexList = logIndexFactory.build(recordId, indexValueToIndexSortMap);
-        LogRecord logRecord = new LogRecord();
-        logRecord.setRecordId(recordId)
-                .setContent(content)
-                .setOperatorSort(operatorSort)
-                .setOperator(operator)
-                .setLogRecordSort(logRecordSort)
-                .addIndexList(indexList)
-                .setVersion(version)
-                .setCreateTime(createTime)
-                .setModifyTime(modifyTime);
+        LogRecord logRecord = new LogRecord(
+                recordId,
+                content,
+                operatorSort,
+                operator,
+                logRecordSort,
+                indexList,
+                version,
+                createTime,
+                modifyTime
+        );
         logRecordFactory.check(logRecord);
         return logRecord;
     }

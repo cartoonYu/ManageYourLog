@@ -1,6 +1,6 @@
 package org.manage.log.common.model.log.builder;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.LogRecordIndex;
 
 import java.time.LocalDateTime;
@@ -63,14 +63,15 @@ public class LogIndexBuilder {
 
     public LogRecordIndex build(){
         indexId = logIndexFactory.generateIndexId();
-        LogRecordIndex logRecordIndex = new LogRecordIndex();
-        logRecordIndex.setIndexId(indexId)
-                .setLogRecordId(logRecordId)
-                .setLogRecordIndexSort(logRecordIndexSort)
-                .setIndexValue(indexValue)
-                .setVersion(version)
-                .setCreateTime(createTime)
-                .setModifyTime(modifyTime);
+        LogRecordIndex logRecordIndex = new LogRecordIndex(
+                indexId,
+                logRecordId,
+                logRecordIndexSort,
+                indexValue,
+                version,
+                createTime,
+                modifyTime
+        );
         logIndexFactory.check(logRecordIndex);
         return logRecordIndex;
     }

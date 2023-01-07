@@ -17,14 +17,14 @@ public class LogConfigTest {
     @Test
     public void testGetterReturnNotNull(){
         LogConfig logConfig = MockData.initLogConfig();
-        Assertions.assertNotNull(logConfig.getRuleId());
-        Assertions.assertNotNull(logConfig.getRuleName());
-        Assertions.assertNotNull(logConfig.getLogRecordSort());
-        Assertions.assertNotNull(logConfig.getOperatorSort());
-        Assertions.assertNotNull(logConfig.getIndexConfigList());
-        Assertions.assertNotNull(logConfig.getDescription());
-        Assertions.assertNotNull(logConfig.getVersion());
-        Assertions.assertNotNull(logConfig.getCreateTime());
-        Assertions.assertNotNull(logConfig.getModifyTime());
+        Assertions.assertNotNull(logConfig.ruleId());
+        Assertions.assertNotNull(logConfig.ruleName());
+        Assertions.assertNotNull(logConfig.logRecordSort());
+        Assertions.assertNotNull(logConfig.operatorSort());
+        Assertions.assertNotNull(logConfig.indexConfigList());
+        Assertions.assertNotNull(logConfig.description());
+        Assertions.assertNotNull(logConfig.version());
+        Assertions.assertNotNull(logConfig.createTime());
+        Assertions.assertNotNull(logConfig.modifyTime());
     }
 }

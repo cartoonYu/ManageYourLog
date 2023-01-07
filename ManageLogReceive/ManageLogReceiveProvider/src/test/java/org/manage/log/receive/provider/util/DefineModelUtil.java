@@ -1,9 +1,9 @@
 package org.manage.log.receive.provider.util;
 
 import com.google.common.collect.ImmutableList;
-import org.manage.log.common.constants.LogRecordIndexSort;
-import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordSort;
+import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.model.log.LogRecord;
@@ -13,6 +13,7 @@ import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,57 +35,65 @@ public class DefineModelUtil {
     }
 
     public static LogRecord defineLogRecord(){
-        LogRecord record = new LogRecord();
         String recordId = IdGenerateUtil.getInstance().generate(13);
-        record.setRecordId(recordId)
-                .setContent("111")
-                .setOperatorSort(OperatorSort.USER)
-                .setOperator("cartoon")
-                .setLogRecordSort(LogRecordSort.OPERATE)
-                .addIndexList(ImmutableList.of(defineLogRecordIndex(recordId)))
-                .setVersion(1)
-                .setCreateTime(LocalDateTime.now())
-                .setModifyTime(LocalDateTime.now());
-        return record;
+        return defineLogRecord(recordId, ImmutableList.of(defineLogRecordIndex(recordId)));
+    }
+
+    public static LogRecord defineLogRecord(String recordId, List<LogRecordIndex> indexList){
+        return new LogRecord(
+                recordId,
+                "111",
+                OperatorSort.USER,
+                "cartoon",
+                LogRecordSort.OPERATE,
+                indexList,
+                1,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
     }
 
     private static LogRecordIndex defineLogRecordIndex(String recordId){
-        LogRecordIndex logRecordIndex = new LogRecordIndex();
-        logRecordIndex.setIndexId(IdGenerateUtil.getInstance().generate(13))
-                .setLogRecordId(recordId)
-                .setLogRecordIndexSort(LogRecordIndexSort.ID)
-                .setIndexValue("111")
-                .setVersion(1)
-                .setCreateTime(LocalDateTime.now())
-                .setModifyTime(LocalDateTime.now());
-        return logRecordIndex;
+        return defineLogRecordIndex(recordId, IdGenerateUtil.getInstance().generate(13));
+    }
+
+    public static LogRecordIndex defineLogRecordIndex(String recordId, String indexId){
+        return new LogRecordIndex(
+                indexId,
+                recordId,
+                LogRecordIndexSort.ID,
+                "111",
+                1,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
     }
 
     public static LogConfig defineLogConfig(){
-        LogConfig logConfig = new LogConfig();
-        logConfig.setRuleId(IdGenerateUtil.getInstance().generate(13))
-                .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
-                .setLogRecordSort(LogRecordSort.DEFAULT)
-                .setOperatorSort(OperatorSort.DEFAULT)
-                .setContentTemplate("test content template")
-                .addIndexConfig(defineLogIndexConfig())
-                .setDescription("test")
-                .setVersion(1L)
-                .setCreateTime(LocalDateTime.now())
-                .setModifyTime(LocalDateTime.now());
-        return logConfig;
+        return new LogConfig(
+                IdGenerateUtil.getInstance().generate(13),
+                "test rule" + IdGenerateUtil.getInstance().generate(100),
+                LogRecordSort.DEFAULT,
+                OperatorSort.DEFAULT,
+                "test content template",
+                ImmutableList.of(defineLogIndexConfig()),
+                "test",
+                1L,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
     }
 
     private static LogIndexConfig defineLogIndexConfig(){
-        LogIndexConfig logIndexConfig = new LogIndexConfig();
-        logIndexConfig.setRuleId(IdGenerateUtil.getInstance().generate(13))
-                .setRuleName("test rule" + IdGenerateUtil.getInstance().generate(100))
-                .setLogRecordIndexSort(LogRecordIndexSort.ID)
-                .setValueIndexKey("test")
-                .setDescription("test")
-                .setVersion(1L)
-                .setCreateTime(LocalDateTime.now())
-                .setModifyTime(LocalDateTime.now());
-        return logIndexConfig;
+        return new LogIndexConfig(
+                IdGenerateUtil.getInstance().generate(13),
+                "test rule" + IdGenerateUtil.getInstance().generate(100),
+                LogRecordIndexSort.ID,
+                "test",
+                "test",
+                1L,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
     }
 }

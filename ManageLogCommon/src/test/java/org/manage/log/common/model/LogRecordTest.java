@@ -17,31 +17,14 @@ public class LogRecordTest {
     @Test
     public void testGetterReturnNotNull(){
         LogRecord logRecord = MockData.initLogRecord();
-        logRecord.addIndex(MockData.initLogRecordIndex());
-        Assertions.assertNotNull(logRecord.getRecordId());
-        Assertions.assertNotNull(logRecord.getContent());
-        Assertions.assertNotNull(logRecord.getOperatorSort());
-        Assertions.assertNotNull(logRecord.getOperator());
-        Assertions.assertNotNull(logRecord.getLogRecordSort());
-        Assertions.assertNotNull(logRecord.getIndexList());
-        Assertions.assertNotNull(logRecord.getVersion());
-        Assertions.assertNotNull(logRecord.getCreateTime());
-        Assertions.assertNotNull(logRecord.getModifyTime());
-    }
-
-    @DisplayName("[abnormal] test add index is null")
-    @Test
-    public void testAddIndexIsNull(){
-        LogRecord logRecord = MockData.initLogRecord();
-        logRecord.addIndex(null);
-        Assertions.assertEquals(1, logRecord.getIndexList().size());
-    }
-
-    @DisplayName("[abnormal] test add index list is null")
-    @Test
-    public void testAddIndexListIsNull(){
-        LogRecord logRecord = MockData.initLogRecord();
-        logRecord.addIndexList(null);
-        Assertions.assertEquals(1, logRecord.getIndexList().size());
+        Assertions.assertNotNull(logRecord.recordId());
+        Assertions.assertNotNull(logRecord.content());
+        Assertions.assertNotNull(logRecord.operatorSort());
+        Assertions.assertNotNull(logRecord.operator());
+        Assertions.assertNotNull(logRecord.logRecordSort());
+        Assertions.assertNotNull(logRecord.indexList());
+        Assertions.assertNotNull(logRecord.version());
+        Assertions.assertNotNull(logRecord.createTime());
+        Assertions.assertNotNull(logRecord.modifyTime());
     }
 }

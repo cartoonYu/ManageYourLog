@@ -1,4 +1,4 @@
-package org.manage.log.receive.provider.repository.mysql.model;
+package org.manage.log.receive.provider.repository.mysql.model.config;
 
 import java.time.LocalDateTime;
 

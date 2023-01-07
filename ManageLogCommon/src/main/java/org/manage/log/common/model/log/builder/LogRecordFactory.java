@@ -1,8 +1,8 @@
 package org.manage.log.common.model.log.builder;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
-import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordSort;
+import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.util.IdGenerateUtil;
 import org.springframework.stereotype.Component;
@@ -41,14 +41,14 @@ public class LogRecordFactory {
     }
 
     public void check(LogRecord logRecord){
-        Assert.notNull(logRecord.getRecordId(), "record id must not be null");
-        Assert.notNull(logRecord.getContent(), "content must not be null");
-        Assert.notNull(logRecord.getOperatorSort(), "operator sort must not be null");
-        Assert.notNull(logRecord.getOperator(), "operator must not be null");
-        Assert.notNull(logRecord.getLogRecordSort(), "record sort must not be null");
-        Assert.notNull(logRecord.getVersion(), "version must not be null");
-        Assert.notNull(logRecord.getCreateTime(), "create time must not be null");
-        Assert.notNull(logRecord.getModifyTime(), "modify time must not be null");
-
+        Assert.notNull(logRecord.recordId(), "record id must not be null");
+        Assert.notNull(logRecord.content(), "content must not be null");
+        Assert.notNull(logRecord.operatorSort(), "operator sort must not be null");
+        Assert.notNull(logRecord.operator(), "operator must not be null");
+        Assert.notNull(logRecord.logRecordSort(), "record sort must not be null");
+        Assert.notNull(logRecord.version(), "version must not be null");
+        Assert.notNull(logRecord.createTime(), "create time must not be null");
+        Assert.notNull(logRecord.modifyTime(), "modify time must not be null");
+        indexFactory.check(logRecord.indexList());
     }
 }

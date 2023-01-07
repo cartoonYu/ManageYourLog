@@ -31,6 +31,8 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
 
     private final LogRecordMapper logRecordMapper;
 
+    private final MysqlEntityBuilder mysqlEntityBuilder;
+
     @Override
     public List<LogRecord> getByIndex(String index) {
         List<LogRecordIndexMysqlPO> indexPoList = logRecordIndexMapper.getByIndex(index);
@@ -44,7 +46,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
         List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexIds(indexIds);
-        return MysqlEntityBuilder.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlList);
+        return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexMysqlList);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
         List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
         //get all index by index id
         List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexIds(indexIds);
-        return MysqlEntityBuilder.getInstance().convertToModel(logRecordMysqlPoList, indexMysqlList);
+        return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexMysqlList);
     }
 
     private List<String> getIndexIdFromRecordList(List<LogRecordMysqlPO> recordMysqlList){
@@ -77,8 +79,10 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
     }
 
     public LogRecordMysqlRepository(LogRecordIndexMapper logRecordIndexMapper,
-                                        LogRecordMapper logRecordMapper) {
+                                    LogRecordMapper logRecordMapper,
+                                    MysqlEntityBuilder mysqlEntityBuilder) {
         this.logRecordIndexMapper = logRecordIndexMapper;
         this.logRecordMapper = logRecordMapper;
+        this.mysqlEntityBuilder = mysqlEntityBuilder;
     }
 }

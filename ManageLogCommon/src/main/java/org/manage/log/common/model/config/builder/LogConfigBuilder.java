@@ -1,8 +1,8 @@
 package org.manage.log.common.model.config.builder;
 
 
-import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.log.constants.LogRecordSort;
+import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
 
@@ -16,6 +16,8 @@ import java.util.Objects;
  * @since 2022/11/15 21:14
  */
 public class LogConfigBuilder {
+
+    private String ruleId;
 
     private String ruleName;
 
@@ -43,6 +45,11 @@ public class LogConfigBuilder {
 
     private LogConfigBuilder(LogConfigFactory logConfigFactory) {
         this.logConfigFactory = logConfigFactory;
+    }
+
+    public LogConfigBuilder setRuleId(String ruleId) {
+        this.ruleId = ruleId;
+        return this;
     }
 
     public LogConfigBuilder setRuleName(String ruleName) {
@@ -79,18 +86,21 @@ public class LogConfigBuilder {
     }
 
     public LogConfig build(){
-        LogConfig logConfig = new LogConfig();
-        logConfig
-                .setRuleId(logConfigFactory.generateRuleId())
-                .setRuleName(ruleName)
-                .setLogRecordSort(logRecordSort)
-                .setOperatorSort(operatorSort)
-                .setContentTemplate(contentTemplate)
-                .addIndexConfig(indexConfigList)
-                .setDescription(description)
-                .setVersion(version)
-                .setCreateTime(createTime)
-                .setModifyTime(modifyTime);
+        if(Objects.isNull(ruleId)){
+            ruleId = logConfigFactory.generateRuleId();
+        }
+        LogConfig logConfig = new LogConfig(
+                ruleId,
+                ruleName,
+                logRecordSort,
+                operatorSort,
+                contentTemplate,
+                indexConfigList,
+                description,
+                version,
+                createTime,
+                modifyTime
+        );
         logConfigFactory.check(logConfig);
         return logConfig;
     }

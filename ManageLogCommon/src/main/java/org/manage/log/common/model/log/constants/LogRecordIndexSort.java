@@ -1,24 +1,24 @@
-package org.manage.log.common.constants;
+package org.manage.log.common.model.log.constants;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * log sort
+ * log index sort
  * @author cartoon
- * @date 2022/1/27 16:34
+ * @date 2022/1/27 16:29
  * @version v1.0
  */
-public enum LogRecordSort implements Serializable {
+public enum LogRecordIndexSort implements Serializable {
 
-    DEFAULT(0L, "default"),
-    OPERATE(1L, "operate");
+    DATE(1L, "date"),
+    ID(2L, "id");
 
     private final Long sortId;
 
     private final String sortDescription;
 
-    LogRecordSort(Long sortId, String sortDescription) {
+    LogRecordIndexSort(Long sortId, String sortDescription) {
         this.sortId = sortId;
         this.sortDescription = sortDescription;
     }
@@ -31,11 +31,10 @@ public enum LogRecordSort implements Serializable {
         return sortDescription;
     }
 
-    public static LogRecordSort parse(String sortDescription){
-        return Arrays.stream(LogRecordSort.values())
-                .filter(value -> value.getSortDescription().equals(sortDescription))
+    public static LogRecordIndexSort parse(String description){
+        return Arrays.stream(LogRecordIndexSort.values())
+                .filter(value -> value.getSortDescription().equals(description))
                 .findAny()
                 .orElse(null);
     }
-
 }

@@ -1,6 +1,6 @@
 package org.manage.log.common.model.log.builder;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.LogRecordIndex;
 import org.manage.log.common.util.IdGenerateUtil;
 import org.springframework.stereotype.Component;
@@ -36,13 +36,17 @@ public class LogIndexFactory {
                 .build();
     }
 
+    public void check(List<LogRecordIndex> indexList){
+        indexList.forEach(this::check);
+    }
+
     public void check(LogRecordIndex logRecordIndex){
-        Assert.notNull(logRecordIndex.getIndexId(), "index id must not be null");
-        Assert.notNull(logRecordIndex.getLogRecordId(), "log record id must not be null");
-        Assert.notNull(logRecordIndex.getLogRecordIndexSort(), "index sort must not be null");
-        Assert.notNull(logRecordIndex.getIndexValue(), "index value must not be null");
-        Assert.notNull(logRecordIndex.getVersion(), "version must not be null");
-        Assert.notNull(logRecordIndex.getCreateTime(), "create time must not be null");
-        Assert.notNull(logRecordIndex.getModifyTime(), "modify time must not be null");
+        Assert.notNull(logRecordIndex.indexId(), "index id must not be null");
+        Assert.notNull(logRecordIndex.logRecordId(), "log record id must not be null");
+        Assert.notNull(logRecordIndex.logRecordIndexSort(), "index sort must not be null");
+        Assert.notNull(logRecordIndex.indexValue(), "index value must not be null");
+        Assert.notNull(logRecordIndex.version(), "version must not be null");
+        Assert.notNull(logRecordIndex.createTime(), "create time must not be null");
+        Assert.notNull(logRecordIndex.modifyTime(), "modify time must not be null");
     }
 }

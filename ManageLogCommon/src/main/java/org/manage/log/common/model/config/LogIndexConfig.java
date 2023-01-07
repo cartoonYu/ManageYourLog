@@ -1,6 +1,6 @@
 package org.manage.log.common.model.config;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 
 import java.time.LocalDateTime;
 
@@ -9,99 +9,53 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2022/12/11 20:59
  */
-public class LogIndexConfig {
+public record LogIndexConfig(
+        String ruleId,
+        String ruleName,
+        LogRecordIndexSort logRecordIndexSort,
+        String valueIndexKey,
+        String description,
+        Long version,
+        LocalDateTime createTime,
+        LocalDateTime modifyTime) {
 
-    private String ruleId;
-
-    private String ruleName;
-
-    private LogRecordIndexSort logRecordIndexSort;
-
-    private Long valueIndex;
-
-    private String valueIndexKey;
-
-    private String description;
-
-    private Long version;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime modifyTime;
-
-    public String getRuleId() {
+    @Override
+    public String ruleId() {
         return ruleId;
     }
 
-    public LogIndexConfig setRuleId(String ruleId) {
-        this.ruleId = ruleId;
-        return this;
-    }
-
-    public String getRuleName() {
+    @Override
+    public String ruleName() {
         return ruleName;
     }
 
-    public LogIndexConfig setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-        return this;
-    }
-
-    public LogRecordIndexSort getLogRecordIndexSort() {
+    @Override
+    public LogRecordIndexSort logRecordIndexSort() {
         return logRecordIndexSort;
     }
 
-    public LogIndexConfig setLogRecordIndexSort(LogRecordIndexSort logRecordIndexSort) {
-        this.logRecordIndexSort = logRecordIndexSort;
-        return this;
-    }
-
-    public Long getValueIndex() {
-        return valueIndex;
-    }
-
-    public String getValueIndexKey() {
+    @Override
+    public String valueIndexKey() {
         return valueIndexKey;
     }
 
-    public LogIndexConfig setValueIndexKey(String valueIndexKey) {
-        this.valueIndexKey = valueIndexKey;
-        return this;
-    }
-
-    public String getDescription() {
+    @Override
+    public String description() {
         return description;
     }
 
-    public LogIndexConfig setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Long getVersion() {
+    @Override
+    public Long version() {
         return version;
     }
 
-    public LogIndexConfig setVersion(Long version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
+    @Override
+    public LocalDateTime createTime() {
         return createTime;
     }
 
-    public LogIndexConfig setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
+    @Override
+    public LocalDateTime modifyTime() {
         return modifyTime;
-    }
-
-    public LogIndexConfig setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
     }
 }

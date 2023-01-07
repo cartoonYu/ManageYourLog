@@ -17,12 +17,12 @@ public class LogRecordIndexTest {
     @Test
     public void testGetterReturnNotNull(){
         LogRecordIndex logRecordIndex = MockData.initLogRecordIndex();
-        Assertions.assertNotNull(logRecordIndex.getIndexId());
-        Assertions.assertNotNull(logRecordIndex.getLogRecordId());
-        Assertions.assertNotNull(logRecordIndex.getLogRecordIndexSort());
-        Assertions.assertNotNull(logRecordIndex.getIndexValue());
-        Assertions.assertNotNull(logRecordIndex.getVersion());
-        Assertions.assertNotNull(logRecordIndex.getCreateTime());
-        Assertions.assertNotNull(logRecordIndex.getModifyTime());
+        Assertions.assertNotNull(logRecordIndex.indexId());
+        Assertions.assertNotNull(logRecordIndex.logRecordId());
+        Assertions.assertNotNull(logRecordIndex.logRecordIndexSort());
+        Assertions.assertNotNull(logRecordIndex.indexValue());
+        Assertions.assertNotNull(logRecordIndex.version());
+        Assertions.assertNotNull(logRecordIndex.createTime());
+        Assertions.assertNotNull(logRecordIndex.modifyTime());
     }
 }

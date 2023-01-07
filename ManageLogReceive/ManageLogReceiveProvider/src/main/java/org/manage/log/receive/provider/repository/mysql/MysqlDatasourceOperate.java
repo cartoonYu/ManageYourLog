@@ -25,7 +25,7 @@ public class MysqlDatasourceOperate {
 
     private final SqlSessionFactory sqlSessionFactory;
 
-    private ThreadLocal<ImmutablePair<SqlSession, TransactionStatus>> executeInfos;
+    private final ThreadLocal<ImmutablePair<SqlSession, TransactionStatus>> executeInfos;
 
     public <T, R> R executeDML(Class<T> classType, Function<T, R> executeFunction){
         return executeDML(classType, executeFunction, false);

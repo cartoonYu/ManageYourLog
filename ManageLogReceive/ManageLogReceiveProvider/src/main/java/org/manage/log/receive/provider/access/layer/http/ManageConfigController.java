@@ -19,9 +19,11 @@ public class ManageConfigController {
 
     private final LogConfigService logConfigService;
 
+    private final LogConfigConverter logConfigConverter;
+
     @PostMapping("/add")
     public boolean add(@RequestBody UploadLogConfigDto uploadLogConfigDto){
-        LogConfig logConfig = LogConfigConverter.getInstance().convertToBo(uploadLogConfigDto);
+        LogConfig logConfig = logConfigConverter.convertToBo(uploadLogConfigDto);
         return logConfigService.add(logConfig);
     }
 
@@ -29,7 +31,7 @@ public class ManageConfigController {
     @ResponseBody
     public LogConfigDto getByName(@RequestParam("name") String name){
         return logConfigService.getConfigByName(name)
-                .map(config -> LogConfigConverter.getInstance().convertToDto(config))
+                .map(logConfigConverter::convertToDto)
                 .orElse(null);
     }
 
@@ -37,11 +39,13 @@ public class ManageConfigController {
     @ResponseBody
     public List<LogConfigDto> getAll(){
         List<LogConfig> configList = logConfigService.getAll();
-        return LogConfigConverter.getInstance().convertToDto(configList);
+        return logConfigConverter.convertToDto(configList);
     }
 
 
-    public ManageConfigController(LogConfigService logConfigService) {
+    public ManageConfigController(LogConfigService logConfigService,
+                                  LogConfigConverter logConfigConverter) {
         this.logConfigService = logConfigService;
+        this.logConfigConverter = logConfigConverter;
     }
 }

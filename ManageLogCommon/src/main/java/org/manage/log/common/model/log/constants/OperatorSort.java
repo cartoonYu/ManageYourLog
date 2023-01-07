@@ -1,4 +1,4 @@
-package org.manage.log.common.constants;
+package org.manage.log.common.model.log.constants;
 
 import java.util.Arrays;
 

@@ -25,16 +25,16 @@ public class QueryResultBuilder {
     }
 
     public List<QueryLogResp> build(List<LogRecord> sourceLog){
-        return sourceLog.stream().map(source -> new QueryLogResp(source.getContent(), source.getOperatorSort().getSortDescription(), source.getOperator(),
-                                source.getLogRecordSort().getSortDescription(), buildIndex(source.getIndexList()),
-                                source.getVersion(), timeFormatUtil.format(source.getCreateTime()), timeFormatUtil.format(source.getModifyTime()))).collect(Collectors.toList());
+        return sourceLog.stream().map(source -> new QueryLogResp(source.content(), source.operatorSort().getSortDescription(), source.operator(),
+                                source.logRecordSort().getSortDescription(), buildIndex(source.indexList()),
+                                source.version(), timeFormatUtil.format(source.createTime()), timeFormatUtil.format(source.modifyTime()))).collect(Collectors.toList());
     }
 
     private List<QueryLogIndexResp> buildIndex(List<LogRecordIndex> sourceLogIndex){
         return sourceLogIndex.stream()
                 .map(source -> new QueryLogIndexResp(
-                        source.getLogRecordIndexSort().getSortDescription(), source.getIndexValue(),
-                        source.getVersion(), timeFormatUtil.format(source.getCreateTime()), timeFormatUtil.format(source.getModifyTime())))
+                        source.logRecordIndexSort().getSortDescription(), source.indexValue(),
+                        source.version(), timeFormatUtil.format(source.createTime()), timeFormatUtil.format(source.modifyTime())))
                 .collect(Collectors.toList());
     }
 

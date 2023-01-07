@@ -12,8 +12,8 @@ import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.mysql.builder.LogConfigMysqlBuilder;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper;
-import org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO;
-import org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO;
+import org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO;
+import org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -37,7 +37,7 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
 
     private final LoadingCache<String, LogConfig> CACHE;
 
-    private static final LogConfigMysqlBuilder builder = LogConfigMysqlBuilder.getInstance();
+    private final LogConfigMysqlBuilder builder;
 
     @Resource
     private TransactionTemplate transactionTemplate;
@@ -79,7 +79,7 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
             log.warn("get by config name, get from cache error", e);
         }
         //calculate diff with cache and source config name list
-        List<String> configNameFromCache = configFromCache.stream().map(LogConfig::getRuleName).toList();
+        List<String> configNameFromCache = configFromCache.stream().map(LogConfig::ruleName).toList();
         List<String> needLoadFromDatabaseConfigNameList = configNameList.stream()
                                                                 .filter(sourceConfigName -> !configNameFromCache.contains(sourceConfigName))
                                                                 .toList();
@@ -112,9 +112,11 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
 
     public LogConfigMysqlRepository(LogConfigMapper logConfigMapper,
                                         LogIndexConfigMapper logIndexConfigMapper,
-                                        ApplicationConfigUtil applicationConfigUtil) {
+                                        ApplicationConfigUtil applicationConfigUtil,
+                                    LogConfigMysqlBuilder logConfigMysqlBuilder) {
         this.logConfigMapper = logConfigMapper;
         this.logIndexConfigMapper = logIndexConfigMapper;
+        this.builder = logConfigMysqlBuilder;
 
         CACHE = CacheBuilder.newBuilder()
                 .maximumSize(10000)

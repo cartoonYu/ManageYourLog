@@ -12,16 +12,16 @@
         LogConfig
     </sql>
 
-    <insert id="add" parameterType = "org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO">
+    <insert id="add" parameterType = "org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO">
         insert into <include refid="TABLE_NAME"/>(ruleId, ruleName, logRecordSort, operatorSort, contentTemplate, description, version, createTime, modifyTime)
         value (#{ruleId}, #{ruleName}, #{logRecordSort}, #{operatorSort}, #{contentTemplate}, #{description}, #{version}, #{createTime}, #{modifyTime})
     </insert>
 
-    <select id="getByConfigName" resultType="org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO">
+    <select id="getByConfigName" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO">
         select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/> where ruleName = #{configName}
     </select>
 
-    <select id="getByConfigNameList" resultType="org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO">
+    <select id="getByConfigNameList" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO">
         select <include refid="Base_Column_List"/>
             from <include refid="TABLE_NAME"/>
             where ruleName in
@@ -30,7 +30,7 @@
                 </foreach>
     </select>
 
-    <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO">
+    <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO">
         select <include refid="Base_Column_List"/>
             from <include refid="TABLE_NAME"/>
     </select>

@@ -1,153 +1,80 @@
 package org.manage.log.common.model.log;
 
 
-import org.manage.log.common.constants.LogRecordSort;
-import org.manage.log.common.constants.OperatorSort;
+import org.manage.log.common.model.log.constants.LogRecordSort;
+import org.manage.log.common.model.log.constants.OperatorSort;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author cartoon
  * @version 1.0
  * @since 2021/10/05 23:48
  */
-public class LogRecord {
+public record LogRecord(
+        //record id, identify record single
+        String recordId,
+        //record source content
+        String content,
+        //operate record sort
+        OperatorSort operatorSort,
+        //operate current record handles
+        String operator,
+        //record sort
+        LogRecordSort logRecordSort,
+        //record index list
+        List<LogRecordIndex> indexList,
+        //version
+        Integer version,
+        //record create time
+        LocalDateTime createTime,
+        //record last modify time
+        LocalDateTime modifyTime
+) {
 
-    /**
-     * record id, identify record single
-     */
-    private String recordId;
-
-    /**
-     * record source content
-     */
-    private String content;
-
-    /**
-     * operate record sort
-     */
-    private OperatorSort operatorSort;
-
-    /**
-     * operate current record handles
-     */
-    private String operator;
-
-    /**
-     * record sort
-     */
-    private LogRecordSort logRecordSort;
-
-    /**
-     * record index list
-     */
-    private List<LogRecordIndex> indexList = new ArrayList<>();
-
-    private Integer version;
-
-    /**
-     * record create time
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * record last modify time
-     */
-    private LocalDateTime modifyTime;
-
-    public String getRecordId() {
+    @Override
+    public String recordId() {
         return recordId;
     }
 
-    public LogRecord setRecordId(String recordId) {
-        this.recordId = recordId;
-        return this;
-    }
-
-    public String getContent() {
+    @Override
+    public String content() {
         return content;
     }
 
-    public LogRecord setContent(String content) {
-        this.content = content;
-        return this;
-    }
-
-    public LogRecord setOperatorSort(OperatorSort operatorSort) {
-        this.operatorSort = operatorSort;
-        return this;
-    }
-
-    public OperatorSort getOperatorSort() {
+    @Override
+    public OperatorSort operatorSort() {
         return operatorSort;
     }
 
-    public String getOperator() {
+    @Override
+    public String operator() {
         return operator;
     }
 
-    public LogRecord setOperator(String operator) {
-        this.operator = operator;
-        return this;
-    }
-
-    public LogRecordSort getLogRecordSort() {
+    @Override
+    public LogRecordSort logRecordSort() {
         return logRecordSort;
     }
 
-    public LogRecord setLogRecordSort(LogRecordSort logRecordSort) {
-        this.logRecordSort = logRecordSort;
-        return this;
-    }
-
-    public List<LogRecordIndex> getIndexList() {
+    @Override
+    public List<LogRecordIndex> indexList() {
         return indexList;
     }
 
-    public LogRecord addIndex(LogRecordIndex index){
-        if(Objects.isNull(index)){
-            return this;
-        }
-        this.indexList.add(index);
-        return this;
-    }
-
-    public LogRecord addIndexList(List<LogRecordIndex> indexList){
-        if(Objects.isNull(indexList)){
-            return this;
-        }
-        this.indexList.addAll(indexList);
-        return this;
-    }
-
-
-    public Integer getVersion() {
+    @Override
+    public Integer version() {
         return version;
     }
 
-    public LogRecord setVersion(Integer version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
+    @Override
+    public LocalDateTime createTime() {
         return createTime;
     }
 
-    public LogRecord setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
+    @Override
+    public LocalDateTime modifyTime() {
         return modifyTime;
-    }
-
-    public LogRecord setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
     }
 }

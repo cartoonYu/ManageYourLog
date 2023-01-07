@@ -40,7 +40,7 @@ public class LogConfigServiceImpl implements LogConfigService {
 
     @Override
     public List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig) {
-        String contentTemplate = logConfig.getContentTemplate();
+        String contentTemplate = logConfig.contentTemplate();
         //get value key like '#{aaa.bbb.ccc.}'
         String regex = "#\\{([A-Za-z]+\\.+)+\\}";
         Pattern pattern = Pattern.compile(regex);

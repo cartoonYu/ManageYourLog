@@ -1,6 +1,6 @@
 package org.manage.log.common.model.log;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 
 import java.time.LocalDateTime;
 
@@ -9,82 +9,48 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2021/10/05 23:56
  */
-public class LogRecordIndex {
+public record LogRecordIndex(
+        String indexId,
+        String logRecordId,
+        LogRecordIndexSort logRecordIndexSort,
+        String indexValue,
+        Integer version,
+        LocalDateTime createTime,
+        LocalDateTime modifyTime
+) {
 
-    private String indexId;
-
-    private String logRecordId;
-
-    private LogRecordIndexSort logRecordIndexSort;
-
-    private String indexValue;
-
-    private Integer version;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime modifyTime;
-
-    public String getIndexId() {
+    @Override
+    public String indexId() {
         return indexId;
     }
 
-    public LogRecordIndex setIndexId(String indexId) {
-        this.indexId = indexId;
-        return this;
-    }
-
-    public String getLogRecordId() {
+    @Override
+    public String logRecordId() {
         return logRecordId;
     }
 
-    public LogRecordIndex setLogRecordId(String logRecordId) {
-        this.logRecordId = logRecordId;
-        return this;
-    }
-
-    public LogRecordIndexSort getLogRecordIndexSort() {
+    @Override
+    public LogRecordIndexSort logRecordIndexSort() {
         return logRecordIndexSort;
     }
 
-    public LogRecordIndex setLogRecordIndexSort(LogRecordIndexSort logRecordIndexSort) {
-        this.logRecordIndexSort = logRecordIndexSort;
-        return this;
-    }
-
-    public String getIndexValue() {
+    @Override
+    public String indexValue() {
         return indexValue;
     }
 
-    public LogRecordIndex setIndexValue(String indexValue) {
-        this.indexValue = indexValue;
-        return this;
-    }
-
-    public Integer getVersion() {
+    @Override
+    public Integer version() {
         return version;
     }
 
-    public LogRecordIndex setVersion(Integer version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
+    @Override
+    public LocalDateTime createTime() {
         return createTime;
     }
 
-    public LogRecordIndex setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
+    @Override
+    public LocalDateTime modifyTime() {
         return modifyTime;
-    }
-
-    public LogRecordIndex setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
     }
 }

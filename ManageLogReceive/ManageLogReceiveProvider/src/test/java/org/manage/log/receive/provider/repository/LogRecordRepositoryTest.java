@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.manage.log.base.test.BaseTest;
 import org.manage.log.common.model.log.LogRecord;
+import org.manage.log.common.model.log.LogRecordIndex;
+import org.manage.log.common.util.IdGenerateUtil;
 import org.manage.log.receive.provider.util.DefineModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,11 +43,11 @@ public class LogRecordRepositoryTest extends BaseTest {
     @Order(2)
     @Test
     public void testRollback(){
-        LogRecord logRecord = DefineModelUtil.defineLogRecord();
-        logRecord.getIndexList().get(0).setIndexId("2222");
+        String recordId = IdGenerateUtil.getInstance().generate(13);
+        List<LogRecordIndex> indexList = ImmutableList.of(DefineModelUtil.defineLogRecordIndex(recordId, "2222"));
+        LogRecord logRecord = DefineModelUtil.defineLogRecord(recordId, indexList);
+
         logRecordRepository.save(ImmutableList.of(logRecord));
-        LogRecord logRecord1 = DefineModelUtil.defineLogRecord();
-        logRecord1.getIndexList().get(0).setIndexId("2222");
-        Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(ImmutableList.of(logRecord1)));
+        Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(ImmutableList.of(logRecord)));
     }
 }

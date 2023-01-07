@@ -1,8 +1,3 @@
-#### facade
-
-#### server
-1. 实际储存方式(es/hbase...)
-2. receive log test
-
-
-#### common
+1. move config domain object to record type
+2. upgrade whole project to spring boot 3.0
+3. modeling format log domain

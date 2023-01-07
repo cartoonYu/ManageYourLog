@@ -1,8 +1,9 @@
 package org.manage.log.common.model.config.builder;
 
-import org.manage.log.common.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.util.IdGenerateUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
@@ -10,22 +11,17 @@ import org.springframework.util.Assert;
  * @version 1.0
  * @since 2022/12/12 20:48
  */
+@Component
 public class LogIndexConfigFactory {
 
-    private static final LogIndexConfigFactory INSTANCE = new LogIndexConfigFactory();
-
-    public static LogIndexConfigFactory getInstance(){
-        return INSTANCE;
-    }
-
     public void check(LogIndexConfig logIndexConfig){
-        Assert.notNull(logIndexConfig.getRuleId(), "rule id must not be null");
-        Assert.notNull(logIndexConfig.getRuleName(), "rule name must not be null");
-        Assert.notNull(logIndexConfig.getLogRecordIndexSort(), "log record index sort must not be null");
-        Assert.notNull(logIndexConfig.getValueIndexKey(), "value index key must not be null");
-        Assert.notNull(logIndexConfig.getVersion(), "version must not be null");
-        Assert.notNull(logIndexConfig.getCreateTime(), "create time must not be null");
-        Assert.notNull(logIndexConfig.getModifyTime(), "modify time must not be null");
+        Assert.notNull(logIndexConfig.ruleId(), "rule id must not be null");
+        Assert.notNull(logIndexConfig.ruleName(), "rule name must not be null");
+        Assert.notNull(logIndexConfig.logRecordIndexSort(), "log record index sort must not be null");
+        Assert.notNull(logIndexConfig.valueIndexKey(), "value index key must not be null");
+        Assert.notNull(logIndexConfig.version(), "version must not be null");
+        Assert.notNull(logIndexConfig.createTime(), "create time must not be null");
+        Assert.notNull(logIndexConfig.modifyTime(), "modify time must not be null");
     }
 
     public String generateRuleId(){

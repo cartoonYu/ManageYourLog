@@ -20,15 +20,15 @@
         </foreach>
     </insert>
 
-    <select id="getByLogConfigId" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
+    <select id="getByLogConfigId" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO">
         select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/> where logConfigId = #{logConfigId}
     </select>
 
-    <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
+    <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO">
         select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
     </select>
 
-    <select id="getByConfigNameList" resultType="org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO">
+    <select id="getByConfigNameList" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO">
         select <include refid="Base_Column_List"/>
         from <include refid="TABLE_NAME"/>
         where logConfigId in

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.manage.log.common.model.log.constants.LogRecordIndexSort;
+import org.manage.log.common.model.log.constants.LogRecordSort;
 
 import java.util.Arrays;
 import java.util.List;

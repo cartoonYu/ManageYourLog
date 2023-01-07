@@ -1,8 +1,7 @@
 package org.manage.log.receive.provider.repository.mysql.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.manage.log.receive.provider.repository.mysql.model.LogConfigMysqlPO;
-import org.manage.log.receive.provider.repository.mysql.model.LogIndexConfigMysqlPO;
+import org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO;
 
 import java.util.List;
 
