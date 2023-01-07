@@ -17,12 +17,12 @@
     <description>ManageYourLog</description>
 
     <modules>
-        <module>ManageYourLogReceive</module>
-        <module>ManageYourLogQuery</module>
-        <module>ManageYourLogTest</module>
-        <module>ManageYourLogCommon</module>
-        <module>ManageYourLogRepository</module>
-        <module>ManageYourLogUpload</module>
+        <module>ManageLogBaseTest</module>
+        <module>ManageLogCommon</module>
+        <module>ManageLogDemo</module>
+        <module>ManageLogReceive</module>
+        <module>ManageLogQuery</module>
+        <module>ManageLogQuery/ManageLogQueryProvider</module>
     </modules>
 
     <properties>
@@ -38,16 +38,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.9</version>
-        </dependency>
-
-
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
+            <version>31.1-jre</version>
         </dependency>
 
         <dependency>
@@ -75,37 +68,7 @@
 
             <dependency>
                 <groupId>org</groupId>
-                <artifactId>ManageYourLogReceive</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogQuery</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogCommon</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogTest</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogRepository</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org</groupId>
-                <artifactId>ManageYourLogUpload</artifactId>
+                <artifactId>ManageLogCommon</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -119,6 +82,36 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>3.0.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>ManageLogBaseTest</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.10</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.10.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>ManageLogReceiveFacade</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>ManageLogQueryFacade</artifactId>
+                <version>1.0.0</version>
             </dependency>
 
         </dependencies>

@@ -1,0 +1,29 @@
+package org.manage.log.receive.provider.service.config;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.manage.log.common.model.config.LogConfig;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * @author cartoon
+ * @since 2022/11/14 20:51
+ */
+public interface LogConfigService {
+
+    boolean add(LogConfig logConfig);
+
+    Optional<LogConfig> getConfigByName(String configName);
+
+    List<LogConfig> getByConfigNameList(List<String> configNameList);
+
+    /**
+     *
+     * @param logConfig
+     * @return key: source value key, value: extract value key
+     */
+    List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig);
+
+    List<LogConfig> getAll();
+}

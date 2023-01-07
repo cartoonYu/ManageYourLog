@@ -38,7 +38,7 @@
 ```xml
 <dependency>
     <groupId>org</groupId>
-    <artifactId>ManageYourLogUpload</artifactId>
+    <artifactId>ManageLogUpload</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```

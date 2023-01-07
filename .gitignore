@@ -2,14 +2,14 @@
 .mvn
 mvnw
 mvnw.cmd
-ManageYourLogBaseTest/target
-ManageYourLogCommon/target
-ManageYourLogDemo/target
-ManageYourLogQuery/target
-ManageYourLogReceive/target
-ManageYourLogRepository/target
-ManageYourLogTest/target
-ManageYourLogUpload/target
+ManageLogBaseTest/target
+ManageLogCommon/target
+ManageLogDemo/target
+ManageLogReceive/ManageLogReceiveFacade/target
+ManageLogReceive/ManageLogReceiveProvider/target
+ManageLogQuery/ManageLogQueryFacade/target
+ManageLogQuery/ManageLogQueryProvider/target
+
 
 *.iml
 data
