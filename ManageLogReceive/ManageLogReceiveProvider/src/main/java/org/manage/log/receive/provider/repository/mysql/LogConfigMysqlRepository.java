@@ -13,14 +13,14 @@ import org.manage.log.receive.provider.repository.mysql.builder.LogConfigMysqlBu
 import org.manage.log.receive.provider.repository.mysql.mapper.LogConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO;
+import org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.support.TransactionTemplate;
-
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -39,19 +39,25 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
 
     private final LogConfigMysqlBuilder builder;
 
-    @Resource
-    private TransactionTemplate transactionTemplate;
+    private final MysqlDatasourceOperate mysqlDatasourceOperate;
 
     @Override
     public boolean add(LogConfig logConfig) {
-        return Boolean.TRUE.equals(transactionTemplate.execute(status -> {
-            ImmutablePair<LogConfigMysqlPO, List<LogIndexConfigMysqlPO>> mysqlPo = builder.convert(logConfig);
-            List<LogIndexConfigMysqlPO> indexList = mysqlPo.getRight();
-            if (!indexList.isEmpty() && logIndexConfigMapper.addList(indexList) != indexList.size()) {
-                return false;
-            }
-            return logConfigMapper.add(mysqlPo.getLeft()) == 1;
-        }));
+        LogConfigMysqlPO logConfigMysqlPO = builder.convertToLogConfig(logConfig);
+        List<LogIndexConfigMysqlPO> indexConfigMysqlPOList = builder.convertToLogIndexConfig(logConfig);
+        List<LogContentFormatConfigMysqlPO> contentformatMysqlPOList = builder.convertToContentFormatConfig(logConfig);
+
+        List<ImmutablePair<Supplier<Integer>, Integer>> executeFunctionToExpectExecuteRowList = new ArrayList<>();
+        if(!indexConfigMysqlPOList.isEmpty()){
+            executeFunctionToExpectExecuteRowList.add(ImmutablePair.of(() -> logIndexConfigMapper.addList(indexConfigMysqlPOList), indexConfigMysqlPOList.size()));
+        }
+        if(!contentformatMysqlPOList.isEmpty()){
+            //todo execute mapper
+        }
+        executeFunctionToExpectExecuteRowList.add(
+                ImmutablePair.of(() -> logConfigMapper.add(logConfigMysqlPO), 1)
+        );
+        return mysqlDatasourceOperate.executeDML(executeFunctionToExpectExecuteRowList);
     }
 
     @Override
@@ -113,10 +119,12 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
     public LogConfigMysqlRepository(LogConfigMapper logConfigMapper,
                                         LogIndexConfigMapper logIndexConfigMapper,
                                         ApplicationConfigUtil applicationConfigUtil,
-                                    LogConfigMysqlBuilder logConfigMysqlBuilder) {
+                                    LogConfigMysqlBuilder logConfigMysqlBuilder,
+                                    MysqlDatasourceOperate mysqlDatasourceOperate) {
         this.logConfigMapper = logConfigMapper;
         this.logIndexConfigMapper = logIndexConfigMapper;
         this.builder = logConfigMysqlBuilder;
+        this.mysqlDatasourceOperate = mysqlDatasourceOperate;
 
         CACHE = CacheBuilder.newBuilder()
                 .maximumSize(10000)

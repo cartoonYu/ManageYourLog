@@ -19,6 +19,8 @@ public class UploadLogConfigDto {
 
     private List<UploadLogIndexConfigDto> indexConfigList;
 
+    private List<UploadLogContentFormatConfigDto> contentFormatConfigList;
+
     private String description;
 
     public String getRuleName() {
@@ -54,6 +56,15 @@ public class UploadLogConfigDto {
 
     public UploadLogConfigDto setIndexConfigList(List<UploadLogIndexConfigDto> indexConfigList) {
         this.indexConfigList = indexConfigList;
+        return this;
+    }
+
+    public List<UploadLogContentFormatConfigDto> getContentFormatConfigList() {
+        return contentFormatConfigList;
+    }
+
+    public UploadLogConfigDto setContentFormatConfigList(List<UploadLogContentFormatConfigDto> contentFormatConfigList) {
+        this.contentFormatConfigList = contentFormatConfigList;
         return this;
     }
 

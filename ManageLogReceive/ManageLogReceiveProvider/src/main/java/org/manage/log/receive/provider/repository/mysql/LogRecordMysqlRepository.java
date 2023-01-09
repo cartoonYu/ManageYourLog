@@ -10,10 +10,10 @@ import org.manage.log.receive.provider.repository.mysql.mapper.LogRecordMapper;
 import org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.LogRecordMysqlPO;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * mysql store repository
@@ -26,18 +26,31 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
 
     public static final String INDEX_SPLIT_CHARACTER = ",";
 
-    @Resource
-    private MysqlDatasourceOperate mysqlDatasourceOperate;
+    private final MysqlDatasourceOperate mysqlDatasourceOperate;
+
+    private final LogRecordMapper logRecordMapper;
+
+    private final LogRecordIndexMapper logRecordIndexMapper;
 
     @Override
     public boolean save(List<LogRecord> logRecords) {
         List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> logInfos = LogRecordMysqlBuilder.getInstance().convertToPo(logRecords);
         List<LogRecordMysqlPO> logRecordPos = logInfos.stream().map(ImmutablePair::getLeft).toList();
         List<LogRecordIndexMysqlPO> logRecordIndexPos = logInfos.stream().map(ImmutablePair::getRight).flatMap(Collection::stream).toList();
-        boolean insertIndexResult = logRecordIndexPos.isEmpty() || mysqlDatasourceOperate.executeDML(LogRecordIndexMapper.class, mapper -> mapper.batchInsert(logRecordIndexPos) == logRecordIndexPos.size());
-        if(!insertIndexResult){
-            return false;
+
+        List<ImmutablePair<Supplier<Integer>, Integer>> executeInfos = new ArrayList<>();
+        if(!logRecordIndexPos.isEmpty()){
+            executeInfos.add(ImmutablePair.of(() -> logRecordIndexMapper.batchInsert(logRecordIndexPos), logRecordIndexPos.size()));
         }
-        return mysqlDatasourceOperate.executeDML(LogRecordMapper.class, mapper -> mapper.batchInsert(logRecordPos) == logRecordPos.size(), true);
+        executeInfos.add(ImmutablePair.of(() -> logRecordMapper.batchInsert(logRecordPos), logRecordPos.size()));
+        return mysqlDatasourceOperate.executeDML(executeInfos);
+    }
+
+    public LogRecordMysqlRepository(MysqlDatasourceOperate mysqlDatasourceOperate,
+                                    LogRecordMapper logRecordMapper,
+                                    LogRecordIndexMapper logRecordIndexMapper) {
+        this.mysqlDatasourceOperate = mysqlDatasourceOperate;
+        this.logRecordMapper = logRecordMapper;
+        this.logRecordIndexMapper = logRecordIndexMapper;
     }
 }

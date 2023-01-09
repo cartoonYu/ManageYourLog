@@ -18,6 +18,8 @@ public class LogConfigDto {
 
     private List<LogIndexConfigDto> indexConfigList;
 
+    private List<LogContentFormatConfigDto> contentFormatConfigList;
+
     private String description;
 
     private Long version;
@@ -95,6 +97,15 @@ public class LogConfigDto {
 
     public LogConfigDto setIndexConfigList(List<LogIndexConfigDto> indexConfigList) {
         this.indexConfigList = indexConfigList;
+        return this;
+    }
+
+    public List<LogContentFormatConfigDto> getContentFormatConfigList() {
+        return contentFormatConfigList;
+    }
+
+    public LogConfigDto setContentFormatConfigList(List<LogContentFormatConfigDto> contentFormatConfigList) {
+        this.contentFormatConfigList = contentFormatConfigList;
         return this;
     }
 }

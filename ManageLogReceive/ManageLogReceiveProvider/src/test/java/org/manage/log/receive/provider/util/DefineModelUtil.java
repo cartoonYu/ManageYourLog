@@ -1,6 +1,8 @@
 package org.manage.log.receive.provider.util;
 
 import com.google.common.collect.ImmutableList;
+import org.manage.log.common.model.config.LogContentFormatConfig;
+import org.manage.log.common.model.config.constants.LogContentFormatType;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
@@ -77,7 +79,21 @@ public class DefineModelUtil {
                 OperatorSort.DEFAULT,
                 "test content template",
                 ImmutableList.of(defineLogIndexConfig()),
+                ImmutableList.of(defineContentFormatConfig()),
                 "test",
+                1L,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
+
+    private static LogContentFormatConfig defineContentFormatConfig(){
+        return new LogContentFormatConfig(
+                IdGenerateUtil.getInstance().generate(13),
+                "test rule" + IdGenerateUtil.getInstance().generate(100),
+                LogContentFormatType.REGULAR_EXPRESSION_MATCH,
+                "test",
+                0L,
                 1L,
                 LocalDateTime.now(),
                 LocalDateTime.now()

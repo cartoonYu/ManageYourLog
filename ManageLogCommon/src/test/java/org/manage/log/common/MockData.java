@@ -1,6 +1,8 @@
 package org.manage.log.common;
 
 import com.google.common.collect.ImmutableList;
+import org.manage.log.common.model.config.LogContentFormatConfig;
+import org.manage.log.common.model.config.constants.LogContentFormatType;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
@@ -28,12 +30,26 @@ public class MockData {
                 OperatorSort.DEFAULT,
                 "test",
                 ImmutableList.of(defineLogIndexConfig()),
+                ImmutableList.of(defineContentFormatConfig()),
                 "test",
                 1L,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
         return logConfig;
+    }
+
+    private static LogContentFormatConfig defineContentFormatConfig(){
+        return new LogContentFormatConfig(
+                IdGenerateUtil.getInstance().generate(13),
+                "test rule" + IdGenerateUtil.getInstance().generate(100),
+                LogContentFormatType.REGULAR_EXPRESSION_MATCH,
+                "test",
+                0L,
+                1L,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
     }
 
     private static LogIndexConfig defineLogIndexConfig(){

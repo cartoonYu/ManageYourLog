@@ -17,6 +17,7 @@ public record LogConfig(
         OperatorSort operatorSort,
         String contentTemplate,
         List<LogIndexConfig> indexConfigList,
+        List<LogContentFormatConfig> formatContentConfig,
         String description,
         Long version,
         LocalDateTime createTime,
