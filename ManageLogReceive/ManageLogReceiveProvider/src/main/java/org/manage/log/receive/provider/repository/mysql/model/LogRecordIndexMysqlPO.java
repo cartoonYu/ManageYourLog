@@ -7,82 +7,43 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2021/11/21 00:04
  */
-public class LogRecordIndexMysqlPO {
+public record LogRecordIndexMysqlPO(
+        String indexId, String logRecordId,
+        String sort, String indexValue,
+        Integer version, LocalDateTime createTime, LocalDateTime modifyTime) {
 
-    private String indexId;
-
-    private String logRecordId;
-
-    private String sort;
-
-    private String indexValue;
-
-    private Integer version;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime modifyTime;
-
-    public String getIndexId() {
+    @Override
+    public String indexId() {
         return indexId;
     }
 
-    public LogRecordIndexMysqlPO setIndexId(String indexId) {
-        this.indexId = indexId;
-        return this;
-    }
-
-    public String getLogRecordId() {
+    @Override
+    public String logRecordId() {
         return logRecordId;
     }
 
-    public LogRecordIndexMysqlPO setLogRecordId(String logRecordId) {
-        this.logRecordId = logRecordId;
-        return this;
-    }
-
-    public String getSort() {
+    @Override
+    public String sort() {
         return sort;
     }
 
-    public LogRecordIndexMysqlPO setSort(String sort) {
-        this.sort = sort;
-        return this;
-    }
-
-    public String getIndexValue() {
+    @Override
+    public String indexValue() {
         return indexValue;
     }
 
-    public LogRecordIndexMysqlPO setIndexValue(String indexValue) {
-        this.indexValue = indexValue;
-        return this;
-    }
-
-    public Integer getVersion() {
+    @Override
+    public Integer version() {
         return version;
     }
 
-    public LogRecordIndexMysqlPO setVersion(Integer version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
+    @Override
+    public LocalDateTime createTime() {
         return createTime;
     }
 
-    public LogRecordIndexMysqlPO setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
+    @Override
+    public LocalDateTime modifyTime() {
         return modifyTime;
-    }
-
-    public LogRecordIndexMysqlPO setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
     }
 }

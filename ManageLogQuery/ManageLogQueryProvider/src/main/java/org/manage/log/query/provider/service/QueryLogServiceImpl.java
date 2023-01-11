@@ -6,6 +6,7 @@ import org.manage.log.query.provider.repository.LogRecordRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class QueryLogServiceImpl implements QueryLogService {
     public List<LogRecord> getLogs(LocalDateTime startTime, LocalDateTime endTime) {
         if(Objects.isNull(startTime) || Objects.isNull(endTime)){
             log.warn("query log, query between time, param is illegal, startTime: {}, endTime: {}", startTime, endTime);
-            return ImmutableList.of();
+            return Collections.emptyList();
         }
         return logRecordRepository.getByTime(startTime, endTime);
     }
@@ -37,7 +38,7 @@ public class QueryLogServiceImpl implements QueryLogService {
     public List<LogRecord> getLogs(String index, LocalDateTime startTime, LocalDateTime endTime) {
         if(Objects.isNull(startTime) || Objects.isNull(endTime) || Objects.isNull(index)){
             log.warn("query log, query between time, param is illegal, startTime: {}, endTime: {}", startTime, endTime);
-            return ImmutableList.of();
+            return Collections.emptyList();
         }
         return logRecordRepository.getByIndexAndTime(index, startTime, endTime);
     }

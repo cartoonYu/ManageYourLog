@@ -6,10 +6,9 @@
         <artifactId>ManageYourLog</artifactId>
         <groupId>org</groupId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>ManageLogQueryProvider</artifactId>
 
     <properties>
@@ -58,7 +57,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.2.1</version>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>

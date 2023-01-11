@@ -11,10 +11,7 @@ import org.manage.log.query.provider.repository.mysql.model.LogRecordMysqlPO;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * mysql store repository
@@ -24,8 +21,6 @@ import java.util.stream.Collectors;
 @Repository
 @LoadBean(primaryConfigKey = "store.mode", loadConfigKey = "store.load.mode", mode = "mysql")
 public class LogRecordMysqlRepository implements LogRecordRepository {
-
-    public static final String INDEX_SPLIT_CHARACTER = ",";
 
     private final LogRecordIndexMapper logRecordIndexMapper;
 
@@ -42,11 +37,10 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
     @Override
     public List<LogRecord> getByTime(LocalDateTime startTime, LocalDateTime endTime) {
         List<LogRecordMysqlPO> logRecordMysqlPoList = logRecordMapper.getByTime(startTime, endTime);
-        //get all index id which is related to log record
-        List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
-        //get all index by index id
-        List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexIds(indexIds);
-        return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexMysqlList);
+        List<String> recordIdList = logRecordMysqlPoList.stream().map(LogRecordMysqlPO::recordId).toList();
+        //get all index which is related to log record
+        List<LogRecordIndexMysqlPO> indexPoList = logRecordIndexMapper.getByRecordIdList(recordIdList);
+        return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexPoList);
     }
 
     @Override
@@ -60,22 +54,12 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
             return ImmutableList.of();
         }
         //get all record id from index list
-        List<String> recordIds = sourceIndexMysqlList.stream().map(LogRecordIndexMysqlPO::getLogRecordId).toList();
+        List<String> recordIds = sourceIndexMysqlList.stream().map(LogRecordIndexMysqlPO::logRecordId).toList();
         //get record by id from database
         List<LogRecordMysqlPO> logRecordMysqlPoList = logRecordMapper.getById(recordIds);
-        //get all index id which is related to log record
-        List<String> indexIds = getIndexIdFromRecordList(logRecordMysqlPoList);
-        //get all index by index id
-        List<LogRecordIndexMysqlPO> indexMysqlList = logRecordIndexMapper.getByIndexIds(indexIds);
-        return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexMysqlList);
-    }
-
-    private List<String> getIndexIdFromRecordList(List<LogRecordMysqlPO> recordMysqlList){
-        return recordMysqlList.stream()
-                .map(LogRecordMysqlPO::getIndexIds)
-                .map(indexId -> Arrays.stream(indexId.split(INDEX_SPLIT_CHARACTER)).collect(Collectors.toList()))
-                .flatMap(Collection::stream)
-                .toList();
+        //get all index which is related to log record
+        List<LogRecordIndexMysqlPO> indexPoList = logRecordIndexMapper.getByRecordIdList(recordIds);
+        return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexPoList);
     }
 
     public LogRecordMysqlRepository(LogRecordIndexMapper logRecordIndexMapper,

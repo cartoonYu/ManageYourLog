@@ -7,115 +7,53 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2022/12/11 10:59
  */
-public class LogIndexConfigMysqlPO {
+public record LogIndexConfigMysqlPO(
+        String ruleId, String ruleName, String logConfigId,
+        String sort, String valueIndexKey,
+        String description, Long version, LocalDateTime createTime, LocalDateTime modifyTime) {
 
-    private String ruleId;
-
-    private String ruleName;
-
-    private String logConfigId;
-
-    private String sort;
-
-    private Long valueIndex;
-
-    private String valueIndexKey;
-
-    private String description;
-
-    private Long version;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime modifyTime;
-
-    public String getRuleId() {
+    @Override
+    public String ruleId() {
         return ruleId;
     }
 
-    public LogIndexConfigMysqlPO setRuleId(String ruleId) {
-        this.ruleId = ruleId;
-        return this;
-    }
-
-    public String getRuleName() {
+    @Override
+    public String ruleName() {
         return ruleName;
     }
 
-    public LogIndexConfigMysqlPO setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-        return this;
+    @Override
+    public String logConfigId() {
+        return logConfigId;
     }
 
-    public LogIndexConfigMysqlPO setLogConfigId(String logConfigId) {
-        this.logConfigId = logConfigId;
-        return this;
-    }
-
-    public String getSort() {
+    @Override
+    public String sort() {
         return sort;
     }
 
-    public LogIndexConfigMysqlPO setSort(String sort) {
-        this.sort = sort;
-        return this;
-    }
-
-    public Long getValueIndex() {
-        return valueIndex;
-    }
-
-    public LogIndexConfigMysqlPO setValueIndex(Long valueIndex) {
-        this.valueIndex = valueIndex;
-        return this;
-    }
-
-    public String getValueIndexKey() {
+    @Override
+    public String valueIndexKey() {
         return valueIndexKey;
     }
 
-    public LogIndexConfigMysqlPO setValueIndexKey(String valueIndexKey) {
-        this.valueIndexKey = valueIndexKey;
-        return this;
-    }
-
-    public String getDescription() {
+    @Override
+    public String description() {
         return description;
     }
 
-    public LogIndexConfigMysqlPO setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Long getVersion() {
+    @Override
+    public Long version() {
         return version;
     }
 
-    public LogIndexConfigMysqlPO setVersion(Long version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
+    @Override
+    public LocalDateTime createTime() {
         return createTime;
     }
 
-    public LogIndexConfigMysqlPO setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
+    @Override
+    public LocalDateTime modifyTime() {
         return modifyTime;
-    }
-
-    public LogIndexConfigMysqlPO setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
-    }
-
-    public String getLogConfigId() {
-        return logConfigId;
     }
 }

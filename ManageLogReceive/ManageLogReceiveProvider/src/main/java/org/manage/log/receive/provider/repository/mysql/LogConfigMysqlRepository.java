@@ -11,6 +11,7 @@ import org.manage.log.receive.provider.config.ApplicationConfigKey;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.repository.mysql.builder.LogConfigMysqlBuilder;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogConfigMapper;
+import org.manage.log.receive.provider.repository.mysql.mapper.LogContentFormatConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.mapper.LogIndexConfigMapper;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -34,6 +34,8 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
     private final LogConfigMapper logConfigMapper;
 
     private final LogIndexConfigMapper logIndexConfigMapper;
+
+    private final LogContentFormatConfigMapper logContentFormatConfigMapper;
 
     private final LoadingCache<String, LogConfig> CACHE;
 
@@ -52,7 +54,7 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
             executeFunctionToExpectExecuteRowList.add(ImmutablePair.of(() -> logIndexConfigMapper.addList(indexConfigMysqlPOList), indexConfigMysqlPOList.size()));
         }
         if(!contentformatMysqlPOList.isEmpty()){
-            //todo execute mapper
+            executeFunctionToExpectExecuteRowList.add(ImmutablePair.of(() -> logContentFormatConfigMapper.batchInsert(contentformatMysqlPOList), contentformatMysqlPOList.size()));
         }
         executeFunctionToExpectExecuteRowList.add(
                 ImmutablePair.of(() -> logConfigMapper.add(logConfigMysqlPO), 1)
@@ -71,8 +73,9 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         if(Objects.isNull(logConfig)){
             return Optional.empty();
         }
-        List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.getRuleId());
-        return Optional.of(builder.convert(logConfig, logIndexConfigList));
+        List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.ruleId());
+        List<LogContentFormatConfigMysqlPO> contentFormatConfigList = logContentFormatConfigMapper.getByConfigId(logConfig.ruleId());
+        return Optional.of(builder.convert(logConfig, logIndexConfigList, contentFormatConfigList));
     }
 
     @Override
@@ -94,11 +97,15 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         }
         //get data from database
         List<LogConfigMysqlPO> configPoFromDatabase = logConfigMapper.getByConfigNameList(needLoadFromDatabaseConfigNameList);
-        List<String> logConfigIdFromDatabase = configPoFromDatabase.stream().map(LogConfigMysqlPO::getRuleId).toList();
-        List<LogIndexConfigMysqlPO> indexConfigFromDatabase = logIndexConfigMapper.getByConfigNameList(logConfigIdFromDatabase);
-        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = indexConfigFromDatabase.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::getLogConfigId));
+        List<String> logConfigIdFromDatabase = configPoFromDatabase.stream().map(LogConfigMysqlPO::ruleId).toList();
+        List<LogIndexConfigMysqlPO> indexConfigFromDatabase = logIndexConfigMapper.getByConfigIdList(logConfigIdFromDatabase);
+        List<LogContentFormatConfigMysqlPO> contentFormatConfigFromDatabase = logContentFormatConfigMapper.getByConfigIdList(logConfigIdFromDatabase);
+        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = indexConfigFromDatabase.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
+        Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigFromDatabase.stream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
         List<LogConfig> configFromDatabase = configPoFromDatabase.stream().
-                                                    map(config -> builder.convert(config, configIdToIndexMap.getOrDefault(config.getRuleId(), new ArrayList<>())))
+                                                    map(config -> builder.convert(config,
+                                                                                    configIdToIndexMap.getOrDefault(config.ruleId(), new ArrayList<>()),
+                                                                                    configIdToFormatMap.getOrDefault(config.ruleId(), new ArrayList<>())))
                                                     .toList();
         //merge two result list and return
         configFromCache.addAll(configFromDatabase);
@@ -109,20 +116,27 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
     public List<LogConfig> getAll() {
         List<LogConfigMysqlPO> configMysqlPoList = logConfigMapper.getAll();
         List<LogIndexConfigMysqlPO> configIndexMysqlPoList = logIndexConfigMapper.getAll();
+        List<LogContentFormatConfigMysqlPO> contentFormatConfigList = logContentFormatConfigMapper.getAll();
+
+        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = configIndexMysqlPoList.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
+        Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigList.stream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
+
 
         return configMysqlPoList.stream().map(configMysqlPo -> {
-            List<LogIndexConfigMysqlPO> indexConfigList = configIndexMysqlPoList.stream().filter(index -> configMysqlPo.getRuleId().equals(index.getLogConfigId())).toList();
-            return builder.convert(configMysqlPo, indexConfigList);
+            String configId = configMysqlPo.ruleId();
+            return builder.convert(configMysqlPo, configIdToIndexMap.getOrDefault(configId, new ArrayList<>()), configIdToFormatMap.getOrDefault(configId, new ArrayList<>()));
         }).toList();
     }
 
     public LogConfigMysqlRepository(LogConfigMapper logConfigMapper,
                                         LogIndexConfigMapper logIndexConfigMapper,
+                                        LogContentFormatConfigMapper logContentFormatConfigMapper,
                                         ApplicationConfigUtil applicationConfigUtil,
                                     LogConfigMysqlBuilder logConfigMysqlBuilder,
                                     MysqlDatasourceOperate mysqlDatasourceOperate) {
         this.logConfigMapper = logConfigMapper;
         this.logIndexConfigMapper = logIndexConfigMapper;
+        this.logContentFormatConfigMapper = logContentFormatConfigMapper;
         this.builder = logConfigMysqlBuilder;
         this.mysqlDatasourceOperate = mysqlDatasourceOperate;
 
@@ -136,8 +150,9 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
                         if(Objects.isNull(logConfig)){
                             return null;
                         }
-                        List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.getRuleId());
-                        return builder.convert(logConfig, logIndexConfigList);
+                        List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.ruleId());
+                        List<LogContentFormatConfigMysqlPO> contentFormatConfigList = logContentFormatConfigMapper.getByConfigId(logConfig.ruleId());
+                        return builder.convert(logConfig, logIndexConfigList, contentFormatConfigList);
                     }
                 });
     }

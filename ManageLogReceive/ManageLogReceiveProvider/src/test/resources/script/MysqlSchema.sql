@@ -8,7 +8,6 @@ CREATE TABLE `LogRecord` (
                              `operatorSort` varchar(100) DEFAULT '' COMMENT 'log operator sort',
                              `operator` varchar(50) NOT NULL DEFAULT '' COMMENT 'log operator',
                              `logRecordSort` varchar(200) NOT NULL DEFAULT '0',
-                             `indexIds` varchar(200) DEFAULT '' COMMENT 'log index id collection',
                              `version` int NOT NULL DEFAULT '1' COMMENT 'log version',
                              `createTime` datetime NOT NULL COMMENT 'record create time',
                              `modifyTime` datetime NOT NULL COMMENT 'record modify time',
@@ -56,4 +55,20 @@ CREATE TABLE `LogIndexConfig` (
                              UNIQUE KEY `LogIndexConfig_ruleId_uindex` (`ruleId`),
                              UNIQUE KEY `LogIndexConfig_ruleName_uindex` (`ruleName`),
                              KEY `LogIndexConfig_logConfigId_index`(`logConfigId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+drop table if exists LogContentFormatConfig;
+CREATE TABLE `LogContentFormatConfig` (
+                                  `ruleId` varchar(100) NOT NULL DEFAULT '' COMMENT 'rule id',
+                                  `ruleName` varchar(200) NOT NULL DEFAULT '' COMMENT 'rule name',
+                                  `logConfigId` varchar(100) NOT NULL COMMENT 'related config id',
+                                  `type` varchar(50) NOT NULL DEFAULT '' COMMENT 'format type',
+                                  `value` varchar(1024) NOT NULL COMMENT 'value',
+                                  `executeSequence` int NOT NULL DEFAULT 0,
+                                  `version` int NOT NULL DEFAULT '1' COMMENT 'version',
+                                  `createTime` datetime NOT NULL COMMENT 'config create time',
+                                  `modifyTime` datetime NOT NULL COMMENT 'config modify time',
+                                  UNIQUE KEY `LogContentFormatConfig_ruleId_uindex` (`ruleId`),
+                                  UNIQUE KEY `LogContentFormatConfig_ruleName_uindex` (`ruleName`),
+                                  KEY `LogContentFormatConfig_logConfigId_index`(`logConfigId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

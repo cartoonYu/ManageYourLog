@@ -1,10 +1,10 @@
 use ManageYourLog;
 insert into LogRecord(
     recordId, content, operatorSort, operator, logRecordSort,
-    indexIds, version, createTime, modifyTime)
+    version, createTime, modifyTime)
     value (
       '111', '订单 1111 被快递员 222 送出分拨中心', 'USER', '222', 'operate',
-      '111', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
+       1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );
 
 insert into LogRecordIndex(
@@ -29,4 +29,12 @@ insert into LogIndexConfig (
     value(
         '1', 'orderOperateIndex', 1, 'date', 'userId',
         'order operate index', 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
+    );
+
+insert into LogContentFormatConfig (
+    ruleId, ruleName, logConfigId, type, `value`,
+    executeSequence, version, createTime, modifyTime)
+    value(
+          '1', 'orderOperateIndex', 1, 'REGULAR_EXPRESSION_MATCH', '#{([A-Za-z]+.+)+}',
+          0, 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );

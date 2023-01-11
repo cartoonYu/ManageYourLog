@@ -2,6 +2,8 @@ package org.manage.log.receive.provider.repository.mysql;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.util.factory.LoadBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -20,6 +22,8 @@ import java.util.function.Supplier;
 @LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", needPrimary = false)
 public class MysqlDatasourceOperate {
 
+    private static final Logger log = LoggerFactory.getLogger(MysqlDatasourceOperate.class);
+
     private final PlatformTransactionManager platformTransactionManager;
 
     public boolean executeDML(List<ImmutablePair<Supplier<Integer>, Integer>> executeFunctionToExpectExecuteRowList){
@@ -36,6 +40,7 @@ public class MysqlDatasourceOperate {
             platformTransactionManager.commit(transactionStatus);
             return true;
         } catch (Exception e){
+            log.error("mysql datasource operate, execute error", e);
             platformTransactionManager.rollback(transactionStatus);
             return false;
         }

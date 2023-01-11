@@ -47,7 +47,7 @@ public class LogRecordRepositoryTest extends BaseTest {
         List<LogRecordIndex> indexList = ImmutableList.of(DefineModelUtil.defineLogRecordIndex(recordId, "2222"));
         LogRecord logRecord = DefineModelUtil.defineLogRecord(recordId, indexList);
 
-        logRecordRepository.save(ImmutableList.of(logRecord));
-        Assertions.assertThrows(PersistenceException.class, () -> logRecordRepository.save(ImmutableList.of(logRecord)));
+        Assertions.assertTrue(logRecordRepository.save(ImmutableList.of(logRecord)));
+        Assertions.assertFalse(logRecordRepository.save(ImmutableList.of(logRecord)));
     }
 }

@@ -24,8 +24,6 @@ import java.util.function.Supplier;
 @LoadBean(loadConfigKey = "store.load.mode", mode = "mysql")
 public class LogRecordMysqlRepository implements LogRecordRepository {
 
-    public static final String INDEX_SPLIT_CHARACTER = ",";
-
     private final MysqlDatasourceOperate mysqlDatasourceOperate;
 
     private final LogRecordMapper logRecordMapper;

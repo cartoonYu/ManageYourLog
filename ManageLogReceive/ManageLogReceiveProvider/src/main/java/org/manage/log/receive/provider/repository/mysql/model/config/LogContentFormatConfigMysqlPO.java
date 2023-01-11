@@ -12,6 +12,8 @@ public record LogContentFormatConfigMysqlPO(
         String ruleId,
         //rule name
         String ruleName,
+        //parent config id,
+        String logConfigId,
         //choose format type mode
         String type,
         //format content basis value
@@ -30,6 +32,11 @@ public record LogContentFormatConfigMysqlPO(
     @Override
     public String ruleName() {
         return ruleName;
+    }
+
+    @Override
+    public String logConfigId() {
+        return logConfigId;
     }
 
     @Override

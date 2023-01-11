@@ -77,13 +77,13 @@ public class ManageConfigControllerTest extends BaseTest {
     public void testAddWithoutContentFormat(){
 
         UploadLogIndexConfigDto indexConfig = new UploadLogIndexConfigDto();
-        indexConfig.setRuleName("test")
+        indexConfig.setRuleName("test1")
                 .setLogRecordIndexSort(LogRecordIndexSort.ID.getSortDescription())
                 .setValueIndexKey("userId")
                 .setDescription("test");
 
         UploadLogConfigDto uploadLogConfigDto = new UploadLogConfigDto();
-        uploadLogConfigDto.setRuleName(mockConfigName)
+        uploadLogConfigDto.setRuleName("testWithoutContentFormat")
                 .setOperatorSort(OperatorSort.USER.getSortDescription())
                 .setIndexConfigList(ImmutableList.of(indexConfig))
                 .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
