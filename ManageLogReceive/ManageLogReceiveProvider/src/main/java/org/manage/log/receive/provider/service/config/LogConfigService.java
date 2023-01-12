@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -18,12 +19,7 @@ public interface LogConfigService {
 
     List<LogConfig> getByConfigNameList(List<String> configNameList);
 
-    /**
-     *
-     * @param logConfig
-     * @return key: source value key, value: extract value key
-     */
-    List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig);
+    String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap);
 
     List<LogConfig> getAll();
 }

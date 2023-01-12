@@ -1,6 +1,5 @@
 package org.manage.log.receive.provider.service;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogConfig;
@@ -65,7 +64,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
             LogConfig logConfig = configNameToConfig.get(uploadReq.getConfigName());
             return ofNullable(logConfig).map(config -> {
                 //format content by content template
-                String content = formatContent(config, uploadReq.getValuePropertyToValueMap());
+                String content = logConfigService.formatContent(config, uploadReq.getValuePropertyToValueMap());
                 //get index value from value list according by index config
                 Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>();
                 for(LogIndexConfig logIndexConfig : config.indexConfigList()){
@@ -77,15 +76,6 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
             }).orElse(null);
         }).filter(Objects::nonNull).toList();
-    }
-
-    private String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
-        List<ImmutablePair<String, String>> extractValueKeyList = logConfigService.extractValueKey(logConfig);
-        String content = logConfig.contentTemplate();
-        for(ImmutablePair<String, String> extractValueKey : extractValueKeyList){
-            content = content.replace(extractValueKey.getLeft(), valuePropertyToValueMap.get(extractValueKey.getRight()));
-        }
-        return content;
     }
 
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);

@@ -21,7 +21,7 @@
         <module>ManageLogCommon</module>
         <module>ManageLogDemo</module>
         <module>ManageLogReceive</module>
-        <module>ManageLogQuery/ManageLogQueryProvider</module>
+        <module>ManageLogQuery</module>
     </modules>
 
     <properties>
