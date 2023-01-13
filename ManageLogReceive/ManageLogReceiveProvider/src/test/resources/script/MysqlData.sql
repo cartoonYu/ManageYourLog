@@ -35,6 +35,23 @@ insert into LogContentFormatConfig (
     ruleId, ruleName, logConfigId, type, `value`,
     executeSequence, version, createTime, modifyTime)
     value(
-          '1', 'orderOperateIndex', 1, 'REGULAR_EXPRESSION_MATCH', '#{([A-Za-z]+.+)+}',
+          '1', 'orderOperateFormat1', 1, 'REGULAR_EXPRESSION_MATCH', '#\\{([A-Za-z]+\\.+)+\\}',
           0, 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
+    );
+
+insert into LogContentFormatConfig (
+    ruleId, ruleName, logConfigId, type, `value`,
+    executeSequence, version, createTime, modifyTime)
+    value(
+          '2', 'orderOperateFormat2', 1, 'REGULAR_EXPRESSION_MATCH', '([A-Za-z]+\\.+)+',
+          1, 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
+    );
+
+-- mock define value todo
+insert into LogContentFormatConfig (
+    ruleId, ruleName, logConfigId, type, `value`,
+    executeSequence, version, createTime, modifyTime)
+    value(
+          '3', 'orderOperateFormat3', 1, 'CODE_EXECUTE', 'test',
+          1, 1, '2021-10-26 00:00:00', '2021-10-26 00:00:00'
     );

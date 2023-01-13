@@ -3,6 +3,7 @@ package org.manage.log.receive.provider.service.config;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
+import org.manage.log.receive.provider.service.config.content.format.LogContentFormatFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -18,6 +19,8 @@ import java.util.regex.Pattern;
 public class LogConfigServiceImpl implements LogConfigService {
 
     private final LogConfigRepository logConfigRepository;
+
+    private final LogContentFormatFactory logContentFormatFactory;
 
     @Override
     public boolean add(LogConfig logConfig) {
@@ -66,12 +69,7 @@ public class LogConfigServiceImpl implements LogConfigService {
 
     @Override
     public String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap) {
-        List<ImmutablePair<String, String>> extractValueKeyList = extractValueKey(logConfig);
-        String content = logConfig.contentTemplate();
-        for(ImmutablePair<String, String> extractValueKey : extractValueKeyList){
-            content = content.replace(extractValueKey.getLeft(), valuePropertyToValueMap.get(extractValueKey.getRight()));
-        }
-        return content;
+        return logContentFormatFactory.format(logConfig, valuePropertyToValueMap);
     }
 
 
@@ -81,7 +79,9 @@ public class LogConfigServiceImpl implements LogConfigService {
         return logConfigRepository.getAll();
     }
 
-    public LogConfigServiceImpl(LogConfigRepository logConfigRepository) {
+    public LogConfigServiceImpl(LogConfigRepository logConfigRepository,
+                                    LogContentFormatFactory logContentFormatFactory) {
         this.logConfigRepository = logConfigRepository;
+        this.logContentFormatFactory = logContentFormatFactory;
     }
 }
