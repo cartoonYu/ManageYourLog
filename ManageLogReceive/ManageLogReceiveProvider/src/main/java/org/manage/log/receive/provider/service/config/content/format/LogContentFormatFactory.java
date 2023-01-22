@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @version 1.0
  * @since 2023/1/12 20:01
  */

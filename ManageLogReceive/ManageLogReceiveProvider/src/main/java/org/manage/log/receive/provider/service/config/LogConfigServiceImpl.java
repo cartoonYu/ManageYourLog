@@ -1,6 +1,5 @@
 package org.manage.log.receive.provider.service.config;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.service.config.content.format.LogContentFormatFactory;
@@ -8,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author cartoon
@@ -38,41 +35,10 @@ public class LogConfigServiceImpl implements LogConfigService {
         return logConfigRepository.getByConfigNameList(configNameList);
     }
 
-    /**
-     * @param logConfig
-     * @return key: source value key, value: extract value key
-     */
-    private List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig) {
-        String contentTemplate = logConfig.contentTemplate();
-        //get value key like '#{aaa.bbb.ccc.}'
-        String regex = "#\\{([A-Za-z]+\\.+)+\\}";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(contentTemplate);
-        List<String> valueFlagList = new ArrayList<>();
-        while (matcher.find()){
-            valueFlagList.add(matcher.group());
-        }
-        regex = "([A-Za-z]+\\.+)+";
-        pattern = Pattern.compile(regex);
-        Pattern finalPattern = pattern;
-        return valueFlagList.stream().map(valueFlag -> {
-            Matcher innerMatcher = finalPattern.matcher(valueFlag);
-            while (innerMatcher.find()){
-                // matchString like this: aaa.
-                String matchString = innerMatcher.group();
-                //remove . from matchString
-                return ImmutablePair.of(valueFlag, matchString.substring(0, matchString.length() - 1));
-            }
-            return null;
-        }).filter(Objects::nonNull).toList();
-    }
-
     @Override
     public String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap) {
         return logContentFormatFactory.format(logConfig, valuePropertyToValueMap);
     }
-
-
 
     @Override
     public List<LogConfig> getAll() {
