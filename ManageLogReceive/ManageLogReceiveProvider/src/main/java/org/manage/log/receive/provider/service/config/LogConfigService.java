@@ -1,6 +1,5 @@
 package org.manage.log.receive.provider.service.config;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 
 import java.util.List;

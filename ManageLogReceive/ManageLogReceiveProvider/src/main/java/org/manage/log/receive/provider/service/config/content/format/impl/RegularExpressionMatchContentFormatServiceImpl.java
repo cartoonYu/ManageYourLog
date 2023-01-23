@@ -25,7 +25,7 @@ public class RegularExpressionMatchContentFormatServiceImpl implements LogConten
     }
 
     @Override
-    public List<String> extractValueKey(LogContentFormatConfig formatConfig, String contentTemplate) {
+    public List<String> firstExtractValueKey(LogContentFormatConfig formatConfig, String contentTemplate) {
         String regex = formatConfig.value();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contentTemplate);

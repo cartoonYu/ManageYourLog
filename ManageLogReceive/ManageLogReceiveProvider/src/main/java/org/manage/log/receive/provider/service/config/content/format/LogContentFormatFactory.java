@@ -20,6 +20,12 @@ public class LogContentFormatFactory {
 
     private final Map<LogContentFormatType, LogContentFormatService> formatTypeToHandlerMap;
 
+    /**
+     * calculate and replace key need to move to add config, in order to short log content upload time
+     * @param logConfig
+     * @param valuePropertyToValueMap
+     * @return
+     */
     public String format(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
         List<ImmutablePair<String, String>> extractValueKeyList = extractValueKey(logConfig);
         String content = logConfig.contentTemplate();

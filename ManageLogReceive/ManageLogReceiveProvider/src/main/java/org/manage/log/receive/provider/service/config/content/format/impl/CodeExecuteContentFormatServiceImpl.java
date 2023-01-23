@@ -21,12 +21,6 @@ public class CodeExecuteContentFormatServiceImpl implements LogContentFormatServ
     }
 
     @Override
-    public List<String> extractValueKey(LogContentFormatConfig formatConfig, String contentTemplate) {
-        //todo use aviator to execute
-        return null;
-    }
-
-    @Override
     public List<String> extractValueKey(LogContentFormatConfig formatConfigs, List<String> sourceValueKeyList) {
         //todo use aviator to execute
         //remove . from matchString default
