@@ -18,58 +18,9 @@ public record LogConfig(
         String contentTemplate,
         List<LogIndexConfig> indexConfigList,
         List<LogContentFormatConfig> formatContentConfig,
+        List<LogContentValueKeyConfig> contentValueKeyConfigs,
         String description,
         Long version,
         LocalDateTime createTime,
         LocalDateTime modifyTime) {
-
-    @Override
-    public String ruleId() {
-        return ruleId;
-    }
-
-    @Override
-    public String ruleName() {
-        return ruleName;
-    }
-
-    @Override
-    public LogRecordSort logRecordSort() {
-        return logRecordSort;
-    }
-
-    @Override
-    public OperatorSort operatorSort() {
-        return operatorSort;
-    }
-
-    @Override
-    public String contentTemplate() {
-        return contentTemplate;
-    }
-
-    @Override
-    public List<LogIndexConfig> indexConfigList() {
-        return indexConfigList;
-    }
-
-    @Override
-    public String description() {
-        return description;
-    }
-
-    @Override
-    public Long version() {
-        return version;
-    }
-
-    @Override
-    public LocalDateTime createTime() {
-        return createTime;
-    }
-
-    @Override
-    public LocalDateTime modifyTime() {
-        return modifyTime;
-    }
 }

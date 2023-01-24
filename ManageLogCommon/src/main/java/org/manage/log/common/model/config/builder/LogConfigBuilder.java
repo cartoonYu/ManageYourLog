@@ -2,6 +2,7 @@ package org.manage.log.common.model.config.builder;
 
 
 import org.manage.log.common.model.config.LogContentFormatConfig;
+import org.manage.log.common.model.config.LogContentValueKeyConfig;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
@@ -31,6 +32,8 @@ public class LogConfigBuilder {
     private List<LogIndexConfig> indexConfigList = new ArrayList<>();
 
     private List<LogContentFormatConfig> contentFormatConfigList = new ArrayList<>();
+
+    private List<LogContentValueKeyConfig> contentValueKeyConfigList = new ArrayList<>();
 
     private String description;
 
@@ -96,6 +99,15 @@ public class LogConfigBuilder {
         return this;
     }
 
+    public LogConfigBuilder setContentValueKeyConfigList(List<LogContentValueKeyConfig> contentValueKeyConfigList){
+        if(Objects.isNull(contentValueKeyConfigList)){
+            return this;
+        }
+        this.contentValueKeyConfigList.addAll(contentValueKeyConfigList);
+        return this;
+    }
+
+
     public LogConfig build(){
         if(Objects.isNull(ruleId)){
             ruleId = logConfigFactory.generateRuleId();
@@ -108,6 +120,7 @@ public class LogConfigBuilder {
                 contentTemplate,
                 indexConfigList,
                 contentFormatConfigList,
+                contentValueKeyConfigList,
                 description,
                 version,
                 createTime,

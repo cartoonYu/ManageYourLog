@@ -23,44 +23,4 @@ public record LogContentFormatConfig(
         Long version,
         LocalDateTime createTime,
         LocalDateTime modifyTime) {
-
-    @Override
-    public String ruleId() {
-        return ruleId;
-    }
-
-    @Override
-    public String ruleName() {
-        return ruleName;
-    }
-
-    @Override
-    public LogContentFormatType type() {
-        return type;
-    }
-
-    @Override
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public Long executeSequence() {
-        return executeSequence;
-    }
-
-    @Override
-    public Long version() {
-        return version;
-    }
-
-    @Override
-    public LocalDateTime createTime() {
-        return createTime;
-    }
-
-    @Override
-    public LocalDateTime modifyTime() {
-        return modifyTime;
-    }
 }

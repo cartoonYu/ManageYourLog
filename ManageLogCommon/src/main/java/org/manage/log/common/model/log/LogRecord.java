@@ -30,51 +30,5 @@ public record LogRecord(
         //record create time
         LocalDateTime createTime,
         //record last modify time
-        LocalDateTime modifyTime
-) {
-
-    @Override
-    public String recordId() {
-        return recordId;
-    }
-
-    @Override
-    public String content() {
-        return content;
-    }
-
-    @Override
-    public OperatorSort operatorSort() {
-        return operatorSort;
-    }
-
-    @Override
-    public String operator() {
-        return operator;
-    }
-
-    @Override
-    public LogRecordSort logRecordSort() {
-        return logRecordSort;
-    }
-
-    @Override
-    public List<LogRecordIndex> indexList() {
-        return indexList;
-    }
-
-    @Override
-    public Integer version() {
-        return version;
-    }
-
-    @Override
-    public LocalDateTime createTime() {
-        return createTime;
-    }
-
-    @Override
-    public LocalDateTime modifyTime() {
-        return modifyTime;
-    }
+        LocalDateTime modifyTime) {
 }

@@ -19,6 +19,7 @@ public class LogConfigServiceImpl implements LogConfigService {
 
     private final LogContentFormatFactory logContentFormatFactory;
 
+    //todo call extract key method extract key
     @Override
     public boolean add(LogConfig logConfig) {
         return logConfigRepository.add(logConfig);

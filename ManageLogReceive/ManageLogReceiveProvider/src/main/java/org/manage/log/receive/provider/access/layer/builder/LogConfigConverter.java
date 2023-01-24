@@ -1,5 +1,6 @@
 package org.manage.log.receive.provider.access.layer.builder;
 
+import com.google.common.collect.ImmutableList;
 import org.manage.log.common.model.config.LogContentFormatConfig;
 import org.manage.log.common.model.config.builder.LogContentFormatConfigFactory;
 import org.manage.log.common.model.config.constants.LogContentFormatType;
@@ -102,6 +103,7 @@ public class LogConfigConverter {
                 .build(uploadLogConfigDto.getRuleName(), LogRecordSort.parse(uploadLogConfigDto.getLogRecordSort()),
                         OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), uploadLogConfigDto.getContentTemplate(), logIndexConfigList,
                         contentFormatConfigList,
+                        ImmutableList.of(),
                         uploadLogConfigDto.getDescription());
     }
 

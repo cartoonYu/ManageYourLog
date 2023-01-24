@@ -72,3 +72,17 @@ CREATE TABLE `LogContentFormatConfig` (
                                   UNIQUE KEY `LogContentFormatConfig_ruleName_uindex` (`ruleName`),
                                   KEY `LogContentFormatConfig_logConfigId_index`(`logConfigId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+drop table if exists LogContentValueKeyConfig;
+CREATE TABLE `LogContentValueKeyConfig` (
+                                          `ruleId` varchar(100) NOT NULL DEFAULT '' COMMENT 'rule id',
+                                          `logConfigId` varchar(100) NOT NULL COMMENT 'related config id',
+                                          `sourceKey` varchar(32) NOT NULL,
+                                          `currentKey` varchar(32) NOT NULL,
+                                          `sequence` int NOT NULL DEFAULT 0,
+                                          `version` int NOT NULL DEFAULT '1' COMMENT 'version',
+                                          `createTime` datetime NOT NULL COMMENT 'config create time',
+                                          `modifyTime` datetime NOT NULL COMMENT 'config modify time',
+                                          UNIQUE KEY `LogContentValueKeyConfig_ruleId_uindex` (`ruleId`),
+                                          KEY `LogContentValueKeyConfig_logConfigId_index`(`logConfigId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

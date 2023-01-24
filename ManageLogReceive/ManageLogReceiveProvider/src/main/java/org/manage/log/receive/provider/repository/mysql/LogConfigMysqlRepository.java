@@ -3,6 +3,7 @@ package org.manage.log.receive.provider.repository.mysql;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
@@ -75,7 +76,8 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         }
         List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.ruleId());
         List<LogContentFormatConfigMysqlPO> contentFormatConfigList = logContentFormatConfigMapper.getByConfigId(logConfig.ruleId());
-        return Optional.of(builder.convert(logConfig, logIndexConfigList, contentFormatConfigList));
+        //todo value key config list get
+        return Optional.of(builder.convert(logConfig, logIndexConfigList, contentFormatConfigList, ImmutableList.of()));
     }
 
     @Override
@@ -102,10 +104,12 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         List<LogContentFormatConfigMysqlPO> contentFormatConfigFromDatabase = logContentFormatConfigMapper.getByConfigIdList(logConfigIdFromDatabase);
         Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = indexConfigFromDatabase.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
         Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigFromDatabase.stream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
+        //todo value key config list get
         List<LogConfig> configFromDatabase = configPoFromDatabase.stream().
                                                     map(config -> builder.convert(config,
                                                                                     configIdToIndexMap.getOrDefault(config.ruleId(), new ArrayList<>()),
-                                                                                    configIdToFormatMap.getOrDefault(config.ruleId(), new ArrayList<>())))
+                                                                                    configIdToFormatMap.getOrDefault(config.ruleId(), new ArrayList<>()),
+                                                                                ImmutableList.of()))
                                                     .toList();
         //merge two result list and return
         configFromCache.addAll(configFromDatabase);
@@ -120,11 +124,10 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
 
         Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = configIndexMysqlPoList.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
         Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigList.stream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
-
-
+        //todo value key config list get
         return configMysqlPoList.stream().map(configMysqlPo -> {
             String configId = configMysqlPo.ruleId();
-            return builder.convert(configMysqlPo, configIdToIndexMap.getOrDefault(configId, new ArrayList<>()), configIdToFormatMap.getOrDefault(configId, new ArrayList<>()));
+            return builder.convert(configMysqlPo, configIdToIndexMap.getOrDefault(configId, new ArrayList<>()), configIdToFormatMap.getOrDefault(configId, new ArrayList<>()), ImmutableList.of());
         }).toList();
     }
 
@@ -152,7 +155,8 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
                         }
                         List<LogIndexConfigMysqlPO> logIndexConfigList = logIndexConfigMapper.getByLogConfigId(logConfig.ruleId());
                         List<LogContentFormatConfigMysqlPO> contentFormatConfigList = logContentFormatConfigMapper.getByConfigId(logConfig.ruleId());
-                        return builder.convert(logConfig, logIndexConfigList, contentFormatConfigList);
+                        //todo value key config list get
+                        return builder.convert(logConfig, logIndexConfigList, contentFormatConfigList, ImmutableList.of());
                     }
                 });
     }

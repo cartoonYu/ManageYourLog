@@ -46,7 +46,7 @@ public class LogContentFormatFactory {
             LogContentFormatService formatHandler = formatTypeToHandlerMap.get(formatConfig.type());
             if(Objects.nonNull(formatHandler)){
                 if(formatConfig.executeSequence() == 0L){
-                    sourceKeyList = formatHandler.extractValueKey(formatConfig, logConfig.contentTemplate());
+                    sourceKeyList = formatHandler.firstExtractValueKey(formatConfig, logConfig.contentTemplate());
                     middleResultList = sourceKeyList;
                 } else {
                     middleResultList = formatHandler.extractValueKey(formatConfig, middleResultList);
