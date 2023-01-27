@@ -18,7 +18,7 @@ public class ReceiveLogByHttpTest extends BaseTest {
 
     @DisplayName("receive single log test")
     @Test
-    public void testReceiveSingleLog() throws Exception{
+    public void testReceiveSingleLog(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
         String result = post("/receive/singleLog", uploadLogRecordReq);
         Assertions.assertNotNull(result);
@@ -26,7 +26,7 @@ public class ReceiveLogByHttpTest extends BaseTest {
 
     @DisplayName("receive log list test")
     @Test
-    public void testReceiveLogList() throws Exception{
+    public void testReceiveLogList(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
         String result = post("/receive/logList", ImmutableList.of(uploadLogRecordReq));
         Assertions.assertNotNull(result);

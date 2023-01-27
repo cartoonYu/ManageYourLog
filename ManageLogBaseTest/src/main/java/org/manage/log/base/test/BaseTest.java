@@ -3,6 +3,7 @@ package org.manage.log.base.test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,46 +49,76 @@ public class BaseTest implements EnvironmentAware {
         BaseTest.environment = environment;
     }
 
-    protected <T> String post(String urlTemplate, T data) throws Exception {
-        return mockMvc
-                .perform(
-                        MockMvcRequestBuilders.post(urlTemplate)
-                                .content(objectMapper.writeValueAsString(data).getBytes(StandardCharsets.UTF_8))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                )
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8);
+    protected <T> String post(String urlTemplate, T data){
+        try {
+            return mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(urlTemplate)
+                                    .content(objectMapper.writeValueAsString(data).getBytes(StandardCharsets.UTF_8))
+                                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    )
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andReturn()
+                    .getResponse()
+                    .getContentAsString(StandardCharsets.UTF_8);
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+            return null;
+        }
     }
 
-    protected String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList) throws Exception{
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate).contentType(MediaType.APPLICATION_JSON_VALUE);
-        paramToDataList.forEach((param) -> requestBuilder.queryParam(param.getLeft(), param.getRight()));
-        MvcResult mvcResult =  mockMvc
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        return mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    protected <T> T get(String urlTemplate, Class<T> classType){
+        try {
+            String sourceResponse = get(urlTemplate, ImmutableList.of());
+            return objectMapper.readValue(sourceResponse, classType);
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+            return null;
+        }
     }
 
-    protected <T> T get(String urlTemplate, Class<T> classType) throws Exception{
-        String sourceResponse = get(urlTemplate, ImmutableList.of());
-        return objectMapper.readValue(sourceResponse, classType);
+    protected <T> T get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList, Class<T> classType){
+        try {
+            String sourceResponse = get(urlTemplate, paramToDataList);
+            return objectMapper.readValue(sourceResponse, classType);
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+            return null;
+        }
     }
 
-    protected <T> T get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList, Class<T> classType) throws Exception{
-        String sourceResponse = get(urlTemplate, paramToDataList);
-        return objectMapper.readValue(sourceResponse, classType);
+    protected <T> List<T> getList(String urlTemplate, Class<T> classType){
+        try {
+            String sourceResponse = get(urlTemplate, ImmutableList.of());
+            return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+            return null;
+        }
     }
 
-    protected <T> List<T> getList(String urlTemplate, Class<T> classType) throws Exception{
-        String sourceResponse = get(urlTemplate, ImmutableList.of());
-        return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
+    protected <T> List<T> getList(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList, Class<T> classType){
+        try {
+            String sourceResponse = get(urlTemplate, paramToDataList);
+            return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+            return null;
+        }
     }
 
-    protected <T> List<T> getList(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList, Class<T> classType) throws Exception{
-        String sourceResponse = get(urlTemplate, paramToDataList);
-        return objectMapper.readValue(sourceResponse, objectMapper.getTypeFactory().constructCollectionType(List.class, classType));
+    private String get(String urlTemplate, List<ImmutablePair<String, String>> paramToDataList){
+        try {
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(urlTemplate).contentType(MediaType.APPLICATION_JSON_VALUE);
+            paramToDataList.forEach((param) -> requestBuilder.queryParam(param.getLeft(), param.getRight()));
+            MvcResult mvcResult =  mockMvc
+                    .perform(requestBuilder)
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andReturn();
+            return mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        } catch (Exception e){
+            Assertions.fail(e.getMessage());
+            return null;
+        }
     }
 }

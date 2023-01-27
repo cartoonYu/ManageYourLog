@@ -48,11 +48,7 @@ public class ManageConfigControllerTest extends BaseTest {
                                             .setContentTemplate("test content template, userId: #{userId}")
                                                 .setContentFormatConfigList(ImmutableList.of(contentFormatConfig))
                                                     .setDescription("test");
-        try {
-            Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
-        } catch (Exception e){
-            Assertions.fail(e.getMessage());
-        }
+        Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
     }
 
     @Test
@@ -65,11 +61,7 @@ public class ManageConfigControllerTest extends BaseTest {
                 .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
                 .setContentTemplate("test content template")
                 .setDescription("test");
-        try {
-            Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
-        } catch (Exception e){
-            Assertions.fail(e.getMessage());
-        }
+        Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
     }
 
     @Test
@@ -89,11 +81,7 @@ public class ManageConfigControllerTest extends BaseTest {
                 .setLogRecordSort(LogRecordSort.OPERATE.getSortDescription())
                 .setContentTemplate("test content template, userId: #{userId}")
                 .setDescription("test");
-        try {
-            Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
-        } catch (Exception e){
-            Assertions.fail(e.getMessage());
-        }
+        Assertions.assertTrue(Boolean.parseBoolean(post("/config/add", uploadLogConfigDto)));
     }
 
 
