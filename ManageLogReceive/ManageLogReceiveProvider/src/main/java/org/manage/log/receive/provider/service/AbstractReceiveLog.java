@@ -61,16 +61,15 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         Map<String, LogConfig> configNameToConfig = configList.stream().collect(Collectors.toMap(LogConfig::ruleName, Function.identity()));
         //format log content and others, call factory to build domain object
         return uploadLogRecordReqList.stream().map(uploadReq -> {
-            LogConfig logConfig = configNameToConfig.get(uploadReq.getConfigName());
-            return ofNullable(logConfig).map(config -> {
+            return ofNullable(configNameToConfig.get(uploadReq.getConfigName())).map(config -> {
                 //format content by content template
                 String content = logConfigService.formatContent(config, uploadReq.getValuePropertyToValueMap());
                 //get index value from value list according by index config
-                Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>();
+                Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>(config.indexConfigList().size());
                 for(LogIndexConfig logIndexConfig : config.indexConfigList()){
                     indexValueToIndexSortMap.put(uploadReq.getValuePropertyToValueMap().get(logIndexConfig.valueIndexKey()), logIndexConfig.logRecordIndexSort());
                 }
-                return logRecordFactory.build(content, logConfig.operatorSort(), uploadReq.getOperator(),
+                return logRecordFactory.build(content, config.operatorSort(), uploadReq.getOperator(),
                                                                 config.logRecordSort(), indexValueToIndexSortMap,
                                             getUploadTime(uploadReq));
 

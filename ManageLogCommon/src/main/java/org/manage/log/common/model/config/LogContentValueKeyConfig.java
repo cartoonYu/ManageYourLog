@@ -6,7 +6,6 @@ public record LogContentValueKeyConfig(
         String ruleId,
         String sourceKey,
         String currentKey,
-        Long sequence,
         Long version,
         LocalDateTime createTime,
         LocalDateTime modifyTime) {

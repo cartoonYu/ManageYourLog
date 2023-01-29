@@ -1,6 +1,8 @@
 package org.manage.log.receive.provider.service.config;
 
 import org.manage.log.common.model.config.LogConfig;
+import org.manage.log.common.model.config.LogContentFormatConfig;
+import org.manage.log.common.model.config.LogContentValueKeyConfig;
 import org.manage.log.receive.provider.repository.LogConfigRepository;
 import org.manage.log.receive.provider.service.config.content.format.LogContentFormatFactory;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,22 @@ public class LogConfigServiceImpl implements LogConfigService {
     @Override
     public String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap) {
         return logContentFormatFactory.format(logConfig, valuePropertyToValueMap);
+    }
+
+    /**
+     * todo replace formatContent after LogContentValueKeyConfig mysql layer build
+     * @param logConfig
+     * @param valuePropertyToValueMap
+     * @return
+     */
+    private String formatContentV2(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
+        List<LogContentValueKeyConfig> contentValueKeyConfigList = logConfig.contentValueKeyConfigs();
+        String contentTemplate = logConfig.contentTemplate();
+        for(LogContentValueKeyConfig valueKeyConfig : contentValueKeyConfigList){
+            String value = valuePropertyToValueMap.get(valueKeyConfig.currentKey());
+            contentTemplate = contentTemplate.replace(valueKeyConfig.sourceKey(), value);
+        }
+        return contentTemplate;
     }
 
     @Override
