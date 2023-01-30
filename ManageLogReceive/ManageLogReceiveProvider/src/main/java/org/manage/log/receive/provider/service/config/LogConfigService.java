@@ -16,6 +16,8 @@ public interface LogConfigService {
 
     Optional<LogConfig> getConfigByName(String configName);
 
+    Optional<LogConfig> getConfigByRuleId(String configId);
+
     List<LogConfig> getByConfigNameList(List<String> configNameList);
 
     String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap);

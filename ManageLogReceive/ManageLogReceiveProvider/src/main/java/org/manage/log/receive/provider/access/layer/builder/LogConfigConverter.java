@@ -103,7 +103,6 @@ public class LogConfigConverter {
                 .build(uploadLogConfigDto.getRuleName(), LogRecordSort.parse(uploadLogConfigDto.getLogRecordSort()),
                         OperatorSort.parse(uploadLogConfigDto.getOperatorSort()), uploadLogConfigDto.getContentTemplate(), logIndexConfigList,
                         contentFormatConfigList,
-                        ImmutableList.of(),
                         uploadLogConfigDto.getDescription());
     }
 

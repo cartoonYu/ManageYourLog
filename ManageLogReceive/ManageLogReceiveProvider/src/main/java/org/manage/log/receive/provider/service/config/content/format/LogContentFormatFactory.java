@@ -1,12 +1,21 @@
 package org.manage.log.receive.provider.service.config.content.format;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogContentFormatConfig;
 import org.manage.log.common.model.config.constants.LogContentFormatType;
+import org.manage.log.common.util.config.ApplicationConfigUtil;
+import org.manage.log.receive.provider.config.ApplicationConfigKey;
+import org.manage.log.receive.provider.repository.LogConfigRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,7 +27,11 @@ import java.util.stream.Collectors;
 @Component
 public class LogContentFormatFactory {
 
+    private static final Logger log = LoggerFactory.getLogger(LogContentFormatFactory.class);
+
     private final Map<LogContentFormatType, LogContentFormatService> formatTypeToHandlerMap;
+
+    private final LoadingCache<String, List<ImmutablePair<String, String>>> CONFIG_RULE_ID_TO_VALUE_KEY_CACHE;
 
     /**
      * calculate and replace key need to move to add config, in order to short log content upload time
@@ -36,8 +49,15 @@ public class LogContentFormatFactory {
     }
 
     private List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig){
+        try {
+            List<ImmutablePair<String, String>> valueKeyList = CONFIG_RULE_ID_TO_VALUE_KEY_CACHE.get(logConfig.ruleId());
+            if(Objects.nonNull(valueKeyList)){
+                return valueKeyList;
+            }
+        } catch (Exception e){
+            log.error("get by config name, get from cache error", e);
+        }
         List<LogContentFormatConfig> logContentFormatConfigs = logConfig.formatContentConfig().stream().sorted(Comparator.comparing(LogContentFormatConfig::executeSequence)).toList();
-
         //store first extract result
         List<String> sourceKeyList = new ArrayList<>();
         //store extract result after first extract
@@ -61,7 +81,19 @@ public class LogContentFormatFactory {
         return resultList;
     }
 
-    public LogContentFormatFactory(List<LogContentFormatService> formatServiceList) {
+    public LogContentFormatFactory(List<LogContentFormatService> formatServiceList, ApplicationConfigUtil applicationConfigUtil, LogConfigRepository logConfigRepository) {
         formatTypeToHandlerMap = formatServiceList.stream().collect(Collectors.toMap(LogContentFormatService::formatType, Function.identity()));
+
+        CONFIG_RULE_ID_TO_VALUE_KEY_CACHE = CacheBuilder.newBuilder()
+                .maximumSize(10000)
+                .expireAfterWrite(applicationConfigUtil.get(ApplicationConfigKey.receiveLogConfigCacheExpireSecond.getKey()).map(Long::parseLong).orElse(1L), TimeUnit.SECONDS)
+                .build(new CacheLoader<>() {
+                    @Override
+                    public List<ImmutablePair<String, String>> load(String logConfigId) {
+                        return logConfigRepository.getByConfigId(logConfigId)
+                                .map(config -> extractValueKey(config))
+                                .orElse(null);
+                    }
+                });
     }
 }

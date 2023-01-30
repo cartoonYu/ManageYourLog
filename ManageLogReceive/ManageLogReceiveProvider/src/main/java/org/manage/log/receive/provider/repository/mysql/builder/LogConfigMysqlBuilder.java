@@ -1,8 +1,6 @@
 package org.manage.log.receive.provider.repository.mysql.builder;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.config.LogContentFormatConfig;
-import org.manage.log.common.model.config.LogContentValueKeyConfig;
 import org.manage.log.common.model.config.builder.LogContentFormatConfigFactory;
 import org.manage.log.common.model.config.constants.LogContentFormatType;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
@@ -14,7 +12,6 @@ import org.manage.log.common.model.config.builder.LogConfigFactory;
 import org.manage.log.common.model.config.builder.LogIndexConfigFactory;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO;
-import org.manage.log.receive.provider.repository.mysql.model.config.LogContentValueKeyConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -32,10 +29,6 @@ public class LogConfigMysqlBuilder {
     private final LogIndexConfigFactory logIndexConfigFactory;
 
     private final LogContentFormatConfigFactory logContentFormatConfigFactory;
-
-    public ImmutablePair<LogConfigMysqlPO, ImmutablePair<List<LogIndexConfigMysqlPO>, List<LogContentFormatConfigMysqlPO>>> convert(LogConfig source){
-        return ImmutablePair.of(convertToLogConfig(source), ImmutablePair.of(convertToLogIndexConfig(source), convertToContentFormatConfig(source)));
-    }
 
     public List<LogContentFormatConfigMysqlPO> convertToContentFormatConfig(LogConfig logConfig){
         return logConfig.formatContentConfig().stream().map(formatContentConfig ->
@@ -66,7 +59,7 @@ public class LogConfigMysqlBuilder {
     }
 
     public LogConfig convert(LogConfigMysqlPO source, List<LogIndexConfigMysqlPO> indexList,
-                             List<LogContentFormatConfigMysqlPO> contentFormatConfigList, List<LogContentValueKeyConfigMysqlPO> valueKeyConfigList){
+                             List<LogContentFormatConfigMysqlPO> contentFormatConfigList){
         if(Objects.isNull(source)){
             return null;
         }
@@ -78,7 +71,6 @@ public class LogConfigMysqlBuilder {
                 source.contentTemplate(),
                 convert(indexList),
                 convertContentFormatConfig(contentFormatConfigList),
-                convertContentValueKeyConfig(valueKeyConfigList),
                 source.description(),
                 source.version(),
                 source.createTime(),
@@ -103,21 +95,6 @@ public class LogConfigMysqlBuilder {
                 index.modifyTime());
         logIndexConfigFactory.check(logIndexConfig);
         return logIndexConfig;
-    }
-
-    private List<LogContentValueKeyConfig> convertContentValueKeyConfig(List<LogContentValueKeyConfigMysqlPO> valueKeyConfigList){
-        return valueKeyConfigList.stream().filter(Objects::nonNull).map(this::convertContentValueKeyConfig).toList();
-    }
-
-    private LogContentValueKeyConfig convertContentValueKeyConfig(LogContentValueKeyConfigMysqlPO valueKeyConfigMysqlPO){
-        LogContentValueKeyConfig valueKeyConfig = new LogContentValueKeyConfig(
-                valueKeyConfigMysqlPO.ruleId(), valueKeyConfigMysqlPO.sourceKey(),
-                valueKeyConfigMysqlPO.currentKey(), valueKeyConfigMysqlPO.sequence(),
-                valueKeyConfigMysqlPO.version(), valueKeyConfigMysqlPO.createTime(),
-                valueKeyConfigMysqlPO.modifyTime()
-        );
-        //todo factory check
-        return valueKeyConfig;
     }
 
     private List<LogContentFormatConfig> convertContentFormatConfig(List<LogContentFormatConfigMysqlPO> contentFormatConfigList){
