@@ -3,7 +3,7 @@ package org.manage.log.receive.facade.dto.config.query;
 import java.time.LocalDateTime;
 
 /**
- * @author cartoon.yu
+ * @author cartoon
  * @version 1.0
  * @since 2023/1/8 20:55
  */

@@ -4,27 +4,6 @@ spring:
 upload:
   log:
     mode: kafka
-    kafka:
-      bootstrap:
-        servers: cartoon-ali.com:9092
-      topic: ManageYourLog
-    rpc:
-      ip: cartoon-ali.com
-      port: 8848
-      application:
-        name: ManageYourLog
-      protocol:
-        name: dubbo
-        port: 20882
-        serialization: hessian2
-dubbo:
-  protocol:
-    port: -1
-    name: dubbo
-  registry:
-    address: nacos://cartoon-ali.com:8848
-  cloud:
-    subscribed-services: dubbo-spring-cloud-provider
-  application:
-    name: consumer
+    url: cartoon-ali.com
+    port: 9092
 
