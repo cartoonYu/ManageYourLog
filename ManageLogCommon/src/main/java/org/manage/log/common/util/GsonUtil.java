@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * gson util, package gson operation
@@ -22,6 +23,16 @@ public class GsonUtil {
 
     public static GsonUtil getInstance(){
         return INSTANCE;
+    }
+
+    public <T> JsonObject getJsonObject(T data){
+        JsonElement jsonElement = formGsonObject().toJsonTree(data);
+        return jsonElement.isJsonObject() ? jsonElement.getAsJsonObject() : null;
+    }
+
+    public <T> JsonArray getJsonArray(T data){
+        JsonElement jsonElement = formGsonObject().toJsonTree(data);
+        return jsonElement.isJsonArray() ? jsonElement.getAsJsonArray() : null;
     }
 
     public <T> String writeJson(List<T> data){

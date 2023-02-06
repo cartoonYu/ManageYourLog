@@ -3,7 +3,6 @@ package org.manage.log.receive.facade.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 /**
  * @author cartoon
@@ -15,7 +14,7 @@ public class UploadLogRecordReq implements Serializable {
 
     private String operator;
 
-    private Map<String, String> valuePropertyToValueMap;
+    private String valueData;
 
     private LocalDateTime uploadTime;
 
@@ -28,12 +27,13 @@ public class UploadLogRecordReq implements Serializable {
         return this;
     }
 
-    public Map<String, String> getValuePropertyToValueMap() {
-        return valuePropertyToValueMap;
+
+    public String getValueData() {
+        return valueData;
     }
 
-    public UploadLogRecordReq setValuePropertyToValueMap(Map<String, String> valuePropertyToValueMap) {
-        this.valuePropertyToValueMap = valuePropertyToValueMap;
+    public UploadLogRecordReq setValueData(String valueData) {
+        this.valueData = valueData;
         return this;
     }
 

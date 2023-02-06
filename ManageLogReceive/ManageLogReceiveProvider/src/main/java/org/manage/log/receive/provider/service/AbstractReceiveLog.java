@@ -63,11 +63,12 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         return uploadLogRecordReqList.stream().map(uploadReq -> {
             return ofNullable(configNameToConfig.get(uploadReq.getConfigName())).map(config -> {
                 //format content by content template
-                String content = logConfigService.formatContent(config, uploadReq.getValuePropertyToValueMap());
+                Map<String, String> valuePropertyToValueMap = getValueProperty(uploadReq.getValueData());
+                String content = logConfigService.formatContent(config, valuePropertyToValueMap);
                 //get index value from value list according by index config
                 Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>(config.indexConfigList().size());
                 for(LogIndexConfig logIndexConfig : config.indexConfigList()){
-                    indexValueToIndexSortMap.put(uploadReq.getValuePropertyToValueMap().get(logIndexConfig.valueIndexKey()), logIndexConfig.logRecordIndexSort());
+                    indexValueToIndexSortMap.put(valuePropertyToValueMap.get(logIndexConfig.valueIndexKey()), logIndexConfig.logRecordIndexSort());
                 }
                 return logRecordFactory.build(content, config.operatorSort(), uploadReq.getOperator(),
                                                                 config.logRecordSort(), indexValueToIndexSortMap,
@@ -75,6 +76,11 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
             }).orElse(null);
         }).filter(Objects::nonNull).toList();
+    }
+
+    private Map<String, String> getValueProperty(String valueData){
+        //todo need to write recursion algorithm to get value property from incoming json data
+        return new HashMap<>(0);
     }
 
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);

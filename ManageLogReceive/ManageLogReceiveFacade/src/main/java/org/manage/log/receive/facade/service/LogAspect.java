@@ -17,9 +17,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author cartoon
@@ -44,17 +41,19 @@ public class LogAspect {
         //get config name from annotation
         String configName = getConfigName(annotationMethod);
         //get method param
-        Map<String, String> valuePropertyToValueMap = getArgument(point);
+        String methodParam = getArgument(point);
         //upload log
-        uploadLog(configName, "", valuePropertyToValueMap);
+        uploadLog(configName, "", methodParam);
     }
 
-    private Map<String, String> getArgument(JoinPoint point){
+    private String getArgument(JoinPoint point){
         Object[] params = point.getArgs();
-        for(Object param : params){
-            log.info("upload log, data: {}", GsonUtil.getInstance().writeJson(param));
+        String data = GsonUtil.getInstance().writeJson(params);
+        if(log.isDebugEnabled()){
+            log.info("upload log, data: {}", data);
         }
-        return new HashMap<>();
+        return data;
+
     }
 
     private String getConfigName(Method annotationMethod){
@@ -62,20 +61,20 @@ public class LogAspect {
         return logAnnotation.ruleName();
     }
 
-    private Boolean uploadLog(String configName, String operator, Map<String, String> valuePropertyToValueMap){
-        UploadLogRecordReq uploadLogRecordReq = packageUploadReq(configName, operator, valuePropertyToValueMap);
+    private Boolean uploadLog(String configName, String operator, String valueData){
+        UploadLogRecordReq uploadLogRecordReq = packageUploadReq(configName, operator, valueData);
         OperateLogResp<Boolean> uploadResultResponse = uploadLog.upload(uploadLogRecordReq);
         boolean uploadResult = !uploadResultResponse.isHasAbnormal() && uploadResultResponse.getSuccessResult();
         log.info("upload log, data: {}, result: {}", GsonUtil.getInstance().writeJson(uploadLogRecordReq), uploadResult);
         return uploadResult;
     }
 
-    private UploadLogRecordReq packageUploadReq(String configName, String operator, Map<String, String> valuePropertyToValueMap){
+    private UploadLogRecordReq packageUploadReq(String configName, String operator, String valueData){
         UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         uploadLogRecordReq.setConfigName(configName);
         uploadLogRecordReq.setOperator(operator);
-        uploadLogRecordReq.setValuePropertyToValueMap(valuePropertyToValueMap);
+        uploadLogRecordReq.setValueData(valueData);
         return uploadLogRecordReq;
     }
 }

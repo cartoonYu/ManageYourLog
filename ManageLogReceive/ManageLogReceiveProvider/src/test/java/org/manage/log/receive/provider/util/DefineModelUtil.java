@@ -30,9 +30,7 @@ public class DefineModelUtil {
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         uploadLogRecordReq.setConfigName("orderOperate");
         uploadLogRecordReq.setOperator("cartoon");
-        Map<String, String> valuePropertyToValueMap = new HashMap<>();
-        valuePropertyToValueMap.put("userId", "cartoon");
-        uploadLogRecordReq.setValuePropertyToValueMap(valuePropertyToValueMap);
+        uploadLogRecordReq.setValueData("{\"userId\":\"cartoon\"}");
         return uploadLogRecordReq;
     }
 
