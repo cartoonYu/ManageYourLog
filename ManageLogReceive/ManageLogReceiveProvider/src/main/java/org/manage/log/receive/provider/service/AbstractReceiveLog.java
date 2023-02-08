@@ -1,11 +1,15 @@
 package org.manage.log.receive.provider.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.builder.LogRecordFactory;
+import org.manage.log.common.util.GsonUtil;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
@@ -80,7 +84,29 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
     private Map<String, String> getValueProperty(String valueData){
         //todo need to write recursion algorithm to get value property from incoming json data
-        return new HashMap<>(0);
+        Map<String, String> valuePropertyMap = new HashMap<>(16);
+        getValueProperty(GsonUtil.getInstance().getJson(valueData), "", valuePropertyMap);
+        return valuePropertyMap;
+    }
+
+    private void getValueProperty(JsonElement valueData, String prefixKey, Map<String, String> valuePropertyMap){
+        if(valueData.isJsonArray()){
+            valueData.getAsJsonArray().asList().forEach(obj -> {
+
+            });
+        }
+        if (valueData.isJsonObject()) {
+            JsonObject jsonObject = valueData.getAsJsonObject();
+            for(String valueKey : jsonObject.keySet()){
+                JsonElement subObject = jsonObject.get(valueKey);
+                if(subObject.isJsonPrimitive()){
+                    valuePropertyMap.put(prefixKey + valueKey, subObject.getAsJsonPrimitive().getAsString());
+                } else {
+                    getValueProperty(subObject, String.format("%s.%s.", prefixKey, valueKey), valuePropertyMap);
+                }
+            }
+        }
+
     }
 
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);

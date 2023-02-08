@@ -1,5 +1,6 @@
 package org.manage.log.receive.facade.service;
 
+import com.google.gson.JsonElement;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -48,6 +49,7 @@ public class LogAspect {
 
     private String getArgument(JoinPoint point){
         Object[] params = point.getArgs();
+        Method annotationMethod = ((MethodSignature)point.getSignature()).getMethod();
         String data = GsonUtil.getInstance().writeJson(params);
         if(log.isDebugEnabled()){
             log.info("upload log, data: {}", data);

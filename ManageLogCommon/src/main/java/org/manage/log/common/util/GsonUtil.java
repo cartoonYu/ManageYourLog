@@ -25,14 +25,8 @@ public class GsonUtil {
         return INSTANCE;
     }
 
-    public <T> JsonObject getJsonObject(T data){
-        JsonElement jsonElement = formGsonObject().toJsonTree(data);
-        return jsonElement.isJsonObject() ? jsonElement.getAsJsonObject() : null;
-    }
-
-    public <T> JsonArray getJsonArray(T data){
-        JsonElement jsonElement = formGsonObject().toJsonTree(data);
-        return jsonElement.isJsonArray() ? jsonElement.getAsJsonArray() : null;
+    public <T> JsonElement getJson(T data){
+        return formGsonObject().toJsonTree(data);
     }
 
     public <T> String writeJson(List<T> data){
