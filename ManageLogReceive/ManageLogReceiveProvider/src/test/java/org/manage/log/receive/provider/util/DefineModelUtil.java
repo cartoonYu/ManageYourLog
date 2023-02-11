@@ -1,6 +1,8 @@
 package org.manage.log.receive.provider.util;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.manage.log.common.model.config.LogContentFormatConfig;
 import org.manage.log.common.model.config.constants.LogContentFormatType;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
@@ -26,6 +28,7 @@ import java.util.Map;
 public class DefineModelUtil {
 
     public static UploadLogRecordReq defineLogRecordReq(){
+
         UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         uploadLogRecordReq.setConfigName("orderOperate");

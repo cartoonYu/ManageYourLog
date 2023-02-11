@@ -1,6 +1,5 @@
 package org.manage.log.receive.provider.service;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.manage.log.common.constants.HandleError;
@@ -83,7 +82,6 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
     }
 
     private Map<String, String> getValueProperty(String valueData){
-        //todo need to write recursion algorithm to get value property from incoming json data
         Map<String, String> valuePropertyMap = new HashMap<>(16);
         getValueProperty(GsonUtil.getInstance().getJson(valueData), "", valuePropertyMap);
         return valuePropertyMap;
@@ -91,9 +89,7 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
     private void getValueProperty(JsonElement valueData, String prefixKey, Map<String, String> valuePropertyMap){
         if(valueData.isJsonArray()){
-            valueData.getAsJsonArray().asList().forEach(obj -> {
-
-            });
+            valueData.getAsJsonArray().asList().forEach(obj -> getValueProperty(obj, prefixKey, valuePropertyMap));
         }
         if (valueData.isJsonObject()) {
             JsonObject jsonObject = valueData.getAsJsonObject();
@@ -106,7 +102,6 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
                 }
             }
         }
-
     }
 
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);

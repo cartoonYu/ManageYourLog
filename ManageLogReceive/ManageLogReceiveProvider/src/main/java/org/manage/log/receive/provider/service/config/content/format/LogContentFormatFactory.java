@@ -50,13 +50,14 @@ public class LogContentFormatFactory {
 
     private List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig){
         try {
-            List<ImmutablePair<String, String>> valueKeyList = CONFIG_RULE_ID_TO_VALUE_KEY_CACHE.get(logConfig.ruleId());
-            if(Objects.nonNull(valueKeyList)){
-                return valueKeyList;
-            }
+            return CONFIG_RULE_ID_TO_VALUE_KEY_CACHE.get(logConfig.ruleId());
         } catch (Exception e){
             log.error("get by config name, get from cache error", e);
         }
+        return Collections.emptyList();
+    }
+
+    private List<ImmutablePair<String, String>> extractValueKeyFromConfig(LogConfig logConfig){
         List<LogContentFormatConfig> logContentFormatConfigs = logConfig.formatContentConfig().stream().sorted(Comparator.comparing(LogContentFormatConfig::executeSequence)).toList();
         //store first extract result
         List<String> sourceKeyList = new ArrayList<>();
@@ -91,7 +92,7 @@ public class LogContentFormatFactory {
                     @Override
                     public List<ImmutablePair<String, String>> load(String logConfigId) {
                         return logConfigRepository.getByConfigId(logConfigId)
-                                .map(config -> extractValueKey(config))
+                                .map(config -> extractValueKeyFromConfig(config))
                                 .orElse(null);
                     }
                 });

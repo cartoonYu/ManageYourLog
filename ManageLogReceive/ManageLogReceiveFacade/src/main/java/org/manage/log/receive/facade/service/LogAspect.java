@@ -1,5 +1,6 @@
 package org.manage.log.receive.facade.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
