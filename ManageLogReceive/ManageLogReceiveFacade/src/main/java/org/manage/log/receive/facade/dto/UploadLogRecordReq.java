@@ -1,9 +1,6 @@
 package org.manage.log.receive.facade.dto;
 
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

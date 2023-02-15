@@ -1,7 +1,7 @@
 package org.manage.log.receive.facade.service;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.time.LocalDateTime;
 
 /**
@@ -49,14 +50,18 @@ public class LogAspect {
     }
 
     private String getArgument(JoinPoint point){
-        Object[] params = point.getArgs();
+        JsonObject argumentData = new JsonObject();
         Method annotationMethod = ((MethodSignature)point.getSignature()).getMethod();
-        String data = GsonUtil.getInstance().writeJson(params);
-        if(log.isDebugEnabled()){
-            log.info("upload log, data: {}", data);
-        }
-        return data;
+        Parameter[] parameterList = annotationMethod.getParameters();
+        Object[] paramDataList = point.getArgs();
 
+        for(int index = 0; index < parameterList.length; index++){
+            Parameter parameter = parameterList[index];
+            Object parameterData = paramDataList[index];
+            JsonElement parameterDataJson = GsonUtil.getInstance().getJson(GsonUtil.getInstance().writeJson(parameterData));
+            argumentData.add(parameter.getName(), parameterDataJson);
+        }
+        return argumentData.toString();
     }
 
     private String getConfigName(Method annotationMethod){
