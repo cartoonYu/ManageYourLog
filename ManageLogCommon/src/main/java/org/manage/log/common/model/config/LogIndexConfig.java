@@ -18,44 +18,4 @@ public record LogIndexConfig(
         Long version,
         LocalDateTime createTime,
         LocalDateTime modifyTime) {
-
-    @Override
-    public String ruleId() {
-        return ruleId;
-    }
-
-    @Override
-    public String ruleName() {
-        return ruleName;
-    }
-
-    @Override
-    public LogRecordIndexSort logRecordIndexSort() {
-        return logRecordIndexSort;
-    }
-
-    @Override
-    public String valueIndexKey() {
-        return valueIndexKey;
-    }
-
-    @Override
-    public String description() {
-        return description;
-    }
-
-    @Override
-    public Long version() {
-        return version;
-    }
-
-    @Override
-    public LocalDateTime createTime() {
-        return createTime;
-    }
-
-    @Override
-    public LocalDateTime modifyTime() {
-        return modifyTime;
-    }
 }

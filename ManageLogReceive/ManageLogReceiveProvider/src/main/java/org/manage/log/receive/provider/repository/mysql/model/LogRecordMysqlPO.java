@@ -7,104 +7,48 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2021/11/20 23:54
  */
-public class LogRecordMysqlPO {
+public record LogRecordMysqlPO(
+     String recordId, String content,
+     String operatorSort, String operator, String logRecordSort,
+     Integer version, LocalDateTime createTime, LocalDateTime modifyTime){
 
-    private String recordId;
-
-    private String content;
-
-    private String operatorSort;
-
-    private String operator;
-
-    private String logRecordSort;
-
-    private String indexIds;
-
-    private Integer version;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime modifyTime;
-
-    public String getRecordId() {
+    @Override
+    public String recordId() {
         return recordId;
     }
 
-    public LogRecordMysqlPO setRecordId(String recordId) {
-        this.recordId = recordId;
-        return this;
-    }
-
-    public String getContent() {
+    @Override
+    public String content() {
         return content;
     }
 
-    public LogRecordMysqlPO setContent(String content) {
-        this.content = content;
-        return this;
-    }
-
-    public String getOperatorSort() {
+    @Override
+    public String operatorSort() {
         return operatorSort;
     }
 
-    public LogRecordMysqlPO setOperatorSort(String operatorSort) {
-        this.operatorSort = operatorSort;
-        return this;
-    }
-
-    public String getOperator() {
+    @Override
+    public String operator() {
         return operator;
     }
 
-    public LogRecordMysqlPO setOperator(String operator) {
-        this.operator = operator;
-        return this;
-    }
-
-    public String getLogRecordSort() {
+    @Override
+    public String logRecordSort() {
         return logRecordSort;
     }
 
-    public LogRecordMysqlPO setLogRecordSort(String logRecordSort) {
-        this.logRecordSort = logRecordSort;
-        return this;
-    }
-
-    public String getIndexIds() {
-        return indexIds;
-    }
-
-    public LogRecordMysqlPO setIndexIds(String indexIds) {
-        this.indexIds = indexIds;
-        return this;
-    }
-
-    public Integer getVersion() {
+    @Override
+    public Integer version() {
         return version;
     }
 
-    public LogRecordMysqlPO setVersion(Integer version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
+    @Override
+    public LocalDateTime createTime() {
         return createTime;
     }
 
-    public LogRecordMysqlPO setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
+    @Override
+    public LocalDateTime modifyTime() {
         return modifyTime;
-    }
-
-    public LogRecordMysqlPO setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
     }
 }

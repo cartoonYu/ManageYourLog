@@ -1,6 +1,8 @@
 package org.manage.log.receive.provider.repository.mysql.builder;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.manage.log.common.model.config.LogContentFormatConfig;
+import org.manage.log.common.model.config.builder.LogContentFormatConfigFactory;
+import org.manage.log.common.model.config.constants.LogContentFormatType;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
@@ -9,9 +11,9 @@ import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.model.config.builder.LogConfigFactory;
 import org.manage.log.common.model.config.builder.LogIndexConfigFactory;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO;
+import org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO;
 import org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -26,55 +28,53 @@ public class LogConfigMysqlBuilder {
 
     private final LogIndexConfigFactory logIndexConfigFactory;
 
-    public ImmutablePair<LogConfigMysqlPO, List<LogIndexConfigMysqlPO>> convert(LogConfig source){
-        return ImmutablePair.of(convertToLogConfig(source), convertToLogIndexConfig(source));
+    private final LogContentFormatConfigFactory logContentFormatConfigFactory;
+
+    public List<LogContentFormatConfigMysqlPO> convertToContentFormatConfig(LogConfig logConfig){
+        return logConfig.formatContentConfig().stream().map(formatContentConfig ->
+                new LogContentFormatConfigMysqlPO(
+                    formatContentConfig.ruleId(), formatContentConfig.ruleName(), logConfig.ruleId(),
+                    formatContentConfig.type().getType(), formatContentConfig.value(),
+                    formatContentConfig.executeSequence(), formatContentConfig.version(),
+                    formatContentConfig.createTime(), formatContentConfig.modifyTime()
+        )).toList();
     }
 
-    private List<LogIndexConfigMysqlPO> convertToLogIndexConfig(LogConfig logConfig){
-        return logConfig.indexConfigList().stream().map(indexConfig -> {
-            LogIndexConfigMysqlPO result = new LogIndexConfigMysqlPO();
-            result.setRuleId(indexConfig.ruleId())
-                    .setRuleName(indexConfig.ruleName())
-                    .setLogConfigId(logConfig.ruleId())
-                    .setSort(indexConfig.logRecordIndexSort().getSortDescription())
-                    .setValueIndexKey(indexConfig.valueIndexKey())
-                    .setDescription(indexConfig.description())
-                    .setVersion(indexConfig.version())
-                    .setCreateTime(indexConfig.createTime())
-                    .setModifyTime(indexConfig.modifyTime());
-            return result;
-        }).toList();
+    public List<LogIndexConfigMysqlPO> convertToLogIndexConfig(LogConfig logConfig){
+        return logConfig.indexConfigList().stream().map(indexConfig ->
+                new LogIndexConfigMysqlPO(
+                    indexConfig.ruleId(), indexConfig.ruleName(), logConfig.ruleId(),
+                    indexConfig.logRecordIndexSort().getSortDescription(), indexConfig.valueIndexKey(),
+                    indexConfig.description(), indexConfig.version(), indexConfig.createTime(), indexConfig.modifyTime()
+        )).toList();
     }
 
-    private LogConfigMysqlPO convertToLogConfig(LogConfig source){
-        LogConfigMysqlPO res = new LogConfigMysqlPO();
-        res.setRuleId(source.ruleId())
-                .setRuleName(source.ruleName())
-                .setLogRecordSort(source.logRecordSort().getSortDescription())
-                .setOperatorSort(source.operatorSort().getSortDescription())
-                .setContentTemplate(source.contentTemplate())
-                .setDescription(source.description())
-                .setVersion(source.version())
-                .setCreateTime(source.createTime())
-                .setModifyTime(source.modifyTime());
-        return res;
+    public LogConfigMysqlPO convertToLogConfig(LogConfig source){
+        return new LogConfigMysqlPO(
+                source.ruleId(), source.ruleName(),
+                source.logRecordSort().getSortDescription(), source.operatorSort().getSortDescription(),
+                source.contentTemplate(), source.description(),
+                source.version(), source.createTime(),source.modifyTime()
+        );
     }
 
-    public LogConfig convert(LogConfigMysqlPO source, List<LogIndexConfigMysqlPO> indexList){
+    public LogConfig convert(LogConfigMysqlPO source, List<LogIndexConfigMysqlPO> indexList,
+                             List<LogContentFormatConfigMysqlPO> contentFormatConfigList){
         if(Objects.isNull(source)){
             return null;
         }
         LogConfig logConfig = new LogConfig(
-                source.getRuleId(),
-                source.getRuleName(),
-                LogRecordSort.parse(source.getLogRecordSort()),
-                OperatorSort.parse(source.getOperatorSort()),
-                source.getContentTemplate(),
+                source.ruleId(),
+                source.ruleName(),
+                LogRecordSort.parse(source.logRecordSort()),
+                OperatorSort.parse(source.operatorSort()),
+                source.contentTemplate(),
                 convert(indexList),
-                source.getDescription(),
-                source.getVersion(),
-                source.getCreateTime(),
-                source.getModifyTime()
+                convertContentFormatConfig(contentFormatConfigList),
+                source.description(),
+                source.version(),
+                source.createTime(),
+                source.modifyTime()
         );
         logConfigFactory.check(logConfig);
         return logConfig;
@@ -85,21 +85,38 @@ public class LogConfigMysqlBuilder {
     }
 
     private LogIndexConfig convert(LogIndexConfigMysqlPO index){
-        LogIndexConfig logIndexConfig = new LogIndexConfig(index.getRuleId(),
-                index.getRuleName(),
-                LogRecordIndexSort.parse(index.getSort()),
-                index.getValueIndexKey(),
-                index.getDescription(),
-                index.getVersion(),
-                index.getCreateTime(),
-                index.getModifyTime());
+        LogIndexConfig logIndexConfig = new LogIndexConfig(index.ruleId(),
+                index.ruleName(),
+                LogRecordIndexSort.parse(index.sort()),
+                index.valueIndexKey(),
+                index.description(),
+                index.version(),
+                index.createTime(),
+                index.modifyTime());
         logIndexConfigFactory.check(logIndexConfig);
         return logIndexConfig;
     }
 
+    private List<LogContentFormatConfig> convertContentFormatConfig(List<LogContentFormatConfigMysqlPO> contentFormatConfigList){
+        return contentFormatConfigList.stream().filter(Objects::nonNull).map(this::convert).toList();
+    }
+
+    private LogContentFormatConfig convert(LogContentFormatConfigMysqlPO formatConfig){
+        LogContentFormatConfig logContentFormatConfig = new LogContentFormatConfig(
+                formatConfig.ruleId(), formatConfig.ruleName(),
+                LogContentFormatType.parse(formatConfig.type()), formatConfig.value(),
+                formatConfig.executeSequence(), formatConfig.version(),
+                formatConfig.createTime(), formatConfig.modifyTime()
+        );
+        logContentFormatConfigFactory.check(logContentFormatConfig);
+        return logContentFormatConfig;
+    }
+
     public LogConfigMysqlBuilder(LogConfigFactory logConfigFactory,
-                                 LogIndexConfigFactory logIndexConfigFactory) {
+                                 LogIndexConfigFactory logIndexConfigFactory,
+                                 LogContentFormatConfigFactory contentFormatConfigFactory) {
         this.logConfigFactory = logConfigFactory;
         this.logIndexConfigFactory = logIndexConfigFactory;
+        this.logContentFormatConfigFactory = contentFormatConfigFactory;
     }
 }

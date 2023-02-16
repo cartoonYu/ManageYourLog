@@ -18,7 +18,7 @@ public class DemoController {
     private static final Logger log = LoggerFactory.getLogger(DemoController.class);
 
     @PostMapping("/query")
-    @Log(ruleName = "orderOperate", paramIsObject = true)
+    @Log(ruleName = "orderOperate", operatorParamKey = "queryReq.userId")
     public String query(@RequestBody QueryReq queryReq){
         log.info("call query interface, req: {}", GsonUtil.getInstance().writeJson(queryReq));
         return "mock call query interface";

@@ -5,7 +5,7 @@
 <mapper namespace="org.manage.log.query.provider.repository.mysql.mapper.LogRecordMapper">
 
     <sql id="Base_Column_List">
-        recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime
+        recordId, content, operatorSort, operator, logRecordSort, version, createTime, modifyTime
     </sql>
 
 

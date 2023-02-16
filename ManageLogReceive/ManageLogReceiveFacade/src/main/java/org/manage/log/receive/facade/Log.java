@@ -16,5 +16,5 @@ public @interface Log {
 
     String ruleName();
 
-    boolean paramIsObject();
+    String operatorParamKey();
 }

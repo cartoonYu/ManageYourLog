@@ -8,7 +8,6 @@ CREATE TABLE `LogRecord` (
                              `operatorSort` varchar(100) DEFAULT '' COMMENT 'log operator sort',
                              `operator` varchar(50) NOT NULL DEFAULT '' COMMENT 'log operator',
                              `logRecordSort` varchar(200) NOT NULL DEFAULT '0',
-                             `indexIds` varchar(200) DEFAULT '' COMMENT 'log index id collection',
                              `version` int NOT NULL DEFAULT '1' COMMENT 'log version',
                              `createTime` datetime NOT NULL COMMENT 'record create time',
                              `modifyTime` datetime NOT NULL COMMENT 'record modify time',

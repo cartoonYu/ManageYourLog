@@ -17,6 +17,10 @@
         value (#{ruleId}, #{ruleName}, #{logRecordSort}, #{operatorSort}, #{contentTemplate}, #{description}, #{version}, #{createTime}, #{modifyTime})
     </insert>
 
+    <select id="getByConfigId" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO">
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/> where ruleId = #{ruleId}
+    </select>
+
     <select id="getByConfigName" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogConfigMysqlPO">
         select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/> where ruleName = #{configName}
     </select>

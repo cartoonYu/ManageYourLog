@@ -4,6 +4,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.util.GsonUtil;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.common.util.factory.LoadBean;
@@ -13,8 +14,11 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.Properties;
+
+import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
 
 /**
  * @author cartoon
@@ -62,11 +66,12 @@ public class UploadLogByKafkaConfig implements DisposableBean {
 
     @Bean(name = "uploadByKafkaConfig")
     public Properties kafkaConfig(){
-        String bootstrapServers = String.format("%s:%s",
-                                                    applicationConfigUtil.get(ApplicationConfigKey.uploadLogUrl.getKey()),
-                                                    applicationConfigUtil.get(ApplicationConfigKey.uploadLogPort.getKey()));
+        String url = applicationConfigUtil.get(ApplicationConfigKey.uploadLogUrl.getKey()).orElseThrow(() -> new RuntimeException(HandleError.PARAM_MISS.getMsg()));
+        String port = applicationConfigUtil.get(ApplicationConfigKey.uploadLogPort.getKey()).orElseThrow(() -> new RuntimeException(HandleError.PARAM_MISS.getMsg()));
+
+        String bootstrapServers = String.format("%s:%s", url, port);
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", bootstrapServers);
+        properties.setProperty(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         return properties;
     }
 

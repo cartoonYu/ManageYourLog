@@ -16,41 +16,5 @@ public record LogRecordIndex(
         String indexValue,
         Integer version,
         LocalDateTime createTime,
-        LocalDateTime modifyTime
-) {
-
-    @Override
-    public String indexId() {
-        return indexId;
-    }
-
-    @Override
-    public String logRecordId() {
-        return logRecordId;
-    }
-
-    @Override
-    public LogRecordIndexSort logRecordIndexSort() {
-        return logRecordIndexSort;
-    }
-
-    @Override
-    public String indexValue() {
-        return indexValue;
-    }
-
-    @Override
-    public Integer version() {
-        return version;
-    }
-
-    @Override
-    public LocalDateTime createTime() {
-        return createTime;
-    }
-
-    @Override
-    public LocalDateTime modifyTime() {
-        return modifyTime;
-    }
+        LocalDateTime modifyTime) {
 }

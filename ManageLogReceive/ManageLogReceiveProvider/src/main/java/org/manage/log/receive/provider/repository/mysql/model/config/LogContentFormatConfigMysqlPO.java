@@ -5,12 +5,24 @@ import java.time.LocalDateTime;
 /**
  * @author cartoon
  * @version 1.0
- * @since 2022/12/11 10:59
+ * @since 2023/1/8 20:12
  */
-public record LogIndexConfigMysqlPO(
-        String ruleId, String ruleName, String logConfigId,
-        String sort, String valueIndexKey,
-        String description, Long version, LocalDateTime createTime, LocalDateTime modifyTime) {
+public record LogContentFormatConfigMysqlPO(
+        // rule id
+        String ruleId,
+        //rule name
+        String ruleName,
+        //parent config id,
+        String logConfigId,
+        //choose format type mode
+        String type,
+        //format content basis value
+        String value,
+        //execute sequence
+        Long executeSequence,
+        Long version,
+        LocalDateTime createTime,
+        LocalDateTime modifyTime) {
 
     @Override
     public String ruleId() {
@@ -28,18 +40,18 @@ public record LogIndexConfigMysqlPO(
     }
 
     @Override
-    public String sort() {
-        return sort;
+    public String type() {
+        return type;
     }
 
     @Override
-    public String valueIndexKey() {
-        return valueIndexKey;
+    public String value() {
+        return value;
     }
 
     @Override
-    public String description() {
-        return description;
+    public Long executeSequence() {
+        return executeSequence;
     }
 
     @Override

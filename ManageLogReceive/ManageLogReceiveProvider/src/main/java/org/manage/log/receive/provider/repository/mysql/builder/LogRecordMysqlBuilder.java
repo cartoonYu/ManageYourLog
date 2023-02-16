@@ -43,32 +43,20 @@ public class LogRecordMysqlBuilder {
      */
     public ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>> convertToPo(LogRecord logRecord){
         //convert log model to po
-        LogRecordMysqlPO logRecordMysqlPO = new LogRecordMysqlPO();
-        logRecordMysqlPO.setRecordId(logRecord.recordId())
-                .setContent(logRecord.content())
-                .setOperatorSort(logRecord.operatorSort().getSortDescription())
-                .setOperator(logRecord.operator())
-                .setLogRecordSort(logRecord.logRecordSort().getSortDescription())
-                .setVersion(logRecord.version())
-                .setCreateTime(logRecord.createTime())
-                .setModifyTime(logRecord.modifyTime());
-        if(CollectionUtils.isNotEmpty(logRecord.indexList())){
-            logRecordMysqlPO.setIndexIds(logRecord.indexList().stream().map(LogRecordIndex::indexId).collect(Collectors.joining(LogRecordMysqlRepository.INDEX_SPLIT_CHARACTER)));
-        }
+        LogRecordMysqlPO logRecordMysqlPO = new LogRecordMysqlPO(
+                logRecord.recordId(), logRecord.content(),
+                logRecord.operatorSort().getSortDescription(), logRecord.operator(),
+                logRecord.logRecordSort().getSortDescription(),
+                logRecord.version(), logRecord.createTime(), logRecord.modifyTime()
+        );
         //convert index model to po
         List<LogRecordIndexMysqlPO> indexMysqlPOS = ofNullable(logRecord.indexList()).map(
                 indexList -> indexList.stream().map(
-                        index -> {
-                            LogRecordIndexMysqlPO indexMysqlPO = new LogRecordIndexMysqlPO();
-                            indexMysqlPO.setIndexId(index.indexId())
-                                    .setLogRecordId(index.logRecordId())
-                                    .setSort(index.logRecordIndexSort().getSortDescription())
-                                    .setIndexValue(index.indexValue())
-                                    .setVersion(index.version())
-                                    .setCreateTime(index.createTime())
-                                    .setModifyTime(index.modifyTime());
-                            return indexMysqlPO;
-                        }
+                        index -> new LogRecordIndexMysqlPO(
+                                index.indexId(), index.logRecordId(),
+                                index.logRecordIndexSort().getSortDescription(), index.indexValue(),
+                                index.version(), index.createTime(), index.modifyTime()
+                        )
                 ).toList()
         ).orElse(Collections.emptyList());
         return ImmutablePair.of(logRecordMysqlPO, indexMysqlPOS);

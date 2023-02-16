@@ -1,6 +1,10 @@
 package org.manage.log.receive.provider.util;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import org.manage.log.common.model.config.LogContentFormatConfig;
+import org.manage.log.common.model.config.constants.LogContentFormatType;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
@@ -24,13 +28,12 @@ import java.util.Map;
 public class DefineModelUtil {
 
     public static UploadLogRecordReq defineLogRecordReq(){
+
         UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
         uploadLogRecordReq.setConfigName("orderOperate");
         uploadLogRecordReq.setOperator("cartoon");
-        Map<String, String> valuePropertyToValueMap = new HashMap<>();
-        valuePropertyToValueMap.put("userId", "cartoon");
-        uploadLogRecordReq.setValuePropertyToValueMap(valuePropertyToValueMap);
+        uploadLogRecordReq.setValueData("{\"userId\":\"cartoon\"}");
         return uploadLogRecordReq;
     }
 
@@ -77,7 +80,21 @@ public class DefineModelUtil {
                 OperatorSort.DEFAULT,
                 "test content template",
                 ImmutableList.of(defineLogIndexConfig()),
+                ImmutableList.of(defineContentFormatConfig()),
                 "test",
+                1L,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
+
+    private static LogContentFormatConfig defineContentFormatConfig(){
+        return new LogContentFormatConfig(
+                IdGenerateUtil.getInstance().generate(13),
+                "test rule" + IdGenerateUtil.getInstance().generate(100),
+                LogContentFormatType.REGULAR_EXPRESSION_MATCH,
+                "test",
+                0L,
                 1L,
                 LocalDateTime.now(),
                 LocalDateTime.now()

@@ -17,6 +17,8 @@ public interface LogConfigRepository {
 
     boolean add(LogConfig logConfig);
 
+    Optional<LogConfig> getByConfigId(String configId);
+
     Optional<LogConfig> getByConfigName(String configName);
 
     List<LogConfig> getByConfigNameList(List<String> configNameList);

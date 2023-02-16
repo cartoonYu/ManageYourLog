@@ -5,11 +5,11 @@
 <mapper namespace="org.manage.log.receive.provider.repository.mysql.mapper.LogRecordMapper">
 
     <sql id="Base_Column_List">
-        recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime
+        recordId, content, operatorSort, operator, logRecordSort, version, createTime, modifyTime
     </sql>
 
     <insert id="batchInsert" parameterType="org.manage.log.receive.provider.repository.mysql.model.LogRecordIndexMysqlPO">
-        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, indexIds, version, createTime, modifyTime)
+        insert into LogRecord(recordId, content, operatorSort, operator, logRecordSort, version, createTime, modifyTime)
         values
         <foreach collection="logRecordMysqlPOS" item="logRecordMysqlPO" separator="," open="(" close=")">
             #{logRecordMysqlPO.recordId},
@@ -17,7 +17,6 @@
             #{logRecordMysqlPO.operatorSort},
             #{logRecordMysqlPO.operator},
             #{logRecordMysqlPO.logRecordSort},
-            #{logRecordMysqlPO.indexIds},
             #{logRecordMysqlPO.version},
             #{logRecordMysqlPO.createTime},
             #{logRecordMysqlPO.modifyTime}

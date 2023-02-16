@@ -6,103 +6,54 @@ import java.time.LocalDateTime;
  * @author cartoon
  * @date 2022/6/4 17:58
  */
-public class LogConfigMysqlPO {
+public record LogConfigMysqlPO(
+        String ruleId, String ruleName,
+        String logRecordSort, String operatorSort,
+        String contentTemplate, String description,
+        Long version, LocalDateTime createTime, LocalDateTime modifyTime) {
 
-    private String ruleId;
-
-    private String ruleName;
-
-    private String logRecordSort;
-
-    private String operatorSort;
-
-    private String contentTemplate;
-
-    private String description;
-
-    private Long version;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime modifyTime;
-
-    public String getRuleId() {
+    @Override
+    public String ruleId() {
         return ruleId;
     }
 
-    public LogConfigMysqlPO setRuleId(String ruleId) {
-        this.ruleId = ruleId;
-        return this;
-    }
-
-    public String getRuleName() {
+    @Override
+    public String ruleName() {
         return ruleName;
     }
 
-    public LogConfigMysqlPO setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-        return this;
-    }
-
-    public String getLogRecordSort() {
+    @Override
+    public String logRecordSort() {
         return logRecordSort;
     }
 
-    public LogConfigMysqlPO setLogRecordSort(String logRecordSort) {
-        this.logRecordSort = logRecordSort;
-        return this;
-    }
-
-    public String getOperatorSort() {
+    @Override
+    public String operatorSort() {
         return operatorSort;
     }
 
-    public LogConfigMysqlPO setOperatorSort(String operatorSort) {
-        this.operatorSort = operatorSort;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LogConfigMysqlPO setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public LogConfigMysqlPO setVersion(Long version) {
-        this.version = version;
-        return this;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public LogConfigMysqlPO setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public LocalDateTime getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public String getContentTemplate() {
+    @Override
+    public String contentTemplate() {
         return contentTemplate;
     }
 
-    public LogConfigMysqlPO setContentTemplate(String contentTemplate) {
-        this.contentTemplate = contentTemplate;
-        return this;
+    @Override
+    public String description() {
+        return description;
+    }
+
+    @Override
+    public Long version() {
+        return version;
+    }
+
+    @Override
+    public LocalDateTime createTime() {
+        return createTime;
+    }
+
+    @Override
+    public LocalDateTime modifyTime() {
+        return modifyTime;
     }
 }

@@ -1,16 +1,17 @@
 package org.manage.log.receive.provider.repository.mysql;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.manage.log.common.util.factory.LoadBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import java.util.Objects;
-import java.util.function.Function;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * mysql operate layer
@@ -21,44 +22,31 @@ import java.util.function.Function;
 @LoadBean(loadConfigKey = "store.load.mode", mode = "mysql", needPrimary = false)
 public class MysqlDatasourceOperate {
 
+    private static final Logger log = LoggerFactory.getLogger(MysqlDatasourceOperate.class);
+
     private final PlatformTransactionManager platformTransactionManager;
 
-    private final SqlSessionFactory sqlSessionFactory;
-
-    private final ThreadLocal<ImmutablePair<SqlSession, TransactionStatus>> executeInfos;
-
-    public <T, R> R executeDML(Class<T> classType, Function<T, R> executeFunction){
-        return executeDML(classType, executeFunction, false);
-    }
-
-    public <T, R> R executeDML(Class<T> classType, Function<T, R> executeFunction, boolean isEndCall){
-        ImmutablePair<SqlSession, TransactionStatus> executeInfo = executeInfos.get();
-        if(Objects.isNull(executeInfo)){
-            executeInfo = ImmutablePair.of(sqlSessionFactory.openSession(), platformTransactionManager.getTransaction(new DefaultTransactionDefinition()));
-            executeInfos.set(executeInfo);
-        }
-        SqlSession sqlSession = executeInfo.getLeft();
-        TransactionStatus transactionStatus = executeInfo.getRight();
-        R executeRes;
+    public boolean executeDML(List<ImmutablePair<Supplier<Integer>, Integer>> executeFunctionToExpectExecuteRowList){
+        TransactionStatus transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
-            T mapper = sqlSession.getMapper(classType);
-            executeRes =  executeFunction.apply(mapper);
-        } catch (Exception e) {
-            platformTransactionManager.rollback(transactionStatus);
-            throw e;
-        } finally {
-            if(isEndCall){
-                sqlSession.close();
-                executeInfos.remove();
+            for(ImmutablePair<Supplier<Integer>, Integer> executeFunctionToExpectExecuteRow : executeFunctionToExpectExecuteRowList){
+                Integer executeRes = executeFunctionToExpectExecuteRow.getLeft().get();
+                //execute result not equals expect result, rollback current transaction
+                if(!executeRes.equals(executeFunctionToExpectExecuteRow.getRight())){
+                    platformTransactionManager.rollback(transactionStatus);
+                    return false;
+                }
             }
+            platformTransactionManager.commit(transactionStatus);
+            return true;
+        } catch (Exception e){
+            log.error("mysql datasource operate, execute error", e);
+            platformTransactionManager.rollback(transactionStatus);
+            return false;
         }
-        return executeRes;
     }
 
-    public MysqlDatasourceOperate(@Qualifier("mysqlPlatformTransactionManager") PlatformTransactionManager platformTransactionManager,
-                                  @Qualifier("mysqlSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    public MysqlDatasourceOperate(@Qualifier("mysqlPlatformTransactionManager") PlatformTransactionManager platformTransactionManager) {
         this.platformTransactionManager = platformTransactionManager;
-        this.sqlSessionFactory = sqlSessionFactory;
-        executeInfos = new ThreadLocal<>();
     }
 }

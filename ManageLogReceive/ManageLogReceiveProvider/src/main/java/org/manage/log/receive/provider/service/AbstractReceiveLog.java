@@ -1,12 +1,14 @@
 package org.manage.log.receive.provider.service;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.manage.log.common.constants.HandleError;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.builder.LogRecordFactory;
+import org.manage.log.common.util.GsonUtil;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
@@ -62,16 +64,16 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         Map<String, LogConfig> configNameToConfig = configList.stream().collect(Collectors.toMap(LogConfig::ruleName, Function.identity()));
         //format log content and others, call factory to build domain object
         return uploadLogRecordReqList.stream().map(uploadReq -> {
-            LogConfig logConfig = configNameToConfig.get(uploadReq.getConfigName());
-            return ofNullable(logConfig).map(config -> {
+            return ofNullable(configNameToConfig.get(uploadReq.getConfigName())).map(config -> {
                 //format content by content template
-                String content = formatContent(config, uploadReq.getValuePropertyToValueMap());
+                Map<String, String> valuePropertyToValueMap = getValueProperty(uploadReq.getValueData());
+                String content = logConfigService.formatContent(config, valuePropertyToValueMap);
                 //get index value from value list according by index config
-                Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>();
+                Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>(config.indexConfigList().size());
                 for(LogIndexConfig logIndexConfig : config.indexConfigList()){
-                    indexValueToIndexSortMap.put(uploadReq.getValuePropertyToValueMap().get(logIndexConfig.valueIndexKey()), logIndexConfig.logRecordIndexSort());
+                    indexValueToIndexSortMap.put(valuePropertyToValueMap.get(logIndexConfig.valueIndexKey()), logIndexConfig.logRecordIndexSort());
                 }
-                return logRecordFactory.build(content, logConfig.operatorSort(), uploadReq.getOperator(),
+                return logRecordFactory.build(content, config.operatorSort(), uploadReq.getOperator(),
                                                                 config.logRecordSort(), indexValueToIndexSortMap,
                                             getUploadTime(uploadReq));
 
@@ -79,13 +81,27 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
         }).filter(Objects::nonNull).toList();
     }
 
-    private String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
-        List<ImmutablePair<String, String>> extractValueKeyList = logConfigService.extractValueKey(logConfig);
-        String content = logConfig.contentTemplate();
-        for(ImmutablePair<String, String> extractValueKey : extractValueKeyList){
-            content = content.replace(extractValueKey.getLeft(), valuePropertyToValueMap.get(extractValueKey.getRight()));
+    private Map<String, String> getValueProperty(String valueData){
+        Map<String, String> valuePropertyMap = new HashMap<>(16);
+        getValueProperty(GsonUtil.getInstance().getJson(valueData), "", valuePropertyMap);
+        return valuePropertyMap;
+    }
+
+    private void getValueProperty(JsonElement valueData, String prefixKey, Map<String, String> valuePropertyMap){
+        if(valueData.isJsonArray()){
+            valueData.getAsJsonArray().asList().forEach(obj -> getValueProperty(obj, prefixKey, valuePropertyMap));
         }
-        return content;
+        if (valueData.isJsonObject()) {
+            JsonObject jsonObject = valueData.getAsJsonObject();
+            for(String valueKey : jsonObject.keySet()){
+                JsonElement subObject = jsonObject.get(valueKey);
+                if(subObject.isJsonPrimitive()){
+                    valuePropertyMap.put(prefixKey + valueKey, subObject.getAsJsonPrimitive().getAsString());
+                } else {
+                    getValueProperty(subObject, String.format("%s.%s.", prefixKey, valueKey), valuePropertyMap);
+                }
+            }
+        }
     }
 
     protected abstract LocalDateTime getUploadTime(UploadLogRecordReq request);

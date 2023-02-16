@@ -8,6 +8,8 @@ import org.manage.log.base.test.BaseTest;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.util.DefineModelUtil;
 
+import java.util.Collections;
+
 /**
  * @author cartoon
  * @version 1.0
@@ -18,7 +20,7 @@ public class ReceiveLogByHttpTest extends BaseTest {
 
     @DisplayName("receive single log test")
     @Test
-    public void testReceiveSingleLog() throws Exception{
+    public void testReceiveSingleLog(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
         String result = post("/receive/singleLog", uploadLogRecordReq);
         Assertions.assertNotNull(result);
@@ -26,9 +28,9 @@ public class ReceiveLogByHttpTest extends BaseTest {
 
     @DisplayName("receive log list test")
     @Test
-    public void testReceiveLogList() throws Exception{
+    public void testReceiveLogList(){
         UploadLogRecordReq uploadLogRecordReq = DefineModelUtil.defineLogRecordReq();
-        String result = post("/receive/logList", ImmutableList.of(uploadLogRecordReq));
+        String result = post("/receive/logList", Collections.singletonList(uploadLogRecordReq));
         Assertions.assertNotNull(result);
     }
 }

@@ -9,6 +9,8 @@ import org.manage.log.base.test.BaseTest;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.util.DefineModelUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.annotation.Resource;
 
@@ -20,15 +22,15 @@ import javax.annotation.Resource;
 @DisplayName("async receive log test")
 public class AsyncReceiveLogTest extends BaseTest {
 
-    @Resource(name = "asyncReceiveLog")
-    private ReceiveLog receiveLog;
+    @Autowired
+    private ReceiveLog asyncReceiveLog;
 
     private static UploadLogRecordReq uploadLogRecordReq;
 
     @DisplayName("receive single log using non upload time test")
     @Test
     public void testReceiveSingleLogWithoutUploadTime(){
-        OperateLogResp<Boolean> uploadRes = receiveLog.receive(uploadLogRecordReq);
+        OperateLogResp<Boolean> uploadRes = asyncReceiveLog.receive(uploadLogRecordReq);
         Assertions.assertTrue(uploadRes.isHasAbnormal());
         Assertions.assertNull(uploadRes.getSuccessResult());
     }
@@ -36,7 +38,7 @@ public class AsyncReceiveLogTest extends BaseTest {
     @DisplayName("receive log list using non upload time test")
     @Test
     public void testReceiveLogListWithoutUploadTime(){
-        OperateLogResp<Boolean> uploadRes = receiveLog.receive(ImmutableList.of(uploadLogRecordReq));
+        OperateLogResp<Boolean> uploadRes = asyncReceiveLog.receive(ImmutableList.of(uploadLogRecordReq));
         Assertions.assertTrue(uploadRes.isHasAbnormal());
         Assertions.assertNull(uploadRes.getSuccessResult());
     }

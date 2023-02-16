@@ -1,5 +1,6 @@
 package org.manage.log.common.model.config.builder;
 
+import org.manage.log.common.model.config.LogContentFormatConfig;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.config.LogConfig;
@@ -34,13 +35,16 @@ public class LogConfigFactory {
 
     public LogConfig build(String ruleName, LogRecordSort logRecordSort,
                            OperatorSort operatorSort, String contentTemplate,
-                           List<LogIndexConfig> logIndexConfigs, String description){
+                           List<LogIndexConfig> logIndexConfigs,
+                           List<LogContentFormatConfig> contentFormatConfigList,
+                           String description){
         return LogConfigBuilder.instance(this)
                 .setRuleName(ruleName)
                 .setLogRecordSort(logRecordSort)
                 .setOperatorSort(operatorSort)
                 .setContentTemplate(contentTemplate)
                 .setIndexConfigList(logIndexConfigs)
+                .setContentFormatConfigList(contentFormatConfigList)
                 .setDescription(description)
                 .build();
     }

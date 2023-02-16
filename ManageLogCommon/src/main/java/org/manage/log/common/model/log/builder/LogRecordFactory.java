@@ -7,8 +7,6 @@ import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.util.IdGenerateUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -20,8 +18,7 @@ import java.util.Map;
 @Component
 public class LogRecordFactory {
 
-    @Resource
-    private LogIndexFactory indexFactory;
+    private final LogIndexFactory indexFactory;
 
     public String generateRecordId(){
         return IdGenerateUtil.getInstance().generate(13);
@@ -50,5 +47,9 @@ public class LogRecordFactory {
         Assert.notNull(logRecord.createTime(), "create time must not be null");
         Assert.notNull(logRecord.modifyTime(), "modify time must not be null");
         indexFactory.check(logRecord.indexList());
+    }
+
+    public LogRecordFactory(LogIndexFactory indexFactory) {
+        this.indexFactory = indexFactory;
     }
 }

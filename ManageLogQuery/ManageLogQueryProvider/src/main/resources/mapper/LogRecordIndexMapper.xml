@@ -8,38 +8,21 @@
         indexId, logRecordId, sort, indexValue, version, createTime, modifyTime
     </sql>
 
-    <insert id="insert" parameterType = "org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
-        insert into LogRecordIndex(indexId, logRecordId, sort, indexValue, version, createTime, modifyTime)
-        value (#{indexId}, #{logRecordId}, #{sort}, #{indexValue}, #{version}, #{createTime}, #{modifyTime})
-    </insert>
+    <sql id="TABLE_NAME">
+        LogRecordIndex
+    </sql>
 
-    <insert id="batchInsert">
-        insert into LogRecordIndex(indexId, logRecordId, sort, indexValue, version, createTime, modifyTime)
-        values
-        <foreach collection="indexList" item="index" open="(" close=")" separator=",">
-            #{index.indexId},
-            #{index.logRecordId},
-            #{index.sort},
-            #{index.indexValue},
-            #{index.version},
-            #{index.createTime},
-            #{index.modifyTime}
+    <select id="getByRecordIdList" resultType="org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
+        where logRecordId in
+        <foreach collection="recordIds" separator="," open="(" close=")" item="recordId">
+            #{recordId}
         </foreach>
-    </insert>
-
-    <select id="getByIndex" resultType = "org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
-        select <include refid="Base_Column_List"/> from LogRecordIndex
-        where indexValue = #{indexValue}
     </select>
 
-    <select id="getByIndexIds" resultType="org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
-        select <include refid="Base_Column_List"/> from LogRecordIndex
-        <where>
-            indexId in
-            <foreach collection="indexIds" open="(" close=")" separator="," item="indexId">
-                #{indexId}
-            </foreach>
-        </where>
+    <select id="getByIndex" resultType = "org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
+        where indexValue = #{indexValue}
     </select>
 
     <select id="getByIndexAndTime" resultType="org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">

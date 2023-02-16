@@ -28,7 +28,7 @@
         select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
     </select>
 
-    <select id="getByConfigNameList" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO">
+    <select id="getByConfigIdList" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogIndexConfigMysqlPO">
         select <include refid="Base_Column_List"/>
         from <include refid="TABLE_NAME"/>
         where logConfigId in
