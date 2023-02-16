@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.log.query.provider.repository.mysql.mapper.LogRecordIndexMapper">
+
+    <sql id="Base_Column_List">
+        indexId, logRecordId, sort, indexValue, version, createTime, modifyTime
+    </sql>
+
+    <sql id="TABLE_NAME">
+        LogRecordIndex
+    </sql>
+
+    <select id="getByRecordIdList" resultType="org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
+        where logRecordId in
+        <foreach collection="recordIds" separator="," open="(" close=")" item="recordId">
+            #{recordId}
+        </foreach>
+    </select>
+
+    <select id="getByIndex" resultType = "org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        select <include refid="Base_Column_List"/> from <include refid="TABLE_NAME"/>
+        where indexValue = #{indexValue}
+    </select>
+
+    <select id="getByIndexAndTime" resultType="org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO">
+        select <include refid="Base_Column_List"/> from LogRecordIndex
+        where indexValue = #{indexValue} and modifyTime between #{startTime} and #{endTime}
+    </select>
+</mapper>

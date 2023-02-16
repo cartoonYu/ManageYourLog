@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.log.receive.provider.repository.mysql.mapper.LogContentFormatConfigMapper">
+
+    <sql id="Base_Column_List">
+        ruleId, ruleName, logConfigId,
+        `type`, `value`, executeSequence,
+        version, createTime, modifyTime
+    </sql>
+
+    <sql id="TABLE_NAME">
+        LogContentFormatConfig
+    </sql>
+
+  <insert id="batchInsert">
+    insert into <include refid="TABLE_NAME"/> (ruleId, ruleName, logConfigId,
+                                        `type`, `value`, executeSequence,
+                                        version, createTime, modifyTime
+    )
+    values
+        <foreach collection="pos" separator="," open="(" close=")" item="po">
+          #{po.ruleId,jdbcType=VARCHAR}, #{po.ruleName,jdbcType=VARCHAR}, #{po.logConfigId,jdbcType=VARCHAR},
+          #{po.type,jdbcType=VARCHAR}, #{po.value,jdbcType=VARCHAR}, #{po.executeSequence,jdbcType=INTEGER},
+          #{po.version,jdbcType=INTEGER}, #{po.createTime,jdbcType=TIMESTAMP}, #{po.modifyTime,jdbcType=TIMESTAMP}
+        </foreach>
+  </insert>
+
+    <select id="getByConfigId" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO">
+        select <include refid="Base_Column_List"/>
+        from <include refid="TABLE_NAME"/>
+        where logConfigId = #{configId}
+    </select>
+
+    <select id="getByConfigIdList" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO">
+        select <include refid="Base_Column_List"/>
+        from <include refid="TABLE_NAME"/>
+        where logConfigId in
+        <foreach collection="configIdList" item="configId" open="(" close=")" separator=",">
+            #{configId}
+        </foreach>
+    </select>
+
+    <select id="getAll" resultType="org.manage.log.receive.provider.repository.mysql.model.config.LogContentFormatConfigMysqlPO">
+        select <include refid="Base_Column_List"/>
+        from <include refid="TABLE_NAME"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ManageYourLogDemo
+upload:
+  log:
+    mode: kafka
+    url: cartoon-ali.com
+    port: 9092
+
