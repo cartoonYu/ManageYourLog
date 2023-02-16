@@ -41,36 +41,63 @@ public class LogAspect {
     @After("uploadLogAspect()")
     public void uploadLog(JoinPoint point){
         Method annotationMethod = ((MethodSignature)point.getSignature()).getMethod();
-        //get config name from annotation
-        String configName = getConfigName(annotationMethod);
-        //get method param
-        String methodParam = getArgument(point);
-        //upload log
-        uploadLog(configName, "", methodParam);
-    }
-
-    private String getArgument(JoinPoint point){
-        JsonObject argumentData = new JsonObject();
-        Method annotationMethod = ((MethodSignature)point.getSignature()).getMethod();
+        Log logAnnotation = annotationMethod.getAnnotation(Log.class);
         Parameter[] parameterList = annotationMethod.getParameters();
         Object[] paramDataList = point.getArgs();
+        //get config name from annotation
+        String configName = getConfigName(logAnnotation);
+        //get method param
+        JsonObject methodParam = getArgument(parameterList, paramDataList);
+        //get operator by operator key
+        String operator = getOperator(logAnnotation.operatorParamKey(), methodParam, "", 0);
+        //upload log
+        uploadLog(configName, operator, methodParam);
+    }
 
+    /**
+     * get operator though specify param key
+     * @param operatorParamKey specify key
+     * @param methodParam method param data
+     * @param currentParamKey current param key, use to append all traverse param key
+     * @param traverseDepth record traverse depth, use to judge format param key
+     * @return
+     */
+    private String getOperator(String operatorParamKey, JsonObject methodParam, String currentParamKey, int traverseDepth){
+        for(String key : methodParam.keySet()){
+            JsonElement jsonElement = methodParam.get(key);
+            String currentKey = traverseDepth == 0 ? key : String.format("%s.%s", currentParamKey, key);
+            if(currentKey.equals(operatorParamKey) && jsonElement.isJsonPrimitive()){
+                //only upper layer assign key and current key match and current json element is json primitive can return
+                return jsonElement.getAsJsonPrimitive().getAsString();
+            }
+            if (jsonElement.isJsonObject()) {
+                return getOperator(operatorParamKey, jsonElement.getAsJsonObject(), currentKey, traverseDepth + 1);
+            } else if(jsonElement.isJsonArray()){
+                for(JsonElement jsonObject : jsonElement.getAsJsonArray().asList()){
+                    return getOperator(operatorParamKey, jsonObject.getAsJsonObject(), currentParamKey, traverseDepth + 1);
+                }
+            }
+        }
+        return "";
+    }
+
+    private JsonObject getArgument(Parameter[] parameterList, Object[] paramDataList){
+        JsonObject argumentData = new JsonObject();
         for(int index = 0; index < parameterList.length; index++){
             Parameter parameter = parameterList[index];
             Object parameterData = paramDataList[index];
             JsonElement parameterDataJson = GsonUtil.getInstance().getJson(GsonUtil.getInstance().writeJson(parameterData));
             argumentData.add(parameter.getName(), parameterDataJson);
         }
-        return argumentData.toString();
+        return argumentData;
     }
 
-    private String getConfigName(Method annotationMethod){
-        Log logAnnotation = annotationMethod.getAnnotation(Log.class);
+    private String getConfigName(Log logAnnotation){
         return logAnnotation.ruleName();
     }
 
-    private Boolean uploadLog(String configName, String operator, String valueData){
-        UploadLogRecordReq uploadLogRecordReq = packageUploadReq(configName, operator, valueData);
+    private Boolean uploadLog(String configName, String operator, JsonObject valueData){
+        UploadLogRecordReq uploadLogRecordReq = packageUploadReq(configName, operator, valueData.toString());
         OperateLogResp<Boolean> uploadResultResponse = uploadLog.upload(uploadLogRecordReq);
         boolean uploadResult = !uploadResultResponse.isHasAbnormal() && uploadResultResponse.getSuccessResult();
         log.info("upload log, data: {}, result: {}", GsonUtil.getInstance().writeJson(uploadLogRecordReq), uploadResult);
