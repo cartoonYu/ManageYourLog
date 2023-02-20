@@ -20,6 +20,8 @@ import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author cartoon
@@ -32,6 +34,13 @@ public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     @Resource
+    private UploadLogExecutor uploadLogExecutor;
+
+    private final Map<Method, Parameter[]> METHOD_TO_PARAMETER_MAP = new HashMap<>();
+
+    private final Map<Method, Log> METHOD_TO_ANNOTATION_MAP = new HashMap<>();
+
+    @Resource
     private UploadLog uploadLog;
 
     @Pointcut(value = "@annotation(org.manage.log.receive.facade.Log)")
@@ -40,18 +49,48 @@ public class LogAspect {
 
     @After("uploadLogAspect()")
     public void uploadLog(JoinPoint point){
-        Method annotationMethod = ((MethodSignature)point.getSignature()).getMethod();
+        uploadLogExecutor.execute(() -> {
+            Method annotationMethod = ((MethodSignature)point.getSignature()).getMethod();
+            Log logAnnotation = getLogAnnotationByMethod(annotationMethod);
+            Parameter[] parameterList = getMethodParameterListByMethod(annotationMethod);
+            Object[] paramDataList = point.getArgs();
+            //get config name from annotation
+            String configName = logAnnotation.ruleName();
+            //get method param
+            JsonObject methodParam = getArgument(parameterList, paramDataList);
+            //get operator by operator key
+            String operator = getOperator(logAnnotation.operatorParamKey(), methodParam, "", 0);
+            //upload log
+            return uploadLog(configName, operator, methodParam);
+        });
+    }
+
+    /**
+     * get log annotation from cache, otherwise get from reflect and put to cache
+     * @param annotationMethod source method
+     * @return log annotation
+     */
+    private Log getLogAnnotationByMethod(Method annotationMethod){
+        if(METHOD_TO_ANNOTATION_MAP.containsKey(annotationMethod)){
+            return METHOD_TO_ANNOTATION_MAP.get(annotationMethod);
+        }
         Log logAnnotation = annotationMethod.getAnnotation(Log.class);
+        METHOD_TO_ANNOTATION_MAP.put(annotationMethod, logAnnotation);
+        return logAnnotation;
+    }
+
+    /**
+     * get parameter list from cache, otherwise get from reflect and put to cache
+     * @param annotationMethod source method
+     * @return parameter list
+     */
+    private Parameter[] getMethodParameterListByMethod(Method annotationMethod){
+        if(METHOD_TO_PARAMETER_MAP.containsKey(annotationMethod)){
+            return METHOD_TO_PARAMETER_MAP.get(annotationMethod);
+        }
         Parameter[] parameterList = annotationMethod.getParameters();
-        Object[] paramDataList = point.getArgs();
-        //get config name from annotation
-        String configName = getConfigName(logAnnotation);
-        //get method param
-        JsonObject methodParam = getArgument(parameterList, paramDataList);
-        //get operator by operator key
-        String operator = getOperator(logAnnotation.operatorParamKey(), methodParam, "", 0);
-        //upload log
-        uploadLog(configName, operator, methodParam);
+        METHOD_TO_PARAMETER_MAP.put(annotationMethod, parameterList);
+        return parameterList;
     }
 
     /**
@@ -92,10 +131,6 @@ public class LogAspect {
         return argumentData;
     }
 
-    private String getConfigName(Log logAnnotation){
-        return logAnnotation.ruleName();
-    }
-
     private Boolean uploadLog(String configName, String operator, JsonObject valueData){
         UploadLogRecordReq uploadLogRecordReq = packageUploadReq(configName, operator, valueData.toString());
         OperateLogResp<Boolean> uploadResultResponse = uploadLog.upload(uploadLogRecordReq);
@@ -104,6 +139,13 @@ public class LogAspect {
         return uploadResult;
     }
 
+    /**
+     * combine upload log request data
+     * @param configName log config name
+     * @param operator upload log operator
+     * @param valueData log data
+     * @return upload log request data
+     */
     private UploadLogRecordReq packageUploadReq(String configName, String operator, String valueData){
         UploadLogRecordReq uploadLogRecordReq = new UploadLogRecordReq();
         uploadLogRecordReq.setUploadTime(LocalDateTime.now());
