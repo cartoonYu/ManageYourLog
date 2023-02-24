@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author cartoon
  * @date 2022/4/5 16:41
  */
-public class MariaDBConfig {
+public class MariaDbConfig {
 
     /**
      * database schema script
@@ -52,7 +52,7 @@ public class MariaDBConfig {
         return baseDir;
     }
 
-    public MariaDBConfig setBaseDir(String baseDir) {
+    public MariaDbConfig setBaseDir(String baseDir) {
         this.baseDir = baseDir;
         return this;
     }
@@ -61,7 +61,7 @@ public class MariaDBConfig {
         return dataDir;
     }
 
-    public MariaDBConfig setDataDir(String dataDir) {
+    public MariaDbConfig setDataDir(String dataDir) {
         this.dataDir = dataDir;
         return this;
     }
@@ -70,7 +70,7 @@ public class MariaDBConfig {
         return port;
     }
 
-    public MariaDBConfig setPort(Integer port) {
+    public MariaDbConfig setPort(Integer port) {
         this.port = port;
         return this;
     }
@@ -87,7 +87,7 @@ public class MariaDBConfig {
         return db;
     }
 
-    public MariaDBConfig setDb(DB db) {
+    public MariaDbConfig setDb(DB db) {
         this.db = db;
         return this;
     }
@@ -96,7 +96,7 @@ public class MariaDBConfig {
         return schemaList;
     }
 
-    public MariaDBConfig addSchemaScript(String... schemaList){
+    public MariaDbConfig addSchemaScript(String... schemaList){
         this.schemaList.addAll(Arrays.asList(schemaList));
         return this;
     }
@@ -105,7 +105,7 @@ public class MariaDBConfig {
         return dataList;
     }
 
-    public MariaDBConfig addDataScript(String... dataList) {
+    public MariaDbConfig addDataScript(String... dataList) {
         this.dataList.addAll(Arrays.asList(dataList));
         return this;
     }

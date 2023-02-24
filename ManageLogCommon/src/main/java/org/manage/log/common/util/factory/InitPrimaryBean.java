@@ -13,9 +13,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @author cartoon
@@ -36,8 +35,7 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         Reflections reflections = new Reflections(SCAN_PACKAGE_NAME);
-        Set<Class<?>> annotatedWithLoanBeanClassList = reflections.getTypesAnnotatedWith(LoadBean.class);
-        annotatedWithLoanBeanClassList.forEach(annotatedWithLoanBeanClass -> {
+        reflections.getTypesAnnotatedWith(LoadBean.class).forEach(annotatedWithLoanBeanClass -> {
             LoadBean loadBean = annotatedWithLoanBeanClass.getDeclaredAnnotation(LoadBean.class);
             // if client asks init primary, then operate, otherwise skip
             if(loadBean.needPrimary()){
@@ -68,12 +66,10 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
      */
     private boolean judgeHavePrimaryBefore(Class<?> selectClass){
         // select class has implement interface
-        Type[] genericInterfaces = selectClass.getGenericInterfaces();
-        for(Type genericInterface : genericInterfaces){
-            if(hasLoadPrimaryClass.contains(genericInterface.getTypeName())){
-                log.info("init primary, has load primary class, class name: {}", selectClass.getSimpleName());
-                return true;
-            }
+        boolean havePrimaryBefore = Stream.of(selectClass.getGenericInterfaces()).map(Type::getTypeName).anyMatch(hasLoadPrimaryClass::contains);
+        if(havePrimaryBefore){
+            log.info("init primary, has load primary class, class name: {}", selectClass.getSimpleName());
+            return true;
         }
         // select class hasn't implemented interface
         if(hasLoadPrimaryClass.contains(selectClass.getTypeName())){
@@ -100,11 +96,11 @@ public class InitPrimaryBean implements BeanDefinitionRegistryPostProcessor, Env
      */
     private void tagHaveInitPrimary(Class<?> selectClass){
         // select class has implement interface
-        Type[] genericInterfaces = selectClass.getGenericInterfaces();
-        for(Type genericInterface : genericInterfaces){
+
+        Stream.of(selectClass.getGenericInterfaces()).forEach(genericInterface -> {
             log.info("init primary, load primary class, class name: {}, interface: {}", selectClass.getSimpleName(), genericInterface.getTypeName());
             hasLoadPrimaryClass.add(genericInterface.getTypeName());
-        }
+        });
         // select class hasn't implemented interface
         if(!hasLoadPrimaryClass.contains(selectClass.getTypeName())){
             log.info("init primary, load primary class, class name: {}", selectClass.getTypeName());
