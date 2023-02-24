@@ -2,6 +2,7 @@ package org.manage.log.common.util.factory;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
+import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.lang.NonNull;
@@ -30,10 +31,12 @@ public class LoadCondition implements Condition {
      */
     @Override
     public boolean matches(@NonNull ConditionContext context, @NonNull AnnotatedTypeMetadata metadata) {
-        Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(LoadBean.class.getName());
+        MergedAnnotation<LoadBean> loadBeanAnnotation = metadata.getAnnotations().get(LoadBean.class);
 
-        String mode = (String) annotationAttributes.get("mode");
-        String configKey = (String) annotationAttributes.get("loadConfigKey");
+        String mode = loadBeanAnnotation.getString("mode");
+
+        String configKey = loadBeanAnnotation.getString("loadConfigKey");
+
         return matches(context, configKey, ALL_MATCH_CONFIG) || matches(context, configKey, mode);
     }
 
@@ -45,14 +48,16 @@ public class LoadCondition implements Condition {
      * @return match result
      */
     private boolean matches(ConditionContext context, String configKey, String configuration){
-        if(Objects.isNull(configKey)){
-            return false;
-        }
-        Environment environment = context.getEnvironment();
-        String config = environment.getProperty(configKey);
-        return Optional.ofNullable(config).map(value -> {
-            List<String> loadList = Arrays.stream(value.split(CONFIG_VALUE_SPLIT_SEPARATOR)).toList();
-            return loadList.stream().anyMatch(configuration::contains);
-        }).orElse(false);
+        return Optional.ofNullable(configKey)
+                .map(key -> {
+                    Environment environment = context.getEnvironment();
+                   //get load bean from config
+                    String config = environment.getProperty(configKey);
+                    return Optional.ofNullable(config).map(value -> {
+                        List<String> loadList = Arrays.stream(value.split(CONFIG_VALUE_SPLIT_SEPARATOR)).toList();
+                        return loadList.stream().anyMatch(configuration::contains);
+                    }).orElse(false);
+                }).orElse(false);
+
     }
 }

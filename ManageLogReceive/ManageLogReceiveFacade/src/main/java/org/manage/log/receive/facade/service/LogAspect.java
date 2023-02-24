@@ -2,6 +2,7 @@ package org.manage.log.receive.facade.service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import jakarta.annotation.Resource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.time.LocalDateTime;

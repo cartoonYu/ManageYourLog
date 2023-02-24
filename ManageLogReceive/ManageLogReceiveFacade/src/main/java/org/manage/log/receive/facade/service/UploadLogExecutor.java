@@ -1,5 +1,6 @@
 package org.manage.log.receive.facade.service;
 
+import jakarta.annotation.PreDestroy;
 import org.manage.log.common.util.config.ApplicationConfigUtil;
 import org.manage.log.receive.facade.config.ApplicationConfigKey;
 import org.slf4j.Logger;
@@ -48,6 +49,19 @@ public class UploadLogExecutor {
         } catch (Exception e) {
             log.error("upload log error", e);
             return false;
+        }
+    }
+
+    @PreDestroy
+    private void preDestroy(){
+        //guarantee to execute all task
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) EXECUTOR;
+        while (executor.getQueue().size() > 0 || executor.getActiveCount() > 0){
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ public abstract class InitMysqlDataUtil {
      * @throws Exception
      */
     protected void start() throws Exception{
-        MariaDBConfig config = getConfig();
+        MariaDbConfig config = getConfig();
         if(!config.getMariaDbIsStart().get()){
             DBConfigurationBuilder configBuilder = DBConfigurationBuilder.newBuilder();
             configBuilder
@@ -59,8 +59,8 @@ public abstract class InitMysqlDataUtil {
      * <p>sub class can overwrite this to determine specify config</p>
      * @return mariadb config
      */
-    protected MariaDBConfig getConfig(){
-        MariaDBConfig mariaDBConfig = new MariaDBConfig();
+    protected MariaDbConfig getConfig(){
+        MariaDbConfig mariaDBConfig = new MariaDbConfig();
         mariaDBConfig.setBaseDir("../local/base")
                 .setDataDir("../local/data")
                 .setPort(13306)
