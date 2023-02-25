@@ -55,7 +55,7 @@ public class LoadCondition implements Condition {
                     String config = environment.getProperty(configKey);
                     return Optional.ofNullable(config).map(value -> {
                         List<String> loadList = Arrays.stream(value.split(CONFIG_VALUE_SPLIT_SEPARATOR)).toList();
-                        return loadList.stream().anyMatch(configuration::contains);
+                        return loadList.parallelStream().anyMatch(configuration::contains);
                     }).orElse(false);
                 }).orElse(false);
 

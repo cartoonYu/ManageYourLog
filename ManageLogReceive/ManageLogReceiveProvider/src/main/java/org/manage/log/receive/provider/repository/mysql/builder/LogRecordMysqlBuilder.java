@@ -33,7 +33,7 @@ public class LogRecordMysqlBuilder {
      * @return record and its index list
      */
     public List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> convertToPo(List<LogRecord> logRecords){
-        return logRecords.stream().map(this::convertToPo).collect(Collectors.toList());
+        return logRecords.parallelStream().map(this::convertToPo).collect(Collectors.toList());
     }
 
     /**
@@ -51,9 +51,9 @@ public class LogRecordMysqlBuilder {
         );
         //convert index model to po
         List<LogRecordIndexMysqlPO> indexMysqlPOS = ofNullable(logRecord.indexList()).map(
-                indexList -> indexList.stream().map(
+                indexList -> indexList.parallelStream().map(
                         index -> new LogRecordIndexMysqlPO(
-                                index.indexId(), index.logRecordId(),
+                                index.indexId(), logRecord.recordId(),
                                 index.logRecordIndexSort().getSortDescription(), index.indexValue(),
                                 index.version(), index.createTime(), index.modifyTime()
                         )

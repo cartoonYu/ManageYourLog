@@ -26,17 +26,16 @@ public class DefineModelUtil {
                 OperatorSort.USER,
                 "cartoon",
                 LogRecordSort.OPERATE,
-                ImmutableList.of(defineLogRecordIndex(recordId)),
+                ImmutableList.of(defineLogRecordIndex()),
                 1,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
     }
 
-    private static LogRecordIndex defineLogRecordIndex(String recordId){
+    private static LogRecordIndex defineLogRecordIndex(){
         return new LogRecordIndex(
                 IdGenerateUtil.getInstance().generate(13),
-                recordId,
                 LogRecordIndexSort.ID,
                 "111",
                 1,

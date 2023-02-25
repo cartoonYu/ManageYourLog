@@ -22,15 +22,8 @@ public class LogIndexFactory {
         return IdGenerateUtil.getInstance().generate(13);
     }
 
-    public List<LogRecordIndex> build(String logRecordId, Map<String, LogRecordIndexSort> valueToSortMap){
-        List<LogRecordIndex> indexList = new ArrayList<>();
-        valueToSortMap.forEach((value, indexSort) -> indexList.add(build(logRecordId, indexSort, value)));
-        return indexList;
-    }
-
-    public LogRecordIndex build(String logRecordId, LogRecordIndexSort indexSort, String value){
+    public LogRecordIndex build(LogRecordIndexSort indexSort, String value){
         return LogIndexBuilder.getInstance(this)
-                .setLogRecordId(logRecordId)
                 .setIndexValue(value)
                 .setLogRecordIndexSort(indexSort)
                 .build();
@@ -42,7 +35,6 @@ public class LogIndexFactory {
 
     public void check(LogRecordIndex logRecordIndex){
         Assert.notNull(logRecordIndex.indexId(), "index id must not be null");
-        Assert.notNull(logRecordIndex.logRecordId(), "log record id must not be null");
         Assert.notNull(logRecordIndex.logRecordIndexSort(), "index sort must not be null");
         Assert.notNull(logRecordIndex.indexValue(), "index value must not be null");
         Assert.notNull(logRecordIndex.version(), "version must not be null");

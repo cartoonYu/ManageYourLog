@@ -18,7 +18,6 @@ public class LogRecordIndexTest {
     public void testGetterReturnNotNull(){
         LogRecordIndex logRecordIndex = MockData.initLogRecordIndex();
         Assertions.assertNotNull(logRecordIndex.indexId());
-        Assertions.assertNotNull(logRecordIndex.logRecordId());
         Assertions.assertNotNull(logRecordIndex.logRecordIndexSort());
         Assertions.assertNotNull(logRecordIndex.indexValue());
         Assertions.assertNotNull(logRecordIndex.version());

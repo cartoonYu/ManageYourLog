@@ -7,10 +7,7 @@ import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.LogRecordIndex;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author cartoon
@@ -29,7 +26,7 @@ public class LogRecordBuilder {
 
     private LogRecordSort logRecordSort;
 
-    private Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>();
+    private List<LogRecordIndex> indexList = new ArrayList<>();
 
     private Integer version = 1;
 
@@ -69,11 +66,11 @@ public class LogRecordBuilder {
         return this;
     }
 
-    public LogRecordBuilder setIndexValueToIndexSortMap(Map<String, LogRecordIndexSort> indexValueToIndexSortMap) {
-        if(Objects.isNull(indexValueToIndexSortMap)){
+    public LogRecordBuilder setIndexList(List<LogRecordIndex> indexList) {
+        if(Objects.isNull(indexList) || indexList.isEmpty()){
             return this;
         }
-        this.indexValueToIndexSortMap.putAll(indexValueToIndexSortMap);
+        this.indexList.addAll(indexList);
         return this;
     }
 
@@ -82,22 +79,18 @@ public class LogRecordBuilder {
         return this;
     }
 
-    public static LogRecordBuilder getInstance(LogRecordFactory logRecordFactory, LogIndexFactory indexFactory){
-        return new LogRecordBuilder(logRecordFactory, indexFactory);
+    public static LogRecordBuilder getInstance(LogRecordFactory logRecordFactory){
+        return new LogRecordBuilder(logRecordFactory);
     }
 
     private LogRecordFactory logRecordFactory;
 
-    private LogIndexFactory logIndexFactory;
-
-    private LogRecordBuilder(LogRecordFactory logRecordFactory, LogIndexFactory indexFactory) {
+    private LogRecordBuilder(LogRecordFactory logRecordFactory) {
         this.logRecordFactory = logRecordFactory;
-        this.logIndexFactory = indexFactory;
     }
 
     public LogRecord build(){
         recordId = logRecordFactory.generateRecordId();
-        List<LogRecordIndex> indexList = logIndexFactory.build(recordId, indexValueToIndexSortMap);
         LogRecord logRecord = new LogRecord(
                 recordId,
                 content,

@@ -25,13 +25,13 @@ public class QueryResultBuilder {
     }
 
     public List<QueryLogResp> build(List<LogRecord> sourceLog){
-        return sourceLog.stream().map(source -> new QueryLogResp(source.content(), source.operatorSort().getSortDescription(), source.operator(),
+        return sourceLog.parallelStream().map(source -> new QueryLogResp(source.content(), source.operatorSort().getSortDescription(), source.operator(),
                                 source.logRecordSort().getSortDescription(), buildIndex(source.indexList()),
                                 source.version(), timeFormatUtil.format(source.createTime()), timeFormatUtil.format(source.modifyTime()))).collect(Collectors.toList());
     }
 
     private List<QueryLogIndexResp> buildIndex(List<LogRecordIndex> sourceLogIndex){
-        return sourceLogIndex.stream()
+        return sourceLogIndex.parallelStream()
                 .map(source -> new QueryLogIndexResp(
                         source.logRecordIndexSort().getSortDescription(), source.indexValue(),
                         source.version(), timeFormatUtil.format(source.createTime()), timeFormatUtil.format(source.modifyTime())))

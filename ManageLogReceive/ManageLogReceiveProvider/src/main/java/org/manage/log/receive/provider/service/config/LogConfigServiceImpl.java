@@ -31,18 +31,18 @@ public class LogConfigServiceImpl implements LogConfigService {
     }
 
     @Override
-    public Optional<LogConfig> getConfigByRuleId(String configId) {
-        return logConfigRepository.getByConfigId(configId);
-    }
-
-    @Override
     public List<LogConfig> getByConfigNameList(List<String> configNameList) {
         return logConfigRepository.getByConfigNameList(configNameList);
     }
 
     @Override
     public String formatContent(LogConfig logConfig, Map<String, String> valuePropertyToValueMap) {
-        return logContentFormatFactory.format(logConfig, valuePropertyToValueMap);
+        Map<String, String> extractValueKeyList = logContentFormatFactory.extractValueKey(logConfig);
+        String content = logConfig.contentTemplate();
+        for(Map.Entry<String, String> entry : extractValueKeyList.entrySet()){
+            content = content.replace(entry.getKey(), valuePropertyToValueMap.get(entry.getValue()));
+        }
+        return content;
     }
 
     @Override

@@ -56,14 +56,9 @@ public class DefineModelUtil {
         );
     }
 
-    private static LogRecordIndex defineLogRecordIndex(String recordId){
-        return defineLogRecordIndex(recordId, IdGenerateUtil.getInstance().generate(13));
-    }
-
-    public static LogRecordIndex defineLogRecordIndex(String recordId, String indexId){
+    public static LogRecordIndex defineLogRecordIndex(String indexId){
         return new LogRecordIndex(
                 indexId,
-                recordId,
                 LogRecordIndexSort.ID,
                 "111",
                 1,

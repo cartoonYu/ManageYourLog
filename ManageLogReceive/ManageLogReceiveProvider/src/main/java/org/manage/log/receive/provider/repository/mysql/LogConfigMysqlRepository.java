@@ -105,8 +105,8 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
             log.warn("get by config name, get from cache error", e);
         }
         //calculate diff with cache and source config name list
-        List<String> configNameFromCache = configFromCache.stream().map(LogConfig::ruleName).toList();
-        List<String> needLoadFromDatabaseConfigNameList = configNameList.stream()
+        List<String> configNameFromCache = configFromCache.parallelStream().map(LogConfig::ruleName).toList();
+        List<String> needLoadFromDatabaseConfigNameList = configNameList.parallelStream()
                                                                 .filter(sourceConfigName -> !configNameFromCache.contains(sourceConfigName))
                                                                 .toList();
         if(needLoadFromDatabaseConfigNameList.isEmpty()){
@@ -114,12 +114,12 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         }
         //get data from database
         List<LogConfigMysqlPO> configPoFromDatabase = logConfigMapper.getByConfigNameList(needLoadFromDatabaseConfigNameList);
-        List<String> logConfigIdFromDatabase = configPoFromDatabase.stream().map(LogConfigMysqlPO::ruleId).toList();
+        List<String> logConfigIdFromDatabase = configPoFromDatabase.parallelStream().map(LogConfigMysqlPO::ruleId).toList();
         List<LogIndexConfigMysqlPO> indexConfigFromDatabase = logIndexConfigMapper.getByConfigIdList(logConfigIdFromDatabase);
         List<LogContentFormatConfigMysqlPO> contentFormatConfigFromDatabase = logContentFormatConfigMapper.getByConfigIdList(logConfigIdFromDatabase);
-        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = indexConfigFromDatabase.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
-        Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigFromDatabase.stream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
-        List<LogConfig> configFromDatabase = configPoFromDatabase.stream().
+        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = indexConfigFromDatabase.parallelStream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
+        Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigFromDatabase.parallelStream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
+        List<LogConfig> configFromDatabase = configPoFromDatabase.parallelStream().
                                                     map(config -> builder.convert(config,
                                                                                     configIdToIndexMap.getOrDefault(config.ruleId(), new ArrayList<>()),
                                                                                     configIdToFormatMap.getOrDefault(config.ruleId(), new ArrayList<>())))
@@ -135,9 +135,9 @@ public class LogConfigMysqlRepository implements LogConfigRepository {
         List<LogIndexConfigMysqlPO> configIndexMysqlPoList = logIndexConfigMapper.getAll();
         List<LogContentFormatConfigMysqlPO> contentFormatConfigList = logContentFormatConfigMapper.getAll();
 
-        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = configIndexMysqlPoList.stream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
-        Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigList.stream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
-        return configMysqlPoList.stream().map(configMysqlPo -> {
+        Map<String, List<LogIndexConfigMysqlPO>> configIdToIndexMap = configIndexMysqlPoList.parallelStream().collect(Collectors.groupingBy(LogIndexConfigMysqlPO::logConfigId));
+        Map<String, List<LogContentFormatConfigMysqlPO>> configIdToFormatMap = contentFormatConfigList.parallelStream().collect(Collectors.groupingBy(LogContentFormatConfigMysqlPO::logConfigId));
+        return configMysqlPoList.parallelStream().map(configMysqlPo -> {
             String configId = configMysqlPo.ruleId();
             return builder.convert(configMysqlPo, configIdToIndexMap.getOrDefault(configId, new ArrayList<>()), configIdToFormatMap.getOrDefault(configId, new ArrayList<>()));
         }).toList();

@@ -1,5 +1,6 @@
 package org.manage.log.common.model.log.builder;
 
+import org.manage.log.common.model.log.LogRecordIndex;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
@@ -8,6 +9,7 @@ import org.manage.log.common.util.IdGenerateUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,14 +27,14 @@ public class LogRecordFactory {
     }
 
     public LogRecord build(String content, OperatorSort operatorSort, String operator,
-                           LogRecordSort logRecordSort, Map<String, LogRecordIndexSort> indexValueToIndexSortMap,
+                           LogRecordSort logRecordSort, List<LogRecordIndex> indexList,
                            LocalDateTime createTime){
-        return LogRecordBuilder.getInstance(this, indexFactory)
+        return LogRecordBuilder.getInstance(this)
                 .setContent(content)
                 .setOperatorSort(operatorSort)
                 .setOperator(operator)
                 .setLogRecordSort(logRecordSort)
-                .setIndexValueToIndexSortMap(indexValueToIndexSortMap)
+                .setIndexList(indexList)
                 .setCreateTime(createTime)
                 .build();
     }

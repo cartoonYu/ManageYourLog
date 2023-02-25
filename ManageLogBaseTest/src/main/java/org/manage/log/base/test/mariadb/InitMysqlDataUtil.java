@@ -45,9 +45,9 @@ public abstract class InitMysqlDataUtil {
      * stop mariadb when program exit
      */
     protected void stop(){
-        ofNullable(getConfig().getDb()).ifPresent(obj -> {
+        ofNullable(getConfig().getDb()).ifPresent(db -> {
             try {
-                obj.stop();
+                db.stop();
             } catch (ManagedProcessException e) {
                 e.printStackTrace();
             }
@@ -60,12 +60,12 @@ public abstract class InitMysqlDataUtil {
      * @return mariadb config
      */
     protected MariaDbConfig getConfig(){
-        MariaDbConfig mariaDBConfig = new MariaDbConfig();
-        mariaDBConfig.setBaseDir("../local/base")
+        MariaDbConfig config = new MariaDbConfig();
+        config.setBaseDir("../local/base")
                 .setDataDir("../local/data")
                 .setPort(13306)
                 .addSchemaScript("script/MysqlSchema.sql")
                 .addDataScript("script/MysqlData.sql");
-        return mariaDBConfig;
+        return config;
     }
 }

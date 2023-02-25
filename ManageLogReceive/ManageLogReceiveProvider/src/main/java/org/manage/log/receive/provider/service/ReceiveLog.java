@@ -17,5 +17,5 @@ public interface ReceiveLog {
 
     OperateLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq);
 
-    OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs);
+    OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordList);
 }
