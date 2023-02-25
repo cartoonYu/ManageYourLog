@@ -24,6 +24,6 @@ public class CodeExecuteContentFormatServiceImpl implements LogContentFormatServ
     public List<String> extractValueKey(LogContentFormatConfig formatConfigs, List<String> sourceValueKeyList) {
         //todo use aviator to execute
         //remove . from matchString default
-        return sourceValueKeyList.stream().map(sourceValueKey -> sourceValueKey.substring(0, sourceValueKey.length() - 1)).toList();
+        return sourceValueKeyList.parallelStream().map(sourceValueKey -> sourceValueKey.substring(0, sourceValueKey.length() - 1)).toList();
     }
 }

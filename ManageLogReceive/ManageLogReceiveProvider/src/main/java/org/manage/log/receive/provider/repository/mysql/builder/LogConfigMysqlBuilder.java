@@ -31,7 +31,7 @@ public class LogConfigMysqlBuilder {
     private final LogContentFormatConfigFactory logContentFormatConfigFactory;
 
     public List<LogContentFormatConfigMysqlPO> convertToContentFormatConfig(LogConfig logConfig){
-        return logConfig.formatContentConfig().stream().map(formatContentConfig ->
+        return logConfig.formatContentConfig().parallelStream().map(formatContentConfig ->
                 new LogContentFormatConfigMysqlPO(
                     formatContentConfig.ruleId(), formatContentConfig.ruleName(), logConfig.ruleId(),
                     formatContentConfig.type().getType(), formatContentConfig.value(),
@@ -41,7 +41,7 @@ public class LogConfigMysqlBuilder {
     }
 
     public List<LogIndexConfigMysqlPO> convertToLogIndexConfig(LogConfig logConfig){
-        return logConfig.indexConfigList().stream().map(indexConfig ->
+        return logConfig.indexConfigList().parallelStream().map(indexConfig ->
                 new LogIndexConfigMysqlPO(
                     indexConfig.ruleId(), indexConfig.ruleName(), logConfig.ruleId(),
                     indexConfig.logRecordIndexSort().getSortDescription(), indexConfig.valueIndexKey(),
@@ -81,7 +81,7 @@ public class LogConfigMysqlBuilder {
     }
 
     private List<LogIndexConfig> convert(List<LogIndexConfigMysqlPO> indexList){
-        return indexList.stream().map(this::convert).toList();
+        return indexList.parallelStream().map(this::convert).toList();
     }
 
     private LogIndexConfig convert(LogIndexConfigMysqlPO index){
@@ -98,7 +98,7 @@ public class LogConfigMysqlBuilder {
     }
 
     private List<LogContentFormatConfig> convertContentFormatConfig(List<LogContentFormatConfigMysqlPO> contentFormatConfigList){
-        return contentFormatConfigList.stream().filter(Objects::nonNull).map(this::convert).toList();
+        return contentFormatConfigList.parallelStream().filter(Objects::nonNull).map(this::convert).toList();
     }
 
     private LogContentFormatConfig convert(LogContentFormatConfigMysqlPO formatConfig){

@@ -83,7 +83,6 @@ public class MockData {
     public static LogRecordIndex initLogRecordIndex(){
         return new LogRecordIndex(
                 "111",
-                "111",
                 LogRecordIndexSort.ID,
                 "111",
                 1,

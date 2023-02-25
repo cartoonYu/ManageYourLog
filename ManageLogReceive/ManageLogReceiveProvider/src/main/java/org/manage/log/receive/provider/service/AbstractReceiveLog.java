@@ -3,6 +3,8 @@ package org.manage.log.receive.provider.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.manage.log.common.constants.HandleError;
+import org.manage.log.common.model.log.LogRecordIndex;
+import org.manage.log.common.model.log.builder.LogIndexFactory;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.config.LogConfig;
 import org.manage.log.common.model.config.LogIndexConfig;
@@ -35,50 +37,55 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
     private final LogRecordFactory logRecordFactory;
 
+    private final LogIndexFactory logIndexFactory;
+
     @Override
     public OperateLogResp<Boolean> receive(UploadLogRecordReq uploadLogRecordReq) {
         return receive(List.of(uploadLogRecordReq));
     }
 
     @Override
-    public OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordReqs) {
+    public OperateLogResp<Boolean> receive(List<UploadLogRecordReq> uploadLogRecordList) {
         //judge income request data illegal
         try {
-            judgeParamIllegal(uploadLogRecordReqs);
+            judgeParamIllegal(uploadLogRecordList);
         } catch (IllegalArgumentException e){
             return new OperateLogResp<>(HandleError.PARAM_MISS.getCode(), e.getMessage());
         }
 
         //transfer request data to domain entity
         //get log config from repository
-        List<String> configNameList = uploadLogRecordReqs.stream().map(UploadLogRecordReq::getConfigName).toList();
+        List<String> configNameList = uploadLogRecordList.parallelStream().map(UploadLogRecordReq::getConfigName).toList();
         List<LogConfig> configList = logConfigService.getByConfigNameList(configNameList);
         //format log by log formatter and value list, construct log index list
-        List<LogRecord> logRecordList = executeLog(configList, uploadLogRecordReqs);
+        List<LogRecord> logRecordList = executeLog(configList, uploadLogRecordList);
         //call repository to store
         boolean saveRes = logRecordRepository.save(logRecordList);
         return new OperateLogResp<>(saveRes);
     }
 
     private List<LogRecord> executeLog(List<LogConfig> configList, List<UploadLogRecordReq> uploadLogRecordReqList){
-        Map<String, LogConfig> configNameToConfig = configList.stream().collect(Collectors.toMap(LogConfig::ruleName, Function.identity()));
+        Map<String, LogConfig> configNameToConfig = configList.parallelStream().collect(Collectors.toMap(LogConfig::ruleName, Function.identity()));
         //format log content and others, call factory to build domain object
-        return uploadLogRecordReqList.stream().map(uploadReq -> {
+        return uploadLogRecordReqList.parallelStream().map(uploadReq -> {
             return ofNullable(configNameToConfig.get(uploadReq.getConfigName())).map(config -> {
                 //format content by content template
                 Map<String, String> valuePropertyToValueMap = getValueProperty(uploadReq.getValueData());
                 String content = logConfigService.formatContent(config, valuePropertyToValueMap);
                 //get index value from value list according by index config
-                Map<String, LogRecordIndexSort> indexValueToIndexSortMap = new HashMap<>(config.indexConfigList().size());
-                for(LogIndexConfig logIndexConfig : config.indexConfigList()){
-                    indexValueToIndexSortMap.put(valuePropertyToValueMap.get(logIndexConfig.valueIndexKey()), logIndexConfig.logRecordIndexSort());
-                }
+                List<LogRecordIndex> indexList = getIndexList(config, valuePropertyToValueMap);
                 return logRecordFactory.build(content, config.operatorSort(), uploadReq.getOperator(),
-                                                                config.logRecordSort(), indexValueToIndexSortMap,
+                                                                config.logRecordSort(), indexList,
                                             getUploadTime(uploadReq));
 
             }).orElse(null);
         }).filter(Objects::nonNull).toList();
+    }
+
+    private List<LogRecordIndex> getIndexList(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
+        return logConfig.indexConfigList().parallelStream()
+                .map(indexConfig -> logIndexFactory.build(indexConfig.logRecordIndexSort(), valuePropertyToValueMap.get(indexConfig.valueIndexKey())))
+                .toList();
     }
 
     private Map<String, String> getValueProperty(String valueData){
@@ -121,9 +128,11 @@ public abstract class AbstractReceiveLog implements ReceiveLog {
 
     public AbstractReceiveLog(LogRecordRepository logRecordRepository,
                                 LogConfigService logConfigService,
-                                LogRecordFactory logRecordFactory) {
+                                LogRecordFactory logRecordFactory,
+                                LogIndexFactory logIndexFactory) {
         this.logRecordRepository = logRecordRepository;
         this.logConfigService = logConfigService;
         this.logRecordFactory = logRecordFactory;
+        this.logIndexFactory = logIndexFactory;
     }
 }

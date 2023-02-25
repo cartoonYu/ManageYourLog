@@ -37,7 +37,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
     @Override
     public List<LogRecord> getByTime(LocalDateTime startTime, LocalDateTime endTime) {
         List<LogRecordMysqlPO> logRecordMysqlPoList = logRecordMapper.getByTime(startTime, endTime);
-        List<String> recordIdList = logRecordMysqlPoList.stream().map(LogRecordMysqlPO::recordId).toList();
+        List<String> recordIdList = logRecordMysqlPoList.parallelStream().map(LogRecordMysqlPO::recordId).toList();
         //get all index which is related to log record
         List<LogRecordIndexMysqlPO> indexPoList = logRecordIndexMapper.getByRecordIdList(recordIdList);
         return mysqlEntityBuilder.convertToModel(logRecordMysqlPoList, indexPoList);
@@ -54,7 +54,7 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
             return ImmutableList.of();
         }
         //get all record id from index list
-        List<String> recordIds = sourceIndexMysqlList.stream().map(LogRecordIndexMysqlPO::logRecordId).toList();
+        List<String> recordIds = sourceIndexMysqlList.parallelStream().map(LogRecordIndexMysqlPO::logRecordId).toList();
         //get record by id from database
         List<LogRecordMysqlPO> logRecordMysqlPoList = logRecordMapper.getById(recordIds);
         //get all index which is related to log record

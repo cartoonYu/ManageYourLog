@@ -44,7 +44,7 @@ public class LogRecordRepositoryTest extends BaseTest {
     @Test
     public void testRollback(){
         String recordId = IdGenerateUtil.getInstance().generate(13);
-        List<LogRecordIndex> indexList = ImmutableList.of(DefineModelUtil.defineLogRecordIndex(recordId, "2222"));
+        List<LogRecordIndex> indexList = ImmutableList.of(DefineModelUtil.defineLogRecordIndex("2222"));
         LogRecord logRecord = DefineModelUtil.defineLogRecord(recordId, indexList);
 
         Assertions.assertTrue(logRecordRepository.save(ImmutableList.of(logRecord)));

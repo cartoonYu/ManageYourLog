@@ -33,8 +33,8 @@ public class LogRecordMysqlRepository implements LogRecordRepository {
     @Override
     public boolean save(List<LogRecord> logRecords) {
         List<ImmutablePair<LogRecordMysqlPO, List<LogRecordIndexMysqlPO>>> logInfos = LogRecordMysqlBuilder.getInstance().convertToPo(logRecords);
-        List<LogRecordMysqlPO> logRecordPos = logInfos.stream().map(ImmutablePair::getLeft).toList();
-        List<LogRecordIndexMysqlPO> logRecordIndexPos = logInfos.stream().map(ImmutablePair::getRight).flatMap(Collection::stream).toList();
+        List<LogRecordMysqlPO> logRecordPos = logInfos.parallelStream().map(ImmutablePair::getLeft).toList();
+        List<LogRecordIndexMysqlPO> logRecordIndexPos = logInfos.parallelStream().map(ImmutablePair::getRight).flatMap(Collection::stream).toList();
 
         List<ImmutablePair<Supplier<Integer>, Integer>> executeInfos = new ArrayList<>();
         if(!logRecordIndexPos.isEmpty()){

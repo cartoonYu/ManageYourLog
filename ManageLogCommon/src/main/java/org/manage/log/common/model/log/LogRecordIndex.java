@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
  */
 public record LogRecordIndex(
         String indexId,
-        String logRecordId,
         LogRecordIndexSort logRecordIndexSort,
         String indexValue,
         Integer version,

@@ -15,8 +15,6 @@ public class LogIndexBuilder {
 
     private String indexId;
 
-    private String logRecordId;
-
     private LogRecordIndexSort logRecordIndexSort;
 
     private String indexValue;
@@ -26,14 +24,6 @@ public class LogIndexBuilder {
     private LocalDateTime createTime = LocalDateTime.now();
 
     private LocalDateTime modifyTime = LocalDateTime.now();
-
-    public LogIndexBuilder setLogRecordId(String logRecordId) {
-        if(Objects.isNull(logRecordId)){
-            return this;
-        }
-        this.logRecordId = logRecordId;
-        return this;
-    }
 
     public LogIndexBuilder setLogRecordIndexSort(LogRecordIndexSort logRecordIndexSort) {
         if(Objects.isNull(logRecordIndexSort)){
@@ -65,7 +55,6 @@ public class LogIndexBuilder {
         indexId = logIndexFactory.generateIndexId();
         LogRecordIndex logRecordIndex = new LogRecordIndex(
                 indexId,
-                logRecordId,
                 logRecordIndexSort,
                 indexValue,
                 version,

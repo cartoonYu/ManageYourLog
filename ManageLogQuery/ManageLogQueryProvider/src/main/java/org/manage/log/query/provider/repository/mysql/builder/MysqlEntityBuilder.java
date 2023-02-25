@@ -1,15 +1,12 @@
 package org.manage.log.query.provider.repository.mysql.builder;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.manage.log.common.model.log.constants.LogRecordIndexSort;
 import org.manage.log.common.model.log.constants.LogRecordSort;
 import org.manage.log.common.model.log.constants.OperatorSort;
 import org.manage.log.common.model.log.LogRecord;
 import org.manage.log.common.model.log.LogRecordIndex;
 import org.manage.log.common.model.log.builder.LogRecordFactory;
-import org.manage.log.query.provider.repository.LogRecordMysqlRepository;
 import org.manage.log.query.provider.repository.mysql.model.LogRecordIndexMysqlPO;
 import org.manage.log.query.provider.repository.mysql.model.LogRecordMysqlPO;
 import org.springframework.stereotype.Component;
@@ -37,10 +34,10 @@ public class MysqlEntityBuilder {
      * @return log record model list
      */
     public List<LogRecord> convertToModel(List<LogRecordMysqlPO> logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
-        Map<String, List<LogRecordIndexMysqlPO>> recordIdToIndexListMap = logRecordIndexMysqlPOList.stream().collect(Collectors.groupingBy(LogRecordIndexMysqlPO::logRecordId));
+        Map<String, List<LogRecordIndexMysqlPO>> recordIdToIndexListMap = logRecordIndexMysqlPOList.parallelStream().collect(Collectors.groupingBy(LogRecordIndexMysqlPO::logRecordId));
         return ofNullable(logRecordMysqlPO)
                 .map(logRecordList ->
-                        logRecordList.stream()
+                        logRecordList.parallelStream()
                                 .map(logRecord -> convertToModel(logRecord, recordIdToIndexListMap.get(logRecord.recordId())))
                                 .collect(Collectors.toList()))
                 .orElse(ImmutableList.of());
@@ -54,10 +51,9 @@ public class MysqlEntityBuilder {
      */
     public LogRecord convertToModel(LogRecordMysqlPO logRecordMysqlPO, List<LogRecordIndexMysqlPO> logRecordIndexMysqlPOList){
         return ofNullable(logRecordMysqlPO).map(po -> {
-            List<LogRecordIndex> indexList = logRecordIndexMysqlPOList.stream().map(indexPo ->
+            List<LogRecordIndex> indexList = logRecordIndexMysqlPOList.parallelStream().map(indexPo ->
                     new LogRecordIndex(
                         indexPo.indexId(),
-                        indexPo.logRecordId(),
                         LogRecordIndexSort.parse(indexPo.sort()),
                         indexPo.indexValue(),
                         indexPo.version(),

@@ -41,7 +41,7 @@ public class RegularExpressionMatchContentFormatServiceImpl implements LogConten
         String regex = formatConfig.value();
         final Pattern pattern = Pattern.compile(regex);
 
-        return sourceValueKeyList.stream().map(sourceValueKey -> {
+        return sourceValueKeyList.parallelStream().map(sourceValueKey -> {
             Matcher matcher = pattern.matcher(sourceValueKey);
             while (matcher.find()){
                 //return first match result

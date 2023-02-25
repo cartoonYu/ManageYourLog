@@ -31,34 +31,24 @@ public class LogContentFormatFactory {
 
     private final Map<LogContentFormatType, LogContentFormatService> formatTypeToHandlerMap;
 
-    private final LoadingCache<String, List<ImmutablePair<String, String>>> CONFIG_RULE_ID_TO_VALUE_KEY_CACHE;
+    private final LoadingCache<String, Map<String, String>> CONFIG_RULE_ID_TO_VALUE_KEY_CACHE;
 
     /**
-     * calculate and replace key need to move to add config, in order to short log content upload time
-     * @param logConfig
-     * @param valuePropertyToValueMap
-     * @return
+     * extract value key from config
+     * @param logConfig config
+     * @return source key to result key list
      */
-    public String format(LogConfig logConfig, Map<String, String> valuePropertyToValueMap){
-        List<ImmutablePair<String, String>> extractValueKeyList = extractValueKey(logConfig);
-        String content = logConfig.contentTemplate();
-        for(ImmutablePair<String, String> extractValueKey : extractValueKeyList){
-            content = content.replace(extractValueKey.getLeft(), valuePropertyToValueMap.get(extractValueKey.getRight()));
-        }
-        return content;
-    }
-
-    private List<ImmutablePair<String, String>> extractValueKey(LogConfig logConfig){
+    public Map<String, String> extractValueKey(LogConfig logConfig){
         try {
             return CONFIG_RULE_ID_TO_VALUE_KEY_CACHE.get(logConfig.ruleId());
         } catch (Exception e){
             log.error("get by config name, get from cache error", e);
         }
-        return Collections.emptyList();
+        return Collections.emptyMap();
     }
 
-    private List<ImmutablePair<String, String>> extractValueKeyFromConfig(LogConfig logConfig){
-        List<LogContentFormatConfig> logContentFormatConfigs = logConfig.formatContentConfig().stream().sorted(Comparator.comparing(LogContentFormatConfig::executeSequence)).toList();
+    private Map<String, String> extractValueKeyFromConfig(LogConfig logConfig){
+        List<LogContentFormatConfig> logContentFormatConfigs = logConfig.formatContentConfig().parallelStream().sorted(Comparator.comparing(LogContentFormatConfig::executeSequence)).toList();
         //store first extract result
         List<String> sourceKeyList = new ArrayList<>();
         //store extract result after first extract
@@ -75,22 +65,24 @@ public class LogContentFormatFactory {
             }
         }
         //merge source key and extract result list to return
-        List<ImmutablePair<String, String>> resultList = new ArrayList<>();
+        Map<String, String> resultList = new HashMap<>();
         for(int index = 0; index < sourceKeyList.size(); index++){
-            resultList.add(ImmutablePair.of(sourceKeyList.get(index), middleResultList.get(index)));
+            resultList.put(sourceKeyList.get(index), middleResultList.get(index));
         }
         return resultList;
     }
 
     public LogContentFormatFactory(List<LogContentFormatService> formatServiceList, ApplicationConfigUtil applicationConfigUtil, LogConfigRepository logConfigRepository) {
-        formatTypeToHandlerMap = formatServiceList.stream().collect(Collectors.toMap(LogContentFormatService::formatType, Function.identity()));
+        formatTypeToHandlerMap = formatServiceList.parallelStream().collect(Collectors.toMap(LogContentFormatService::formatType, Function.identity()));
 
         CONFIG_RULE_ID_TO_VALUE_KEY_CACHE = CacheBuilder.newBuilder()
                 .maximumSize(10000)
                 .expireAfterWrite(applicationConfigUtil.get(ApplicationConfigKey.receiveLogConfigCacheExpireSecond.getKey()).map(Long::parseLong).orElse(1L), TimeUnit.SECONDS)
                 .build(new CacheLoader<>() {
+
+
                     @Override
-                    public List<ImmutablePair<String, String>> load(String logConfigId) {
+                    public Map<String, String> load(String logConfigId) {
                         return logConfigRepository.getByConfigId(logConfigId)
                                 .map(config -> extractValueKeyFromConfig(config))
                                 .orElse(null);

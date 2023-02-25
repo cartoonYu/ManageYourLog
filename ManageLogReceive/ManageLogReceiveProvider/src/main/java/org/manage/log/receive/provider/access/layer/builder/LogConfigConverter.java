@@ -36,7 +36,7 @@ public class LogConfigConverter {
     private final LogContentFormatConfigFactory logContentFormatConfigFactory;
 
     public List<LogConfigDto> convertToDto(List<LogConfig> logConfigs){
-        return logConfigs.stream().filter(Objects::nonNull).map(this::convertToDto).collect(Collectors.toList());
+        return logConfigs.parallelStream().filter(Objects::nonNull).map(this::convertToDto).collect(Collectors.toList());
     }
 
     public LogConfigDto convertToDto(LogConfig logConfig){
@@ -57,7 +57,7 @@ public class LogConfigConverter {
     }
 
     private List<LogContentFormatConfigDto> convertToContentFormatConfig(List<LogContentFormatConfig> contentFormatConfigList){
-        return contentFormatConfigList.stream().map(contentFormatConfig -> {
+        return contentFormatConfigList.parallelStream().map(contentFormatConfig -> {
             LogContentFormatConfigDto contentFormatConfigCto = new LogContentFormatConfigDto();
             contentFormatConfigCto.setRuleName(contentFormatConfigCto.getRuleName())
                     .setType(contentFormatConfig.type().getType())
@@ -71,7 +71,7 @@ public class LogConfigConverter {
     }
 
     private List<LogIndexConfigDto> convertToIndexConfigDto(List<LogIndexConfig> logIndexConfigs){
-        return logIndexConfigs.stream().map(logConfig -> {
+        return logIndexConfigs.parallelStream().map(logConfig -> {
             LogIndexConfigDto logIndexConfigDto = new LogIndexConfigDto();
             logIndexConfigDto.setRuleName(logConfig.ruleName())
                     .setLogRecordIndexSort(logConfig.logRecordIndexSort().getSortDescription())
@@ -87,14 +87,14 @@ public class LogConfigConverter {
     public LogConfig convertToBo(UploadLogConfigDto uploadLogConfigDto){
         List<LogIndexConfig> logIndexConfigList = new ArrayList<>();
         if(Objects.nonNull(uploadLogConfigDto.getIndexConfigList())){
-            logIndexConfigList.addAll(uploadLogConfigDto.getIndexConfigList().stream().map(indexConfig ->
+            logIndexConfigList.addAll(uploadLogConfigDto.getIndexConfigList().parallelStream().map(indexConfig ->
                     logIndexConfigFactory
                             .build(indexConfig.getRuleName(), LogRecordIndexSort.parse(indexConfig.getLogRecordIndexSort()),
                                     indexConfig.getValueIndexKey(), indexConfig.getDescription())).toList());
         }
         List<LogContentFormatConfig> contentFormatConfigList = new ArrayList<>();
         if(Objects.nonNull(uploadLogConfigDto.getContentFormatConfigList())){
-            contentFormatConfigList.addAll(uploadLogConfigDto.getContentFormatConfigList().stream().map(contentFormatConfig ->
+            contentFormatConfigList.addAll(uploadLogConfigDto.getContentFormatConfigList().parallelStream().map(contentFormatConfig ->
                     logContentFormatConfigFactory
                             .build(contentFormatConfig.getRuleName(), LogContentFormatType.parse(contentFormatConfig.getType()),
                                     contentFormatConfig.getValue(), contentFormatConfig.getExecuteSequence())).toList());

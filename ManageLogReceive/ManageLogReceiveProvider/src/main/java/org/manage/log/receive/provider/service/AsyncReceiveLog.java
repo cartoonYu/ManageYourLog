@@ -1,5 +1,6 @@
 package org.manage.log.receive.provider.service;
 
+import org.manage.log.common.model.log.builder.LogIndexFactory;
 import org.manage.log.common.model.log.builder.LogRecordFactory;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
 import org.manage.log.receive.provider.repository.LogRecordRepository;
@@ -28,8 +29,9 @@ public class AsyncReceiveLog extends AbstractReceiveLog {
     }
 
     public AsyncReceiveLog(LogRecordRepository logRecordRepository,
-                            LogConfigService logConfigService,
-                            LogRecordFactory logRecordFactory) {
-        super(logRecordRepository, logConfigService, logRecordFactory);
+                           LogConfigService logConfigService,
+                           LogRecordFactory logRecordFactory,
+                           LogIndexFactory logIndexFactory) {
+        super(logRecordRepository, logConfigService, logRecordFactory, logIndexFactory);
     }
 }
