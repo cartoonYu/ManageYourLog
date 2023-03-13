@@ -9,6 +9,7 @@ ManageLogReceive/ManageLogReceiveFacade/target
 ManageLogReceive/ManageLogReceiveProvider/target
 ManageLogQuery/ManageLogQueryFacade/target
 ManageLogQuery/ManageLogQueryProvider/target
+ManageLogReceive/ManageLogReceiveClient/target
 
 
 *.iml

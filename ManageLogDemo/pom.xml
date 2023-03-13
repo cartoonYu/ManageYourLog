@@ -57,7 +57,7 @@
 
         <dependency>
             <groupId>org</groupId>
-            <artifactId>ManageLogReceiveFacade</artifactId>
+            <artifactId>ManageLogReceiveClient</artifactId>
             <version>1.0.0</version>
             <exclusions>
                 <exclusion>

@@ -1,4 +1,4 @@
-package org.manage.log.receive.facade.service;
+package org.manage.log.receive.client;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,7 +9,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.manage.log.common.util.GsonUtil;
-import org.manage.log.receive.facade.Log;
 import org.manage.log.receive.facade.UploadLog;
 import org.manage.log.receive.facade.dto.OperateLogResp;
 import org.manage.log.receive.facade.dto.UploadLogRecordReq;
@@ -43,7 +42,7 @@ public class LogAspect {
     @Resource
     private UploadLog uploadLog;
 
-    @Pointcut(value = "@annotation(org.manage.log.receive.facade.Log)")
+    @Pointcut(value = "@annotation(org.manage.log.receive.client.Log)")
     public void uploadLogAspect(){
     }
 

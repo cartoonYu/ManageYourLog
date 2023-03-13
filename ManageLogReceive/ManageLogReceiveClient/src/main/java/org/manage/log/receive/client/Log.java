@@ -1,4 +1,4 @@
-package org.manage.log.receive.facade;
+package org.manage.log.receive.client;
 
 import org.springframework.stereotype.Indexed;
 

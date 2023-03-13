@@ -13,6 +13,7 @@
     <modules>
         <module>ManageLogReceiveFacade</module>
         <module>ManageLogReceiveProvider</module>
+        <module>ManageLogReceiveClient</module>
     </modules>
 
     <artifactId>ManageLogReceive</artifactId>

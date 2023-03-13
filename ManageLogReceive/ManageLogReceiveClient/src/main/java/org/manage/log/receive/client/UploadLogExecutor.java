@@ -1,4 +1,4 @@
-package org.manage.log.receive.facade.service;
+package org.manage.log.receive.client;
 
 import jakarta.annotation.PreDestroy;
 import org.manage.log.common.util.config.ApplicationConfigUtil;

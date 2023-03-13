@@ -1,7 +1,7 @@
 package org.manage.log.demo;
 
 import org.manage.log.common.util.GsonUtil;
-import org.manage.log.receive.facade.Log;
+import org.manage.log.receive.client.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;

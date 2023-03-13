@@ -1,4 +1,4 @@
-package org.manage.log.receive.facade.base;
+package org.manage.log.receive.client;
 
 import org.junit.platform.suite.api.ExcludePackages;
 import org.junit.platform.suite.api.SelectPackages;
