@@ -56,7 +56,8 @@ public class UploadLogExecutor {
     private void preDestroy(){
         //guarantee to execute all task
         ThreadPoolExecutor executor = (ThreadPoolExecutor) EXECUTOR;
-        while (executor.getQueue().size() > 0 || executor.getActiveCount() > 0){
+        //todo use CountDownLatch to count task
+        while (!executor.getQueue().isEmpty() || executor.getActiveCount() > 0){
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
